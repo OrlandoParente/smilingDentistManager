@@ -1,0 +1,11 @@
+/**
+ * 
+ */
+/**
+ * 
+ */
+module smilingDentinstManagerClient {
+	
+	exports smilingDentinstManagerClient;
+	
+}
