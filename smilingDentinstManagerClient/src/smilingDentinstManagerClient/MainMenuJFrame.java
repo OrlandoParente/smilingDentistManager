@@ -6,9 +6,9 @@ import java.awt.*;
 class MainMenuJFrame extends JFrame {
 	
 	public MainMenuJFrame() {
-		super("MAIN MENU");
-		// inizializzo frame
 		
+		// inizializzazione del frame
+		super("MAIN MENU");	
 		this.setSize( 400, 700 );
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		this.setVisible( true );
