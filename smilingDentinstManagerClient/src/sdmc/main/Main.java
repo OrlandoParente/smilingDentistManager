@@ -1,5 +1,4 @@
-package smilingDentinstManagerClient;
-
+package sdmc.main;
 
 
 public class Main {

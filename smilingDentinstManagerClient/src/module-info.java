@@ -1,12 +1,12 @@
 /**
- * 
- */
-/**
- * 
+ * @author Orlando Parente
  */
 module smilingDentinstManagerClient {
 	
-	exports smilingDentinstManagerClient;
+	exports sdmc.main;
+	exports sdmc.utils;
+	
 	requires java.desktop;
+	requires transitive org.json;
 	
 }
