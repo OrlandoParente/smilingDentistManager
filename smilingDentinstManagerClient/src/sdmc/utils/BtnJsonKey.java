@@ -1,5 +1,7 @@
 package sdmc.utils;
 
+// QUESTO FILE SI PUO' CANCELLARE 
+
 // Raccolata di costanti
 public enum BtnJsonKey {
 	

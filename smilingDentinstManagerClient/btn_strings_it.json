@@ -2,8 +2,8 @@
 	"btnCalendar": "CALENDARIO",
 	"btnAddCustomer" : "AGGIUNGI CLIENTE",
 	"btnSearchCustomer" : "CERCA CLIENTE",
-	"btnAddEmployee" : "AGGIUNGI DOTTORE",
-	"btnSearchEmployee" : "CERCA DOTTORE",
+	"btnAddEmployee" : "AGGIUNGI IMPIEGATO",
+	"btnSearchEmployee" : "CERCA IMPIEGATO",
 	"btnUploadDatabase" : "CARICA DATABASE",
 	"btnDownloadDatabase" : "SCARICA DATABASE",
 	"btnSetttings" : "IMPOSTAZIONI"
