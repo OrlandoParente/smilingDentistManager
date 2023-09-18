@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import java.awt.*;
 
-class MainMenuJFrame extends JFrame {
+public class MainMenuFrame extends JFrame {
 	
 	private JSONObject btnNames;
 	private MainMenuActionListener listener;
@@ -21,7 +21,7 @@ class MainMenuJFrame extends JFrame {
 	private JButton btnDownloadDatabase;
 	private JButton btnSetttings;
 	
-	public MainMenuJFrame() {
+	public MainMenuFrame() {
 		
 		// inizializzazione del frame -----------------------------------------------
 		super("MAIN MENU");	
@@ -38,7 +38,7 @@ class MainMenuJFrame extends JFrame {
 		
 		
 		btnNames = Utils.fileToJSONObject( Utils.BTNS_ITALIAN_LANGUANGE );
-		listener = new MainMenuActionListener();
+		listener = new MainMenuActionListener( this );
 		
 		
 		// Creazione bottoni ----------------------------------------------------------

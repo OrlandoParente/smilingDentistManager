@@ -1,9 +1,12 @@
 package sdmc.main;
 
+import sdmc.calendar.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainMenuActionListener implements ActionListener {
+import javax.swing.JFrame;
+
+class MainMenuActionListener implements ActionListener {
 	
 	public final static String CALENDAR = "btnCalendar";
 	public final static String ADD_CUSTOMER = "btnAddCustomer";
@@ -13,6 +16,14 @@ public class MainMenuActionListener implements ActionListener {
 	public final static String UPLOAD_DATABASE = "btnUploadDatabase";
 	public final static String DOWNLOAD_DATABASE = "btnDownloadDatabase";
 	public final static String SETTING = "btnSetttings";
+	
+	private JFrame MainMenuFrame;
+	
+	MainMenuActionListener( JFrame MainMenuFrame ) {
+		
+		// Prende in input la MainMenu frame per poterla chiudere all'occorrenza 
+		this.MainMenuFrame = MainMenuFrame;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -23,6 +34,10 @@ public class MainMenuActionListener implements ActionListener {
 		case CALENDAR:
 			
 			System.out.println( "Main Menu Action Listener -> CALENDAR " );
+			
+			new CalendarFrame();
+			MainMenuFrame.dispose();
+			
 			
 			break;
 			
