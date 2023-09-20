@@ -1,7 +1,6 @@
 package sdms.repository;
 
 import java.io.File;
-import java.io.FilePermission;
 import java.io.IOException;
 import java.sql.*;
 
@@ -219,273 +218,309 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public ResultSet getCustomers() throws SQLException {
 		
+		Statement state = conn.createStatement();
+		
+		return state.executeQuery("SELECT* FROM customer" );
+		
+	}
+
+	@Override
+	public ResultSet getCustomerById(String id) throws SQLException {
 		
 		Statement state = conn.createStatement();
-		/*ResultSet rs = state.executeQuery("SELECT* FROM customer" );
-		System.out.println( "########################################################################" );
-		System.out.println( rs );
-		while( rs.next() ) System.out.println( rs.getString("name") );
-		*/
 		
-		// ResultSet rs = state.executeQuery("SELECT* FROM employee" );
+		return state.executeQuery("SELECT* FROM customer WHERE customer.id='" + id + "'");
+	}
+
+	@Override
+	public boolean postCustomer(String name, String surname, String phone_number) throws SQLException {
 		
-		state.execute("INSERT INTO customer (tax_id_code, name, surname, birth_city, birth_city_province, birth_date, residence_street, residence_city, residence_province, phone_number, phone_number_2, e_mail )\n"
-				+ "VALUES ('1AAAAAAAAAAAAAAA', 'Giggi', 'Rossi', 'Cosmo', 'RM', '1990-10-10', 'Leonardo Da Vinci', 'Cosenza', 'CS', '1234567890', '2345678901', 'mariorossi@email.it' )");
-				
-		return null;
+		return this.postCustomer( null , name, surname, null , null , null, null, null, null, phone_number, null, null );
+		
 		
 	}
 
 	@Override
-	public ResultSet getCustomerById(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void postCustomer(String name, String surname, String phone_number) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void postCustomer(String tax_id_code, String name, String surname, String birth_city,
+	public boolean postCustomer(String tax_id_code, String name, String surname, String birth_city,
 			String birth_city_province, String birth_date, String residence_street, String residence_city,
-			String residence_province, String phone_number, String phone_number_2, String e_mail) {
-		// TODO Auto-generated method stub
+			String residence_province, String phone_number, String phone_number_2, String e_mail) throws SQLException {
+		
+		return conn.createStatement().execute("INSERT INTO customer( tax_id_code, name, surname, birth_city, birth_city_province , "
+					+ " birth_date, residence_street, residence_city, residence_province, phone_number, phone_number_2, e_mail ) "
+					+ "VALUES (  '"+ tax_id_code +"','"+ name +"','"+ surname +"','"+ birth_city  +"','"+ birth_city_province +"','"
+					+ birth_date +"','"+ residence_street +"','"+ residence_city +"','"+ residence_province +"','"+ phone_number  +"','"
+					+ phone_number_2 +"','"+ e_mail +"')");
 		
 	}
 
 	@Override
-	public void deleteCustomerById(String id) {
-		// TODO Auto-generated method stub
+	public boolean deleteCustomerById(String id) throws SQLException {
+		
+		return conn.createStatement().execute("DELETE FROM customer WHERE id='"+ id +"'");
 		
 	}
 
 	@Override
-	public ResultSet getMedicalsHistoryByCustomer(String id_customer) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResultSet getMedicalHistoryById(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void postMedicalHistory(String id_customer, String type, String name) {
-		// TODO Auto-generated method stub
+	public ResultSet getMedicalsHistoryByCustomer(String id_customer) throws SQLException {
 		
+		return conn.createStatement().executeQuery("SELECT* FROM medical_history WHERE medical_history.id_customer = '"+ id_customer +"'");
 	}
 
 	@Override
-	public void postMedicalHistory(String id_customer, String type, String name, String descriprion) {
-		// TODO Auto-generated method stub
+	public ResultSet getMedicalHistoryById(String id) throws SQLException {
 		
+		return conn.createStatement().executeQuery("SELECT* FROM medical_history WHERE medical_history.id='" + id + "'");
 	}
 
 	@Override
-	public void deleteMedicalHistoryById(String id) {
-		// TODO Auto-generated method stub
+	public boolean postMedicalHistory(String id_customer, String type, String name) throws SQLException {
 		
+		return this.postMedicalHistory(id_customer, type, name, null);
 	}
 
 	@Override
-	public ResultSet getAppointments() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResultSet getAppointmentByCustomer(String customer) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResultSet getAppointmentByDoctor(String doctor) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void postAppointment(String date, String time, String id_customer, String id_doctor, String id_treatment,
-			String note) {
-		// TODO Auto-generated method stub
+	public boolean postMedicalHistory(String id_customer, String type, String name, String descriprion)
+			throws SQLException {
 		
+		return conn.createStatement().execute("INSERT INTO medical_history(id_customer, type, name, description) "
+				+ "VALUES ('"+ id_customer +"','" + type + "','" + name + "','" + descriprion + "')");
 	}
 
 	@Override
-	public void postAppointment(String date, String time, String id_customer, String id_doctor, String id_treatment,
-			String bill_number, String note) {
-		// TODO Auto-generated method stub
+	public boolean deleteMedicalHistoryById(String id) throws SQLException {
+
+		return conn.createStatement().execute("DELETE FROM medical_history WHERE medical_history.id='"+ id +"'");
+	}
+
+	@Override
+	public ResultSet getAppointments() throws SQLException {
 		
+		return conn.createStatement().executeQuery("SELECT* FROM appointment");
 	}
 
 	@Override
-	public void postAppointment(String date, String time, String id_customer, String id_doctor, String id_treatment,
-			int is_done, String bill_number, String note) {
-		// TODO Auto-generated method stub
+	public ResultSet getAppointmentByCustomerId(String id_customer) throws SQLException {
 		
+		return conn.createStatement().executeQuery("SELECT* FROM appointment WHERE appointment.id_customer='" + id_customer + "'");
 	}
 
 	@Override
-	public void putSetAppointmentDoneById(String date, String time, String id_customer) {
-		// TODO Auto-generated method stub
+	public ResultSet getAppointmentByDoctorId(String id_doctor) throws SQLException {
 		
+		return conn.createStatement().executeQuery("SELECT* FROM appointment WHERE appointment.id_doctor='" + id_doctor + "'");
 	}
 
 	@Override
-	public void putUnsetAppointmentDoneById(String date, String time, String id_customer) {
-		// TODO Auto-generated method stub
+	public boolean postAppointment(String date, String time, String id_customer, String id_doctor, String id_treatment,
+			String note) throws SQLException {
 		
+		return this.postAppointment(date, time, id_customer, id_doctor, id_treatment, 0, null, note);
 	}
 
 	@Override
-	public void putAppointmentBillNumberById(String date, String time, String id_customer, String billNumber) {
+	public boolean postAppointment(String date, String time, String id_customer, String id_doctor, String id_treatment,
+			String bill_number, String note) throws SQLException {
 		// TODO Auto-generated method stub
+		return this.postAppointment(date, time, id_customer, id_doctor, id_treatment, 0, bill_number, note);
+	}
+
+	@Override
+	public boolean postAppointment(String date, String time, String id_customer, String id_doctor, String id_treatment,
+			int is_done, String bill_number, String note) throws SQLException {
 		
+		return conn.createStatement().execute("INSERT INTO appointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note) "
+				+ "VALUES ('"+ date +"','" + time + "','" + id_customer + "','" + id_doctor + "','" + id_treatment + "',"
+				+ "' " + is_done + " ',' " + bill_number + " ','" + note + "')");
 	}
 
 	@Override
-	public void putAppointmentNoteById(String date, String time, String id_customer, String note) {
-		// TODO Auto-generated method stub
+	public boolean putSetAppointmentDoneById(String date, String time, String id_customer) throws SQLException {
 		
+		return conn.createStatement().execute("UPDATE appointment SET appointment.is_done='1' "
+									+" WHERE appointment.date = '"+date+"' "
+									+ "AND appointment.time='"+time+"'"
+									+ "AND appointment.id_customer = '"+ id_customer +"'");
 	}
 
 	@Override
-	public void putAppointmentTreatmentById(String date, String time, String id_customer, String id_treatment) {
-		// TODO Auto-generated method stub
+	public boolean putUnsetAppointmentDoneById(String date, String time, String id_customer) throws SQLException {
 		
+		return conn.createStatement().execute("UPDATE appointment SET appointment.is_done='0' "
+									+" WHERE appointment.date = '"+date+"' "
+									+ "AND appointment.time='"+time+"'"
+									+ "AND appointment.id_customer = '"+ id_customer +"'");
 	}
 
 	@Override
-	public void deleteAppointmentById(String date, String time, String id_customer) {
-		// TODO Auto-generated method stub
+	public boolean putAppointmentBillNumberById(String date, String time, String id_customer, String bill_number)
+			throws SQLException {
 		
+		return conn.createStatement().execute("UPDATE appointment SET appointment.bill_number = '"+ bill_number +"' "
+									+" WHERE appointment.date = '"+date+"' "
+									+ "AND appointment.time='"+time+"'"
+									+ "AND appointment.id_customer = '"+ id_customer +"'");
 	}
 
 	@Override
-	public ResultSet getTreatmentById(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResultSet getTreatmentByCustomer(String id_customer) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResultSet getTreatmentByBillNumber(String bill_number) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void postTreatment(String name, String cost) {
-		// TODO Auto-generated method stub
+	public boolean putAppointmentNoteById(String date, String time, String id_customer, String note)
+			throws SQLException {
 		
+		return conn.createStatement().execute("UPDATE appointment SET appointment.note = '"+ note +"' "
+									+" WHERE appointment.date = '"+date+"' "
+									+ "AND appointment.time='"+time+"'"
+									+ "AND appointment.id_customer = '"+ id_customer +"'");
 	}
 
 	@Override
-	public void postTreatment(String name, String description, String cost) {
-		// TODO Auto-generated method stub
+	public boolean putAppointmentTreatmentById(String date, String time, String id_customer, String id_treatment)
+			throws SQLException {
 		
+		return conn.createStatement().execute("UPDATE appointment SET appointment.id_treatment = '"+ id_treatment +"' "
+									+" WHERE appointment.date = '"+date+"' "
+									+ "AND appointment.time='"+time+"'"
+									+ "AND appointment.id_customer = '"+ id_customer +"'");
 	}
 
 	@Override
-	public void deleteTreatmentById(String id) {
-		// TODO Auto-generated method stub
+	public boolean deleteAppointmentById(String date, String time, String id_customer) throws SQLException {
 		
+		return conn.createStatement().execute("DELETE FROM appointment  "
+									+" WHERE appointment.date = '"+date+"' "
+									+ "AND appointment.time='"+time+"'"
+									+ "AND appointment.id_customer = '"+ id_customer +"'");
 	}
 
 	@Override
-	public ResultSet getEmployees() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResultSet getEmployeesByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResultSet getEmployeesBySurname(String surnname) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResultSet getEmployeesByProfessionalRoleName(String professiona_role_name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResultSet getEmployeeById(String Id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void postEmployee(String name, String surname, String title, String phone_number) {
-		// TODO Auto-generated method stub
+	public ResultSet getTreatmentById(String id) throws SQLException {
 		
+		return conn.createStatement().executeQuery("SELECT* FROM treatment WHERE treatment.id='" + id + "'");
 	}
 
 	@Override
-	public void postEmployee(String name, String surname, String title, String birth_date, String phone_number,
-			String phone_number_2, String e_mail) {
-		// TODO Auto-generated method stub
+	public ResultSet getTreatmentByCustomer(String id_customer) throws SQLException {
 		
+		return conn.createStatement().executeQuery("SELECT* FROM treatment WHERE treatment.id_customer='" + id_customer + "'");
 	}
 
 	@Override
-	public void deleteEmployeeById(String id) {
-		// TODO Auto-generated method stub
+	public ResultSet getTreatmentByBillNumber(String bill_number) throws SQLException {
 		
+		return conn.createStatement().executeQuery("SELECT* FROM treatment, appointment "
+													+ "WHERE appointment.bill_number='" + bill_number + "'"
+													+ "AND appointment.id_treatment=treatment.id");
 	}
 
 	@Override
-	public ResultSet getProfessionalRoles() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void postProfessionalRole(String name) {
-		// TODO Auto-generated method stub
+	public boolean postTreatment(String name, String cost) throws SQLException {
 		
+		return this.postTreatment(name, null, cost);
 	}
 
 	@Override
-	public void postProfessionalRole(String name, String description) {
-		// TODO Auto-generated method stub
+	public boolean postTreatment(String name, String description, String cost) throws SQLException {
 		
+		return conn.createStatement().execute("INSERT INTO treatment(name, description, cost) VALUES('"+ name +"','"+ description +"','" + cost + "')");
 	}
 
 	@Override
-	public void deleteProfessionalRoleById(String id) {
-		// TODO Auto-generated method stub
+	public boolean deleteTreatmentById(String id) throws SQLException {
 		
+		return conn.createStatement().execute("DELETE FROM treatment WHERE treatment.id = '" + id + "'");
 	}
 
 	@Override
-	public void postLinkEmployeeToProfessionalRole(String id_employee, String id_professional_rol) {
-		// TODO Auto-generated method stub
+	public ResultSet getEmployees() throws SQLException {
 		
+		return conn.createStatement().executeQuery("SELECT* FROM employee");
 	}
 
 	@Override
-	public void deleteLinkEmployeeWithProfessionalRole(String id_employee, String id_professional_rol) {
-		// TODO Auto-generated method stub
+	public ResultSet getEmployeesByName(String name) throws SQLException {
 		
+		return conn.createStatement().executeQuery("SELECT* FROM employee WHERE employee.name = '" + name + "'");
 	}
-	
+
+	@Override
+	public ResultSet getEmployeesBySurname(String surname) throws SQLException {
+		
+		return conn.createStatement().executeQuery("SELECT* FROM employee WHERE employee.surname = '" + surname + "'");
+	}
+
+	@Override
+	public ResultSet getEmployeesByProfessionalRoleName(String professiona_role_name) throws SQLException {
+		
+		return conn.createStatement().executeQuery("SELECT* FROM employee, has_professional_role, professional_role"
+													+ "WHERE employee.id = has_prefessional_role.id_employee"
+													+ "AND professional_role.id = has_professional_role.id_professional_role" );
+	}
+
+	@Override
+	public ResultSet getEmployeeById(String id) throws SQLException {
+		
+		return conn.createStatement().executeQuery("SELECT* FROM employee WHERE employee.id = '" + id + "'");
+	}
+
+	@Override
+	public boolean postEmployee(String name, String surname, String title, String phone_number) throws SQLException {
+		
+		return this.postEmployee(name, surname, title, null, phone_number, null, null);
+	}
+
+	@Override
+	public boolean postEmployee(String name, String surname, String title, String birth_date, String phone_number,
+			String phone_number_2, String e_mail) throws SQLException {
+		
+		return conn.createStatement().execute("INSERT INTO employee (name, surname, title, birth_date, phone_number, phone_number_2, e_mail)"
+												+ "VALUES ('" + name + "','" + surname + "','" + title + "',"
+														+ "'" + birth_date + "','" + phone_number + "','" + phone_number_2 + "','" + e_mail + "')");
+	}
+
+	@Override
+	public boolean deleteEmployeeById(String id) throws SQLException {
+		
+		return conn.createStatement().execute("DELETE FROM employee WHERE employee.id = '" + id +  "'");
+	}
+
+	@Override
+	public ResultSet getProfessionalRoles() throws SQLException {
+		
+		return conn.createStatement().executeQuery("SELECT* FROM professional_role");
+	}
+
+	@Override
+	public boolean postProfessionalRole(String name) throws SQLException {
+		
+		return this.postProfessionalRole(name, null);
+	}
+
+	@Override
+	public boolean postProfessionalRole(String name, String description) throws SQLException {
+		
+		return conn.createStatement().execute("INSERT INTO professional_role(name, description) VALUES ('" + name + "','" + description + "')");
+	}
+
+	@Override
+	public boolean deleteProfessionalRoleById(String id) throws SQLException {
+		
+		return conn.createStatement().execute("DELETE FROM professional_role WHERE professional_role.id = '" +id+ "'");
+	}
+
+	@Override
+	public boolean postLinkEmployeeToProfessionalRole(String id_employee, String id_professional_role)
+			throws SQLException {
+		
+		return conn.createStatement().execute("INSERT INTO has_professional_role( id_employee, id_professional_role)"
+												+ "VALUES ('" + id_employee + "','" + id_professional_role + "')");
+	}
+
+	@Override
+	public boolean deleteLinkEmployeeWithProfessionalRole(String id_employee, String id_professional_role)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return conn.createStatement().execute("DELETE FROM has_professional_role WHERE has_professional_role.id_employee = '" + id_employee + "'"
+												+ "has_professional_role.id_professional_role = '" + id_professional_role + "'");
+	}
+
 }
+
+	

@@ -15,108 +15,110 @@ public interface DbManagerInterface {
 	// Gestione clienti -------------------------------------
 	ResultSet getCustomers() throws SQLException;
 	
-	ResultSet getCustomerById( String id );
+	ResultSet getCustomerById( String id ) throws SQLException;
 	
 	// inserimento dati essenziali del cliente
-	void postCustomer( String name , String surname ,String phone_number );
+	boolean postCustomer( String name , String surname ,String phone_number ) throws SQLException;
 	
-	void postCustomer( String tax_id_code /* codice fiscale*/, String name , String surname , String birth_city , String birth_city_province, String birth_date,
-			String residence_street, String residence_city , String residence_province, String phone_number , String phone_number_2, String e_mail );
+	boolean postCustomer( String tax_id_code /* codice fiscale*/, String name , String surname , String birth_city , String birth_city_province, String birth_date,
+			String residence_street, String residence_city , String residence_province, String phone_number , String phone_number_2, String e_mail )
+		    throws SQLException;
 	
-	void deleteCustomerById( String id );
+	boolean deleteCustomerById( String id ) throws SQLException;
 	
 	// ------------------------------------------------------
 	
 	// Gestione Medical History (Annamnesi) -----------------
-	ResultSet getMedicalsHistoryByCustomer( String id_customer );
+	ResultSet getMedicalsHistoryByCustomer( String id_customer ) throws SQLException;
 	
-	ResultSet getMedicalHistoryById( String id );
+	ResultSet getMedicalHistoryById( String id ) throws SQLException;
 	
 	// type = "generale" o "odontoiatrica" 
-	void postMedicalHistory( String id_customer, String type , String name );
-	void postMedicalHistory( String id_customer, String type , String name, String descriprion );
+	boolean postMedicalHistory( String id_customer, String type , String name ) throws SQLException;
+	boolean postMedicalHistory( String id_customer, String type , String name, String descriprion ) throws SQLException;
 
-	void deleteMedicalHistoryById( String id );
+	boolean deleteMedicalHistoryById( String id ) throws SQLException;
 	// ------------------------------------------------------
 	
 	// Gestione Appuntamenti --------------------------------
-	ResultSet getAppointments();
+	ResultSet getAppointments() throws SQLException;
 	
-	ResultSet getAppointmentByCustomer( String customer );
+	ResultSet getAppointmentByCustomerId( String id_customer ) throws SQLException;
 	
-	ResultSet getAppointmentByDoctor( String doctor );
+	ResultSet getAppointmentByDoctorId( String id_doctor ) throws SQLException;
 	
 	// per registrare un appuntamento ancora non svolto
-	void postAppointment( String date, String time, String id_customer, String id_doctor, String id_treatment, String note);
+	boolean postAppointment( String date, String time, String id_customer, String id_doctor, String id_treatment, String note) throws SQLException;
 	
 	// per registrare un appuntamento già svolto
-	void postAppointment( String date, String time, String id_customer, String id_doctor, String id_treatment, String bill_number, String note);
+	boolean postAppointment( String date, String time, String id_customer, String id_doctor, String id_treatment, String bill_number, String note) throws SQLException;
 	
 	// per registrare un appuntamento potendo scegliere i valori di tutti i campi
-	void postAppointment( String date, String time, String id_customer, String id_doctor, String id_treatment, int is_done, String bill_number, String note);
+	boolean postAppointment( String date, String time, String id_customer, String id_doctor, String id_treatment, 
+			int is_done, String bill_number, String note) throws SQLException;
 	
 	// set is_done = 1
-	void putSetAppointmentDoneById( String date, String time, String id_customer );
+	boolean putSetAppointmentDoneById( String date, String time, String id_customer ) throws SQLException;
 	
 	// set is_done = 0
-	void putUnsetAppointmentDoneById( String date, String time, String id_customer );
+	boolean putUnsetAppointmentDoneById( String date, String time, String id_customer ) throws SQLException;
 	
-	void putAppointmentBillNumberById( String date, String time, String id_customer, String billNumber );
+	boolean putAppointmentBillNumberById( String date, String time, String id_customer, String bill_number ) throws SQLException;
 	
-	void putAppointmentNoteById( String date, String time, String id_customer, String note );
+	boolean putAppointmentNoteById( String date, String time, String id_customer, String note ) throws SQLException;
 	
-	void putAppointmentTreatmentById( String date, String time, String id_customer, String id_treatment );
+	boolean putAppointmentTreatmentById( String date, String time, String id_customer, String id_treatment ) throws SQLException;
 	
-	void deleteAppointmentById( String date, String time, String id_customer );
+	boolean deleteAppointmentById( String date, String time, String id_customer ) throws SQLException;
 	// ------------------------------------------------------
 	
 	// Gestione trattamenti ---------------------------------
-	ResultSet getTreatmentById( String id );
+	ResultSet getTreatmentById( String id ) throws SQLException;
 	
-	ResultSet getTreatmentByCustomer( String id_customer );
+	ResultSet getTreatmentByCustomer( String id_customer ) throws SQLException;
 	
 	// restituisce i trattamenti associati ad una fattura
-	ResultSet getTreatmentByBillNumber( String bill_number );
+	ResultSet getTreatmentByBillNumber( String bill_number ) throws SQLException;
 	
-	void postTreatment( String name, String cost );
-	void postTreatment( String name, String description, String cost );
+	boolean postTreatment( String name, String cost ) throws SQLException;
+	boolean postTreatment( String name, String description, String cost ) throws SQLException;
 	
-	void deleteTreatmentById( String id );
+	boolean deleteTreatmentById( String id ) throws SQLException;
 	
 	// ------------------------------------------------------
 	
 	
 	// Gestione Dipendenti (Employee) -----------------------
-	ResultSet getEmployees();
+	ResultSet getEmployees() throws SQLException;
 	
-	ResultSet getEmployeesByName( String name );
+	ResultSet getEmployeesByName( String name ) throws SQLException;
 	
-	ResultSet getEmployeesBySurname( String surnname );
+	ResultSet getEmployeesBySurname( String surname ) throws SQLException;
 	
-	ResultSet getEmployeesByProfessionalRoleName( String professiona_role_name );
+	ResultSet getEmployeesByProfessionalRoleName( String professiona_role_name ) throws SQLException;
 	
-	ResultSet getEmployeeById( String Id );
+	ResultSet getEmployeeById( String id ) throws SQLException;
 	
 	// title e.g. Dott. , Dott.ssa, Sig. , Sig.ra , Sig.na
-	void postEmployee( String name, String surname, String title, String phone_number );
-	void postEmployee( String name, String surname, String title, String birth_date, String phone_number, String phone_number_2, String e_mail );
+	boolean postEmployee( String name, String surname, String title, String phone_number ) throws SQLException;
+	boolean postEmployee( String name, String surname, String title, String birth_date, String phone_number, String phone_number_2, String e_mail ) throws SQLException;
 	
-	void deleteEmployeeById( String id );
+	boolean deleteEmployeeById( String id ) throws SQLException;
 	// ------------------------------------------------------
 	
 	// Gestione Professional Role ---------------------------
-	ResultSet getProfessionalRoles();
+	ResultSet getProfessionalRoles() throws SQLException;
 	
-	void postProfessionalRole( String name );
-	void postProfessionalRole( String name, String description );
+	boolean postProfessionalRole( String name ) throws SQLException;
+	boolean postProfessionalRole( String name, String description ) throws SQLException;
 	
-	void deleteProfessionalRoleById( String id );	
+	boolean deleteProfessionalRoleById( String id ) throws SQLException;	
 	// ------------------------------------------------------
 	
 	// Gestione Has Professional Role -----------------------
-	void postLinkEmployeeToProfessionalRole( String id_employee, String id_professional_rol );
+	boolean postLinkEmployeeToProfessionalRole( String id_employee, String id_professional_role ) throws SQLException;
 	
-	void deleteLinkEmployeeWithProfessionalRole( String id_employee, String id_professional_rol );
+	boolean deleteLinkEmployeeWithProfessionalRole( String id_employee, String id_professional_role ) throws SQLException;
 	// ------------------------------------------------------
 	
 	

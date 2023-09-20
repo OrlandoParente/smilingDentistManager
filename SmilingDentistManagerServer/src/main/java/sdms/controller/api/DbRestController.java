@@ -28,16 +28,27 @@ public class DbRestController {
 		dbManager = DbManager.getDbManager();
 		ResultSet rs = null;
 		try {
-			rs = dbManager.getCustomers();
+			// rs = dbManager.getCustomers();
 			// System.out.println( rs.getString("name") );
-			if(  rs != null && rs.next()  )
-			 out += " " + rs.getString("name");
-			else out="Query empty!";
+			//if(  rs != null && rs.next()  )
+			// out += " " + rs.getString("name");
+			//else out="Query empty!";
 			// dbManager.closeConnection();
-
+			// dbManager.postCustomer("Alfredo", "Giacomo", "123456789");
+			
+			// dbManager.postCustomer("sadads", "sdfesdfd", "sfdd", "dfsadsd", "sdfsdf",
+			//		/* date */"safsaf", "sfssss", "sssss", "sssss", "eeee", "wwww", "wwww");
+			
+			System.out.println( "##########################>>>>>>>>>>>>" + dbManager.deleteCustomerById("3") );
+			
+			dbManager.closeConnection();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			
+			
 		}
 
 		
