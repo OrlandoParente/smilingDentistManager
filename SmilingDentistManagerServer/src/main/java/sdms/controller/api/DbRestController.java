@@ -36,7 +36,7 @@ public class DbRestController {
 	
 	 @RequestMapping("/getCustomers")
 	 @ResponseBody
-	public String getDoctors(){
+	public ArrayList<Customer> getDoctors(){
 		 
 		 
 		 ArrayList<Customer> customerList = null;
@@ -50,7 +50,7 @@ public class DbRestController {
 		} 
 
 		
-		return customerList.toString();
+		return customerList;
 	}
 	 
 }
