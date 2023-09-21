@@ -1,6 +1,8 @@
 package sdmc.main;
 
 import sdmc.calendar.*;
+import sdmc.customer.AddCustomerFrame;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -44,6 +46,9 @@ class MainMenuActionListener implements ActionListener {
 		case ADD_CUSTOMER:
 			
 			System.out.println( "Main Menu Action Listener -> ADD_CUSTOMER " );
+			
+			new AddCustomerFrame();
+			MainMenuFrame.dispose();
 			
 			break;
 			

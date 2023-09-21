@@ -1,5 +1,6 @@
 package sdmc.main;
 
+import sdmc.server_connection.HttpConnectionManager;
 
 public class Main {
 	
@@ -8,6 +9,7 @@ public class Main {
 		
 		new MainMenuFrame();
 		
+		new HttpConnectionManager().getCustomers();
 	}
 	
 }
