@@ -1,19 +1,29 @@
-package sdms.repository;
+package sdms.service;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 
+import org.springframework.stereotype.Service;
+
+
+// Mettiamo questa etichetta sull'implementazione da usare
+// e Spring la utilizzerà anche se l'interfaccia ha più di una implementazione
+@Service("mainDbManager")
 public class DbManager implements DbManagerInterface {
 
 	private static Connection conn;
 	
 	// Singleton: voglio un solo oggetto di questa classe #########################
-	private static DbManager dbManager;
+	// private static DbManagerInterface dbManager;
 	
-	private DbManager() {
+	public DbManager() {
+		
 		try {
-			this.getConnection();
+			
+			if( DbManager.conn == null )
+				this.getConnection();
+			// DbManager.dbManager = this;
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			//
@@ -21,14 +31,20 @@ public class DbManager implements DbManagerInterface {
 		}
 	}
 	
-	public static DbManager getDbManager() {
+	/*
+	// Utilizzo la factory per renderlo static
+	public DbManagerInterface getDbManager() {
 		
-		if( dbManager == null )
-			dbManager = new DbManager();
+		//if( dbManager == null )
+		//	dbManager = new DbManager();
 		
 		return dbManager;
 		
+		return null;
+		
 	}
+	*/
+	
 	// ############################################################################
 
 	private void getConnection() throws ClassNotFoundException, SQLException {
@@ -210,13 +226,29 @@ public class DbManager implements DbManagerInterface {
 			
 			DbManager.conn.close();
 			DbManager.conn = null;
-			DbManager.dbManager = null;
+			// DbManager.dbManager = null;
+		}
+		
+	}
+	
+	private void ConnectIfClosed() {
+		
+		try {
+			
+			if( conn != null && !conn.isClosed() ) 
+				this.getConnection();
+			
+			
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 		
 	}
 
 	@Override
 	public ResultSet getCustomers() throws SQLException {
+		
+		this.ConnectIfClosed();
 		
 		Statement state = conn.createStatement();
 		

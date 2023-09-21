@@ -1,14 +1,14 @@
-package sdms.repository;
+package sdms.service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Service;
+
 // GET ottieni dati; DELETE elimina dati; POST inserisci dati; PUT modifica dati
 
-
+@Service
 public interface DbManagerInterface {
-	
-	// void getDbManager();
 	
 	void closeConnection() throws SQLException;
 	
@@ -120,9 +120,6 @@ public interface DbManagerInterface {
 	
 	boolean deleteLinkEmployeeWithProfessionalRole( String id_employee, String id_professional_role ) throws SQLException;
 	// ------------------------------------------------------
-	
-	
-	
 	
 
 }
