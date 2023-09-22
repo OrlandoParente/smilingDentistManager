@@ -5,6 +5,7 @@ package sdmc.utils;
 // // solo appesantito il codice 
 public final class ButtonJsonKey {
 
+	// Bottoni presenti nel menu principale
 	public final static String MAIN_MENU_CALENDAR = "btnCalendar";
 	public final static String MAIN_MENU_ADD_CUSTOMER = "btnAddCustomer";
 	public final static String MAIN_MENU_SEARCH_CUSTOMER = "btnSearchCustomer";
@@ -13,5 +14,11 @@ public final class ButtonJsonKey {
 	public final static String MAIN_MENU_UPLOAD_DATABASE = "btnUploadDatabase";
 	public final static String MAIN_MENU_DOWNLOAD_DATABASE = "btnDownloadDatabase";
 	public final static String MAIN_MENU_SETTING = "btnSetttings";
+	
+	// bottoni generali
+	public final static String BTN_MAIN_MENU = "btnMainMenu";
+	public final static String BTN_SEARCH = "btnSearch";
+	public final static String BTN_ADD = "btnAdd";
+	
 	
 }
