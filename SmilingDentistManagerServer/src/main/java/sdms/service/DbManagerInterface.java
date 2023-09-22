@@ -20,9 +20,10 @@ public interface DbManagerInterface {
 	// inserimento dati essenziali del cliente
 	boolean postCustomer( String name , String surname ,String phone_number ) throws SQLException;
 	
-	boolean postCustomer( String tax_id_code /* codice fiscale*/, String name , String surname , String birth_city , String birth_city_province, String birth_date,
-			String residence_street, String residence_city , String residence_province, String phone_number , String phone_number_2, String e_mail )
-		    throws SQLException;
+	boolean postCustomer( String tax_id_code /* codice fiscale*/, String name , String surname , String birth_city , 
+			String birth_city_province, String birth_date,String residence_street, String house_number,
+			String residence_city , String residence_city_cap, String residence_province, String phone_number , 
+			String phone_number_2, String e_mail ) throws SQLException;
 	
 	boolean deleteCustomerById( String id ) throws SQLException;
 	

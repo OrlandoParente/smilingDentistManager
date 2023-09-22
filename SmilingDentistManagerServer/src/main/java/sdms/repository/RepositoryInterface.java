@@ -13,23 +13,25 @@ public interface RepositoryInterface {
 	// Gestione clienti -------------------------------------
 	ArrayList<Customer> getCustomers() throws SQLException;
 	
-	ArrayList<Customer> getCustomerById( Integer id ) throws SQLException;
+	Customer getCustomerById( Integer id ) throws SQLException;
 	
 	// inserimento dati essenziali del cliente
 	boolean postCustomer( String name , String surname ,String phone_number ) throws SQLException;
 	
-	boolean postCustomer( String tax_id_code /* codice fiscale*/, String name , String surname , String birth_city , String birth_city_province, String birth_date,
-			String residence_street, String residence_city , String residence_province, String phone_number , String phone_number_2, String e_mail )
+	boolean postCustomer( String tax_id_code /* codice fiscale*/, String name , String surname , String birth_city , 
+			String birth_city_province, String birth_date, String residence_street, String house_number, 
+			String residence_city , String residence_city_cap , String residence_province, String phone_number ,
+			String phone_number_2, String e_mail )
 		    throws SQLException;
 	
 	boolean deleteCustomerById( String id ) throws SQLException;
-/*	
+	
 	// ------------------------------------------------------
 	
 	// Gestione Medical History (Annamnesi) -----------------
-	ResultSet getMedicalsHistoryByCustomer( String id_customer ) throws SQLException;
+	ArrayList<MedicalHistory> getMedicalsHistoryByCustomer( String id_customer ) throws SQLException;
 	
-	ResultSet getMedicalHistoryById( String id ) throws SQLException;
+	ArrayList<MedicalHistory> AgetMedicalHistoryById( String id ) throws SQLException;
 	
 	// type = "generale" o "odontoiatrica" 
 	boolean postMedicalHistory( String id_customer, String type , String name ) throws SQLException;
@@ -37,7 +39,7 @@ public interface RepositoryInterface {
 
 	boolean deleteMedicalHistoryById( String id ) throws SQLException;
 	// ------------------------------------------------------
-	
+/*	
 	// Gestione Appuntamenti --------------------------------
 	ResultSet getAppointments() throws SQLException;
 	

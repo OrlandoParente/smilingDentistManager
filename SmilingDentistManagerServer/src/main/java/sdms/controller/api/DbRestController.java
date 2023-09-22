@@ -1,18 +1,16 @@
 package sdms.controller.api;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sdms.model.Customer;
 import sdms.repository.RepositoryInterface;
-import sdms.service.DbManager;
-import sdms.service.DbManagerInterface;
 
 @RestController
 public class DbRestController {
@@ -34,10 +32,13 @@ public class DbRestController {
 	}
 	*/
 	
+	//
 	 @RequestMapping("/getCustomers")
-	 @ResponseBody
-	public ArrayList<Customer> getDoctors(){
+	 // @ResponseBody
+	 public ArrayList<Customer> getDoctors(){
 		 
+		 // Stampa di controllo
+		 System.out.println("DBRestController --> getCustomers ");
 		 
 		 ArrayList<Customer> customerList = null;
 		 
@@ -51,6 +52,54 @@ public class DbRestController {
 
 		
 		return customerList;
-	}
+	 }
+	 
+	 
+	 // Inserimento dei soli parametri essenziali del cliente
+	 @PostMapping( value = "/postCustomer" , params = {"name","surname","phone_number"}  )
+	 public boolean postEssentialCustomer( @RequestParam("name") String name, @RequestParam("surname") String surname, @RequestParam("phone_number") String phoneNumber ) {
+
+		 // Stampa di controllo
+		 System.out.println("DBRestController --> getCustomers ");
+
+		 try {
+			 
+			 return repository.postCustomer(name, surname, phoneNumber);
+		
+		 } catch (SQLException e) {
+			e.printStackTrace();
+		 }
+		 
+		 return false;
+	 }
+	 
+	 
+	 //
+	 @PostMapping( value = "/postCustomer" , params = {"tax_id_code", "name", "surname", "birth_city" , "birth_city_province", 
+			 "birth_date","residence_street", "house_number", "residence_city", "residence_city_cap" ,"residence_province", 
+			 "phone_number" , "phone_number_2", "e_mail" })
+	 public boolean postCustomer(  @RequestParam("tax_id_code") String taxIdCode , @RequestParam("name") String name, 
+			 @RequestParam("surname") String surname, @RequestParam("birth_city") String birthCity , @RequestParam("birth_city_province") String birthCityProvince,
+			 @RequestParam("birth_date") String birthDate,@RequestParam("residence_street") String residenceStreet, 
+			 @RequestParam("house_number") String houseNumber, @RequestParam("residence_city") String residenceCity, 
+			 @RequestParam("residence_city_cap") String residenceCityCap,
+			 @RequestParam("residence_province") String residenceProvince, @RequestParam("phone_number") String phoneNumber, 
+			 @RequestParam("phone_number_2") String phoneNumber2,  @RequestParam("e_mail") String EMail) {
+
+		 // Stampa di controllo
+		 System.out.println("DBRestController --> getCustomers (con tutti i dati) ");
+
+		 try {
+			 
+			 return repository.postCustomer(taxIdCode, name, surname, birthCity, birthCityProvince, birthDate, residenceStreet,
+					 						houseNumber, residenceProvince, residenceCity, residenceCityCap, phoneNumber, 
+					 						phoneNumber2, EMail);
+		
+		 } catch (SQLException e) {
+			e.printStackTrace();
+		 }
+		 
+		 return false;
+	 }
 	 
 }
