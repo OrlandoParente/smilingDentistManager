@@ -9,6 +9,8 @@ import java.awt.*;
 
 public class MainMenuFrame extends JFrame {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private JSONObject btnNames;
 	private MainMenuActionListener listener;
 	

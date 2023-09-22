@@ -8,5 +8,6 @@ module smilingDentinstManagerClient {
 	
 	requires java.desktop;
 	requires transitive org.json;
+	requires java.net.http;
 	
 }
