@@ -6,6 +6,10 @@
 	"btnSearchEmployee" : "CERCA IMPIEGATO",
 	"btnUploadDatabase" : "CARICA DATABASE",
 	"btnDownloadDatabase" : "SCARICA DATABASE",
-	"btnSetttings" : "IMPOSTAZIONI"
+	"btnSetttings" : "IMPOSTAZIONI",
+	
+	"btnMainMenu" : "MAIN MENU",
+	"btnSearch" : "CERCA",
+	"btnAdd" : "AGGIUNGI"
 
 }
