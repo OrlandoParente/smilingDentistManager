@@ -19,8 +19,11 @@ public class MainMenuFrame extends JFrame {
 	private JButton btnSearchCustomer;
 	private JButton btnAddEmployee;
 	private JButton btnSearchEmployee;
-	private JButton btnUploadDatabase;
-	private JButton btnDownloadDatabase;
+	private JButton btnProfessionalRoleManager;
+	// private JButton btnUploadDatabase;		// In futuro si può pensare di aggiungere un db locale per maggiore sicurezza
+												// nel non perdere i dati
+	// private JButton btnDownloadDatabase;		// In futuro si può pensare di aggiungere un db locale per maggiore sicurezza
+												// nel non perdere i dati	
 	private JButton btnSetttings;
 	
 	public MainMenuFrame() {
@@ -30,12 +33,12 @@ public class MainMenuFrame extends JFrame {
 		this.setSize( 400, 600 );
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		
-		this.setLocation( 700, 200 );
+		this.setLocation( 700, 300 );
 		
 		//
 		Container c = this.getContentPane();
 		
-		c.setLayout( new GridLayout( 8, 1) );
+		c.setLayout( new GridLayout( 7, 1) );
 		// ---------------------------------------------------------------------------
 		
 		
@@ -65,6 +68,8 @@ public class MainMenuFrame extends JFrame {
 		btnSearchEmployee.addActionListener( listener );
 		btnSearchEmployee.setActionCommand( MainMenuActionListener.SEARCH_EMPLOYEE );
 		
+		/*
+		// Bottoni per un futuro miglioramento del software
 		btnUploadDatabase = new JButton( btnNames.getString( ButtonJsonKey.MAIN_MENU_UPLOAD_DATABASE ) );
 		btnUploadDatabase.addActionListener( listener );
 		btnUploadDatabase.setActionCommand( MainMenuActionListener.UPLOAD_DATABASE );
@@ -72,6 +77,13 @@ public class MainMenuFrame extends JFrame {
 		btnDownloadDatabase = new JButton( btnNames.getString( ButtonJsonKey.MAIN_MENU_DOWNLOAD_DATABASE ) );
 		btnDownloadDatabase.addActionListener( listener );
 		btnDownloadDatabase.setActionCommand( MainMenuActionListener.DOWNLOAD_DATABASE );
+		*/
+		
+		btnProfessionalRoleManager = new JButton( btnNames.getString( ButtonJsonKey.MAIN_MENU_PROFESSIONAL_ROLE_MANAGER ) );
+		btnProfessionalRoleManager.addActionListener( listener );
+		btnProfessionalRoleManager.setActionCommand( MainMenuActionListener.PROFESSIONAL_ROLE_MANAGER );
+	
+		
 		
 		btnSetttings = new JButton( btnNames.getString( ButtonJsonKey.MAIN_MENU_SETTING ) );
 		btnSetttings.addActionListener( listener );
@@ -86,8 +98,9 @@ public class MainMenuFrame extends JFrame {
 		c.add( btnSearchCustomer );
 		c.add( btnAddEmployee );
 		c.add( btnSearchEmployee );
-		c.add( btnUploadDatabase  );
-		c.add( btnDownloadDatabase );
+		c.add( btnProfessionalRoleManager );
+		// c.add( btnUploadDatabase  );
+		// c.add( btnDownloadDatabase );
 		c.add( btnSetttings );
 		
 		// ----------------------------------------------------------------------------
