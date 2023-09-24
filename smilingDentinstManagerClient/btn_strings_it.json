@@ -10,6 +10,9 @@
 	
 	"btnMainMenu" : "MAIN MENU",
 	"btnSearch" : "CERCA",
-	"btnAdd" : "AGGIUNGI"
+	"btnAdd" : "AGGIUNGI",
+	"btnDelete":"ELIMINA",
+	"btnEdit":"MODIFICA",
+	"btnBack":"INDIETRO"
 
 }
