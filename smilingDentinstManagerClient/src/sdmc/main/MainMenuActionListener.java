@@ -3,6 +3,9 @@ package sdmc.main;
 import sdmc.calendar.*;
 import sdmc.customer.AddCustomerFrame;
 import sdmc.customer.SearchCustomerFrame;
+import sdmc.employee.AddEmployeeFrame;
+import sdmc.employee.SearchEmployeeFrame;
+import sdmc.professional_role.ProfessionalRoleManagerFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,16 +19,17 @@ class MainMenuActionListener implements ActionListener {
 	public final static String SEARCH_CUSTOMER = "btnSearchCustomer";
 	public final static String ADD_EMPLOYEE = "btnAddEmployee";
 	public final static String SEARCH_EMPLOYEE = "btnSearchEmployee";
+	public final static String PROFESSIONAL_ROLE_MANAGER = "btnProfessionalRoleManager";
 	public final static String UPLOAD_DATABASE = "btnUploadDatabase";
 	public final static String DOWNLOAD_DATABASE = "btnDownloadDatabase";
 	public final static String SETTING = "btnSetttings";
 	
-	private JFrame MainMenuFrame;
+	private JFrame mainMenuFrame;
 	
-	MainMenuActionListener( JFrame MainMenuFrame ) {
+	MainMenuActionListener( JFrame mainMenuFrame ) {
 		
 		// Prende in input la MainMenu frame per poterla chiudere all'occorrenza 
-		this.MainMenuFrame = MainMenuFrame;
+		this.mainMenuFrame = mainMenuFrame;
 	}
 
 	@Override
@@ -39,7 +43,7 @@ class MainMenuActionListener implements ActionListener {
 			System.out.println( "Main Menu Action Listener -> CALENDAR " );
 			
 			new CalendarFrame();
-			MainMenuFrame.dispose();
+			mainMenuFrame.dispose();
 			
 			
 			break;
@@ -49,7 +53,7 @@ class MainMenuActionListener implements ActionListener {
 			System.out.println( "Main Menu Action Listener -> ADD_CUSTOMER " );
 			
 			new AddCustomerFrame();
-			MainMenuFrame.dispose();
+			mainMenuFrame.dispose();
 			
 			break;
 			
@@ -58,7 +62,7 @@ class MainMenuActionListener implements ActionListener {
 			System.out.println( "Main Menu Action Listener -> SEARCH_CUSTOMER " );
 			
 			new SearchCustomerFrame();
-			MainMenuFrame.dispose();
+			mainMenuFrame.dispose();
 			
 			break;
 			
@@ -66,11 +70,26 @@ class MainMenuActionListener implements ActionListener {
 			
 			System.out.println( "Main Menu Action Listener -> ADD_EMPLOYEE " );
 			
+			new AddEmployeeFrame();
+			mainMenuFrame.dispose();
+			
 			break;
 			
 		case SEARCH_EMPLOYEE:
 			
 			System.out.println( "Main Menu Action Listener -> SEARCH_EMPLOYEE " );
+			
+			new SearchEmployeeFrame();
+			mainMenuFrame.dispose();
+			
+			break;
+
+		case PROFESSIONAL_ROLE_MANAGER:
+			
+			System.out.println( "Main Menu Action Listener ->  " + e.getActionCommand() );
+			
+			new ProfessionalRoleManagerFrame();
+			mainMenuFrame.dispose();
 			
 			break;
 			
