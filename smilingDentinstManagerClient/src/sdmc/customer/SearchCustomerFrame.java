@@ -1,17 +1,24 @@
 package sdmc.customer;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
-
 import javax.swing.BoxLayout;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import sdmc.server_connection.HttpConnectionManager;
+import sdmc.server_connection.RequestResponse;
 import sdmc.utils.ButtonJsonKey;
 import sdmc.utils.Utils;
 
@@ -29,6 +36,8 @@ public class SearchCustomerFrame extends JFrame {
 	
 	private JSONObject btnNames;
 	private SearchCustomerActionListener listener;
+	private DeleteCustomerActionListener deleteCustomerListener;
+	private EditCustomerActionListener editCustomerListener;
 	
 	
 	public SearchCustomerFrame() {
@@ -39,10 +48,14 @@ public class SearchCustomerFrame extends JFrame {
 		this.setSize(1500, 800);
 		this.setLocation(100, 150);
 		
+		
+		
 		btnNames = Utils.fileToJSONObject( Utils.BTNS_ITALIAN_LANGUANGE );
 		
+		// Inizializazione listeners
 		listener = new SearchCustomerActionListener( this );
-		
+		deleteCustomerListener = new DeleteCustomerActionListener( this );
+		editCustomerListener = new EditCustomerActionListener( this );
 		
 		Container c = this.getContentPane();
 		c.setLayout( new BorderLayout() );
@@ -74,12 +87,8 @@ public class SearchCustomerFrame extends JFrame {
 		panelShowDatas = new JPanel( );
 		panelShowDatas.setLayout( new BoxLayout(panelShowDatas, BoxLayout.Y_AXIS ));
 		
+		showCustomers( getCustomers() );
 		
-		JButton btn1 = new JButton("PROVA 1");
-		JButton btn2 = new JButton("PROVA 2");
-		
-		panelShowDatas.add(btn1);
-		panelShowDatas.add(btn2);
 		
 		// -----------
 		
@@ -87,14 +96,140 @@ public class SearchCustomerFrame extends JFrame {
 		
 		// aggiungo i pannel al container
 		c.add( panelTopMenu , BorderLayout.NORTH );
-		c.add( panelShowDatas, BorderLayout.CENTER );
+		c.add( new JScrollPane( panelShowDatas ), BorderLayout.CENTER );
 		
 		this.setVisible( true );
 		
 	}
 	
-	private void showCustomer() {
+	public void showCustomers( JSONArray customers ) {
+		
+	
+		panelShowDatas.removeAll();
+		panelShowDatas.revalidate();
+		panelShowDatas.repaint();
+		
+		customers.forEach( item -> { 
+				System.out.println( item );
+				JSONObject jo = ( JSONObject ) item;
+
+				JPanel panelCustomer = new JPanel( new  FlowLayout( FlowLayout.LEFT ) );
+				// evita che box layout lo sparpagli per tutto lo spazio disponibile
+				panelCustomer.setMaximumSize( 
+						new Dimension( (int) panelCustomer.getMaximumSize().getWidth(),  40 )  );
+				panelCustomer.setBackground( Color.CYAN );
+				
+				// Bottoni Modifica ed Elimina --------------
+				JButton btnEdit = new JButton( btnNames.getString( ButtonJsonKey.BTN_EDIT ) );
+				btnEdit.addActionListener( editCustomerListener  ); //<<<< ##################
+				btnEdit.setActionCommand( jo.getInt("id")+"" );
+				
+				JButton btnDelete = new JButton( btnNames.getString( ButtonJsonKey.BTN_DELETE ) );
+				btnDelete.setBackground( Color.RED );
+				btnDelete.addActionListener( deleteCustomerListener ); // <<<< #########################
+				btnDelete.setActionCommand( jo.getInt("id")+"" );
+				
+				panelCustomer.add( btnEdit );
+				panelCustomer.add( btnDelete );
+				
+				// --------------------------------------------
+				
+				// Inserisco in prima e seconda posizione il nome e il cognome del customer -----------
+	
+				JTextField textFieldName = new JTextField(20);
+				textFieldName.setText( jo.getString( "name" ) );
+				textFieldName.setToolTipText( "name"  );
+				textFieldName.setEditable( false );
+				
+				panelCustomer.add( textFieldName );
+				
+				JTextField textFieldSurname = new JTextField(20);
+				textFieldSurname.setText( jo.getString( "surname" ) );
+				textFieldSurname.setToolTipText( "surname"  );
+				textFieldSurname.setEditable( false );
+				
+				panelCustomer.add( textFieldSurname );
+				
+				// ------------------------------------------------------------------------------------
+				
+				
+				for( String key:  jo.keySet() ) {
+					// Salto l'id perchè si tratta di dettagli tecnici di implementazione che non interessano all'utente finale
+					// Salto name e surname perchè già inseriti rispettivamente in prima e seconda posizione
+					if( key.equals("id") || key.equals("name") || key.equals("surname") ) continue; 
+					
+					JTextField textField = new JTextField(20);
+					textField.setText( jo.getString( key ) );
+					textField.setToolTipText( key  );
+					textField.setEditable( false );
+					
+					panelCustomer.add( textField );
+					
+					 //JLabel label = new JLabel( jo.getString(key) );
+					 //panelCustomer.add( label );
+					
+				}
+				
+				
+				panelShowDatas.add( panelCustomer );
+		});
+		
+		
+		// System.out.println( customers );
+	}
+	
+	public JSONArray getCustomers() {
+		JSONArray customers = new JSONArray();
+		RequestResponse response = HttpConnectionManager.doGet("getCustomers");
+		
+		if( response.getResponseCode() ==  RequestResponse.CONNECTION_REFUSED ) {
+
+			// Messaggio di Errore
+			JOptionPane.showConfirmDialog( this , "Connessione con il server non riuscita", 
+					"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.ERROR_MESSAGE );
+			
+
+		} else {
+		
+			customers = new JSONArray( response.getResponseString() );
+		}
+		
+		return customers;
 		
 	}
+	
+	public JSONObject getCustomer( String id ) {
+		
+		JSONObject customer = new JSONObject();
+		RequestResponse response = HttpConnectionManager.doGet( "getCustomer/" + id );
+		
+		if( response.getResponseCode() ==  RequestResponse.CONNECTION_REFUSED ) {
+
+			// Messaggio di Errore
+			JOptionPane.showConfirmDialog( this , "Connessione con il server non riuscita", 
+					"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.ERROR_MESSAGE );
+			
+
+		} else {
+		
+			customer = new JSONObject( response.getResponseString() );
+		}
+		
+		return customer;
+		
+	}
+	
+	public JSONArray getCustomers( String id ) {
+		
+		return new JSONArray().put( getCustomer(id) );
+	}
+	
+	// GETTERS
+	
+	 public JTextField getTextFieldSearch() {
+	
+		 return this.textFieldSearch;
+	 
+	 }
 	
 }

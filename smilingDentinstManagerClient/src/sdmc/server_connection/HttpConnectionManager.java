@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -48,8 +49,13 @@ public class HttpConnectionManager {
 			// chiudo la connessione
 			conn.disconnect();
 			
+		}  catch ( ConnectException ce ) {
+			
+			response = ce.getMessage();
+			responseCode = RequestResponse.CONNECTION_REFUSED;
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -76,11 +82,7 @@ public class HttpConnectionManager {
 			
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
-			conn.setDoInput(true);
-			// ----
-			// conn.setDoOutput(true);
-			// conn.setRequestProperty(postRequest, response);
-			// ----
+			//conn.setDoInput(true);
 					
 			// Se ci sono dei parametri li scrive
 			if( parameters != null && ! parameters.equals("") ) {
@@ -129,7 +131,12 @@ public class HttpConnectionManager {
 			// chiudo la connessione
 			conn.disconnect();
 			
-		} catch (IOException e) {
+		} catch ( ConnectException ce ) {
+			
+			response = ce.getMessage();
+			responseCode = RequestResponse.CONNECTION_REFUSED;
+			
+		}catch (IOException e) {
 			
 			e.printStackTrace();
 		}
@@ -142,10 +149,84 @@ public class HttpConnectionManager {
 	// ------------------------------------------------------------------------------------------------------------
 	
 	// PUT REQUEST ------------------------------------------------------------------------------------------------
+	public static int doPut( String putRequest, String parameters ) {
+		
+		int responseCode = 0;
+		
+		
+		try {
+			
+			URL url = new URL( URL_SERVER + putRequest );
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			
+			conn.setRequestMethod("PUT");
+			
+			conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
+			// conn.setDoInput(true);
+			conn.setDoOutput(true);
+			
+			// Inserisco i parametri ----
+			OutputStream os = conn.getOutputStream();
+			os.write( parameters.getBytes() );
+			os.flush();
+			os.close();
+			// --------------------------
+			
+			responseCode = conn.getResponseCode();
+			
+			conn.disconnect();
+			
+		} catch ( ConnectException ce ) {
+			ce.printStackTrace();
+			responseCode = RequestResponse.CONNECTION_REFUSED;
+			
+		} catch ( IOException e ) {
+			
+			e.printStackTrace();
+		}
+		
+		return responseCode;
+	}
+	
 	// ------------------------------------------------------------------------------------------------------------
 	
 	
 	// DELTE REQUEST ----------------------------------------------------------------------------------------------
+	public static int doDelete( String deleteRequest, String parameters ) {
+		
+		int responseCode = 0;
+		
+		try {
+			
+			URL url = new URL( URL_SERVER + deleteRequest );
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			
+			conn.setRequestMethod("DELETE");
+			// conn.setDoInput(true);
+			conn.setDoOutput(true);
+			
+			// Inserisco i parametri ----
+			OutputStream os = conn.getOutputStream();
+			os.write( parameters.getBytes() );
+			os.flush();
+			os.close();
+			// --------------------------
+			
+			responseCode = conn.getResponseCode();
+			
+			conn.disconnect();
+			
+		} catch ( ConnectException ce ) {
+			ce.printStackTrace();
+			responseCode = RequestResponse.CONNECTION_REFUSED;
+			
+		} catch ( IOException e ) {
+			
+			e.printStackTrace();
+		}
+		
+		return responseCode;
+	}
 	// ------------------------------------------------------------------------------------------------------------
 	
 	

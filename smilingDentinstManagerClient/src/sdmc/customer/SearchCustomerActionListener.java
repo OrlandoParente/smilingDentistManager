@@ -3,7 +3,11 @@ package sdmc.customer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import org.json.JSONArray;
+
 import sdmc.main.MainMenuFrame;
+import sdmc.server_connection.HttpConnectionManager;
+import sdmc.server_connection.RequestResponse;
 
 public class SearchCustomerActionListener implements ActionListener{
 
@@ -32,9 +36,17 @@ public class SearchCustomerActionListener implements ActionListener{
 			
 			break;
 			
-		case SEARCH:
+		case SEARCH: // <<<<<<<<< ########### mancano i controlli  CONNECTION REFUSED 6
 			
 			System.out.println("SearchCustomerListener --> " + e.getActionCommand() );
+			
+			String keyWord = searchCustomerFrame.getTextFieldSearch().getText();
+			
+			RequestResponse response = HttpConnectionManager.doGet("getCustomersByPartialKeyWordOverAllFields/" + keyWord );
+			
+			JSONArray customerList = new JSONArray( response.getResponseString() );
+			
+			searchCustomerFrame.showCustomers( customerList );
 			
 			break;
 		
