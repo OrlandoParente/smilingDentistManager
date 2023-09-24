@@ -2,6 +2,9 @@ package sdmc.server_connection;
 
 public class RequestResponse {
 	
+	// In caso di internet assente, responseCode = CONNECTION REFUSED
+	public static int CONNECTION_REFUSED = 0;
+	
 	private String responseString;
 	private int responseCode;
 	
