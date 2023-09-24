@@ -6,6 +6,7 @@
 	"btnSearchEmployee" : "CERCA IMPIEGATO",
 	"btnUploadDatabase" : "CARICA DATABASE",
 	"btnDownloadDatabase" : "SCARICA DATABASE",
+	"btnProfessionalRoleManager":"GESTIONE RUOLI PROFESSIONALI",
 	"btnSetttings" : "IMPOSTAZIONI",
 	
 	"btnMainMenu" : "MAIN MENU",
@@ -13,6 +14,7 @@
 	"btnAdd" : "AGGIUNGI",
 	"btnDelete":"ELIMINA",
 	"btnEdit":"MODIFICA",
-	"btnBack":"INDIETRO"
+	"btnBack":"INDIETRO",
+	"btnResetSearch":"ANNULLA RICERCA"
 
 }
