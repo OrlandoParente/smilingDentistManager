@@ -233,7 +233,7 @@ public class DbManager implements DbManagerInterface {
 		
 	}
 	
-	private void ConnectIfClosed() {
+	private void connectIfClosed() {
 		
 		try {
 			
@@ -250,7 +250,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public ResultSet getCustomers() throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().executeQuery("SELECT* FROM customer" );
 		
@@ -259,9 +259,24 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public ResultSet getCustomerById(String id) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().executeQuery("SELECT* FROM customer WHERE customer.id='" + id + "'");
+	}
+	
+	@Override
+	public ResultSet getCustomersByPartialKeyWordOverAllFields( String key_word ) throws SQLException {
+		
+		this.connectIfClosed();
+		
+		return conn.createStatement().executeQuery("SELECT* FROM employee WHERE tax_id_code LIKE '%"+ key_word + "%' "
+				+ "OR name LIKE '%"+ key_word + "%' OR surname OR birth_city LIKE '%"+ key_word + "%' "
+				+ "OR birth_city_province LIKE '%"+ key_word + "%' "
+				+ "OR birth_date LIKE '%"+ key_word + "%' OR residence_street LIKE '%"+ key_word + "%'"
+				+ "OR String house_number LIKE '%"+ key_word + "%'"
+				+ "OR residence_city LIKE '%"+ key_word + "%' OR residence_city_cap LIKE '%"+ key_word + "%'"
+				+ "OR residence_province LIKE '%"+ key_word + "%' OR phone_number LIKE '%"+ key_word + "%'"
+				+ "OR phone_number_2 LIKE '%"+ key_word + "%' OR e_mail LIKE '%"+ key_word + "%'");
 	}
 
 	@Override
@@ -278,7 +293,7 @@ public class DbManager implements DbManagerInterface {
 			String residence_city, String residence_city_cap, String residence_province, String phone_number, 
 			String phone_number_2, String e_mail) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().execute("INSERT INTO customer( tax_id_code, name, surname, birth_city, birth_city_province , "
 					+ " birth_date, residence_street, house_number, residence_city, residence_city_cap, "
@@ -288,11 +303,29 @@ public class DbManager implements DbManagerInterface {
 					+"','"+ residence_province +"','"+ phone_number  +"','" + phone_number_2 +"','"+ e_mail +"')");
 		
 	}
+	
+	@Override
+	public boolean putCustomerById(String id, String tax_id_code, String name, String surname, String birth_city,
+			String birth_city_province, String birth_date, String residence_street, String house_number,
+			String residence_city, String residence_city_cap, String residence_province, String phone_number,
+			String phone_number_2, String e_mail) throws SQLException {
+		
+		this.connectIfClosed();
+		
+		return conn.createStatement().execute("UPDATE customer SET tax_id_code='" + tax_id_code + "'"
+				+ ",name='" + name + "', surname='" + surname + "', birth_city='" + birth_city + "'"
+				+ ",birth_city_province='" + birth_city_province + "', birth_date='" + birth_date + "'"
+				+ ",residence_street='" + residence_street + "', house_number='" + house_number + "'"
+				+ ",residence_city='" + residence_city + "', residence_city_cap='" + residence_city_cap + "'"
+				+ ",residence_province='" + residence_province + "', phone_number='" + phone_number + "'"
+				+ ",phone_number_2='" + phone_number_2 + "', e_mail='" + e_mail + "'"
+				+ "WHERE id='"+ id +"'");
+	}
 
 	@Override
 	public boolean deleteCustomerById(String id) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().execute("DELETE FROM customer WHERE id='"+ id +"'");
 		
@@ -301,7 +334,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public ResultSet getMedicalsHistoryByCustomer(String id_customer) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().executeQuery("SELECT* FROM medical_history WHERE medical_history.id_customer = '"+ id_customer +"'");
 	}
@@ -309,7 +342,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public ResultSet getMedicalHistoryById(String id) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().executeQuery("SELECT* FROM medical_history WHERE medical_history.id='" + id + "'");
 	}
@@ -324,7 +357,7 @@ public class DbManager implements DbManagerInterface {
 	public boolean postMedicalHistory(String id_customer, String type, String name, String descriprion)
 			throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().execute("INSERT INTO medical_history(id_customer, type, name, description) "
 				+ "VALUES ('"+ id_customer +"','" + type + "','" + name + "','" + descriprion + "')");
@@ -333,7 +366,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public boolean deleteMedicalHistoryById(String id) throws SQLException {
 
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().execute("DELETE FROM medical_history WHERE medical_history.id='"+ id +"'");
 	}
@@ -341,7 +374,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public ResultSet getAppointments() throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().executeQuery("SELECT* FROM appointment");
 	}
@@ -349,7 +382,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public ResultSet getAppointmentByCustomerId(String id_customer) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().executeQuery("SELECT* FROM appointment WHERE appointment.id_customer='" + id_customer + "'");
 	}
@@ -357,7 +390,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public ResultSet getAppointmentByDoctorId(String id_doctor) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().executeQuery("SELECT* FROM appointment WHERE appointment.id_doctor='" + id_doctor + "'");
 	}
@@ -380,7 +413,7 @@ public class DbManager implements DbManagerInterface {
 	public boolean postAppointment(String date, String time, String id_customer, String id_doctor, String id_treatment,
 			int is_done, String bill_number, String note) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().execute("INSERT INTO appointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note) "
 				+ "VALUES ('"+ date +"','" + time + "','" + id_customer + "','" + id_doctor + "','" + id_treatment + "',"
@@ -390,7 +423,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public boolean putSetAppointmentDoneById(String date, String time, String id_customer) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().execute("UPDATE appointment SET appointment.is_done='1' "
 									+" WHERE appointment.date = '"+date+"' "
@@ -401,7 +434,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public boolean putUnsetAppointmentDoneById(String date, String time, String id_customer) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().execute("UPDATE appointment SET appointment.is_done='0' "
 									+" WHERE appointment.date = '"+date+"' "
@@ -413,7 +446,7 @@ public class DbManager implements DbManagerInterface {
 	public boolean putAppointmentBillNumberById(String date, String time, String id_customer, String bill_number)
 			throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().execute("UPDATE appointment SET appointment.bill_number = '"+ bill_number +"' "
 									+" WHERE appointment.date = '"+date+"' "
@@ -425,7 +458,7 @@ public class DbManager implements DbManagerInterface {
 	public boolean putAppointmentNoteById(String date, String time, String id_customer, String note)
 			throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().execute("UPDATE appointment SET appointment.note = '"+ note +"' "
 									+" WHERE appointment.date = '"+date+"' "
@@ -437,7 +470,7 @@ public class DbManager implements DbManagerInterface {
 	public boolean putAppointmentTreatmentById(String date, String time, String id_customer, String id_treatment)
 			throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().execute("UPDATE appointment SET appointment.id_treatment = '"+ id_treatment +"' "
 									+" WHERE appointment.date = '"+date+"' "
@@ -448,7 +481,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public boolean deleteAppointmentById(String date, String time, String id_customer) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().execute("DELETE FROM appointment  "
 									+" WHERE appointment.date = '"+date+"' "
@@ -459,7 +492,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public ResultSet getTreatmentById(String id) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().executeQuery("SELECT* FROM treatment WHERE treatment.id='" + id + "'");
 	}
@@ -467,7 +500,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public ResultSet getTreatmentByCustomer(String id_customer) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().executeQuery("SELECT* FROM treatment WHERE treatment.id_customer='" + id_customer + "'");
 	}
@@ -475,7 +508,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public ResultSet getTreatmentByBillNumber(String bill_number) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().executeQuery("SELECT* FROM treatment, appointment "
 													+ "WHERE appointment.bill_number='" + bill_number + "'"
@@ -491,7 +524,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public boolean postTreatment(String name, String description, String cost) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().execute("INSERT INTO treatment(name, description, cost) VALUES('"+ name +"','"+ description +"','" + cost + "')");
 	}
@@ -499,7 +532,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public boolean deleteTreatmentById(String id) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().execute("DELETE FROM treatment WHERE treatment.id = '" + id + "'");
 	}
@@ -507,7 +540,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public ResultSet getEmployees() throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().executeQuery("SELECT* FROM employee");
 	}
@@ -515,7 +548,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public ResultSet getEmployeesByName(String name) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().executeQuery("SELECT* FROM employee WHERE employee.name = '" + name + "'");
 	}
@@ -523,7 +556,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public ResultSet getEmployeesBySurname(String surname) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().executeQuery("SELECT* FROM employee WHERE employee.surname = '" + surname + "'");
 	}
@@ -531,17 +564,29 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public ResultSet getEmployeesByProfessionalRoleName(String professiona_role_name) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().executeQuery("SELECT* FROM employee, has_professional_role, professional_role"
 													+ "WHERE employee.id = has_prefessional_role.id_employee"
 													+ "AND professional_role.id = has_professional_role.id_professional_role" );
 	}
+	
+	@Override
+	public ResultSet getEmployeesByPartialKeyWordOverAllFields( String key_word ) throws SQLException {
+		
+		this.connectIfClosed();
+		
+		return conn.createStatement().executeQuery("SELECT* FROM employee WHERE "
+				+ "name LIKE '%"+ key_word + "%' OR surname OR birth_city LIKE '%"+ key_word + "%' "
+				+ "OR title LIKE '%" + key_word + "%' OR birth_date LIKE '%"+ key_word + "%' "
+				+ "OR phone_number LIKE '%"+ key_word + "%'"
+				+ "OR phone_number_2 LIKE '%"+ key_word + "%' OR e_mail LIKE '%"+ key_word + "%'");
+	}
 
 	@Override
 	public ResultSet getEmployeeById(String id) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().executeQuery("SELECT* FROM employee WHERE employee.id = '" + id + "'");
 	}
@@ -553,10 +598,25 @@ public class DbManager implements DbManagerInterface {
 	}
 
 	@Override
+	public boolean putEmployeeById(String id, String name, String surname, String title, String birth_date,
+			String phone_number, String phone_number_2, String e_mail) throws SQLException {
+
+		this.connectIfClosed();
+		
+		return conn.createStatement().execute("UPDATE employee SET name='" + name + "'"
+							+ ",surname='" + surname + "', title='" + title + "'"
+							+ ",birth_date='" + birth_date + "', phone_number='" + phone_number + "'"
+							+ ",phone_number_2='" + phone_number_2 + "', e_mail='" + e_mail + "'"
+							+ "WHERE id='" + id + "'");
+		
+	}
+
+	
+	@Override
 	public boolean postEmployee(String name, String surname, String title, String birth_date, String phone_number,
 			String phone_number_2, String e_mail) throws SQLException {
 		
-		this.ConnectIfClosed();
+		this.connectIfClosed();
 		
 		return conn.createStatement().execute("INSERT INTO employee (name, surname, title, birth_date, phone_number, phone_number_2, e_mail)"
 												+ "VALUES ('" + name + "','" + surname + "','" + title + "',"
@@ -620,6 +680,9 @@ public class DbManager implements DbManagerInterface {
 		return conn.createStatement().execute("DELETE FROM has_professional_role WHERE has_professional_role.id_employee = '" + id_employee + "'"
 												+ "has_professional_role.id_professional_role = '" + id_professional_role + "'");
 	}
+
+
+
 
 }
 

@@ -1,5 +1,6 @@
 package sdms.repository;
 
+import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,6 +23,25 @@ public class RepositoryManager implements RepositoryInterface{
 		
 		ArrayList<Customer> customerList = new ArrayList<>();
 		ResultSet rs = dbManager.getCustomers();
+		
+		while( rs.next() ) {
+			customerList.add( new Customer(rs.getInt("id"), rs.getString("tax_id_code"), rs.getString("name"), rs.getString("surname"), 
+					rs.getString("birth_city"), rs.getString("birth_city_province"), rs.getString("birth_date"),
+					rs.getString("residence_street"), rs.getString("house_number"), rs.getString("residence_city"), 
+					rs.getString("residence_city_cap"), rs.getString("residence_province"), rs.getString("phone_number"),   
+					rs.getString("phone_number_2"), rs.getString("e_mail")) );
+		}
+		
+		dbManager.closeConnection();
+		
+		return customerList;
+	}
+	
+	@Override
+	public ArrayList<Customer> getCustomersByPartialKeyWordOverAllFields( String key_word ) throws SQLException{
+		
+		ArrayList<Customer> customerList = new ArrayList<>();
+		ResultSet rs = dbManager.getCustomersByPartialKeyWordOverAllFields( key_word );
 		
 		while( rs.next() ) {
 			customerList.add( new Customer(rs.getInt("id"), rs.getString("tax_id_code"), rs.getString("name"), rs.getString("surname"), 
@@ -68,6 +88,21 @@ public class RepositoryManager implements RepositoryInterface{
 					throws SQLException {
 		
 		boolean result = dbManager.postCustomer(tax_id_code, name, surname, birth_city, birth_city_province, birth_date, 
+												residence_street, house_number, residence_city, residence_city_cap , 
+												residence_province, phone_number, phone_number_2, e_mail);
+		 
+		dbManager.closeConnection();
+		
+		return result;
+	}
+	
+	@Override
+	public boolean putCustomerById(String id, String tax_id_code, String name, String surname, String birth_city,
+			String birth_city_province, String residence_city_cap , String birth_date, String residence_street,String house_number,
+			String residence_city,String residence_province, String phone_number, String phone_number_2, String e_mail)
+					throws SQLException {
+		
+		boolean result = dbManager.putCustomerById( id, tax_id_code, name, surname, birth_city, birth_city_province, birth_date, 
 												residence_street, house_number, residence_city, residence_city_cap , 
 												residence_province, phone_number, phone_number_2, e_mail);
 		 

@@ -17,6 +17,8 @@ public interface DbManagerInterface {
 	
 	ResultSet getCustomerById( String id ) throws SQLException;
 	
+	ResultSet getCustomersByPartialKeyWordOverAllFields( String key_word ) throws SQLException;
+	
 	// inserimento dati essenziali del cliente
 	boolean postCustomer( String name , String surname ,String phone_number ) throws SQLException;
 	
@@ -24,6 +26,12 @@ public interface DbManagerInterface {
 			String birth_city_province, String birth_date,String residence_street, String house_number,
 			String residence_city , String residence_city_cap, String residence_province, String phone_number , 
 			String phone_number_2, String e_mail ) throws SQLException;
+	
+	boolean putCustomerById( String id, String tax_id_code /* codice fiscale*/, String name , String surname ,
+			String birth_city , String birth_city_province, String birth_date,String residence_street, String house_number,
+			String residence_city , String residence_city_cap, String residence_province, String phone_number , 
+			String phone_number_2, String e_mail ) throws SQLException;
+	
 	
 	boolean deleteCustomerById( String id ) throws SQLException;
 	
@@ -98,11 +106,18 @@ public interface DbManagerInterface {
 	
 	ResultSet getEmployeesByProfessionalRoleName( String professiona_role_name ) throws SQLException;
 	
+	ResultSet getEmployeesByPartialKeyWordOverAllFields( String key_word ) throws SQLException;
+	
 	ResultSet getEmployeeById( String id ) throws SQLException;
 	
 	// title e.g. Dott. , Dott.ssa, Sig. , Sig.ra , Sig.na
 	boolean postEmployee( String name, String surname, String title, String phone_number ) throws SQLException;
-	boolean postEmployee( String name, String surname, String title, String birth_date, String phone_number, String phone_number_2, String e_mail ) throws SQLException;
+	boolean postEmployee( String name, String surname, String title, String birth_date, String phone_number, 
+						String phone_number_2, String e_mail ) throws SQLException;
+	
+	boolean putEmployeeById( String id, String name, String surname, String title, String birth_date, String phone_number, 
+						String phone_number_2, String e_mail ) throws SQLException;
+	
 	
 	boolean deleteEmployeeById( String id ) throws SQLException;
 	// ------------------------------------------------------
