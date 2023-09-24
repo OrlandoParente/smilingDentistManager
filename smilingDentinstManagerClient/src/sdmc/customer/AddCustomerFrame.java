@@ -12,11 +12,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.json.JSONObject;
+
+import sdmc.utils.ButtonJsonKey;
+import sdmc.utils.Utils;
+
 public class AddCustomerFrame extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 	
 	private AddCustomerActionListener listener;
+	
+	private JSONObject btnNames;
 	
 	private JPanel panelBottomMenu;
 	private JPanel panelFormMenu;
@@ -79,9 +86,76 @@ public class AddCustomerFrame extends JFrame{
 	private JLabel labelEMail;
 	private JTextField textFieldEMail;
 	private JPanel panelEMail;
-	 
-	// ----------------------------
 	
+	// per CROSTRUTTORE SECONDARIO ---
+	private int idCustomer;
+	
+	private JButton btnEdit;
+	private JButton btnDelete;
+	private JButton btnBack;
+	
+	// -------------------------------
+	
+	
+	/*
+	 * COSTRUTTORE SECONDARIO che riempe i field i fati di un customer già esistente
+	 * e si occupa di aggiornarne i dati, si avvia da SearchCustomerFrame -> EditCustomer button
+	 */
+	public AddCustomerFrame( int idCustomer, String taxIdCode, String name, String surname, String birthCity,
+						String birthCityProvince, String birthDate, String residenceStreet, String houseNumber,
+						String residenceCity, String residenceCityCap, String residenceProvince, String phoneNumber,
+						String phoneNumber2, String eMail ) {
+		
+		// Richiamo il costruttore principale
+		this();
+		
+		this.idCustomer = idCustomer;
+		
+		// Inserisco i dati del customer selezionato
+		textFieldTaxIdCode.setText( taxIdCode );
+		textFieldName.setText( name );
+		textFieldSurname.setText( surname );
+		textFieldBirthCity.setText( birthCity );
+		textFieldBirthCityProvince.setText( birthCityProvince );
+		textFieldBirthDate.setText( birthDate );
+		textFieldResidenceStreet.setText( residenceStreet );
+		textFieldHouseNumber.setText( houseNumber );
+		textFieldResidenceCity.setText( residenceCity );
+		textFieldResidenceCityCap.setText( residenceCityCap );
+		textFieldResidenceProvince.setText( residenceProvince );
+		textFieldPhoneNumber.setText( phoneNumber );
+		textFieldPhoneNumber2.setText( phoneNumber2 );
+		textFieldEMail.setText( eMail );
+		
+		// svuoto il bottom menu per adattarlo alle nuove esigenze
+		panelBottomMenu.removeAll();
+		panelBottomMenu.revalidate();
+		panelBottomMenu.repaint();
+		
+		// Creo il nuovo bottom menu
+		btnEdit = new JButton( btnNames.getString( ButtonJsonKey.BTN_EDIT ) );
+		btnEdit.addActionListener( listener );
+		btnEdit.setActionCommand( AddCustomerActionListener.EDIT );
+		
+		btnDelete = new JButton( btnNames.getString( ButtonJsonKey.BTN_DELETE ) );
+		btnDelete.addActionListener( listener );
+		btnDelete.setActionCommand( AddCustomerActionListener.DELETE );
+		
+		btnBack = new JButton( btnNames.getString( ButtonJsonKey.BTN_BACK ) );
+		btnBack.addActionListener(listener);
+		btnBack.setActionCommand( AddCustomerActionListener.BACK_TO_SEARCH_CUSTOMER );
+		
+		panelBottomMenu.add( btnEdit );
+		panelBottomMenu.add( btnDelete );
+		panelBottomMenu.add( btnBack );
+		
+		
+	}
+	
+	
+	/*
+	 * COSTRUTTORE PRINCIPALE che si avvia dal MAIN MENU con la funzionalità di aggiungere un nuovo customer
+	*/
 	public AddCustomerFrame() {
 		// inizializzazione del frame -----------------------------------------------
 		super("ADD NEW CUSTOMER");	
@@ -95,20 +169,23 @@ public class AddCustomerFrame extends JFrame{
 		
 		c.setLayout( new BorderLayout() );
 		
+		//
+		btnNames = Utils.fileToJSONObject( Utils.BTNS_ITALIAN_LANGUANGE );
+		
 		// inizializzazione listener
 		listener = new AddCustomerActionListener( this );
 		
 		// ######################################################################
 		panelBottomMenu = new JPanel( new FlowLayout( FlowLayout.CENTER ) );
 		
-		btnMainMenu = new JButton("MAIN MENU");
+		btnMainMenu = new JButton( btnNames.getString( ButtonJsonKey.BTN_MAIN_MENU ) );
 		btnMainMenu.addActionListener( listener );
 		btnMainMenu.setActionCommand( AddCustomerActionListener.MAIN_MENU );
 		
 		panelBottomMenu.add( btnMainMenu );
 		
 		
-		btnAddCustomer = new JButton("AGGIUNGI");
+		btnAddCustomer = new JButton( btnNames.getString( ButtonJsonKey.BTN_ADD ) );
 		btnAddCustomer.addActionListener( listener );
 		btnAddCustomer.setActionCommand( AddCustomerActionListener.ADD_CUSTOMER );
 		
@@ -322,7 +399,11 @@ public class AddCustomerFrame extends JFrame{
 		this.setVisible( true );
 	}
 	
+	// GETTERS
 	
+	public int getIdCustomer() {
+		return this.idCustomer;
+	}
 	
 	public JTextField getTextFieldTaxIdCode() {
 		return this.textFieldTaxIdCode;

@@ -17,6 +17,11 @@ public class AddCustomerActionListener implements ActionListener {
 	public final static String MAIN_MENU = "MAIN_MENU";
 	public final static String ADD_CUSTOMER = "ADD_CUSTOMER";
 	
+	//
+	public final static String BACK_TO_SEARCH_CUSTOMER = "BACK_TO_SEARCH_CUSTOMER";
+	public final static String DELETE = "DELETE";
+	public final static String EDIT = "EDIT";
+	
 	// Dati per l'inserimento del nuovo customer 
 	
 	private String taxIdCode;
@@ -34,6 +39,11 @@ public class AddCustomerActionListener implements ActionListener {
 	private String phoneNumber2;
 	private String eMail;
 	
+	//
+	private String param;
+	private int resultCode;
+	private String parameters;
+	
 	
 	
 	public AddCustomerActionListener( AddCustomerFrame addCustomerFrame ) {
@@ -48,6 +58,7 @@ public class AddCustomerActionListener implements ActionListener {
 		
 		case MAIN_MENU:
 			
+			// check message
 			System.out.println( "AddCustomerActionListener ----> " + e.getActionCommand() );
 			
 			new MainMenuFrame();
@@ -57,6 +68,7 @@ public class AddCustomerActionListener implements ActionListener {
 			
 		case ADD_CUSTOMER:
 			
+			// check message
 			System.out.println( "AddCustomerActionListener ----> " + e.getActionCommand() );
 			
 			// recupero contenuto textFields
@@ -84,7 +96,7 @@ public class AddCustomerActionListener implements ActionListener {
 			} else {
 				
 				// Generazione stringa parametri
-				String parameters = "tax_id_code=" + taxIdCode + "&name=" + name + "&surname=" + surname + "&birth_city=" + birthCity
+				parameters = "tax_id_code=" + taxIdCode + "&name=" + name + "&surname=" + surname + "&birth_city=" + birthCity
 								+ "&birth_city_province=" + birthCityProvince + "&birth_date=" + birthDate 
 								+ "&residence_street=" + residenceStreet + "&house_number=" + houseNumber 
 								+ "&residence_city=" + residenceCity + "&residence_city_cap=" + residenceCityCap 
@@ -111,7 +123,7 @@ public class AddCustomerActionListener implements ActionListener {
 					
 				} else {
 					
-					// Messaggio di conferma per l'utente
+					// Messaggio di Errore
 					JOptionPane.showConfirmDialog( addCustomerFrame, "Connessione con il server non riuscita", 
 							"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.ERROR_MESSAGE );
 					
@@ -121,6 +133,103 @@ public class AddCustomerActionListener implements ActionListener {
 
 				
 			 }
+			
+			break;
+			
+		case BACK_TO_SEARCH_CUSTOMER:
+			
+			// check message
+			System.out.println( "AddCustomerActionListener ----> " + e.getActionCommand() );
+
+			new SearchCustomerFrame();
+			addCustomerFrame.dispose();
+			
+			break;
+			
+		case EDIT:
+			
+			// check message
+			System.out.println( "AddCustomerActionListener ----> " + e.getActionCommand() +" -> id = " + addCustomerFrame.getIdCustomer() );
+			
+			// recupero contenuto textFields
+			taxIdCode = addCustomerFrame.getTextFieldTaxIdCode().getText();
+			name = addCustomerFrame.getTextFieldName().getText();
+			surname = addCustomerFrame.getTextFieldSurname().getText();
+			birthCity = addCustomerFrame.getTextFieldBirthCity().getText();
+			birthCityProvince = addCustomerFrame.getTextFieldBirthCityProvince().getText();
+			birthDate = addCustomerFrame.getTextFieldBirthDate().getText();
+			residenceStreet = addCustomerFrame.getTextFieldResidenceStreet().getText();
+			houseNumber = addCustomerFrame.getTextFieldHouseNumber().getText();
+			residenceCity = addCustomerFrame.getTextFieldResidenceCity().getText();
+			residenceCityCap = addCustomerFrame.getTextFieldResidenceCityCap().getText();
+			residenceProvince = addCustomerFrame.getTextFieldResidenceProvince().getText();
+			phoneNumber = addCustomerFrame.getTextFieldPhoneNumber().getText();
+			phoneNumber2 = addCustomerFrame.getTextFieldPhoneNumber2().getText();
+			eMail = addCustomerFrame.getTextFieldEMail().getText();
+			
+			
+			// Generazione stringa parametri
+			parameters = "id="+ addCustomerFrame.getIdCustomer() + "&tax_id_code=" + taxIdCode + "&name=" + name 
+							+ "&surname=" + surname + "&birth_city=" + birthCity
+							+ "&birth_city_province=" + birthCityProvince + "&birth_date=" + birthDate 
+							+ "&residence_street=" + residenceStreet + "&house_number=" + houseNumber 
+							+ "&residence_city=" + residenceCity + "&residence_city_cap=" + residenceCityCap 
+							+ "&residence_province=" + residenceProvince + "&phone_number=" + phoneNumber 
+							+ "&phone_number_2=" + phoneNumber2 + "&e_mail=" + eMail ;
+		
+			
+			resultCode = HttpConnectionManager.doPut("putCustomerById", parameters);
+			
+			if(  resultCode == HttpsURLConnection.HTTP_OK ) {
+				
+				// Messaggio di conferma per l'utente
+				JOptionPane.showConfirmDialog( addCustomerFrame, "Dati cliente modificati  con successo", 
+						"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE );
+				
+				
+			} else {
+				
+				// Messaggio di Errore
+				JOptionPane.showConfirmDialog( addCustomerFrame, "Connessione con il server non riuscita", 
+						"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.ERROR_MESSAGE );
+				
+			}
+			
+			new SearchCustomerFrame();
+			addCustomerFrame.dispose();
+			
+			
+			
+			break;
+			
+		case DELETE:
+			
+			// check message
+			System.out.println( "AddCustomerActionListener ----> " + e.getActionCommand() +" -> id = " + addCustomerFrame.getIdCustomer() );
+			
+			param = "id="+ addCustomerFrame.getIdCustomer();
+			
+			resultCode = HttpConnectionManager.doDelete("deleteCustomer", param);
+			
+			if(  resultCode == HttpsURLConnection.HTTP_OK ) {
+				
+				// Messaggio di conferma per l'utente
+				JOptionPane.showConfirmDialog( addCustomerFrame, "Cliente eliminato con successo", 
+						"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE );
+				
+				
+			} else {
+				
+				// Messaggio di Errore
+				JOptionPane.showConfirmDialog( addCustomerFrame, "Connessione con il server non riuscita", 
+						"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.ERROR_MESSAGE );
+				
+			}
+			
+			new SearchCustomerFrame();
+			addCustomerFrame.dispose();
+			
+			
 			
 			break;
 		
