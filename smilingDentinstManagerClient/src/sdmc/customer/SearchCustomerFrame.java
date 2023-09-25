@@ -31,6 +31,7 @@ public class SearchCustomerFrame extends JFrame {
 	
 	private JButton btnMainMenu;
 	private JButton btnSearch;
+	private JButton btnResetSearch;
 	
 	private JTextField textFieldSearch;
 	
@@ -67,6 +68,11 @@ public class SearchCustomerFrame extends JFrame {
 		btnMainMenu.addActionListener( listener );
 		btnMainMenu.setActionCommand( SearchCustomerActionListener.MAIN_MENU );
 		
+		btnResetSearch = new JButton( btnNames.getString( ButtonJsonKey.BTN_RESET_SEARCH ) );
+		btnResetSearch.addActionListener( listener );
+		btnResetSearch.setActionCommand( SearchCustomerActionListener.RESET_SEARCH );
+		
+		
 		btnSearch = new JButton( btnNames.getString( ButtonJsonKey.BTN_SEARCH ) );
 		btnSearch.addActionListener( listener );
 		btnSearch.setActionCommand( SearchCustomerActionListener.SEARCH );
@@ -78,7 +84,7 @@ public class SearchCustomerFrame extends JFrame {
 		panelTopMenu.add( btnMainMenu );
 		panelTopMenu.add( textFieldSearch );
 		panelTopMenu.add( btnSearch );
-		
+		panelTopMenu.add( btnResetSearch );
 		
 		// ------------
 		
