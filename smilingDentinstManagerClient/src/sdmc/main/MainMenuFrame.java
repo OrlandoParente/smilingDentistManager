@@ -33,8 +33,7 @@ public class MainMenuFrame extends JFrame {
 		this.setSize( 400, 600 );
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		
-		this.setLocation( 700, 300 );
-		
+		this.setLocation( 700, 150 );
 		//
 		Container c = this.getContentPane();
 		
