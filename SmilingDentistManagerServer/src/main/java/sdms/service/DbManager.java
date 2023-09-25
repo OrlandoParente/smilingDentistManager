@@ -269,11 +269,11 @@ public class DbManager implements DbManagerInterface {
 		
 		this.connectIfClosed();
 		
-		return conn.createStatement().executeQuery("SELECT* FROM employee WHERE tax_id_code LIKE '%"+ key_word + "%' "
+		return conn.createStatement().executeQuery("SELECT* FROM customer WHERE tax_id_code LIKE '%"+ key_word + "%' "
 				+ "OR name LIKE '%"+ key_word + "%' OR surname OR birth_city LIKE '%"+ key_word + "%' "
 				+ "OR birth_city_province LIKE '%"+ key_word + "%' "
 				+ "OR birth_date LIKE '%"+ key_word + "%' OR residence_street LIKE '%"+ key_word + "%'"
-				+ "OR String house_number LIKE '%"+ key_word + "%'"
+				+ "OR house_number LIKE '%"+ key_word + "%'"
 				+ "OR residence_city LIKE '%"+ key_word + "%' OR residence_city_cap LIKE '%"+ key_word + "%'"
 				+ "OR residence_province LIKE '%"+ key_word + "%' OR phone_number LIKE '%"+ key_word + "%'"
 				+ "OR phone_number_2 LIKE '%"+ key_word + "%' OR e_mail LIKE '%"+ key_word + "%'");
