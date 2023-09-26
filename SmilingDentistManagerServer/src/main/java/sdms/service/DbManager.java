@@ -380,7 +380,7 @@ public class DbManager implements DbManagerInterface {
 	}
 
 	@Override
-	public ResultSet getAppointmentByCustomerId(String id_customer) throws SQLException {
+	public ResultSet getAppointmentsByCustomerId(String id_customer) throws SQLException {
 		
 		this.connectIfClosed();
 		
@@ -388,7 +388,7 @@ public class DbManager implements DbManagerInterface {
 	}
 
 	@Override
-	public ResultSet getAppointmentByDoctorId(String id_doctor) throws SQLException {
+	public ResultSet getAppointmentsByDoctorId(String id_doctor) throws SQLException {
 		
 		this.connectIfClosed();
 		
@@ -498,7 +498,7 @@ public class DbManager implements DbManagerInterface {
 	}
 
 	@Override
-	public ResultSet getTreatmentByCustomer(String id_customer) throws SQLException {
+	public ResultSet getTreatmentsByCustomer(String id_customer) throws SQLException {
 		
 		this.connectIfClosed();
 		
@@ -506,7 +506,7 @@ public class DbManager implements DbManagerInterface {
 	}
 
 	@Override
-	public ResultSet getTreatmentByBillNumber(String bill_number) throws SQLException {
+	public ResultSet getTreatmentsByBillNumber(String bill_number) throws SQLException {
 		
 		this.connectIfClosed();
 		

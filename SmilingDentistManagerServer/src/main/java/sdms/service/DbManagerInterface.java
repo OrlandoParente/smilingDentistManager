@@ -52,9 +52,9 @@ public interface DbManagerInterface {
 	// Gestione Appuntamenti --------------------------------
 	ResultSet getAppointments() throws SQLException;
 	
-	ResultSet getAppointmentByCustomerId( String id_customer ) throws SQLException;
+	ResultSet getAppointmentsByCustomerId( String id_customer ) throws SQLException;
 	
-	ResultSet getAppointmentByDoctorId( String id_doctor ) throws SQLException;
+	ResultSet getAppointmentsByDoctorId( String id_doctor ) throws SQLException;
 	
 	// per registrare un appuntamento ancora non svolto
 	boolean postAppointment( String date, String time, String id_customer, String id_doctor, String id_treatment, String note) throws SQLException;
@@ -84,10 +84,10 @@ public interface DbManagerInterface {
 	// Gestione trattamenti ---------------------------------
 	ResultSet getTreatmentById( String id ) throws SQLException;
 	
-	ResultSet getTreatmentByCustomer( String id_customer ) throws SQLException;
+	ResultSet getTreatmentsByCustomer( String id_customer ) throws SQLException;
 	
 	// restituisce i trattamenti associati ad una fattura
-	ResultSet getTreatmentByBillNumber( String bill_number ) throws SQLException;
+	ResultSet getTreatmentsByBillNumber( String bill_number ) throws SQLException;
 	
 	boolean postTreatment( String name, String cost ) throws SQLException;
 	boolean postTreatment( String name, String description, String cost ) throws SQLException;
