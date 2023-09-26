@@ -4,6 +4,10 @@ INSERT INTO customer (tax_id_code, name, surname, birth_city, birth_city_provinc
 VALUES ('tax_id_code', 'name', 'surname', 'birth_city', 'birth_city_province', 'birth_date', 'residence_street', 'house_number','residence_city', 'residence_city_cap', 'residence_province', 'phone_number', 'phone_number_2', 'e_mail');
 */
 
+/* PROFESSIONAL ROLE */
+/*INSERT INTO professional_role (name, description) 
+VALUES ('name','description');*/
+
 /* EMPLOYEES */
 /* INSERT INTO employee(name, surname, title, birth_date, phone_number, phone_number_2, e_mail )
 VALUES ('name', 'surname', 'title', 'birth_date', 'phone_number', 'phone_number_2', 'e_mail' );*/
@@ -36,3 +40,22 @@ VALUES ('Giusy', 'Frocca', 'Dott.ssa', '1982-02-10', '1254120301', null, 'giusyf
 
 INSERT INTO treatment (name, description, cost )
 VALUES ('Pulizia dei denti', 'Toglie il tartaro', '50');
+
+/* PROFESSIONAL ROLE */
+INSERT INTO professional_role (name, description) 
+VALUES ('Direttore Sanitario','Il capo supremo dello studio');
+
+INSERT INTO professional_role (name, description) 
+VALUES ('Medico chirurgo odontoiatra','Non so che significa');
+
+INSERT INTO professional_role (name, description) 
+VALUES ('Amministratore unico','Comanda solo lui');
+
+
+
+
+
+
+
+
+
