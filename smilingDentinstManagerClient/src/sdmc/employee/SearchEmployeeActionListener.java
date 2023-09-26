@@ -3,9 +3,17 @@ package sdmc.employee;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import sdmc.main.MainMenuFrame;
+
 public class SearchEmployeeActionListener implements ActionListener {
 
+	// Action commands
+	public static final String MAIN_MENU = "MAIN_MENU";
+	public static final String SEARCH_EMPLOYEE = "SEARCH_EMPLOYEE";
+	public static final String RESET_SEARCH = "RESET_SEARCH";
+	
 	private SearchEmployeeFrame searchEmployeeFrame;
+	
 	
 	public SearchEmployeeActionListener( SearchEmployeeFrame searchEmployeeFrame ) {
 		
@@ -16,6 +24,41 @@ public class SearchEmployeeActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+		switch( e.getActionCommand() ) {
+			
+		case MAIN_MENU:
+			
+			// Check Message
+			System.out.println("SearchEmployeeActionListener --> " + e.getActionCommand() );
+			
+			new MainMenuFrame();
+			searchEmployeeFrame.dispose();
+			
+			break;
+		
+				
+		case SEARCH_EMPLOYEE:
+					
+			// Check Message
+			System.out.println("SearchEmployeeActionListener --> " + e.getActionCommand() );
+					
+			
+					
+			break;
+					
+					
+					
+					
+		case RESET_SEARCH:
+			
+			// Check Message
+			System.out.println("SearchEmployeeActionListener --> " + e.getActionCommand() );
+			
+			
+			
+			break;
+			
+		}
 		
 	}
 
