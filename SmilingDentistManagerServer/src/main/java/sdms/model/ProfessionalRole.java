@@ -1,12 +1,12 @@
 package sdms.model;
 
-public class ProfessionalRol {
+public class ProfessionalRole {
 	
 	private int id;
 	private String name;
 	private String description;
 	
-	public ProfessionalRol(int id, String name, String description) {
+	public ProfessionalRole(int id, String name, String description) {
 		super();
 		this.id = id;
 		this.name = name;
