@@ -17,14 +17,14 @@ import sdms.model.Customer;
 import sdms.repository.RepositoryInterface;
 
 @RestController
-public class CustomerDbRestController {
+public class CustomerRestController {
 	
 	// Spring si occupa di associare la giusta implementazione
 	@Autowired
 	RepositoryInterface repository;
 	//DbManagerInterface dbManager;
 	
-	public CustomerDbRestController() {
+	public CustomerRestController() {
 		
 	}
 	
@@ -58,18 +58,18 @@ public class CustomerDbRestController {
 		return customerList;
 	 }
 	 
-	 @RequestMapping("/getCustomersByPartialKeyWordOverAllFields{key_word}")
+	 @RequestMapping("/getCustomersByPartialKeyWordOverAllFields/{key_word}")
 	 // @ResponseBody
-	 public ArrayList<Customer> getCustomersByPartialKeyWordOverAllFields( @PathVariable String keyWord ){
+	 public ArrayList<Customer> getCustomersByPartialKeyWordOverAllFields( @PathVariable String key_word ){
 		 
 		 // Stampa di controllo
-		 System.out.println("DBRestController --> getCustomersByPartialKeyWordOverAllFields -> key_word = " + keyWord );
+		 System.out.println("DBRestController --> getCustomersByPartialKeyWordOverAllFields -> key_word = " + key_word );
 		 
 		 ArrayList<Customer> customerList = null;
 		 
 		 try {
 			 
-			 customerList = repository.getCustomersByPartialKeyWordOverAllFields( keyWord );
+			 customerList = repository.getCustomersByPartialKeyWordOverAllFields( key_word );
 		 
 		} catch (SQLException e) {
 			e.printStackTrace();
