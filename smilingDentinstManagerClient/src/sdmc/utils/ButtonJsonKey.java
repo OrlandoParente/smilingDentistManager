@@ -14,6 +14,7 @@ public final class ButtonJsonKey {
 	public final static String MAIN_MENU_UPLOAD_DATABASE = "btnUploadDatabase";
 	public final static String MAIN_MENU_DOWNLOAD_DATABASE = "btnDownloadDatabase";
 	public final static String MAIN_MENU_SETTING = "btnSetttings";
+	public final static String MAIN_MENU_PROFESSIONAL_ROLE_MANAGER = "btnProfessionalRoleManager";
 	
 	// bottoni generali
 	public final static String BTN_MAIN_MENU = "btnMainMenu";
@@ -22,5 +23,6 @@ public final class ButtonJsonKey {
 	public final static String BTN_EDIT = "btnEdit";
 	public final static String BTN_DELETE = "btnDelete";
 	public final static String BTN_BACK = "btnBack";
+	public final static String BTN_RESET_SEARCH = "btnResetSearch";
 	
 }
