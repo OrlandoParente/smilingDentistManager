@@ -12,10 +12,15 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class HttpConnectionManager {
 
+	public static final String GET_PROFESSIONAL_ROLES = "getProfessionalRoles";
+	public static final String POST_PROFESSIONAL_ROLE = "postProfessionalRole";
+	public static final String PUT_PROFESSIONAL_ROLE_BY_ID = "putProfessionalRoleById";
+	public static final String DELETE_PROFESSIONAL_ROLE_BY_ID = "deleteProfessionalRoleById";
+	
 	private final static String URL_SERVER = "http://localhost:8080/";
 	
 	public HttpConnectionManager() {
-		// TODO Auto-generated constructor stub
+
 	}
 	
 	
