@@ -626,6 +626,8 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public boolean deleteEmployeeById(String id) throws SQLException {
 		
+		this.connectIfClosed();
+		
 		conn.createStatement();
 		
 		return conn.createStatement().execute("DELETE FROM employee WHERE employee.id = '" + id +  "'");
@@ -633,6 +635,8 @@ public class DbManager implements DbManagerInterface {
 
 	@Override
 	public ResultSet getProfessionalRoles() throws SQLException {
+		
+		this.connectIfClosed();
 		
 		conn.createStatement();
 		
@@ -642,11 +646,15 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public boolean postProfessionalRole(String name) throws SQLException {
 		
+		this.connectIfClosed();
+		
 		return this.postProfessionalRole(name, null);
 	}
 
 	@Override
 	public boolean postProfessionalRole(String name, String description) throws SQLException {
+		
+		this.connectIfClosed();
 		
 		conn.createStatement();
 		
@@ -655,6 +663,8 @@ public class DbManager implements DbManagerInterface {
 
 	@Override
 	public boolean deleteProfessionalRoleById(String id) throws SQLException {
+		
+		this.connectIfClosed();
 		
 		conn.createStatement();
 		
@@ -665,6 +675,9 @@ public class DbManager implements DbManagerInterface {
 	public boolean postLinkEmployeeToProfessionalRole(String id_employee, String id_professional_role)
 			throws SQLException {
 		
+		
+		this.connectIfClosed();
+		
 		conn.createStatement();
 		
 		return conn.createStatement().execute("INSERT INTO has_professional_role( id_employee, id_professional_role)"
@@ -674,6 +687,8 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public boolean deleteLinkEmployeeWithProfessionalRole(String id_employee, String id_professional_role)
 			throws SQLException {
+		
+		this.connectIfClosed();
 		
 		conn.createStatement();
 		
