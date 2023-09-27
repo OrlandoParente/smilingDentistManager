@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ public class CustomerRestController {
 	
 	// Spring si occupa di associare la giusta implementazione
 	@Autowired
+	@Qualifier("mainRepository")
 	RepositoryInterface repository;
 	//DbManagerInterface dbManager;
 	
@@ -37,12 +39,13 @@ public class CustomerRestController {
 	*/
 	
 	//
-	 @RequestMapping("/getCustomers")
+	 // @RequestMapping("/getCustomers")
 	 // @ResponseBody
-	 public ArrayList<Customer> getCustomers(){
+	@GetMapping("/getCustomers") 
+	public ArrayList<Customer> getCustomers(){
 		 
 		 // Stampa di controllo
-		 System.out.println("DBRestController --> getCustomers ");
+		 System.out.println("CustomerRestController --> getCustomers ");
 		 
 		 ArrayList<Customer> customerList = null;
 		 
@@ -63,7 +66,7 @@ public class CustomerRestController {
 	 public ArrayList<Customer> getCustomersByPartialKeyWordOverAllFields( @PathVariable String key_word ){
 		 
 		 // Stampa di controllo
-		 System.out.println("DBRestController --> getCustomersByPartialKeyWordOverAllFields -> key_word = " + key_word );
+		 System.out.println("CustomerRestController --> getCustomersByPartialKeyWordOverAllFields -> key_word = " + key_word );
 		 
 		 ArrayList<Customer> customerList = null;
 		 
@@ -84,7 +87,7 @@ public class CustomerRestController {
 	 public Customer getCustomer( @PathVariable int id){
 		 
 		 // Stampa di controllo
-		 System.out.println("DBRestController --> getCustomer -> id customer = " + id );
+		 System.out.println("CustomerRestController --> getCustomer -> id customer = " + id );
 		 
 		 Customer customer =  null;
 		 
@@ -106,7 +109,7 @@ public class CustomerRestController {
 	 public boolean postEssentialCustomer( @RequestParam("name") String name, @RequestParam("surname") String surname, @RequestParam("phone_number") String phoneNumber ) {
 
 		 // Stampa di controllo
-		 System.out.println("DBRestController --> getCustomers ");
+		 System.out.println("CustomerRestController --> getCustomers ");
 
 		 try {
 			 
@@ -133,7 +136,7 @@ public class CustomerRestController {
 			 @RequestParam("phone_number_2") String phoneNumber2,  @RequestParam("e_mail") String EMail) {
 
 		 // Stampa di controllo
-		 System.out.println("DBRestController --> getCustomers (con tutti i dati) ");
+		 System.out.println("CustomerRestController --> getCustomers (con tutti i dati) ");
 
 		 try {
 			 
@@ -162,7 +165,7 @@ public class CustomerRestController {
 			 @RequestParam("phone_number_2") String phoneNumber2,  @RequestParam("e_mail") String EMail) {
 
 		 // Stampa di controllo
-		 System.out.println("DBRestController --> puCustomerById (con tutti i dati) ");
+		 System.out.println("CustomerRestController --> puCustomerById (con tutti i dati) ");
 
 		 try {
 			 
