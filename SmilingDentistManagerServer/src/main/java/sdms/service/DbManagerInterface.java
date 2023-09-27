@@ -37,7 +37,7 @@ public interface DbManagerInterface {
 	
 	// ------------------------------------------------------
 	
-	// Gestione Medical History (Annamnesi) -----------------
+	// Gestione Medical History (Anamnesi) -----------------
 	ResultSet getMedicalsHistoryByCustomer( String id_customer ) throws SQLException;
 	
 	ResultSet getMedicalHistoryById( String id ) throws SQLException;
