@@ -128,6 +128,8 @@ public interface DbManagerInterface {
 	boolean postProfessionalRole( String name ) throws SQLException;
 	boolean postProfessionalRole( String name, String description ) throws SQLException;
 	
+	boolean putProfessionalRoleById(String id, String name, String description ) throws SQLException;
+	
 	boolean deleteProfessionalRoleById( String id ) throws SQLException;	
 	// ------------------------------------------------------
 	

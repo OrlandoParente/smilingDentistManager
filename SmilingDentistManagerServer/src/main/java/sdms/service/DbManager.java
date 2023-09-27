@@ -660,6 +660,19 @@ public class DbManager implements DbManagerInterface {
 		
 		return conn.createStatement().execute("INSERT INTO professional_role(name, description) VALUES ('" + name + "','" + description + "')");
 	}
+	
+	@Override
+	public boolean putProfessionalRoleById(String id, String name, String description) throws SQLException {
+		
+		this.connectIfClosed();
+		
+		conn.createStatement();
+		
+		return conn.createStatement().execute("UPDATE FROME professional_role "
+				+ "SET name='" + name + "', description='" + description + "' "
+				+ "WHERE id='" + id + "'");
+	}
+	
 
 	@Override
 	public boolean deleteProfessionalRoleById(String id) throws SQLException {

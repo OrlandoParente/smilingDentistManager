@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import sdms.model.Appointment;
@@ -19,6 +20,7 @@ import sdms.service.DbManagerInterface;
 public class RepositoryManager implements RepositoryInterface{
 
 	@Autowired
+	@Qualifier("mainDbManager")
 	private DbManagerInterface dbManager;
 	
 	// Customer Management ----------------------------------------------------------------------------------------
@@ -650,6 +652,17 @@ public class RepositoryManager implements RepositoryInterface{
 		
 	}
 
+	@Override
+	public boolean putProfessionalRoleById( String id, String name, String description ) throws SQLException{
+	
+		boolean result = dbManager.putProfessionalRoleById( id, name, description );
+		
+		dbManager.closeConnection();
+		
+		return result;
+	}
+	
+	
 	@Override
 	public boolean deleteProfessionalRoleById(String id) throws SQLException {
 		
