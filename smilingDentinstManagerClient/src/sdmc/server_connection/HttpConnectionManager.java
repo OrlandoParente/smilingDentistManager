@@ -12,6 +12,31 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class HttpConnectionManager {
 
+	// Requesto for Customer
+	public static final String GET_CUSTOMERS = "getCustomers";
+	public static final String GET_CUSTOMER = "getCustomerById/";
+	public static final String GET_CUSTOMER_BY_PARTIAL_KEY_WORD_OVER_ALL_FIELDS = "getCustomersByPartialKeyWordOverAllFields/";
+	public static final String POST_CUSTOMER = "postCustomer";
+	public static final String PUT_CUSTOMER_BY_ID = "putCustomerById";
+	public static final String DELETE_CUSTOMER = "deleteCustomer";
+	
+	// Request for Employee
+	public static final String GET_EMPLOYEES = "getEmployees";
+	public static final String GET_EMPLOYEES_BY_NAME = "getEmployeesByName/";
+	public static final String GET_EMPLOYEES_BY_SURNAME = "getEmployeesBySurname/";
+	public static final String GET_EMPLOYEES_BY_PROFESSIONAL_ROLE_NAME = "getEmployeesByProfessionalRoleName/";
+	public static final String GET_EMPLOYEES_BY_PARTIAL_KEY_WORD_OVER_ALL_FIELDS = "getEmployeesByPartialKeyWordOverAllFields/";
+	public static final String GET_EMPLOYEE_BY_ID = "getEmployeeById/";
+	public static final String POST_EMPLOYEE = "postEmployee";
+	public static final String PUT_EMPLOYEE = "putEmployee";
+	public static final String DELETE_EMPLOYEE_BY_ID = "deleteEmployeeById";
+	
+	
+	// Request for hasProfessionalRole
+	public static final String POST_LINK_EMPLOYEE_TO_PROFESSIONAL_ROLE = "postLinkEmployeeToProfessionalRole";
+	public static final String DELETE_LINK_EMPLOYEE_WITH_PROFESSIONAL_ROLE = "deleteLinkEmployeeWithProfessionalRole";
+	
+	// Request for Professional Role
 	public static final String GET_PROFESSIONAL_ROLES = "getProfessionalRoles";
 	public static final String POST_PROFESSIONAL_ROLE = "postProfessionalRole";
 	public static final String PUT_PROFESSIONAL_ROLE_BY_ID = "putProfessionalRoleById";

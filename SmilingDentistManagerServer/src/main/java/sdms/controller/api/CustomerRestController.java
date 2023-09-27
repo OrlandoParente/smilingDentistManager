@@ -82,9 +82,9 @@ public class CustomerRestController {
 		return customerList;
 	 }
 	 
-	 @GetMapping( value = "/getCustomer/{id}" )
+	 @GetMapping( value = "/getCustomerById/{id}" )
 	 // @ResponseBody
-	 public Customer getCustomer( @PathVariable int id){
+	 public Customer getCustomerById( @PathVariable int id){
 		 
 		 // Stampa di controllo
 		 System.out.println("CustomerRestController --> getCustomer -> id customer = " + id );

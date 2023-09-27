@@ -108,7 +108,7 @@ public class AddCustomerActionListener implements ActionListener {
 				
 
 				// System.out.println( " -------------------->>>>>>>>>>>>>>>>> " + HttpConnectionManager.doPost("postCustomer") );
-				RequestResponse result = HttpConnectionManager.doPost("postCustomer", parameters );
+				RequestResponse result = HttpConnectionManager.doPost( HttpConnectionManager.POST_CUSTOMER, parameters );
 				
 				System.out.println("Inserimento customer completo ----> " + result.getResponseString() );
 				
@@ -178,7 +178,7 @@ public class AddCustomerActionListener implements ActionListener {
 							+ "&phone_number_2=" + phoneNumber2 + "&e_mail=" + eMail ;
 		
 			
-			resultCode = HttpConnectionManager.doPut("putCustomerById", parameters);
+			resultCode = HttpConnectionManager.doPut(HttpConnectionManager.PUT_CUSTOMER_BY_ID, parameters);
 			
 			if(  resultCode == HttpsURLConnection.HTTP_OK ) {
 				
@@ -209,7 +209,7 @@ public class AddCustomerActionListener implements ActionListener {
 			
 			param = "id="+ addCustomerFrame.getIdCustomer();
 			
-			resultCode = HttpConnectionManager.doDelete("deleteCustomer", param);
+			resultCode = HttpConnectionManager.doDelete( HttpConnectionManager.DELETE_CUSTOMER, param);
 			
 			if(  resultCode == HttpsURLConnection.HTTP_OK ) {
 				

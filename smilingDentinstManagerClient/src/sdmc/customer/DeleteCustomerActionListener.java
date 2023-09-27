@@ -29,7 +29,7 @@ public class DeleteCustomerActionListener implements ActionListener {
 		
 		String param = "id="+customerId;
 		
-		HttpConnectionManager.doDelete("deleteCustomer", param);
+		HttpConnectionManager.doDelete( HttpConnectionManager.DELETE_CUSTOMER, param);
 		
 		searchCustomerFrame.showCustomers( searchCustomerFrame.getCustomers() );
 		

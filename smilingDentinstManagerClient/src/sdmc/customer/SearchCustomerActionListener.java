@@ -38,14 +38,15 @@ public class SearchCustomerActionListener implements ActionListener{
 			
 			break;
 			
-		case SEARCH: // <<<<<<<<< ########### mancano i controlli  CONNECTION REFUSED 6
+		case SEARCH: // <<<<<<<<< ########### mancano i controlli  CONNECTION REFUSED 
 			
 			// check message
 			System.out.println("SearchCustomerListener --> " + e.getActionCommand() );
 			
 			String keyWord = searchCustomerFrame.getTextFieldSearch().getText();
 			
-			RequestResponse response = HttpConnectionManager.doGet("getCustomersByPartialKeyWordOverAllFields/" + keyWord );
+			RequestResponse response = HttpConnectionManager.doGet(
+											HttpConnectionManager.GET_CUSTOMER_BY_PARTIAL_KEY_WORD_OVER_ALL_FIELDS + keyWord );
 			
 			System.out.println( "SearchCustomerListener --> " + e.getActionCommand() 
 									+ "RESPONSE STRING -> " + response.getResponseString()
@@ -63,9 +64,11 @@ public class SearchCustomerActionListener implements ActionListener{
 			
 			break;
 			
-		case RESET_SEARCH: // <<<<<<<<< ########### mancano i controlli  CONNECTION REFUSED 6
+		case RESET_SEARCH: // <<<<<<<<< ########### mancano i controlli  CONNECTION REFUSED 
 			
 			// check message
+			System.out.println("SearchCustomerListener --> " + e.getActionCommand() );
+			
 			
 			searchCustomerFrame.showCustomers( searchCustomerFrame.getCustomers() );
 			
