@@ -498,7 +498,7 @@ public class DbManager implements DbManagerInterface {
 	}
 
 	@Override
-	public ResultSet getTreatmentsByCustomer(String id_customer) throws SQLException {
+	public ResultSet getTreatmentsByCustomerId(String id_customer) throws SQLException {
 		
 		this.connectIfClosed();
 		

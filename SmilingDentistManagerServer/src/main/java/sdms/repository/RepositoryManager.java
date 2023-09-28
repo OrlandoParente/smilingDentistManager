@@ -382,11 +382,11 @@ public class RepositoryManager implements RepositoryInterface{
 	}
 
 	@Override
-	public ArrayList<Treatment> getTreatmentsByCustomer(String id_customer) throws SQLException {
+	public ArrayList<Treatment> getTreatmentsByCustomerId(String id_customer) throws SQLException {
 		
 		ArrayList<Treatment> arrayListTreatment = new ArrayList<Treatment>();
 		
-		ResultSet rs = dbManager.getTreatmentsByCustomer( id_customer );
+		ResultSet rs = dbManager.getTreatmentsByCustomerId( id_customer );
 		
 		while( rs.next() ) {
 			arrayListTreatment.add( new Treatment(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getFloat("cost") ) );
@@ -398,7 +398,7 @@ public class RepositoryManager implements RepositoryInterface{
 	}
 
 	@Override
-	public ArrayList<Treatment> getTreatmentByBillNumber(String bill_number) throws SQLException {
+	public ArrayList<Treatment> getTreatmentsByBillNumber(String bill_number) throws SQLException {
 		
 		ArrayList<Treatment> arrayListTreatment = new ArrayList<Treatment>();
 		

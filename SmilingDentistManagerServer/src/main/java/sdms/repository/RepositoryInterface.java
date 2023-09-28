@@ -83,10 +83,10 @@ public interface RepositoryInterface {
 	// Gestione trattamenti ---------------------------------
 	Treatment getTreatmentById( String id ) throws SQLException;
 	
-	ArrayList<Treatment> getTreatmentsByCustomer( String id_customer ) throws SQLException;
+	ArrayList<Treatment> getTreatmentsByCustomerId( String id_customer ) throws SQLException;
 	
 	// restituisce i trattamenti associati ad una fattura
-	ArrayList<Treatment> getTreatmentByBillNumber( String bill_number ) throws SQLException;
+	ArrayList<Treatment> getTreatmentsByBillNumber( String bill_number ) throws SQLException;
 	
 	boolean postTreatment( String name, String cost ) throws SQLException;
 	boolean postTreatment( String name, String description, String cost ) throws SQLException;

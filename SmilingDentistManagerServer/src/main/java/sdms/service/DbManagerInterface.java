@@ -84,7 +84,7 @@ public interface DbManagerInterface {
 	// Gestione trattamenti ---------------------------------
 	ResultSet getTreatmentById( String id ) throws SQLException;
 	
-	ResultSet getTreatmentsByCustomer( String id_customer ) throws SQLException;
+	ResultSet getTreatmentsByCustomerId( String id_customer ) throws SQLException;
 	
 	// restituisce i trattamenti associati ad una fattura
 	ResultSet getTreatmentsByBillNumber( String bill_number ) throws SQLException;
