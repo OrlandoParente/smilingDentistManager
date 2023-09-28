@@ -12,6 +12,8 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class HttpConnectionManager {
 
+	// Oss.: Le costanti request che terminano con / significa che prevedono una PathVariable
+	
 	// Requesto for Customer
 	public static final String GET_CUSTOMERS = "getCustomers";
 	public static final String GET_CUSTOMER = "getCustomerById/";
@@ -31,6 +33,18 @@ public class HttpConnectionManager {
 	public static final String PUT_EMPLOYEE = "putEmployee";
 	public static final String DELETE_EMPLOYEE_BY_ID = "deleteEmployeeById";
 	
+	// Request for medicalHistory
+	public static final String GET_MEDICALS_HISTORY_BY_CUSTOMER = "getMedicalsHistoryByCustomer/";
+	public static final String GET_MEDICAL_HISTORY_BY_ID = "getMedicalHistoryById/";
+	public static final String POST_MEDICAL_HISTORY = "postMedicalHistory";
+	public static final String DELETE_MEDICAL_HISTORY_BY_ID = "deleteMedicalHistoryById";
+	
+	// Request for TreatmentRestController
+	public static final String GET_TREATMENT_BY_ID = "getTreatmentById/";
+	public static final String GET_TREATMENTS_BY_ID = "getTreatmentsById/";
+	public static final String GET_TREATMENTS_BY_BILL_NUMBER = "getTreatmentsByBillNumber/";
+	public static final String POST_TREATMENT = "postTreatment";
+	public static final String DELETE_TREATMENT_BY_IS = "deleteTreatmentById";
 	
 	// Request for hasProfessionalRole
 	public static final String POST_LINK_EMPLOYEE_TO_PROFESSIONAL_ROLE = "postLinkEmployeeToProfessionalRole";
