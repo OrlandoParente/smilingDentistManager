@@ -687,7 +687,7 @@ public class DbManager implements DbManagerInterface {
 		
 		conn.createStatement();
 		
-		return conn.createStatement().execute("UPDATE FROME professional_role "
+		return conn.createStatement().execute("UPDATE professional_role "
 				+ "SET name='" + name + "', description='" + description + "' "
 				+ "WHERE id='" + id + "'");
 	}
@@ -698,9 +698,12 @@ public class DbManager implements DbManagerInterface {
 		
 		this.connectIfClosed();
 		
-		conn.createStatement();
+		Statement state = conn.createStatement();
 		
-		return conn.createStatement().execute("DELETE FROM professional_role WHERE professional_role.id = '" +id+ "'");
+		// Elimina anche tutte le associazione con i rispettivi employees con un certo professional role
+		state.execute("DELETE FROM has_professional_role WHERE has_professional_role.id_professional_role = '" + id + "'");
+		
+		return state.execute("DELETE FROM professional_role WHERE professional_role.id = '" +id+ "'");
 	}
 
 	@Override
