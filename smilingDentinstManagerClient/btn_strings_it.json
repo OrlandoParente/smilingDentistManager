@@ -15,6 +15,7 @@
 	"btnDelete":"ELIMINA",
 	"btnEdit":"MODIFICA",
 	"btnBack":"INDIETRO",
-	"btnResetSearch":"ANNULLA RICERCA"
+	"btnResetSearch":"ANNULLA RICERCA",
+	"btnAddNewProfessionalRole":"AGGIUNGI RUOLO PROFESSIONALE"
 
 }
