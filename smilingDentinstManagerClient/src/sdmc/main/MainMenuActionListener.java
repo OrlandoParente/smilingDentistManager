@@ -20,9 +20,9 @@ class MainMenuActionListener implements ActionListener {
 	public final static String ADD_EMPLOYEE = "btnAddEmployee";
 	public final static String SEARCH_EMPLOYEE = "btnSearchEmployee";
 	public final static String PROFESSIONAL_ROLE_MANAGER = "btnProfessionalRoleManager";
-	public final static String UPLOAD_DATABASE = "btnUploadDatabase";
-	public final static String DOWNLOAD_DATABASE = "btnDownloadDatabase";
-	public final static String SETTING = "btnSetttings";
+	// public final static String UPLOAD_DATABASE = "btnUploadDatabase";
+	// public final static String DOWNLOAD_DATABASE = "btnDownloadDatabase";
+	// public final static String SETTING = "btnSetttings";
 	
 	private JFrame mainMenuFrame;
 	
@@ -92,7 +92,7 @@ class MainMenuActionListener implements ActionListener {
 			mainMenuFrame.dispose();
 			
 			break;
-			
+	/*		
 		case UPLOAD_DATABASE:
 			
 			System.out.println( "Main Menu Action Listener -> UPLOAD_DATABASE " );
@@ -111,6 +111,7 @@ class MainMenuActionListener implements ActionListener {
 			
 			break;
 		
+	*/
 		}
 	}
 

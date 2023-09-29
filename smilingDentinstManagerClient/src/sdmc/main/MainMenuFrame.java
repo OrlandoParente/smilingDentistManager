@@ -37,7 +37,7 @@ public class MainMenuFrame extends JFrame {
 		//
 		Container c = this.getContentPane();
 		
-		c.setLayout( new GridLayout( 7, 1) );
+		c.setLayout( new GridLayout( 6, 1) );
 		// ---------------------------------------------------------------------------
 		
 		
@@ -82,11 +82,13 @@ public class MainMenuFrame extends JFrame {
 		btnProfessionalRoleManager.addActionListener( listener );
 		btnProfessionalRoleManager.setActionCommand( MainMenuActionListener.PROFESSIONAL_ROLE_MANAGER );
 	
-		
+		/*
 		
 		btnSetttings = new JButton( btnNames.getString( ButtonJsonKey.MAIN_MENU_SETTING ) );
 		btnSetttings.addActionListener( listener );
 		btnSetttings.setActionCommand( MainMenuActionListener.SETTING );
+		
+		*/
 		
 		// ----------------------------------------------------------------------------
 		
