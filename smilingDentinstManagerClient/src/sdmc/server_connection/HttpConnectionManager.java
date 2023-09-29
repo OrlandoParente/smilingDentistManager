@@ -14,6 +14,9 @@ public class HttpConnectionManager {
 
 	// Oss.: Le costanti request che terminano con / significa che prevedono una PathVariable
 	
+	//
+	public static final String GET_MAX_ID_FROM_TABLE = "getMaxIdFromTable/";
+	
 	// Requesto for Customer
 	public static final String GET_CUSTOMERS = "getCustomers";
 	public static final String GET_CUSTOMER = "getCustomerById/";
@@ -21,6 +24,7 @@ public class HttpConnectionManager {
 	public static final String POST_CUSTOMER = "postCustomer";
 	public static final String PUT_CUSTOMER_BY_ID = "putCustomerById";
 	public static final String DELETE_CUSTOMER = "deleteCustomer";
+	public static final String GET_MAX_ID_CUSTOMER = "getMaxIdCustomer";
 	
 	// Request for Employee
 	public static final String GET_EMPLOYEES = "getEmployees";
@@ -32,6 +36,7 @@ public class HttpConnectionManager {
 	public static final String POST_EMPLOYEE = "postEmployee";
 	public static final String PUT_EMPLOYEE = "putEmployee";
 	public static final String DELETE_EMPLOYEE_BY_ID = "deleteEmployeeById";
+	public static final String GET_MAX_ID_EMPLOYEE = "getMaxIdEmployee";
 	
 	// Request for medicalHistory
 	public static final String GET_MEDICALS_HISTORY_BY_CUSTOMER = "getMedicalsHistoryByCustomer/";

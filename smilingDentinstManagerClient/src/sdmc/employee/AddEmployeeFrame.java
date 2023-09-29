@@ -1,20 +1,33 @@
 package sdmc.employee;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import sdmc.main.MainMenuFrame;
+import sdmc.model.ComboBoxProfessionalRoleListener;
+import sdmc.model.ComboBoxProfessionaleRoleRenderer;
+import sdmc.model.ProfessionalRole;
+import sdmc.server_connection.HttpConnectionManager;
+import sdmc.server_connection.RequestResponse;
 import sdmc.utils.ButtonJsonKey;
 import sdmc.utils.Utils;
 
@@ -60,11 +73,24 @@ public class AddEmployeeFrame extends JFrame {
 	private JTextField textFieldEMail;
 	private JLabel labelEMail;
 	private JPanel panelEMail;
+	
+	// private JComboBox<ProfessionalRole> comboBoxProfessionalRole;
+	// private JLabel labelProfessionalRole;
+	private JPanel panelProfessionalRolesContainer;
+	
+	private ComboBoxProfessionalRoleListener comboBoxProfessionalRoleListener;
+	
+	private int numProfessionalRole; 	// tiene il conto di quanti professionalRole panel inserire
+	private int maxNumProfessionalRole; // conta quanti professional role sono presenti nel database 
+										// e quindi quanti professional role possono essere associati al nuovo employee
+	private boolean isInitializeProfessionalRoleLogic;
+	private int [] arrProfessionalRoleIds ;
 	// -------------------------------
 	
 	// BottomMenu panel Stuff --------
 	private JButton btnAdd;
 	private JButton btnMainMenu;
+	private JButton btnAddNewProfessionalRole;
 	
 	// bottoni messi con il secondo costruttore
 	private JButton btnEdit;
@@ -105,7 +131,7 @@ public class AddEmployeeFrame extends JFrame {
 		
 		// inizializzazione del frame -----------------------------------------------
 		super("ADD NEW EMPLOYEE");	
-		this.setSize( 400, 400 );
+		this.setSize( 700, 500 );
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		
 		this.setLocation( 700, 200 );
@@ -130,8 +156,13 @@ public class AddEmployeeFrame extends JFrame {
 		btnAdd.addActionListener( listener );
 		btnAdd.setActionCommand( AddEmployeeActionListener.ADD_EMPLOYEE );
 		
+		btnAddNewProfessionalRole = new JButton( btnNames.getString( ButtonJsonKey.BTN_ADD_NEW_PROFESSIONAL_ROLE ) );
+		btnAddNewProfessionalRole.addActionListener( listener );
+		btnAddNewProfessionalRole.setActionCommand( AddEmployeeActionListener.ADD_NEW_PROFESSIONAL_ROLE );
+		
 		panelBottomMenu.add( btnMainMenu );
 		panelBottomMenu.add(btnAdd);
+		panelBottomMenu.add( btnAddNewProfessionalRole );
 		
 		c.add( panelBottomMenu , BorderLayout.SOUTH );
 		
@@ -141,7 +172,8 @@ public class AddEmployeeFrame extends JFrame {
 
 		// PANEL FORM  -----------------------------------------------------------------
 		
-		panelForm = new JPanel( new GridLayout( 7, 1 ) );
+		panelForm = new JPanel( );
+		panelForm.setLayout( new BoxLayout( panelForm, BoxLayout.Y_AXIS ));
 		
 		
 		// Panel Name -----
@@ -215,6 +247,23 @@ public class AddEmployeeFrame extends JFrame {
 		// ----------------
 		
 		
+		// panelAddProfessionalRolesContainer -----------------
+		
+		panelProfessionalRolesContainer = new JPanel(  );
+		
+		// se lo metto direttamente nel costruttore del JPanel non funziona
+		panelProfessionalRolesContainer.setLayout( new BoxLayout( panelProfessionalRolesContainer , BoxLayout.Y_AXIS ) );
+		
+		System.out.println( "AddEmployeeFrame -> isInitializeProfessionalRoleLogic -> " + isInitializeProfessionalRoleLogic );
+		
+		this.initializeProfessionalRoleLogic();
+		// inizializzo il listener del professional role combo box
+		comboBoxProfessionalRoleListener = new ComboBoxProfessionalRoleListener();
+		
+		this.insertProfessionalRolePanelsInProfessionalRolesContainer();
+		
+		// --------------------------------------------
+		
 		panelForm.add( panelName );
 		panelForm.add( panelSurname );
 		panelForm.add( panelTitle );
@@ -223,7 +272,9 @@ public class AddEmployeeFrame extends JFrame {
 		panelForm.add( panelPhoneNumber2 );
 		panelForm.add( panelEMail );
 		
-		c.add( panelForm, BorderLayout.CENTER );
+		panelForm.add( panelProfessionalRolesContainer );
+		
+		c.add(   new JScrollPane( panelForm ) , BorderLayout.CENTER );
 		// -----------------------------------------------------------------------------
 		
 		
@@ -231,6 +282,213 @@ public class AddEmployeeFrame extends JFrame {
 		// rende visibile il frame
 		this.setVisible( true );
 		
+		
+		// CONTROLLO ERRORE nessun professional role nel db
+		if( this.maxNumProfessionalRole <= 0 ) {
+			// Messaggio di Errore
+			JOptionPane.showConfirmDialog( this, "Per inserire un dipendente, ci deve essere almeno un ruolo professionale nel database",
+					"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.ERROR_MESSAGE );
+		
+			this.dispose();
+		
+			new MainMenuFrame();
+		}
+		
+		
+	}
+	
+	// Resetta il panel dei combo box professional role con uno solo 1, come appena aperta il add Employee Frame
+	public void resetProfessionalRolePanel() {
+		
+		this.isInitializeProfessionalRoleLogic = false;
+		
+		this.insertProfessionalRolePanelsInProfessionalRolesContainer();
+	}
+	
+	// Popola il panel dei combo box professional roles con quanti richiesti, inizialmente 1
+	private void insertProfessionalRolePanelsInProfessionalRolesContainer() {
+		
+		if( ! isInitializeProfessionalRoleLogic  )
+			this.initializeProfessionalRoleLogic();
+
+		// Oss.: In questo modo l'utente perderà i ruoli selezionati fin'ora
+		// Per conservare i valori selezionati fin'ora servirebbero molte più righe di codice, 
+		// ma dato che realisticamente i ruoli associati ad un impiegato sono al massimo fino a 4, 
+		// preferisco tenere, almeno per ora, il codice più leggero e leggibile
+		arrProfessionalRoleIds = new int[ numProfessionalRole ];
+
+		// Ripulisce il panel
+		panelProfessionalRolesContainer.removeAll();
+		
+		for( int i = 0; i < numProfessionalRole ; i ++ ) {
+			
+			JLabel labelProfessionalRole = new JLabel(" PROFESSIONAL ROLE : ");
+			ProfessionalRole arrProfessionalRoles [] = ProfessionalRole.getProfessionalRoleArray();
+			
+			JComboBox<ProfessionalRole> comboBoxSelectProfessionalRole = new JComboBox<ProfessionalRole>( arrProfessionalRoles  );
+		
+			// Inizializza
+			arrProfessionalRoleIds[i] = arrProfessionalRoles[0].getId();
+			
+			// Serve a inserire nel combo Box solo il nome del Professional Role
+			comboBoxSelectProfessionalRole.setRenderer( new ComboBoxProfessionaleRoleRenderer() );
+			
+			comboBoxSelectProfessionalRole.addActionListener( listener );
+			comboBoxSelectProfessionalRole.setActionCommand( i + "");
+
+			JButton btnDeleteProfessionalRolePanel = new JButton( btnNames.getString( ButtonJsonKey.BTN_DELETE ) );
+			btnDeleteProfessionalRolePanel.addActionListener( listener );
+			btnDeleteProfessionalRolePanel.setActionCommand( AddEmployeeActionListener.DELETE_A_PROFESSIONAL_ROLE_PANEL );
+			btnDeleteProfessionalRolePanel.setBackground( Color.RED );
+			
+			// Un dipendente deve avere almeno un professional role
+			if( i == 0 )
+				btnDeleteProfessionalRolePanel.setEnabled( false );
+		
+			JPanel panelProfessionalRole = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
+			
+			panelProfessionalRole.add( labelProfessionalRole );
+			panelProfessionalRole.add( comboBoxSelectProfessionalRole );
+			panelProfessionalRole.add( btnDeleteProfessionalRolePanel );
+			
+			panelProfessionalRolesContainer.add( panelProfessionalRole );
+			
+			
+		}
+		
+		// "disegna" il panel con i nuovi elementi
+		panelProfessionalRolesContainer.revalidate();
+		panelProfessionalRolesContainer.repaint();
+		
+	}
+	 
+	
+	private void initializeProfessionalRoleLogic() {
+		
+		this.isInitializeProfessionalRoleLogic = true;
+		
+		
+		// Inizializzazione del maxNumProfessionalRole -----
+		RequestResponse response = HttpConnectionManager.doGet( HttpConnectionManager.GET_PROFESSIONAL_ROLES );
+		
+		if( response.getResponseString() == null || response.getResponseCode() != HttpsURLConnection.HTTP_OK ) {
+			
+			this.maxNumProfessionalRole = 0;
+			
+		} else if ( response.getResponseString().equals("") ) {
+			
+			this.maxNumProfessionalRole = 0;
+			
+		} else {
+			
+			JSONArray jsonArr = new JSONArray( response.getResponseString() );
+			this.maxNumProfessionalRole = jsonArr.length();
+		}
+		
+
+		// -------------------------------------------------
+		
+		// inizializzazione numProfessionalRole che deve essere almeno uno all'inizio
+		this.numProfessionalRole = 1;
+		
+	}
+	
+	public void incrementNumProfessionalRole() {
+		
+		if( this.numProfessionalRole < this.maxNumProfessionalRole ) {
+			
+			this.numProfessionalRole ++;
+			// aggiorna la GUI
+			this.insertProfessionalRolePanelsInProfessionalRolesContainer();
+			
+		} else { // ERRORE : Si vuole associare più professional role di quelli disponibili
+			
+			// Messaggio di Errore
+			JOptionPane.showConfirmDialog( this, "Non ci sono altri ruoli professionali disponibili, puoi aggiungerli in MAIN MENU -> GESTIONE RUOLO PROFESSIONALE", 
+					"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.ERROR_MESSAGE );
+			
+		}
+	}
+	
+	public void decrementNumProfessionalRole() {
+		
+		if( this.numProfessionalRole > 0 ) {
+			
+			this.numProfessionalRole --;
+			// aggiorna la GUI
+			this.insertProfessionalRolePanelsInProfessionalRolesContainer();
+			
+		} else { // ERRORE : Si vuole associare 0 professional role al dipendente			
+			// Messaggio di Errore
+			JOptionPane.showConfirmDialog( this, "Ogni dipendente deve avere almeno un ruolo professionale associato",
+					"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.ERROR_MESSAGE );
+			
+		}
+	}
+
+
+	/*
+	 * Imposta ad un certo indice dell'array arrProfessionalRole, l'id di un certo ProfessionalRole
+	 * DOVE l'indice dell'array sta ad indicare un certo comboBox a cui è associato tramite l'action Command
+	 * MENTRE il ProfessionalRoleId serve a recuperare in seguito il Professional Role selezionato dal combo box in questione
+	 */
+	public void setSelectedProfessionalRoleInTheProfessionalRoleArray( int arrayIndex, int professionalRoleId ) {
+		
+		this.arrProfessionalRoleIds[ arrayIndex ] = professionalRoleId;
+		
+		
+		String arr = "arrProfessionalRoleIds ---> [";
+		for( int i = 0; i < this.arrProfessionalRoleIds.length ; i ++) {
+			arr += i +" : " + this.arrProfessionalRoleIds[i] ;
+			if( i != this.arrProfessionalRoleIds.length -1  )
+				arr +=  " ;  ";
+		}
+		arr += "]";
+		
+		System.out.println( arr );
+	
+	}
+	
+	
+	// GETTERS
+	
+	public int[] getArrProfessionalRoleIds() {
+		return arrProfessionalRoleIds;
+	}
+
+
+	public JTextField getTextFieldName() {
+		return textFieldName;
+	}
+
+
+	public JTextField getTextFieldSurname() {
+		return textFieldSurname;
+	}
+
+
+	public JTextField getTextFieldTitle() {
+		return textFieldTitle;
+	}
+
+
+	public JTextField getTextFieldBirthDate() {
+		return textFieldBirthDate;
+	}
+
+
+	public JTextField getTextFieldPhoneNumber() {
+		return textFieldPhoneNumber;
+	}
+
+
+	public JTextField getTextFieldPhoneNumber2() {
+		return textFieldPhoneNumber2;
+	}
+
+
+	public JTextField getTextFieldEMail() {
+		return textFieldEMail;
 	}
 	
 	

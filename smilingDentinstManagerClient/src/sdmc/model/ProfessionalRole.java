@@ -1,5 +1,7 @@
 package sdmc.model;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -32,7 +34,7 @@ public class ProfessionalRole {
 		System.out.println( "ProfessionalRole -> getProfessionalRoleArray -> responseCode ---> " + response.getResponseCode() );
 		
 		// Evita errori nella creazione di JSON Array in caso di risposta vuota
-		if( response.getResponseString() == null || response.getResponseString().equals("") )
+		if( response.getResponseString() == null || response.getResponseCode() != HttpsURLConnection.HTTP_OK )
 			response.setResponseString("[]");
 		
 		JSONArray jsonArrProfessionalRoles = new JSONArray( response.getResponseString() );

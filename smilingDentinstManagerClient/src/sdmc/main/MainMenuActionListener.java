@@ -70,8 +70,8 @@ class MainMenuActionListener implements ActionListener {
 			
 			System.out.println( "Main Menu Action Listener -> ADD_EMPLOYEE " );
 			
-			new AddEmployeeFrame();
 			mainMenuFrame.dispose();
+			new AddEmployeeFrame();
 			
 			break;
 			

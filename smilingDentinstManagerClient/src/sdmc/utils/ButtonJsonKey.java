@@ -16,7 +16,10 @@ public final class ButtonJsonKey {
 	public final static String MAIN_MENU_SETTING = "btnSetttings";
 	public final static String MAIN_MENU_PROFESSIONAL_ROLE_MANAGER = "btnProfessionalRoleManager";
 	
-	// bottoni generali
+	// Bottoni addEmployeeFrame
+	public final static String BTN_ADD_NEW_PROFESSIONAL_ROLE = "btnAddNewProfessionalRole";
+	
+	// Bottoni generali
 	public final static String BTN_MAIN_MENU = "btnMainMenu";
 	public final static String BTN_SEARCH = "btnSearch";
 	public final static String BTN_ADD = "btnAdd";
