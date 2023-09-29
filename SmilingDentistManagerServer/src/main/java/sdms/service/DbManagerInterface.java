@@ -12,6 +12,10 @@ public interface DbManagerInterface {
 	
 	void closeConnection() throws SQLException;
 	
+	// Query generale -------------------------------------------
+	int getMaxIdFromTable( String table ) throws SQLException;
+	// ----------------------------------------------------------
+	
 	// Gestione clienti -------------------------------------
 	ResultSet getCustomers() throws SQLException;
 	

@@ -38,6 +38,22 @@ public class CustomerRestController {
 	}
 	*/
 	
+	@GetMapping("/getMaxIdCustomer")
+	public int getMaxIdCustomer() {
+		
+		try {
+			return repository.getMaxIdFromTable("customer");
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return -1;
+	}
+	
+	
+	
 	//
 	 // @RequestMapping("/getCustomers")
 	 // @ResponseBody

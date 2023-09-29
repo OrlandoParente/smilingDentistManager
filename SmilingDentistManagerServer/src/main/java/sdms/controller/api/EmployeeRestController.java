@@ -26,6 +26,20 @@ public class EmployeeRestController {
 	public EmployeeRestController() {
 	}
 	
+	@GetMapping("/getMaxIdEmployee")
+	public int getMaxIdEmployee( ) {
+		
+		try {
+			return repository.getMaxIdFromTable("employee");
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return -1;
+	}
+	
 	@GetMapping("/getEmployees")
 	public ArrayList<Employee> getEmployees(){
 		

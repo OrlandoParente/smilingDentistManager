@@ -23,6 +23,19 @@ public class RepositoryManager implements RepositoryInterface{
 	@Qualifier("mainDbManager")
 	private DbManagerInterface dbManager;
 	
+	public RepositoryManager() {
+		
+	}
+	
+	// Generale --------------------------------------------------------------------------------------------------
+	
+	public int getMaxIdFromTable( String table ) throws SQLException{
+		
+		return dbManager.getMaxIdFromTable( table );
+	}
+	
+	// ------------------------------------------------------------------------------------------------------------
+	
 	// Customer Management ----------------------------------------------------------------------------------------
 	
 	@Override

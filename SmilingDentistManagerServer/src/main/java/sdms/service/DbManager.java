@@ -248,6 +248,22 @@ public class DbManager implements DbManagerInterface {
 	}
 
 	@Override
+	public int getMaxIdFromTable( String table) throws SQLException{
+		
+		this.connectIfClosed();
+		
+		int lastId = -1;
+		
+		ResultSet rs = conn.createStatement().executeQuery("SELECT MAX(id) FROM " + table  ); 
+		
+		if( rs.next() )
+			lastId = rs.getInt(1);
+		
+		return lastId;
+		
+	}
+	
+	@Override
 	public ResultSet getCustomers() throws SQLException {
 		
 		this.connectIfClosed();
@@ -627,10 +643,13 @@ public class DbManager implements DbManagerInterface {
 	public boolean deleteEmployeeById(String id) throws SQLException {
 		
 		this.connectIfClosed();
+
+		Statement state = conn.createStatement();
 		
-		conn.createStatement();
+		// Prima elimina tutti i link dell'employee con i professional_role
+		state.execute("DELETE FROM has_professional_role WHERE has_professional_role.id_employee = '" + id + "'");
 		
-		return conn.createStatement().execute("DELETE FROM employee WHERE employee.id = '" + id +  "'");
+		return state.execute("DELETE FROM employee WHERE employee.id = '" + id +  "'");
 	}
 
 	@Override

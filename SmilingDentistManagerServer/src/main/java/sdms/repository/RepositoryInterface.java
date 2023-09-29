@@ -10,6 +10,9 @@ import sdms.model.*;
 @Repository
 public interface RepositoryInterface {
 
+	// Generale
+	int getMaxIdFromTable( String table ) throws SQLException;
+	
 	// Gestione clienti -------------------------------------
 	ArrayList<Customer> getCustomers() throws SQLException;
 	
