@@ -1,5 +1,6 @@
 package sdmc.main;
 
+import sdmc.settings.Setting;
 import sdmc.utils.*;
 import javax.swing.*;
 
@@ -41,7 +42,7 @@ public class MainMenuFrame extends JFrame {
 		// ---------------------------------------------------------------------------
 		
 		
-		btnNames = Utils.fileToJSONObject( Utils.BTNS_ITALIAN_LANGUANGE );
+		btnNames = Utils.fileToJSONObject( Setting.getSettings().getBtnsLanguageFile()  );
 		listener = new MainMenuActionListener( this );
 		
 		
@@ -100,9 +101,9 @@ public class MainMenuFrame extends JFrame {
 		c.add( btnAddEmployee );
 		c.add( btnSearchEmployee );
 		c.add( btnProfessionalRoleManager );
-		// c.add( btnUploadDatabase  );
-		// c.add( btnDownloadDatabase );
-		c.add( btnSetttings );
+		// c.add( btnUploadDatabase  );		// implementabile in futuro
+		// c.add( btnDownloadDatabase );	// implementabile in futuro
+		// c.add( btnSetttings );			// implementabile in futuro
 		
 		// ----------------------------------------------------------------------------
 		

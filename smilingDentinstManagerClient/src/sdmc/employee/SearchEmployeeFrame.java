@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 
 import org.json.JSONObject;
 
+import sdmc.settings.Setting;
 import sdmc.utils.ButtonJsonKey;
 import sdmc.utils.Utils;
 
@@ -43,7 +44,7 @@ public class SearchEmployeeFrame extends JFrame{
 		this.setLocation(100, 150);
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		
-		btnNames = Utils.fileToJSONObject( Utils.BTNS_ITALIAN_LANGUANGE );
+		btnNames = Utils.fileToJSONObject( Setting.getSettings().getBtnsLanguageFile()  );
 		
 		Container c = this.getContentPane();
 		c.setLayout( new BorderLayout() );

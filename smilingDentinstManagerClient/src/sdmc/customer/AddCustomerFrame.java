@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 import org.json.JSONObject;
 
+import sdmc.settings.Setting;
 import sdmc.utils.ButtonJsonKey;
 import sdmc.utils.Utils;
 
@@ -170,7 +171,7 @@ public class AddCustomerFrame extends JFrame{
 		c.setLayout( new BorderLayout() );
 		
 		//
-		btnNames = Utils.fileToJSONObject( Utils.BTNS_ITALIAN_LANGUANGE );
+		btnNames = Utils.fileToJSONObject( Setting.getSettings().getBtnsLanguageFile() );
 		
 		// inizializzazione listener
 		listener = new AddCustomerActionListener( this );

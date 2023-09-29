@@ -28,6 +28,7 @@ import sdmc.model.ComboBoxProfessionaleRoleRenderer;
 import sdmc.model.ProfessionalRole;
 import sdmc.server_connection.HttpConnectionManager;
 import sdmc.server_connection.RequestResponse;
+import sdmc.settings.Setting;
 import sdmc.utils.ButtonJsonKey;
 import sdmc.utils.Utils;
 
@@ -139,7 +140,7 @@ public class AddEmployeeFrame extends JFrame {
 		Container c = this.getContentPane();
 		c.setLayout( new BorderLayout() );
 		
-		btnNames = Utils.fileToJSONObject( Utils.BTNS_ITALIAN_LANGUANGE );
+		btnNames = Utils.fileToJSONObject( Setting.getSettings().getBtnsLanguageFile()  );
 		listener = new AddEmployeeActionListener( this );
 		
 		// ----------------------------------------------------------------------------

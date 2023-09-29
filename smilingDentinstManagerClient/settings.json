@@ -1,0 +1,8 @@
+{
+	"btnsLanguageFile" : "btn_strings_it.json",
+	"labelsLanguageFile" : "",
+	"frameTitlesLanguageFile" : "",
+	"jOptionMessageLanguageFile" : "",
+	
+	"server":"http://localhost:8080/"
+}

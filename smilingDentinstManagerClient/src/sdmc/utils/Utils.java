@@ -1,18 +1,17 @@
 package sdmc.utils;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 // https://github.com/stleary/JSON-java
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 
 
 public class Utils {
-	
-	// Definisco come costanti i path dei file contenenti informazioni di impostazioni del sistema
-	public final static String BTNS_ITALIAN_LANGUANGE = "btn_strings_it.json";
 	
 	public Utils() {}
 	
@@ -62,6 +61,24 @@ public class Utils {
 		return jsonObj;
 	}
 	
+	/*
+	 * Scrive una stringa su un file
+	 */
+	public static void writeOnFile( String string, String path, boolean append) {
+		
+		try {
+			
+			FileWriter fw = new FileWriter( new File( path ) ,append );
+			fw.write( string );
+			fw.flush();
+			fw.close();
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		
+	}
 	
 	
 	

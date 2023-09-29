@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import sdmc.model.ComboBoxProfessionalRoleListener;
 import sdmc.model.ComboBoxProfessionaleRoleRenderer;
 import sdmc.model.ProfessionalRole;
+import sdmc.settings.Setting;
 import sdmc.utils.ButtonJsonKey;
 import sdmc.utils.Utils;
 
@@ -72,7 +73,7 @@ public class ProfessionalRoleManagerFrame extends JFrame {
 		listener = new ProfessionalRoleManagerActionListener( this );
 		// Listener combo box 
 		comboBoxProfessionalRoleListener = new ComboBoxProfessionalRoleListener( this );
-		btnNames = Utils.fileToJSONObject( Utils.BTNS_ITALIAN_LANGUANGE );
+		btnNames = Utils.fileToJSONObject( Setting.getSettings().getBtnsLanguageFile()  );
 		
 		// ---------------------------------------------------------------------------
 

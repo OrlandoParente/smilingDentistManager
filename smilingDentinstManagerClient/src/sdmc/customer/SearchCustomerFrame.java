@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import sdmc.server_connection.HttpConnectionManager;
 import sdmc.server_connection.RequestResponse;
+import sdmc.settings.Setting;
 import sdmc.utils.ButtonJsonKey;
 import sdmc.utils.Utils;
 
@@ -51,7 +52,7 @@ public class SearchCustomerFrame extends JFrame {
 		
 		
 		
-		btnNames = Utils.fileToJSONObject( Utils.BTNS_ITALIAN_LANGUANGE );
+		btnNames = Utils.fileToJSONObject( Setting.getSettings().getBtnsLanguageFile()  );
 		
 		// Inizializazione listeners
 		listener = new SearchCustomerActionListener( this );
