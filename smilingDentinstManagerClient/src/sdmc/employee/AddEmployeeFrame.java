@@ -284,16 +284,8 @@ public class AddEmployeeFrame extends JFrame {
 		this.setVisible( true );
 		
 		
-		// CONTROLLO ERRORE nessun professional role nel db
-		if( this.maxNumProfessionalRole <= 0 ) {
-			// Messaggio di Errore
-			JOptionPane.showConfirmDialog( this, "Per inserire un dipendente, ci deve essere almeno un ruolo professionale nel database",
-					"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.ERROR_MESSAGE );
-		
-			this.dispose();
-		
-			new MainMenuFrame();
-		}
+		// CONTROLLO e gestione ERRORE nessun professional role nel db
+		this.checkProfessionalRoleEnoughtQuantityInDb();
 		
 		
 	}
@@ -312,6 +304,10 @@ public class AddEmployeeFrame extends JFrame {
 		if( ! isInitializeProfessionalRoleLogic  )
 			this.initializeProfessionalRoleLogic();
 
+		// CONTROLLO e gestione ERRORE nessun professional role nel db
+		this.checkProfessionalRoleEnoughtQuantityInDb();
+
+		
 		// Oss.: In questo modo l'utente perderà i ruoli selezionati fin'ora
 		// Per conservare i valori selezionati fin'ora servirebbero molte più righe di codice, 
 		// ma dato che realisticamente i ruoli associati ad un impiegato sono al massimo fino a 4, 
@@ -386,8 +382,7 @@ public class AddEmployeeFrame extends JFrame {
 			this.maxNumProfessionalRole = jsonArr.length();
 		}
 		
-
-		// -------------------------------------------------
+	// -------------------------------------------------
 		
 		// inizializzazione numProfessionalRole che deve essere almeno uno all'inizio
 		this.numProfessionalRole = 1;
@@ -448,6 +443,20 @@ public class AddEmployeeFrame extends JFrame {
 		
 		System.out.println( arr );
 	
+	}
+	
+	//  CONTROLLO  e gestione ERRORE nessun professional role nel db 
+	private void checkProfessionalRoleEnoughtQuantityInDb() {
+		
+		if( this.maxNumProfessionalRole <= 0 ) {
+			// Messaggio di Errore
+			JOptionPane.showConfirmDialog( this, "Per inserire un dipendente, ci deve essere almeno un ruolo professionale nel database",
+					"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.ERROR_MESSAGE );
+		
+			this.dispose();
+		
+			new MainMenuFrame();
+		}
 	}
 	
 	
