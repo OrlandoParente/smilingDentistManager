@@ -1,4 +1,4 @@
-package sdmc.model;
+package sdmc.professional_role_management;
 
 import javax.net.ssl.HttpsURLConnection;
 

@@ -1,4 +1,4 @@
-package sdmc.model;
+package sdmc.professional_role_management;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -7,7 +7,9 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import sdmc.employee.SearchEmployeeFrame;
 import sdmc.professional_role.ProfessionalRoleManagerFrame;
+import sdmc.utils.Utils;
 
 public class ComboBoxProfessionalRoleListener implements ItemListener {
 
@@ -15,10 +17,12 @@ public class ComboBoxProfessionalRoleListener implements ItemListener {
 	// private JTextArea textAreaProfessionalRoleDescription;
 	
 	ProfessionalRoleManagerFrame professionalRoleManagerFrame;
+	SearchEmployeeFrame searchEmployeeFrame;
 	
 	public ComboBoxProfessionalRoleListener() {
 		
 		this.professionalRoleManagerFrame = null;
+		this.searchEmployeeFrame = null;
 	}
 	
 	public ComboBoxProfessionalRoleListener( ProfessionalRoleManagerFrame professionalRoleManagerFrame ) {
@@ -26,6 +30,15 @@ public class ComboBoxProfessionalRoleListener implements ItemListener {
 		this();
 		
 		this.professionalRoleManagerFrame = professionalRoleManagerFrame;
+	
+	}
+	
+	public ComboBoxProfessionalRoleListener( SearchEmployeeFrame searchEmployeeFrame ) {
+		
+		this();
+		
+		this.searchEmployeeFrame = searchEmployeeFrame;
+	
 	}
 	
 	@Override
@@ -39,7 +52,8 @@ public class ComboBoxProfessionalRoleListener implements ItemListener {
 		
 		if( professionalRole != null ) {
 			
-			if( professionalRoleManagerFrame != null ) {
+			
+			if( professionalRoleManagerFrame != null ) { // Se il listener fa riferimento al combo box del professionalRoleManagerFrame
 			
 				professionalRoleManagerFrame.getTextFieldProfessionalRoleName().setText( professionalRole.getName() );
 				professionalRoleManagerFrame.getTextAreaProfessionalDescription().setText( professionalRole.getDescription() );
@@ -50,11 +64,20 @@ public class ComboBoxProfessionalRoleListener implements ItemListener {
 				professionalRoleManagerFrame.getBtnEditProfessionalRole().setEnabled( true );
 				professionalRoleManagerFrame.getBtnAddProfessionalRole().setEnabled( false );
 			
+			} else if ( searchEmployeeFrame != null ) { // Se il listener fa riferimento al combo box del searchEmployeeFrame 
+			
+				System.out.println("ComboBoxProfessionalRoleListener -> searchEmployeeFrame NOT NULL -> professional name -> " + professionalRole.getName() );
+			
+				// toglie fli spazi e li sostituisce con "%20", che invece è riconosciuto dall'url encoding
+				String professionalRoleName = Utils.adaptStrToUrlEncoding( professionalRole.getName() );
+				
+				searchEmployeeFrame.reloadPanelEmployeeShowDatas( 
+						searchEmployeeFrame.getEmployeesByProfessionalRoleName(  professionalRoleName ));
 			}
 		
 		} else {
 			
-			if( professionalRoleManagerFrame != null ) {
+			if( professionalRoleManagerFrame != null ) { // Se il listener fa riferimento al combo box del professionalRoleManagerFrame
 				
 				professionalRoleManagerFrame.getTextFieldProfessionalRoleName().setText( "" );
 				professionalRoleManagerFrame.getTextAreaProfessionalDescription().setText( "" );
@@ -65,6 +88,12 @@ public class ComboBoxProfessionalRoleListener implements ItemListener {
 				professionalRoleManagerFrame.getBtnEditProfessionalRole().setEnabled( false );
 				professionalRoleManagerFrame.getBtnAddProfessionalRole().setEnabled( true );
 			
+			} else if ( searchEmployeeFrame != null ) { // Se il listener fa riferimento al combo box del searchEmployeeFrame 
+				
+				System.out.println("ComboBoxProfessionalRoleListener -> searchEmployeeFrame NOT NULL");
+				
+				searchEmployeeFrame.reloadPanelEmployeeShowDatas();
+				
 			}
 		}
 		
