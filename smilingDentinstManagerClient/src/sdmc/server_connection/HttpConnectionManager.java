@@ -10,6 +10,8 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import sdmc.settings.Setting;
+
 public class HttpConnectionManager {
 
 	// Oss.: Le costanti request che terminano con / significa che prevedono una PathVariable
@@ -28,6 +30,7 @@ public class HttpConnectionManager {
 	
 	// Request for Employee
 	public static final String GET_EMPLOYEES = "getEmployees";
+	public static final String GET_PROFESSIONAL_ROLES_ASSOCIATED_TO_ID_EMPLOYEE = "getProfessionalRolesAssociatedToIdEmployee/";
 	public static final String GET_EMPLOYEES_BY_NAME = "getEmployeesByName/";
 	public static final String GET_EMPLOYEES_BY_SURNAME = "getEmployeesBySurname/";
 	public static final String GET_EMPLOYEES_BY_PROFESSIONAL_ROLE_NAME = "getEmployeesByProfessionalRoleName/";
@@ -61,7 +64,8 @@ public class HttpConnectionManager {
 	public static final String PUT_PROFESSIONAL_ROLE_BY_ID = "putProfessionalRoleById";
 	public static final String DELETE_PROFESSIONAL_ROLE_BY_ID = "deleteProfessionalRoleById";
 	
-	private final static String URL_SERVER = "http://localhost:8080/";
+	// Prendo il server dai settings
+	// private final static String URL_SERVER = "http://localhost:8080/";
 	
 	public HttpConnectionManager() {
 
@@ -75,7 +79,7 @@ public class HttpConnectionManager {
 		int responseCode = 0;
 		try {
 			
-			URL url = new URL(URL_SERVER + getRequest );
+			URL url = new URL(Setting.getSettings().getServer() + getRequest );
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			// set properties
@@ -110,6 +114,7 @@ public class HttpConnectionManager {
 		
 		return new RequestResponse(response, responseCode);
 	}
+	
 	// ------------------------------------------------------------------------------------------------------------
 	// POST REQUEST -----------------------------------------------------------------------------------------------
 	public static RequestResponse doPost( String postRequest ) {
@@ -123,10 +128,10 @@ public class HttpConnectionManager {
 		try {
 			
 			// Check Message
-			System.out.println("HttpConnectionManaget -> DoPost --->  URL --->" + URL_SERVER + postRequest );
+			System.out.println("HttpConnectionManaget -> DoPost --->  URL --->" + Setting.getSettings().getServer() + postRequest );
 
 			
-			URL url = new URL( URL_SERVER + postRequest );
+			URL url = new URL( Setting.getSettings().getServer() + postRequest );
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			
 			conn.setRequestMethod("POST");
@@ -205,7 +210,7 @@ public class HttpConnectionManager {
 		
 		try {
 			
-			URL url = new URL( URL_SERVER + putRequest );
+			URL url = new URL( Setting.getSettings().getServer() + putRequest );
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			
 			conn.setRequestMethod("PUT");
@@ -247,7 +252,7 @@ public class HttpConnectionManager {
 		
 		try {
 			
-			URL url = new URL( URL_SERVER + deleteRequest );
+			URL url = new URL( Setting.getSettings().getServer() + deleteRequest );
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			
 			conn.setRequestMethod("DELETE");
