@@ -535,6 +535,8 @@ public class RepositoryManager implements RepositoryInterface{
 		
 		dbManager.closeConnection();
 		
+		System.out.println( "Repository Manager -> getEmployeesByProfessionalRoleName -> " + arrayListEmployees );
+				
 		return arrayListEmployees;
 	}
 
@@ -562,7 +564,6 @@ public class RepositoryManager implements RepositoryInterface{
 	public Employee getEmployeeById(String id) throws SQLException {
 
 		ResultSet rs = dbManager.getEmployeeById( id );
-		
 		
 		Employee employee =  new Employee(rs.getInt("id"), rs.getString("name"), rs.getString("surname"), 
 										rs.getString("title"), rs.getString("birth_date"), rs.getString("phone_number"), 
@@ -643,6 +644,24 @@ public class RepositoryManager implements RepositoryInterface{
 		return arrayListProfessionalRole;
 	}
 
+	@Override
+	public ArrayList<ProfessionalRole> getProfessionalRolesAssociatedToIdEmployee( String id_employee ) throws SQLException{
+		
+		ArrayList<ProfessionalRole> arrayListProfessionalRole = new ArrayList<ProfessionalRole>();
+		
+		ResultSet rs = dbManager.getProfessionalRolesAssociatedToIdEmployee( id_employee );
+		
+		while( rs.next() ) {
+			arrayListProfessionalRole.add( 
+					new ProfessionalRole(rs.getInt("id"), rs.getString("name"), rs.getString("description")) );
+		}
+		
+		dbManager.closeConnection();
+		
+		return arrayListProfessionalRole;
+		
+	}
+	
 	@Override
 	public boolean postProfessionalRole(String name) throws SQLException {
 		

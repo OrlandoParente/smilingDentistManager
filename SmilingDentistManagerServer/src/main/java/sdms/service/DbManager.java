@@ -298,7 +298,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public boolean postCustomer(String name, String surname, String phone_number) throws SQLException {
 		
-		return this.postCustomer( null , name, surname, null , null , null, null, null, null, null, null, phone_number, null, null );
+		return this.postCustomer( "" , name, surname, "" , "" , "", "", "", "", "", "", phone_number, "", "" );
 		
 		
 	}
@@ -366,7 +366,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public boolean postMedicalHistory(String id_customer, String type, String name) throws SQLException {
 		
-		return this.postMedicalHistory(id_customer, type, name, null);
+		return this.postMedicalHistory(id_customer, type, name, "");
 	}
 
 	@Override
@@ -415,7 +415,7 @@ public class DbManager implements DbManagerInterface {
 	public boolean postAppointment(String date, String time, String id_customer, String id_doctor, String id_treatment,
 			String note) throws SQLException {
 		
-		return this.postAppointment(date, time, id_customer, id_doctor, id_treatment, 0, null, note);
+		return this.postAppointment(date, time, id_customer, id_doctor, id_treatment, 0, "", note);
 	}
 
 	@Override
@@ -534,7 +534,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public boolean postTreatment(String name, String cost) throws SQLException {
 		
-		return this.postTreatment(name, null, cost);
+		return this.postTreatment(name, "", cost);
 	}
 
 	@Override
@@ -582,9 +582,13 @@ public class DbManager implements DbManagerInterface {
 		
 		this.connectIfClosed();
 		
-		return conn.createStatement().executeQuery("SELECT* FROM employee, has_professional_role, professional_role"
-													+ "WHERE employee.id = has_prefessional_role.id_employee"
-													+ "AND professional_role.id = has_professional_role.id_professional_role" );
+		return conn.createStatement().executeQuery("SELECT employee.id, employee.name, employee.surname, employee.title,"
+													+ "employee.birth_date, employee.phone_number, "
+													+ "employee.phone_number_2, employee.e_mail "
+													+ "FROM employee, has_professional_role, professional_role "
+													+ "WHERE employee.id = has_professional_role.id_employee "
+													+ "AND professional_role.id = has_professional_role.id_professional_role "
+													+ "AND professional_role.name='" + professiona_role_name + "'" );
 	}
 	
 	@Override
@@ -593,10 +597,10 @@ public class DbManager implements DbManagerInterface {
 		this.connectIfClosed();
 		
 		return conn.createStatement().executeQuery("SELECT* FROM employee WHERE "
-				+ "name LIKE '%"+ key_word + "%' OR surname OR birth_city LIKE '%"+ key_word + "%' "
-				+ "OR title LIKE '%" + key_word + "%' OR birth_date LIKE '%"+ key_word + "%' "
-				+ "OR phone_number LIKE '%"+ key_word + "%'"
-				+ "OR phone_number_2 LIKE '%"+ key_word + "%' OR e_mail LIKE '%"+ key_word + "%'");
+				+ "name LIKE '%" + key_word + "%' OR surname LIKE '%"+ key_word + "%' "
+				+ "OR title LIKE '%" + key_word + "%' OR birth_date LIKE '%" + key_word + "%' "
+				+ "OR phone_number LIKE '%" + key_word + "%' "
+				+ "OR phone_number_2 LIKE '%" + key_word + "%' OR e_mail LIKE '%" + key_word + "%'");
 	}
 
 	@Override
@@ -610,7 +614,7 @@ public class DbManager implements DbManagerInterface {
 	@Override
 	public boolean postEmployee(String name, String surname, String title, String phone_number) throws SQLException {
 		
-		return this.postEmployee(name, surname, title, null, phone_number, null, null);
+		return this.postEmployee(name, surname, title, "", phone_number, "", "");
 	}
 
 	@Override
@@ -657,17 +661,31 @@ public class DbManager implements DbManagerInterface {
 		
 		this.connectIfClosed();
 		
-		conn.createStatement();
-		
 		return conn.createStatement().executeQuery("SELECT* FROM professional_role");
 	}
+	
+	@Override
+	public ResultSet getProfessionalRolesAssociatedToIdEmployee( String id_employee ) throws SQLException{
+	
+		this.connectIfClosed();
+		
+		return conn.createStatement().executeQuery("SELECT professional_role.id, professional_role.name ,"
+													+ " professional_role.description, employee.id AS id_employee"
+													+ " FROM employee, has_professional_role, professional_role "
+													+ "WHERE professional_role.id = has_professional_role.id_professional_role "
+													+ "AND has_professional_role.id_employee = employee.id "
+													+ "AND employee.id='" + id_employee + "'");
+	
+		
+	}
+	
 
 	@Override
 	public boolean postProfessionalRole(String name) throws SQLException {
 		
 		this.connectIfClosed();
 		
-		return this.postProfessionalRole(name, null);
+		return this.postProfessionalRole(name, "");
 	}
 
 	@Override

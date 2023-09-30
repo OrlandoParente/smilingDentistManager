@@ -129,6 +129,8 @@ public interface DbManagerInterface {
 	// Gestione Professional Role ---------------------------
 	ResultSet getProfessionalRoles() throws SQLException;
 	
+	ResultSet getProfessionalRolesAssociatedToIdEmployee( String id_employee ) throws SQLException;
+	
 	boolean postProfessionalRole( String name ) throws SQLException;
 	boolean postProfessionalRole( String name, String description ) throws SQLException;
 	
