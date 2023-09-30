@@ -7,7 +7,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 import sdmc.main.MainMenuFrame;
-import sdmc.model.ProfessionalRole;
+import sdmc.professional_role_management.ProfessionalRole;
 import sdmc.server_connection.HttpConnectionManager;
 
 public class AddEmployeeActionListener implements ActionListener {
@@ -64,49 +64,7 @@ public class AddEmployeeActionListener implements ActionListener {
 			// check message
 			System.out.println("AddEmployeeActionListener ---> " + e.getActionCommand() );
 			
-			name = addEmployeeFrame.getTextFieldName().getText();
-			surname = addEmployeeFrame.getTextFieldSurname().getText();
-			title = addEmployeeFrame.getTextFieldTitle().getText();
-			birth_date = addEmployeeFrame.getTextFieldBirthDate().getText();
-			phone_number = addEmployeeFrame.getTextFieldPhoneNumber().getText();
-			phone_number_2 = addEmployeeFrame.getTextFieldPhoneNumber2().getText();
-			e_mail = addEmployeeFrame.getTextFieldEMail().getText();
-			
-			arrProfessionalRoleIds = addEmployeeFrame.getArrProfessionalRoleIds();
-			
-			// Controllo che i campi obbligatori siano riempiti ----------------------------------
-			
-			if( name == null || surname == null || phone_number == null ) {
-				
-				missEssentialFieldErrorMessage();
-				break;
-				
-			} else if ( name.equals("") || surname.equals("") || phone_number.equals("") ) {
-				
-				missEssentialFieldErrorMessage();
-				break;
-			}
-			
-			// -----------------------------------------------------------------------------------
-			
-			params = "name=" + name + "&surname=" + surname + "&title=" + title + "&birth_date=" + birth_date
-					+"&phone_number=" + phone_number + "&phone_number=" + phone_number_2 + "&e_mail="+ e_mail;
-			
-			HttpConnectionManager.doPost( HttpConnectionManager.POST_EMPLOYEE, params);
-			
-			int lastId = Integer.valueOf( HttpConnectionManager.doGet( HttpConnectionManager.GET_MAX_ID_EMPLOYEE)
-											.getResponseString().trim() );
-			
-			System.out.println("=================> " + HttpConnectionManager.doGet( HttpConnectionManager.GET_MAX_ID_EMPLOYEE)
-			.getResponseString());
-			
-			for( int i = 0; i < arrProfessionalRoleIds.length; i ++ ) {
-				if( ! isDoubleInArray( i ) ) { // Se non ha duplicati nelle posizioni successive dell'array 
-					
-					params = "id_employee=" + lastId + "&id_professional_role=" + arrProfessionalRoleIds[i];
-					HttpConnectionManager.doPost( HttpConnectionManager.POST_LINK_EMPLOYEE_TO_PROFESSIONAL_ROLE, params);
-				}
-			}
+			this.addEmployee();
 			
 			// Svuota i fields
 			addEmployeeFrame.getTextFieldName().setText("");
@@ -145,6 +103,10 @@ public class AddEmployeeActionListener implements ActionListener {
 			// check message
 			System.out.println("AddEmployeeActionListener ---> " + e.getActionCommand() );
 			
+			addEmployeeFrame.dispose();
+			
+			new SearchEmployeeFrame();
+			
 			break;
 			
 			
@@ -152,6 +114,20 @@ public class AddEmployeeActionListener implements ActionListener {
 			
 			// check message
 			System.out.println("AddEmployeeActionListener ---> " + e.getActionCommand() );
+			
+			// Oss.: In questo modo l'employee cambia id, ma dato che è un dato tecnico che non viene mai mostrato all'utente
+			// e a questo non interessa, allora posso dedurre che non è importante
+			// facendo in questo modo ( elimina, ri aggiungi ) si semplifica e snellisce notevolemente il codice
+			// perchè ci permette di non dover gestire l'update dei professional role che, non essendo un numero fisso
+			// si sarebbero dovuti gestire comunque con più di una query sql
+			
+			this.deleteEmployee();
+			
+			this.addEmployee();
+			
+			addEmployeeFrame.dispose();
+			
+			new SearchEmployeeFrame();
 			
 			break;
 			
@@ -161,7 +137,12 @@ public class AddEmployeeActionListener implements ActionListener {
 			// check message
 			System.out.println("AddEmployeeActionListener ---> " + e.getActionCommand() );
 			
-			// HttpConnectionManager.doDelete( HttpConnectionManager.DELETE_EMPLOYEE_BY_ID, "id=" DA COMPLETARE );
+			this.deleteEmployee();
+			
+			addEmployeeFrame.dispose();
+			
+			new SearchEmployeeFrame();
+			
 			
 			break;
 			
@@ -209,5 +190,63 @@ public class AddEmployeeActionListener implements ActionListener {
 		return false;
 	}
 	
+	
+	private void deleteEmployee() {
+		
+		String param = "id=" + addEmployeeFrame.getIdFromSearchEmployeeFrame();
+		
+		HttpConnectionManager.doDelete( HttpConnectionManager.DELETE_EMPLOYEE_BY_ID, param);
+		
+	}
+	
+	private void addEmployee() {
+		
+		name = addEmployeeFrame.getTextFieldName().getText();
+		surname = addEmployeeFrame.getTextFieldSurname().getText();
+		title = addEmployeeFrame.getTextFieldTitle().getText();
+		birth_date = addEmployeeFrame.getTextFieldBirthDate().getText();
+		phone_number = addEmployeeFrame.getTextFieldPhoneNumber().getText();
+		phone_number_2 = addEmployeeFrame.getTextFieldPhoneNumber2().getText();
+		e_mail = addEmployeeFrame.getTextFieldEMail().getText();
+		
+		arrProfessionalRoleIds = addEmployeeFrame.getArrProfessionalRoleIds();
+		
+		// Controllo che i campi obbligatori siano riempiti ----------------------------------
+		
+
+		if( name == null || surname == null || phone_number == null ) {
+			
+			missEssentialFieldErrorMessage();
+			
+			
+		} else if ( name.equals("") || surname.equals("") || phone_number.equals("") ) {
+			
+			missEssentialFieldErrorMessage();
+
+		} else {
+			
+			// -----------------------------------------------------------------------------------
+			
+			params = "name=" + name + "&surname=" + surname + "&title=" + title + "&birth_date=" + birth_date
+					+"&phone_number=" + phone_number + "&phone_number_2=" + phone_number_2 + "&e_mail="+ e_mail;
+			
+			HttpConnectionManager.doPost( HttpConnectionManager.POST_EMPLOYEE, params);
+			
+			int lastId = Integer.valueOf( HttpConnectionManager.doGet( HttpConnectionManager.GET_MAX_ID_EMPLOYEE)
+											.getResponseString().trim() );
+			
+			System.out.println("=================> " + HttpConnectionManager.doGet( HttpConnectionManager.GET_MAX_ID_EMPLOYEE)
+			.getResponseString());
+			
+			for( int i = 0; i < arrProfessionalRoleIds.length; i ++ ) {
+				if( ! isDoubleInArray( i ) ) { // Se non ha duplicati nelle posizioni successive dell'array 
+					
+					params = "id_employee=" + lastId + "&id_professional_role=" + arrProfessionalRoleIds[i];
+					HttpConnectionManager.doPost( HttpConnectionManager.POST_LINK_EMPLOYEE_TO_PROFESSIONAL_ROLE, params);
+				}
+			}
+		
+		}		
+	}
 
 }

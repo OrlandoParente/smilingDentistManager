@@ -42,8 +42,14 @@ public class SearchEmployeeActionListener implements ActionListener {
 			// Check Message
 			System.out.println("SearchEmployeeActionListener --> " + e.getActionCommand() );
 					
+			String keyWord = searchEmployeeFrame.getTextFieldSearchEmployee().getText();
 			
-					
+			// Per evitare eventuali problemi con il risultato delle query sql
+			if( keyWord == null ) keyWord = "";
+			
+			searchEmployeeFrame.reloadPanelEmployeeShowDatas( 
+								searchEmployeeFrame.getEmployeesByPartialKeyWordOverAllFields( keyWord ) );
+			
 			break;
 					
 					
@@ -54,7 +60,11 @@ public class SearchEmployeeActionListener implements ActionListener {
 			// Check Message
 			System.out.println("SearchEmployeeActionListener --> " + e.getActionCommand() );
 			
+			searchEmployeeFrame.reloadPanelEmployeeShowDatas();
 			
+			searchEmployeeFrame.getComboBoxProfessionalRoles().setSelectedItem( null );
+			
+			searchEmployeeFrame.getTextFieldSearchEmployee().setText("");
 			
 			break;
 			

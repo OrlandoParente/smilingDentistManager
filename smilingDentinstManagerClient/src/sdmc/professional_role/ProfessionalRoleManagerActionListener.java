@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import sdmc.main.MainMenuFrame;
-import sdmc.model.ProfessionalRole;
+import sdmc.professional_role_management.ProfessionalRole;
 import sdmc.server_connection.HttpConnectionManager;
 import sdmc.server_connection.RequestResponse;
 

@@ -19,9 +19,9 @@ import javax.swing.JTextField;
 
 import org.json.JSONObject;
 
-import sdmc.model.ComboBoxProfessionalRoleListener;
-import sdmc.model.ComboBoxProfessionaleRoleRenderer;
-import sdmc.model.ProfessionalRole;
+import sdmc.professional_role_management.ComboBoxProfessionalRoleListener;
+import sdmc.professional_role_management.ComboBoxProfessionaleRoleRenderer;
+import sdmc.professional_role_management.ProfessionalRole;
 import sdmc.settings.Setting;
 import sdmc.utils.ButtonJsonKey;
 import sdmc.utils.Utils;

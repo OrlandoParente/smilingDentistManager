@@ -23,9 +23,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import sdmc.main.MainMenuFrame;
-import sdmc.model.ComboBoxProfessionalRoleListener;
-import sdmc.model.ComboBoxProfessionaleRoleRenderer;
-import sdmc.model.ProfessionalRole;
+import sdmc.professional_role_management.ComboBoxProfessionalRoleListener;
+import sdmc.professional_role_management.ComboBoxProfessionaleRoleRenderer;
+import sdmc.professional_role_management.ProfessionalRole;
 import sdmc.server_connection.HttpConnectionManager;
 import sdmc.server_connection.RequestResponse;
 import sdmc.settings.Setting;
@@ -100,29 +100,65 @@ public class AddEmployeeFrame extends JFrame {
 	// -------------------------------
 	
 	//
-	private String id;
-	private String name;
-	private String surname; 
-	private String title;   // e.g. Dott. , Dott.ssa, Sig. , Sig.ra , Sig.na,
-	private String birthDate;
-	private String phoneNumber;
-	private String phoneNumber2; // Generalmente telefono di casa
-	private String eMail;
-	
+	private String idFromSearchEmployeeFrame;
+
 			
 	// COSTRUTTORE SECONDARIO, per accedervi da SearchEmployeeFrame		
 	public AddEmployeeFrame(String id, 	String name, String surname, String title, String birthDate, 
-							String phoneNumber, String phoneNumber2, String eMail) {
+							String phoneNumber, String phoneNumber2, String eMail, int [] arrProfessionalRoleIds) {
 		
 		this();
 		
-		this.id = id;
-		this.name = name;
-		this.surname = surname;
-		this.birthDate = birthDate;
-		this.phoneNumber = phoneNumber;
-		this.phoneNumber2 = phoneNumber2;
-		this.eMail = eMail;
+		this.idFromSearchEmployeeFrame = id;
+		textFieldName.setText( name );
+		textFieldSurname.setText( surname );
+		textFieldBirthDate.setText( birthDate ); 
+		textFieldPhoneNumber.setText( phoneNumber );
+		textFieldPhoneNumber2.setText( phoneNumber2 );
+		textFieldEMail.setText(  eMail );
+		this.arrProfessionalRoleIds = arrProfessionalRoleIds;
+		
+		this.insertProfessionalRolePanelsInProfessionalRolesContainer( arrProfessionalRoleIds );
+		
+		// PANEL BOTTM MENU -----------------------------------------------------------
+		
+		// già impostato dal costruttore principale
+		// panelBottomMenu = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
+
+		// ripulisce il panel dai pulsanti messi dal costruttore principale
+		panelBottomMenu.removeAll();
+		
+		btnBackToSearchEmployee = new JButton( btnNames.getString( ButtonJsonKey.BTN_BACK ) );
+		btnBackToSearchEmployee.addActionListener( listener );
+		btnBackToSearchEmployee.setActionCommand( AddEmployeeActionListener.BACK_TO_SEARCH_EMPLOYEE );
+				
+		btnEdit = new JButton( btnNames.getString( ButtonJsonKey.BTN_EDIT ) );
+		btnEdit.addActionListener( listener );
+		btnEdit.setActionCommand( AddEmployeeActionListener.EDIT_EMPLOYEE );
+		
+		btnDelete= new JButton( btnNames.getString( ButtonJsonKey.BTN_DELETE ) );
+		btnDelete.addActionListener( listener );
+		btnDelete.setActionCommand( AddEmployeeActionListener.DELETE_EMPLOYEE );
+		btnDelete.setBackground( Color.RED );
+		
+		
+		btnAddNewProfessionalRole = new JButton( btnNames.getString( ButtonJsonKey.BTN_ADD_NEW_PROFESSIONAL_ROLE ) );
+		btnAddNewProfessionalRole.addActionListener( listener );
+		btnAddNewProfessionalRole.setActionCommand( AddEmployeeActionListener.ADD_NEW_PROFESSIONAL_ROLE );
+				
+		panelBottomMenu.add( btnBackToSearchEmployee );
+		panelBottomMenu.add( btnEdit );
+		panelBottomMenu.add( btnDelete );
+		panelBottomMenu.add( btnAddNewProfessionalRole );
+			
+		// Ricarica la grafica sul panel bottom menu
+		panelBottomMenu.revalidate();
+		panelBottomMenu.repaint();
+		// c.add( panelBottomMenu , BorderLayout.SOUTH );
+				
+		// -----------------------------------------------------------------------------
+				
+		
 		
 	}
 			
@@ -296,6 +332,73 @@ public class AddEmployeeFrame extends JFrame {
 		this.isInitializeProfessionalRoleLogic = false;
 		
 		this.insertProfessionalRolePanelsInProfessionalRolesContainer();
+	}
+	
+	// Popola il panel dei combo box professional role partento dall'array di partenza
+	// Usato per popolare i combo box dalla chiamata dal SearchEmployeeFrame -> Edit Employee
+	private void insertProfessionalRolePanelsInProfessionalRolesContainer( int [] arrProfessionalRoleIds ) {
+		
+		// reset Professional Roles Panel
+		panelProfessionalRolesContainer.removeAll();
+		
+		numProfessionalRole = arrProfessionalRoleIds.length;
+		
+		for( int i = 0; i < numProfessionalRole ; i ++ ) {
+			
+			JLabel labelProfessionalRole = new JLabel(" PROFESSIONAL ROLE : ");
+			ProfessionalRole arrProfessionalRoles [] = ProfessionalRole.getProfessionalRoleArray();
+			
+			JComboBox<ProfessionalRole> comboBoxSelectProfessionalRole = new JComboBox<ProfessionalRole>( arrProfessionalRoles  );
+		
+			// Serve a inserire nel combo Box solo il nome del Professional Role
+			comboBoxSelectProfessionalRole.setRenderer( new ComboBoxProfessionaleRoleRenderer() );
+			comboBoxSelectProfessionalRole.addActionListener( listener );
+			comboBoxSelectProfessionalRole.setActionCommand( i + "");
+			
+			// ------ Cerca il Professional Role selezionato per impostarlo nell combo box ----------------
+			
+			ProfessionalRole selectedProfessionalRole = null;
+			for( int j = 0; j < arrProfessionalRoles.length ; j ++ ) {
+				if( arrProfessionalRoles[j].getId() == arrProfessionalRoleIds[i] ) {
+					selectedProfessionalRole = arrProfessionalRoles[j];
+					break;
+				}
+				
+			}
+			
+			// --------------------------------------------------------------------------------------------
+
+			comboBoxSelectProfessionalRole.setSelectedItem( selectedProfessionalRole );
+
+			
+			
+			
+			JButton btnDeleteProfessionalRolePanel = new JButton( btnNames.getString( ButtonJsonKey.BTN_DELETE ) );
+			btnDeleteProfessionalRolePanel.addActionListener( listener );
+			btnDeleteProfessionalRolePanel.setActionCommand( AddEmployeeActionListener.DELETE_A_PROFESSIONAL_ROLE_PANEL );
+			btnDeleteProfessionalRolePanel.setBackground( Color.RED );
+			
+			// Un dipendente deve avere almeno un professional role
+			if( i == 0 )
+				btnDeleteProfessionalRolePanel.setEnabled( false );
+		
+			JPanel panelProfessionalRole = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
+			
+			panelProfessionalRole.add( labelProfessionalRole );
+			panelProfessionalRole.add( comboBoxSelectProfessionalRole );
+			panelProfessionalRole.add( btnDeleteProfessionalRolePanel );
+			
+			panelProfessionalRolesContainer.add( panelProfessionalRole );
+			
+			
+		}
+
+		
+		// "disegna" i componenti 
+		panelProfessionalRolesContainer.revalidate();
+		panelProfessionalRolesContainer.repaint();
+		
+		
 	}
 	
 	// Popola il panel dei combo box professional roles con quanti richiesti, inizialmente 1
@@ -501,5 +604,7 @@ public class AddEmployeeFrame extends JFrame {
 		return textFieldEMail;
 	}
 	
-	
+	public String getIdFromSearchEmployeeFrame() {
+		return idFromSearchEmployeeFrame;
+	}	
 }
