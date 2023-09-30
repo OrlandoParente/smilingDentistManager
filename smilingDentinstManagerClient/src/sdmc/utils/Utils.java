@@ -80,6 +80,38 @@ public class Utils {
 		
 	}
 	
+	/*
+	 * Addatta una stringa per essere passata tramite url,
+	 * ovvero toglie gli spazi a dx e a sx e sostituisce gli spazi centrali con %20
+	 */
+	public static String adaptStrToUrlEncoding( String str ) {
+		
+		String firstPart;
+		String secondPart;
+		String space = "%20";
+		
+		// toglie eventuali spazi a dx e a sx della str
+		str.trim();
+		
+		for( int i = 0; i < str.length(); i ++ ) {
+			
+			if( str.charAt( i ) == ' ' ) {
+				firstPart = str.substring(0, i );
+				secondPart = str.substring( i + 1);
+				
+				str = firstPart + space + secondPart;
+				
+				i += 2; // salta i caratteri "%20" appena inseriti
+				
+			}
+			
+		}
+		
+		// check message
+		System.out.println("Utils -> adaptStrToUrlEncoding -> outputStr -> " + str );
+		
+		return str;
+	}
 	
 	
 }
