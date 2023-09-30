@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,6 +43,27 @@ public class ProfessionalRoleRestController {
 		
 	}
 
+	@GetMapping("/getProfessionalRolesAssociatedToIdEmployee/{id_employee}")
+	public ArrayList<ProfessionalRole> getProfessionalRolesAssociatedToIdEmployee( @PathVariable String id_employee ){
+		
+		// Stampa di controllo
+		System.out.println("ProfessionalRoleRestController --> getProfessionalRolesAssociatedToIdEmployee ");
+		 
+		try {
+			
+			return repository.getProfessionalRolesAssociatedToIdEmployee( id_employee );
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
+
+	
+	
+	
 	@PostMapping( value="/postProfessionalRole" , params= {"name"} )
 	public boolean postProfessionalRole( @RequestParam("name") String name ) {
 		

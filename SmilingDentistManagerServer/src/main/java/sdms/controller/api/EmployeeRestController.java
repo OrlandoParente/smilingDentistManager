@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sdms.model.Employee;
@@ -95,17 +97,18 @@ public class EmployeeRestController {
 		
 	}
 	
+	// :[a-zA-Z &+-]* serve per accettare lo spazio
+	@RequestMapping("/getEmployeesByProfessionalRoleName/{professional_role_name}")
 	
-	@GetMapping("/getEmployeesByProfessionalRoleName/{professional_role_name}")
-	public ArrayList<Employee> getEmployeesByProfessionalRoleName( @PathVariable String professional_role_name){
+	public ArrayList<Employee> getEmployeesByProfessionalRoleName( @PathVariable("professional_role_name") String professional_role_name){
 		
 		// Messaggio di controllo
-		System.out.println("EmployeeRestController --> getEmployeesByProfessionalRoleName ");
+		System.out.println("EmployeeRestController --> getEmployeesByProfessionalRoleName -> " + professional_role_name );
 		
 		ArrayList<Employee> employees = null;
 		
 		try {
-			employees = repository.getEmployeesByName(professional_role_name);
+			employees = repository.getEmployeesByProfessionalRoleName(professional_role_name);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -113,18 +116,20 @@ public class EmployeeRestController {
 		return employees;
 		
 	}
+
+
 	
 	
 	@GetMapping("/getEmployeesByPartialKeyWordOverAllFields/{key_word}")
 	public ArrayList<Employee> getEmployeesByPartialKeyWordOverAllFields( @PathVariable String key_word ){
 		
 		// Messaggio di controllo
-		System.out.println("EmployeeRestController --> getEmployeesByPartialKeyWordOverAllFields ");
+		System.out.println("EmployeeRestController --> getEmployeesByPartialKeyWordOverAllFields -> key_word -> " + key_word );
 		
 		ArrayList<Employee> employees = null;
 		
 		try {
-			employees = repository.getEmployeesByName( key_word );
+			employees = repository.getEmployeesByPartialKeyWordOverAllFields( key_word );
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -145,7 +150,7 @@ public class EmployeeRestController {
 		Employee employee = null;
 		
 		try {
-			repository.getEmployeeById( id );
+			employee = repository.getEmployeeById( id );
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
