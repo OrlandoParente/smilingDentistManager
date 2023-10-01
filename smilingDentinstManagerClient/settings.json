@@ -3,6 +3,7 @@
 	"labelsLanguageFile" : "",
 	"frameTitlesLanguageFile" : "",
 	"jOptionMessageLanguageFile" : "",
+	"monthsLanguageFile":"month_strings_it.json",
 	
 	"server":"http://localhost:8080/"
 }

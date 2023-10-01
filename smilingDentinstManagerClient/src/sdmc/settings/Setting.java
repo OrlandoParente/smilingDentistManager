@@ -14,6 +14,7 @@ public class Setting {
 	private String labelsLanguageFile;				// Ancora non implementato
 	private String frameTitlesLanguageFile;			// Ancora non implementato
 	private String jOptionMessageLanguageFile;		// Ancora non implementato
+	private String monthsLanguageFile;
 	
 	private String server;
 	
@@ -27,6 +28,7 @@ public class Setting {
 	private static final String JSON_KEY_LABELS_LANGUAGE_FILE = "labelsLanguageFile";
 	private static final String JSON_KEY_FRAME_TITLES_LANGUAGE_FILE = "frameTitlesLanguageFile";
 	private static final String JSON_KEY_J_OPTION_MESSAGE_LANGUAGE_FILE = "jOptionMessageLanguageFile";
+	private static final String JSON_KEY_MONTHS_LANGUAGE_FILE = "monthsLanguageFile";
 	
 	private static final String JSON_KEY_SERVER = "server";
 	
@@ -61,7 +63,8 @@ public class Setting {
 		this.setLabelsLanguageFile( joSettings.getString( Setting.JSON_KEY_LABELS_LANGUAGE_FILE ) );
 		this.setFrameTitlesLanguageFile( joSettings.getString( Setting.JSON_KEY_FRAME_TITLES_LANGUAGE_FILE) );
 		this.setjOptionMessageLanguageFile( joSettings.getString( Setting.JSON_KEY_J_OPTION_MESSAGE_LANGUAGE_FILE) );
-		this.setServer( joSettings.getString( JSON_KEY_SERVER ));
+		this.setMonthsLanguageFile( joSettings.getString( JSON_KEY_MONTHS_LANGUAGE_FILE ));
+		this.setServer( joSettings.getString( Setting.JSON_KEY_SERVER ));
 		
 		// Check Message
 		System.out.print("\n \n SETTINGS : \n BTNS_LANGUAGE_FILE = " + btnsLanguageFile 
@@ -125,6 +128,14 @@ public class Setting {
 
 	public void setjOptionMessageLanguageFile(String jOptionMessageLanguageFile) {
 		this.jOptionMessageLanguageFile = jOptionMessageLanguageFile;
+	}
+
+	public String getMonthsLanguageFile() {
+		return monthsLanguageFile;
+	}
+
+	public void setMonthsLanguageFile(String monthsLanguageFile) {
+		this.monthsLanguageFile = monthsLanguageFile;
 	}
 
 	public String getServer() {
