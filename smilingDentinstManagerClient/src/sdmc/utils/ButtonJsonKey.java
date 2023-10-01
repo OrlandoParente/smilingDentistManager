@@ -17,7 +17,12 @@ public final class ButtonJsonKey {
 	public final static String MAIN_MENU_PROFESSIONAL_ROLE_MANAGER = "btnProfessionalRoleManager";
 	
 	// Bottoni addEmployeeFrame
-	public final static String BTN_ADD_NEW_PROFESSIONAL_ROLE = "btnAddNewProfessionalRole";
+	public final static String EMPLOYEE_BTN_ADD_NEW_PROFESSIONAL_ROLE = "btnAddNewProfessionalRole";
+	
+	// Bottoni calnedarFrame
+	public final static String CALENDAR_BTN_ADD_APPOINTMENT = "btnAddAppointment";
+	public final static String CALENDAR_BTN_PREV_DAY = "btnPrevDay";
+	public final static String CALENDAR_BTN_NEXT_DAT = "btnNextDay";
 	
 	// Bottoni generali
 	public final static String BTN_MAIN_MENU = "btnMainMenu";
