@@ -1,11 +1,9 @@
-package sdmc.professional_role_management;
+package sdmc.combo_box_management.professional_role;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import sdmc.employee.SearchEmployeeFrame;
 import sdmc.professional_role.ProfessionalRoleManagerFrame;

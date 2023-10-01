@@ -1,10 +1,11 @@
-package sdmc.professional_role_management;
+package sdmc.combo_box_management.professional_role;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import sdmc.combo_box_management.customer.Customer;
 import sdmc.server_connection.HttpConnectionManager;
 import sdmc.server_connection.RequestResponse;
 
@@ -28,7 +29,7 @@ public class ProfessionalRole {
 	// Recupera la lista dei professional roles presenti nel db
 	public static ProfessionalRole []  getProfessionalRoleArray() {
 		
-		RequestResponse response = HttpConnectionManager.doGet("getProfessionalRoles");
+		RequestResponse response = HttpConnectionManager.doGet( HttpConnectionManager.GET_PROFESSIONAL_ROLES );
 		
 		// Messaggio di controllo
 		System.out.println( "ProfessionalRole -> getProfessionalRoleArray -> responseCode ---> " + response.getResponseCode() );
@@ -74,6 +75,23 @@ public class ProfessionalRole {
 		return newArr;
 	}
 	
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if( obj instanceof ProfessionalRole ) {
+			
+			ProfessionalRole professionalRole = (ProfessionalRole) obj;
+		
+			if( this.getId() == professionalRole.getId() )
+				return true;
+		}
+		
+		return false;
+	}
+	
+	
+	// GETTERS AND SETTERS
 	
 	public int getId() {
 		return id;
