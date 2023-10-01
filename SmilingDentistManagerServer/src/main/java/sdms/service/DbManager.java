@@ -188,7 +188,7 @@ public class DbManager implements DbManagerInterface {
 										+ "PRIMARY KEY(date, time, id_customer),"
 										+ "FOREIGN KEY(id_doctor) REFERENCES employee(id),"
 										+ "FOREIGN KEY(id_customer) REFERENCES customer(id)"
-										+ "FOREIGN KEY(id_treatment) REFERENCES tretment(id)"
+										+ "FOREIGN KEY(id_treatment) REFERENCES treatment(id)"
 										+ ")");
 		
 		/*
@@ -392,7 +392,7 @@ public class DbManager implements DbManagerInterface {
 		
 		this.connectIfClosed();
 		
-		return conn.createStatement().executeQuery("SELECT* FROM appointment");
+		return conn.createStatement().executeQuery("SELECT* FROM appointment ORDER BY time");
 	}
 
 	@Override
