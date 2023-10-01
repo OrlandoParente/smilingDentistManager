@@ -19,9 +19,9 @@ import javax.swing.JTextField;
 
 import org.json.JSONObject;
 
-import sdmc.professional_role_management.ComboBoxProfessionalRoleListener;
-import sdmc.professional_role_management.ComboBoxProfessionaleRoleRenderer;
-import sdmc.professional_role_management.ProfessionalRole;
+import sdmc.combo_box_management.ComboBoxRenderer;
+import sdmc.combo_box_management.professional_role.ComboBoxProfessionalRoleListener;
+import sdmc.combo_box_management.professional_role.ProfessionalRole;
 import sdmc.settings.Setting;
 import sdmc.utils.ButtonJsonKey;
 import sdmc.utils.Utils;
@@ -115,7 +115,7 @@ public class ProfessionalRoleManagerFrame extends JFrame {
 		
 		comboBoxSelectProfessionalRole = new JComboBox<ProfessionalRole>(  ProfessionalRole.getProfessionalRoleArrayWithFirstNull() );
 		// Serve a inserire nel combo Box solo il nome del Professional Role
-		comboBoxSelectProfessionalRole.setRenderer( new ComboBoxProfessionaleRoleRenderer() );
+		comboBoxSelectProfessionalRole.setRenderer( new ComboBoxRenderer() );
 		comboBoxSelectProfessionalRole.addItemListener( comboBoxProfessionalRoleListener );
 		
 		panelSelectProfessionalRole.add( labelSelectProfessionalRole );

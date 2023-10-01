@@ -22,10 +22,10 @@ import javax.swing.JTextField;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import sdmc.combo_box_management.ComboBoxRenderer;
+import sdmc.combo_box_management.professional_role.ComboBoxProfessionalRoleListener;
+import sdmc.combo_box_management.professional_role.ProfessionalRole;
 import sdmc.main.MainMenuFrame;
-import sdmc.professional_role_management.ComboBoxProfessionalRoleListener;
-import sdmc.professional_role_management.ComboBoxProfessionaleRoleRenderer;
-import sdmc.professional_role_management.ProfessionalRole;
 import sdmc.server_connection.HttpConnectionManager;
 import sdmc.server_connection.RequestResponse;
 import sdmc.settings.Setting;
@@ -112,6 +112,7 @@ public class AddEmployeeFrame extends JFrame {
 		this.idFromSearchEmployeeFrame = id;
 		textFieldName.setText( name );
 		textFieldSurname.setText( surname );
+		textFieldTitle.setText( title );
 		textFieldBirthDate.setText( birthDate ); 
 		textFieldPhoneNumber.setText( phoneNumber );
 		textFieldPhoneNumber2.setText( phoneNumber2 );
@@ -142,7 +143,7 @@ public class AddEmployeeFrame extends JFrame {
 		btnDelete.setBackground( Color.RED );
 		
 		
-		btnAddNewProfessionalRole = new JButton( btnNames.getString( ButtonJsonKey.BTN_ADD_NEW_PROFESSIONAL_ROLE ) );
+		btnAddNewProfessionalRole = new JButton( btnNames.getString( ButtonJsonKey.EMPLOYEE_BTN_ADD_NEW_PROFESSIONAL_ROLE ) );
 		btnAddNewProfessionalRole.addActionListener( listener );
 		btnAddNewProfessionalRole.setActionCommand( AddEmployeeActionListener.ADD_NEW_PROFESSIONAL_ROLE );
 				
@@ -193,7 +194,7 @@ public class AddEmployeeFrame extends JFrame {
 		btnAdd.addActionListener( listener );
 		btnAdd.setActionCommand( AddEmployeeActionListener.ADD_EMPLOYEE );
 		
-		btnAddNewProfessionalRole = new JButton( btnNames.getString( ButtonJsonKey.BTN_ADD_NEW_PROFESSIONAL_ROLE ) );
+		btnAddNewProfessionalRole = new JButton( btnNames.getString( ButtonJsonKey.EMPLOYEE_BTN_ADD_NEW_PROFESSIONAL_ROLE ) );
 		btnAddNewProfessionalRole.addActionListener( listener );
 		btnAddNewProfessionalRole.setActionCommand( AddEmployeeActionListener.ADD_NEW_PROFESSIONAL_ROLE );
 		
@@ -351,7 +352,7 @@ public class AddEmployeeFrame extends JFrame {
 			JComboBox<ProfessionalRole> comboBoxSelectProfessionalRole = new JComboBox<ProfessionalRole>( arrProfessionalRoles  );
 		
 			// Serve a inserire nel combo Box solo il nome del Professional Role
-			comboBoxSelectProfessionalRole.setRenderer( new ComboBoxProfessionaleRoleRenderer() );
+			comboBoxSelectProfessionalRole.setRenderer( new ComboBoxRenderer() );
 			comboBoxSelectProfessionalRole.addActionListener( listener );
 			comboBoxSelectProfessionalRole.setActionCommand( i + "");
 			
@@ -431,7 +432,7 @@ public class AddEmployeeFrame extends JFrame {
 			arrProfessionalRoleIds[i] = arrProfessionalRoles[0].getId();
 			
 			// Serve a inserire nel combo Box solo il nome del Professional Role
-			comboBoxSelectProfessionalRole.setRenderer( new ComboBoxProfessionaleRoleRenderer() );
+			comboBoxSelectProfessionalRole.setRenderer( new ComboBoxRenderer() );
 			
 			comboBoxSelectProfessionalRole.addActionListener( listener );
 			comboBoxSelectProfessionalRole.setActionCommand( i + "");

@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
+import sdmc.combo_box_management.professional_role.ProfessionalRole;
 import sdmc.main.MainMenuFrame;
-import sdmc.professional_role_management.ProfessionalRole;
 import sdmc.server_connection.HttpConnectionManager;
 
 public class AddEmployeeActionListener implements ActionListener {

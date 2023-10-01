@@ -19,9 +19,9 @@ import javax.swing.JTextField;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import sdmc.professional_role_management.ComboBoxProfessionalRoleListener;
-import sdmc.professional_role_management.ComboBoxProfessionaleRoleRenderer;
-import sdmc.professional_role_management.ProfessionalRole;
+import sdmc.combo_box_management.ComboBoxRenderer;
+import sdmc.combo_box_management.professional_role.ComboBoxProfessionalRoleListener;
+import sdmc.combo_box_management.professional_role.ProfessionalRole;
 import sdmc.server_connection.HttpConnectionManager;
 import sdmc.settings.Setting;
 import sdmc.utils.ButtonJsonKey;
@@ -92,7 +92,7 @@ public class SearchEmployeeFrame extends JFrame{
 		
 		comboBoxProfessionalRoles = new JComboBox<ProfessionalRole>( ProfessionalRole.getProfessionalRoleArrayWithFirstNull() ); 
 		// Per mostrare solo il nome del Professional Role
-		comboBoxProfessionalRoles.setRenderer( new ComboBoxProfessionaleRoleRenderer() );
+		comboBoxProfessionalRoles.setRenderer( new ComboBoxRenderer() );
 		comboBoxProfessionalRoles.addItemListener( comboBoxProfessionalRoleListener );
 		
 		panelTopMenu.add( btnMainMenu );
