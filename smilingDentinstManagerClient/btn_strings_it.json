@@ -9,6 +9,10 @@
 	"btnProfessionalRoleManager":"GESTIONE RUOLI PROFESSIONALI",
 	"btnSetttings" : "IMPOSTAZIONI",
 	
+	"btnAddAppointment":"AGGIUNGI APPUNTAMENTO",
+	"btnPrevDay":"INDIETRO",
+	"btnNextDay":"AVANTI",
+	
 	"btnMainMenu" : "MAIN MENU",
 	"btnSearch" : "CERCA",
 	"btnAdd" : "AGGIUNGI",
