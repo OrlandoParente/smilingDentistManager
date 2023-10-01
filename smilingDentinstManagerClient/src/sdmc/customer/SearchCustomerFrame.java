@@ -208,7 +208,7 @@ public class SearchCustomerFrame extends JFrame {
 	public JSONObject getCustomer( String id ) {
 		
 		JSONObject customer = new JSONObject();
-		RequestResponse response = HttpConnectionManager.doGet( "getCustomer/" + id );
+		RequestResponse response = HttpConnectionManager.doGet( HttpConnectionManager.GET_CUSTOMER_BY_ID + id );
 		
 		if( response.getResponseCode() ==  RequestResponse.CONNECTION_REFUSED ) {
 
