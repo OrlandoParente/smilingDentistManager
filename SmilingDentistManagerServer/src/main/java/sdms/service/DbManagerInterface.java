@@ -75,7 +75,7 @@ public interface DbManagerInterface {
 	
 	// set is_done = 0
 	boolean putUnsetAppointmentDoneById( String date, String time, String id_customer ) throws SQLException;
-	
+
 	boolean putAppointmentBillNumberById( String date, String time, String id_customer, String bill_number ) throws SQLException;
 	
 	boolean putAppointmentNoteById( String date, String time, String id_customer, String note ) throws SQLException;
