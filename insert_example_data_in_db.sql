@@ -138,38 +138,38 @@ VALUES ('Pulizia dei denti', 'Toglie il tartaro', '50');
 
 /* APPOINTMENT */ 
 INSERT INTO appointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note)
-VALUES ('2023-9-30', '18:00', '1', '1', null, '0', '', '');
+VALUES ('2023-9-30', '18:00', '1', '1', '1', '0', '', '');
 
 
 INSERT INTO appointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note)
-VALUES ('2023-9-30', '12:00', '2', '1', null, '1', '', '');
+VALUES ('2023-9-30', '12:00', '2', '1', '1', '1', '', '');
 
 INSERT INTO appointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note)
-VALUES ('2023-10-1', '12:00', '3', '1', null, '0', '', '');
+VALUES ('2023-10-26', '12:00', '3', '1', '1', '0', '', '');
 
 INSERT INTO appointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note)
-VALUES ('2023-10-1', '18:00', '4', '1', null, '0', '', '');
-
-
-INSERT INTO appointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note)
-VALUES ('2023-10-25', '12:00', '1', '1', null, '1', '', '');
-
-INSERT INTO appointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note)
-VALUES ('2023-10-30', '18:00', '2', '1', null, '0', '', '');
+VALUES ('2023-10-20', '18:00', '4', '1', '1', '0', '', '');
 
 
 INSERT INTO appointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note)
-VALUES ('2023-10-30', '12:00', '2', '1', null, '1', '', '');
+VALUES ('2023-10-25', '12:00', '1', '1', '1', '1', '', '');
 
 INSERT INTO appointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note)
-VALUES ('2023-11-15', '12:00', '5', '1', null, '0', '', '');
-
-INSERT INTO appointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note)
-VALUES ('2023-12-1', '18:00', '6', '1', null, '0', '', '');
+VALUES ('2023-10-22', '18:00', '2', '1', '1', '0', '', '');
 
 
 INSERT INTO appointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note)
-VALUES ('2023-12-15', '12:00', '7', '1', null, '1', '', '');
+VALUES ('2023-10-30', '12:00', '2', '1', '1', '1', '', '');
+
+INSERT INTO appointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note)
+VALUES ('2023-11-22', '12:00', '5', '1', '1', '0', '', '');
+
+INSERT INTO appointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note)
+VALUES ('2023-12-20', '18:00', '6', '1', '1', '0', '', '');
+
+
+INSERT INTO appointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note)
+VALUES ('2023-12-25', '12:00', '7', '1', '1', '1', '', '');
 
 
 
