@@ -1,0 +1,8 @@
+{
+	"customerDataSuccessfulEdited" : "Customer data successful edited",
+	"serverConnectionFailed" : "Server connection failed",
+	"customerSuccessfulDeleted" : "Customer successful deleted",
+	"errorEmptyFieldName" : "NAME field can't be empty",
+	"errorMissEssentialFields" : "Name, surname and phone number are mandatory",
+	"newCustomerAdded" : "Customer successful added"
+}

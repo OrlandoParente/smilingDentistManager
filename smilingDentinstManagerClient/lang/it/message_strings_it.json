@@ -1,0 +1,8 @@
+{
+	"customerDataSuccessfulEdited" : "Dati cliente modificati  con successo",
+	"serverConnectionFailed" : "Connessione con il server non riuscita",
+	"customerSuccessfulDeleted" : "Cliente eliminato con successo",
+	"errorEmptyFieldName" : "NOME non può essere vuoto",
+	"errorMissEssentialFields" : "Nome, cognome e numero di telefono sono campi obbligatori",
+	"newCustomerAdded" : "Nuovo cliente inserito"
+}

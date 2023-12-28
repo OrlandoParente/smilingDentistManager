@@ -1,0 +1,11 @@
+{
+	"frameTitleMainMenu" : "MAIN MENU",
+	"frameTitleCalendar" : "CALENDAR",
+	"frameTitleAddNewCustomer" : "ADD NEW CUSTOMER",
+	"frameTitleSearchCustomer" : "SEARCH CUSTOMER",
+	"frameTitleAddEmployee" : "ADD EMPLOYEE",
+	"frameTitleSearchEmployee" : "SEARCH EMPLOYEE",
+	"frameTitleProfessionalRoleManager" : "PROFESSIONAL ROLE MANAGER",
+	"frameTitleSettings" : "SETTINGS"
+	
+}

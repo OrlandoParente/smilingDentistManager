@@ -20,6 +20,9 @@
 	"btnEdit":"MODIFICA",
 	"btnBack":"INDIETRO",
 	"btnResetSearch":"ANNULLA RICERCA",
-	"btnAddNewProfessionalRole":"AGGIUNGI RUOLO PROFESSIONALE"
+	"btnAddNewProfessionalRole":"AGGIUNGI RUOLO PROFESSIONALE",
+	"btnUploadDb" : "UPLOAD DB",
+	"btnDownloadDb" : "DOWNLOAD DB",
+	"btnSave" : "SALVA"
 
 }

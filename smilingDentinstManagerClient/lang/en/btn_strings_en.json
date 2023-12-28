@@ -1,0 +1,28 @@
+{
+	"btnCalendar": "CALENDAR",
+	"btnAddCustomer" : "CUSTOMER",
+	"btnSearchCustomer" : "SEARCH CUSTOMER",
+	"btnAddEmployee" : "ADD EMPLOYEE",
+	"btnSearchEmployee" : "SEARCH EMPLOYEE",
+	"btnUploadDatabase" : "UPLOAD DATABASE",
+	"btnDownloadDatabase" : "DOWNLOAD DATABASE",
+	"btnProfessionalRoleManager":"EDIT PROFESSIONAL ROLE MANAGER",
+	"btnSetttings" : "SETTINGS",
+	
+	"btnAddAppointment":"ADD APPOINTMENT",
+	"btnPrevDay":"BACK",
+	"btnNextDay":"NEXT",
+	
+	"btnMainMenu" : "MAIN MENU",
+	"btnSearch" : "SEARCH",
+	"btnAdd" : "ADD",
+	"btnDelete":"DELETE",
+	"btnEdit":"EDIT",
+	"btnBack":"BACK",
+	"btnResetSearch":"RESET SEARCH",
+	"btnAddNewProfessionalRole":"ADD PROFESSIONAL ROLE",
+	"btnUploadDb" : "UPLOAD DB",
+	"btnDownloadDb" : "DOWNLOAD DB",
+	"btnSave" : "SAVE"
+
+}

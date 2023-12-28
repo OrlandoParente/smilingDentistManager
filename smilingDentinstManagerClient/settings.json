@@ -1,9 +1,1 @@
-{
-	"btnsLanguageFile" : "btn_strings_it.json",
-	"labelsLanguageFile" : "",
-	"frameTitlesLanguageFile" : "",
-	"jOptionMessageLanguageFile" : "",
-	"monthsLanguageFile":"month_strings_it.json",
-	
-	"server":"http://localhost:8080/"
-}
+{"server" : "http://localhost:8080/" , "languageCode" : "en" }

@@ -1,0 +1,11 @@
+{
+	"frameTitleMainMenu" : "MAIN MENU",
+	"frameTitleCalendar" : "CALENDARIO",
+	"frameTitleAddNewCustomer" : "AGGIUNGI NUOVO CLIENTE",
+	"frameTitleSearchCustomer" : "CERCA CLIENTE",
+	"frameTitleAddEmployee" : "AGGIUNGI IMPIEGATO",
+	"frameTitleSearchEmployee" : "CERCA IMPIEGATO",
+	"frameTitleProfessionalRoleManager" : "GESTIONE RUOLO PROFESSIONALE",
+	"frameTitleSettings" : "IMPOSTAZIONI"
+	
+}
