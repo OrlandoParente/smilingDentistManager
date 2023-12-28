@@ -32,5 +32,8 @@ public final class ButtonJsonKey {
 	public final static String BTN_DELETE = "btnDelete";
 	public final static String BTN_BACK = "btnBack";
 	public final static String BTN_RESET_SEARCH = "btnResetSearch";
+	public final static String 	BTN_UPLOAD_DB = "btnUploadDb";
+	public final static String 	BTN_DOWNLOAD_DB = "btnDownloadDb";
+	public final static String BTN_SAVE = "btnSave";
 	
 }
