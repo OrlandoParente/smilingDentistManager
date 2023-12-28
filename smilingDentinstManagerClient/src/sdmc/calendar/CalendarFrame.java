@@ -25,6 +25,7 @@ import sdmc.server_connection.HttpConnectionManager;
 import sdmc.server_connection.RequestResponse;
 import sdmc.settings.Setting;
 import sdmc.utils.ButtonJsonKey;
+import sdmc.utils.FrameTitleJsonKey;
 import sdmc.utils.Utils;
 
 public class CalendarFrame extends JFrame {
@@ -60,7 +61,7 @@ public class CalendarFrame extends JFrame {
 	public CalendarFrame(  ){
 		
 		// inizializzazione finestra
-		super("CALENDAR");
+		super( Utils.fileToJSONObject( Setting.getSettings().getFrameTitlesLanguageFile() ).getString( FrameTitleJsonKey.CALENDAR ) );
 
 		this.setLocation(500, 100);
 		this.setSize( 700, 700 );

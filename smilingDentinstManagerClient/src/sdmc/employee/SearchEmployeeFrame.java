@@ -25,6 +25,7 @@ import sdmc.combo_box_management.professional_role.ProfessionalRole;
 import sdmc.server_connection.HttpConnectionManager;
 import sdmc.settings.Setting;
 import sdmc.utils.ButtonJsonKey;
+import sdmc.utils.FrameTitleJsonKey;
 import sdmc.utils.Utils;
 
 public class SearchEmployeeFrame extends JFrame{
@@ -55,7 +56,7 @@ public class SearchEmployeeFrame extends JFrame{
 	public SearchEmployeeFrame() {
 		
 		// inizializzazione finestra ----
-		super("SEARCH EMPLOYEE ");
+		super( Utils.fileToJSONObject( Setting.getSettings().getFrameTitlesLanguageFile() ).getString( FrameTitleJsonKey.SEARCH_EMPLOYEE ) );
 		
 		this.setSize(1500, 800);
 		this.setLocation(100, 150);

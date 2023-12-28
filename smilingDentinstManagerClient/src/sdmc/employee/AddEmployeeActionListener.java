@@ -6,9 +6,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
+import org.json.JSONObject;
+
 import sdmc.combo_box_management.professional_role.ProfessionalRole;
 import sdmc.main.MainMenuFrame;
 import sdmc.server_connection.HttpConnectionManager;
+import sdmc.settings.Setting;
+import sdmc.utils.MessageJsonKey;
+import sdmc.utils.Utils;
 
 public class AddEmployeeActionListener implements ActionListener {
 	
@@ -24,6 +29,9 @@ public class AddEmployeeActionListener implements ActionListener {
 	public final static String BACK_TO_SEARCH_EMPLOYEE = "BACK_TO_SEARCH_EMPLOYEE";
 	public final static String DELETE_EMPLOYEE = "DELETE_EMPLOYEE";
 	public final static String EDIT_EMPLOYEE = "EDIT_EMPLOYEE";
+	
+	//
+	private JSONObject messageStrings;
 	
 	private String params;
 	
@@ -41,6 +49,7 @@ public class AddEmployeeActionListener implements ActionListener {
 		
 		this.addEmployeeFrame = addEmployeeFrame;
 	
+		messageStrings = Utils.fileToJSONObject( Setting.getSettings().getMessageLanguageFile() );
 	}
 	
 
@@ -171,7 +180,7 @@ public class AddEmployeeActionListener implements ActionListener {
 	private void missEssentialFieldErrorMessage() {
 		
 		// Messaggio di Errore
-		JOptionPane.showConfirmDialog( addEmployeeFrame , "Nome, cognome e numero di telefono sono campi obbligatori", 
+		JOptionPane.showConfirmDialog( addEmployeeFrame , messageStrings.getString( MessageJsonKey.ERROR_MISS_ESSENTIAL_FIELDS ), 
 				"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.ERROR_MESSAGE );
 		
 	}

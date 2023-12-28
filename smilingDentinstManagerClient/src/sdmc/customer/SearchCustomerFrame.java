@@ -21,6 +21,7 @@ import sdmc.server_connection.HttpConnectionManager;
 import sdmc.server_connection.RequestResponse;
 import sdmc.settings.Setting;
 import sdmc.utils.ButtonJsonKey;
+import sdmc.utils.FrameTitleJsonKey;
 import sdmc.utils.Utils;
 
 public class SearchCustomerFrame extends JFrame {
@@ -45,7 +46,7 @@ public class SearchCustomerFrame extends JFrame {
 	public SearchCustomerFrame() {
 		
 		// --------
-		super("SEARCH CUSTOMER ");
+		super( Utils.fileToJSONObject( Setting.getSettings().getFrameTitlesLanguageFile() ).getString( FrameTitleJsonKey.SEARCH_CUSTOMER ));
 		
 		this.setSize(1500, 800);
 		this.setLocation(100, 150);

@@ -16,6 +16,8 @@ import org.json.JSONObject;
 
 import sdmc.settings.Setting;
 import sdmc.utils.ButtonJsonKey;
+import sdmc.utils.FrameTitleJsonKey;
+import sdmc.utils.LabelJsonKey;
 import sdmc.utils.Utils;
 
 public class AddCustomerFrame extends JFrame{
@@ -25,6 +27,7 @@ public class AddCustomerFrame extends JFrame{
 	private AddCustomerActionListener listener;
 	
 	private JSONObject btnNames;
+	private JSONObject labelNames;
 	
 	private JPanel panelBottomMenu;
 	private JPanel panelFormMenu;
@@ -159,7 +162,7 @@ public class AddCustomerFrame extends JFrame{
 	*/
 	public AddCustomerFrame() {
 		// inizializzazione del frame -----------------------------------------------
-		super("ADD NEW CUSTOMER");	
+		super( Utils.fileToJSONObject( Setting.getSettings().getFrameTitlesLanguageFile() ).getString( FrameTitleJsonKey.ADD_NEW_CUSTOMER ) );	
 		this.setSize( 400, 600 );
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		
@@ -172,6 +175,7 @@ public class AddCustomerFrame extends JFrame{
 		
 		//
 		btnNames = Utils.fileToJSONObject( Setting.getSettings().getBtnsLanguageFile() );
+		labelNames = Utils.fileToJSONObject( Setting.getSettings().getLabelsLanguageFile() );
 		
 		// inizializzazione listener
 		listener = new AddCustomerActionListener( this );
@@ -200,7 +204,7 @@ public class AddCustomerFrame extends JFrame{
 		// add panel tax code ---------------------------------------------------
 		
 		
-		labelTaxIdCode = new JLabel("COD FISCALE : ");
+		labelTaxIdCode = new JLabel( labelNames.getString( LabelJsonKey.TAX_ID_CODE ) + labelNames.getString( LabelJsonKey.COLON ));
 		textFieldTaxIdCode = new JTextField(20);
 		 
 		// textFieldBirthCity.getV
@@ -216,7 +220,9 @@ public class AddCustomerFrame extends JFrame{
 		// ----------------------------------------------------------------------
 		
 		// add panel name --- ---------------------------------------------------
-		labelName = new JLabel("NOME* : ");
+		labelName = new JLabel(  labelNames.getString( LabelJsonKey.NAME )
+				+ labelNames.getString( LabelJsonKey.STAR) 
+				+ labelNames.getString( LabelJsonKey.COLON ) );
 		textFieldName = new JTextField(20);
 		
 		panelName = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
@@ -229,7 +235,7 @@ public class AddCustomerFrame extends JFrame{
 		// ----------------------------------------------------------------------
 		
 		// add panel surname ----------------------------------------------------
-		labelSurname= new JLabel("COGNOME* : ");
+		labelSurname= new JLabel( labelNames.getString( LabelJsonKey.SURNAME ) + labelNames.getString( LabelJsonKey.STAR) + labelNames.getString( LabelJsonKey.COLON ) );
 		textFieldSurname = new JTextField(20);
 		
 		panelSurname = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
@@ -243,7 +249,7 @@ public class AddCustomerFrame extends JFrame{
 		// ----------------------------------------------------------------------
 		// Add Birth City panel -------------------------------------------------
 
-		labelBirthCity= new JLabel("CITTÀ DI NASCITA : ");
+		labelBirthCity = new JLabel( labelNames.getString( LabelJsonKey.BIRTH_CITY )  + labelNames.getString( LabelJsonKey.COLON  ) );
 		textFieldBirthCity= new JTextField(20);
 				
 		panelBirthCity = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
@@ -257,7 +263,7 @@ public class AddCustomerFrame extends JFrame{
 	    // ----------------------------------------------------------------------
 		// Add Birth City Province panel ----------------------------------------
 
-		labelBirthCityProvince = new JLabel("PROVINCIA : ");
+		labelBirthCityProvince = new JLabel( labelNames.getString( LabelJsonKey.BIRTH_CITY_PROVINCE ) + labelNames.getString( LabelJsonKey.COLON ) );
 		textFieldBirthCityProvince = new JTextField(20);
 		
 		panelBirthCityProvince = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
@@ -271,7 +277,7 @@ public class AddCustomerFrame extends JFrame{
 		// ----------------------------------------------------------------------
 		// add Birth Date panel -------------------------------------------------
 
-		labelBirthDate= new JLabel("DATA DI NASCITA : ");
+		labelBirthDate= new JLabel( labelNames.getString( LabelJsonKey.BIRTH_CITY ) + labelNames.getString( LabelJsonKey.COLON ) );
 		textFieldBirthDate = new JTextField(20);
 		
 		panelBirthDate= new JPanel( new FlowLayout( FlowLayout.LEADING ) );
@@ -286,7 +292,7 @@ public class AddCustomerFrame extends JFrame{
 		// ----------------------------------------------------------------------
 		// add Residence Street panel -------------------------------------------
 		
-		labelResidenceStreet = new JLabel("VIA : ");
+		labelResidenceStreet = new JLabel( labelNames.getString( LabelJsonKey.RESIDENCE_STREET )  + labelNames.getString( LabelJsonKey.COLON ) );
 		textFieldResidenceStreet = new JTextField(20);
 		
 		panelResidenceStreet = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
@@ -294,7 +300,7 @@ public class AddCustomerFrame extends JFrame{
 		panelResidenceStreet.add(textFieldResidenceStreet);
 		
 	
-		labelHouseNumber = new JLabel("N : ");
+		labelHouseNumber = new JLabel( labelNames.getString( LabelJsonKey.HOUSE_NUMBER )  + labelNames.getString( LabelJsonKey.COLON ) );
 		textFieldHouseNumber = new JTextField(3);
 				
 		panelResidenceStreet.add( labelHouseNumber );
@@ -308,7 +314,7 @@ public class AddCustomerFrame extends JFrame{
 		// ----------------------------------------------------------------------
 		// add ResidenceCity panel ----------------------------------------------
 
-		labelResidenceCity= new JLabel("CITTÀ : ");
+		labelResidenceCity= new JLabel( labelNames.getString( LabelJsonKey.RESIDENCE_CITY )  + labelNames.getString( LabelJsonKey.COLON ) );
 		textFieldResidenceCity = new JTextField(20);
 		
 		panelResidenceCity = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
@@ -321,7 +327,7 @@ public class AddCustomerFrame extends JFrame{
 		// ----------------------------------------------------------------------
 		// add ResidenceCity CAP panel ------------------------------------------
 
-		labelResidenceCityCap= new JLabel("CAP : ");
+		labelResidenceCityCap= new JLabel( labelNames.getString( LabelJsonKey.RESIDENCE_CITY_CAP )  + labelNames.getString( LabelJsonKey.COLON ) );
 		textFieldResidenceCityCap = new JTextField(20);
 		
 		panelResidenceCityCap = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
@@ -334,7 +340,7 @@ public class AddCustomerFrame extends JFrame{
 		// ----------------------------------------------------------------------
 		// add ResidenceProvince panel -------------------------------------------
 
-		labelResidenceProvince= new JLabel("PROVINCIA: ");
+		labelResidenceProvince= new JLabel( labelNames.getString( LabelJsonKey.RESIDENCE_PROVINCE )  + labelNames.getString( LabelJsonKey.COLON ) );
 		textFieldResidenceProvince = new JTextField(20);
 		
 		panelResidenceProvince = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
@@ -348,7 +354,7 @@ public class AddCustomerFrame extends JFrame{
 		// ----------------------------------------------------------------------
 		// add phone number panel -----------------------------------------------
 		
-		labelPhoneNumber= new JLabel("NUM. TELEFONO* : ");
+		labelPhoneNumber= new JLabel( labelNames.getString( LabelJsonKey.PHONE_NUMBER )  + labelNames.getString( LabelJsonKey.COLON ) );
 		textFieldPhoneNumber = new JTextField(20);
 		
 		panelPhoneNumber = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
@@ -361,7 +367,7 @@ public class AddCustomerFrame extends JFrame{
 		
 		// ----------------------------------------------------------------------
 		// Add phone number 2 panel ----------------------------------------------
-		labelPhoneNumber2= new JLabel("NUM. TELEFONO 2: ");
+		labelPhoneNumber2= new JLabel( labelNames.getString( LabelJsonKey.PHONE_NUMBER_2 )  + labelNames.getString( LabelJsonKey.COLON ) );
 		textFieldPhoneNumber2 = new JTextField(20);
 		
 		panelPhoneNumber2 = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
@@ -375,7 +381,7 @@ public class AddCustomerFrame extends JFrame{
 		// ----------------------------------------------------------------------
 		// add email panel -------------------------------------------------------
 		
-		labelEMail= new JLabel("E-MAIL : ");
+		labelEMail= new JLabel( labelNames.getString( LabelJsonKey.E_MAIL )  + labelNames.getString( LabelJsonKey.COLON ) );
 		textFieldEMail = new JTextField(20);
 		
 		panelEMail= new JPanel( new FlowLayout( FlowLayout.LEADING ) );

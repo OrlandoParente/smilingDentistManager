@@ -30,6 +30,7 @@ import sdmc.server_connection.HttpConnectionManager;
 import sdmc.server_connection.RequestResponse;
 import sdmc.settings.Setting;
 import sdmc.utils.ButtonJsonKey;
+import sdmc.utils.FrameTitleJsonKey;
 import sdmc.utils.Utils;
 
 public class AddEmployeeFrame extends JFrame {
@@ -168,7 +169,7 @@ public class AddEmployeeFrame extends JFrame {
 	public AddEmployeeFrame() {
 		
 		// inizializzazione del frame -----------------------------------------------
-		super("ADD NEW EMPLOYEE");	
+		super( Utils.fileToJSONObject( Setting.getSettings().getFrameTitlesLanguageFile() ).getString( FrameTitleJsonKey.ADD_EMPLOYEE ) );	
 		this.setSize( 700, 500 );
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		

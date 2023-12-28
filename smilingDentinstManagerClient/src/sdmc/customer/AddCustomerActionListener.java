@@ -5,12 +5,20 @@ import java.awt.event.ActionListener;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.swing.JOptionPane;
+
+import org.json.JSONObject;
+
 import sdmc.main.MainMenuFrame;
 import sdmc.server_connection.HttpConnectionManager;
 import sdmc.server_connection.RequestResponse;
+import sdmc.settings.Setting;
+import sdmc.utils.MessageJsonKey;
+import sdmc.utils.Utils;
 
 public class AddCustomerActionListener implements ActionListener {
 
+	private JSONObject messageStrings;
+	
 	private AddCustomerFrame addCustomerFrame;
 	
 	// Action commands
@@ -48,6 +56,8 @@ public class AddCustomerActionListener implements ActionListener {
 	
 	public AddCustomerActionListener( AddCustomerFrame addCustomerFrame ) {
 		this.addCustomerFrame = addCustomerFrame;
+		
+		messageStrings = Utils.fileToJSONObject( Setting.getSettings().getMessageLanguageFile() );
 		
 	}
 	
@@ -89,7 +99,7 @@ public class AddCustomerActionListener implements ActionListener {
 			
 			// Controllo presenza delle informazioni essenziali 
 			if( name.equals("") || surname.equals("") || phoneNumber.equals("") ) {
-				JOptionPane.showConfirmDialog( addCustomerFrame, "NOME, COGNOME e NUMERO DI TELEFONO sono campi obblicatori", 
+				JOptionPane.showConfirmDialog( addCustomerFrame,  messageStrings.getString( MessageJsonKey.ERROR_MISS_ESSENTIAL_FIELDS ), 
 						"Message",JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE );
 				
 				break; // esci 
@@ -115,7 +125,7 @@ public class AddCustomerActionListener implements ActionListener {
 				if( result.getResponseCode() == HttpsURLConnection.HTTP_OK ) {
 					
 					// Messaggio di conferma per l'utente
-					JOptionPane.showConfirmDialog( addCustomerFrame, "Nuovo cliente inserito", 
+					JOptionPane.showConfirmDialog( addCustomerFrame, messageStrings.getString( MessageJsonKey.NEW_CUSTOMER_ADDED ), 
 							"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE );
 					
 					// Svuota i campi dai dati immessi
@@ -124,7 +134,7 @@ public class AddCustomerActionListener implements ActionListener {
 				} else {
 					
 					// Messaggio di Errore
-					JOptionPane.showConfirmDialog( addCustomerFrame, "Connessione con il server non riuscita", 
+					JOptionPane.showConfirmDialog( addCustomerFrame, messageStrings.getString( MessageJsonKey.SERVER_CONNECTION_FAILED ), 
 							"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.ERROR_MESSAGE );
 					
 				}
@@ -183,14 +193,14 @@ public class AddCustomerActionListener implements ActionListener {
 			if(  resultCode == HttpsURLConnection.HTTP_OK ) {
 				
 				// Messaggio di conferma per l'utente
-				JOptionPane.showConfirmDialog( addCustomerFrame, "Dati cliente modificati  con successo", 
+				JOptionPane.showConfirmDialog( addCustomerFrame,  messageStrings.getString( MessageJsonKey.CUSTOMER_DATA_SUCCESSFUL_EDITED ),
 						"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE );
 				
 				
 			} else {
 				
 				// Messaggio di Errore
-				JOptionPane.showConfirmDialog( addCustomerFrame, "Connessione con il server non riuscita", 
+				JOptionPane.showConfirmDialog( addCustomerFrame, messageStrings.getString( MessageJsonKey.SERVER_CONNECTION_FAILED ) , 
 						"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.ERROR_MESSAGE );
 				
 			}
@@ -214,14 +224,14 @@ public class AddCustomerActionListener implements ActionListener {
 			if(  resultCode == HttpsURLConnection.HTTP_OK ) {
 				
 				// Messaggio di conferma per l'utente
-				JOptionPane.showConfirmDialog( addCustomerFrame, "Cliente eliminato con successo", 
+				JOptionPane.showConfirmDialog( addCustomerFrame, messageStrings.getString( MessageJsonKey.CUSTOMER_SUCCESSFUL_DELETED ) , 
 						"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE );
 				
 				
 			} else {
 				
 				// Messaggio di Errore
-				JOptionPane.showConfirmDialog( addCustomerFrame, "Connessione con il server non riuscita", 
+				JOptionPane.showConfirmDialog( addCustomerFrame, messageStrings.getString( MessageJsonKey.SERVER_CONNECTION_FAILED ) , 
 						"Message",JOptionPane.PLAIN_MESSAGE, JOptionPane.ERROR_MESSAGE );
 				
 			}
