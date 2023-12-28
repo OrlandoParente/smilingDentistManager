@@ -6,6 +6,7 @@ import sdmc.customer.SearchCustomerFrame;
 import sdmc.employee.AddEmployeeFrame;
 import sdmc.employee.SearchEmployeeFrame;
 import sdmc.professional_role.ProfessionalRoleManagerFrame;
+import sdmc.settings.SettingsFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +23,7 @@ class MainMenuActionListener implements ActionListener {
 	public final static String PROFESSIONAL_ROLE_MANAGER = "btnProfessionalRoleManager";
 	// public final static String UPLOAD_DATABASE = "btnUploadDatabase";
 	// public final static String DOWNLOAD_DATABASE = "btnDownloadDatabase";
-	// public final static String SETTING = "btnSetttings";
+	public final static String SETTING = "btnSetttings";
 	
 	private JFrame mainMenuFrame;
 	
@@ -105,13 +106,17 @@ class MainMenuActionListener implements ActionListener {
 			
 			break;
 			
+		*/
+			
 		case SETTING:
 			
 			System.out.println( "Main Menu Action Listener -> SETTING " );
 			
+			new SettingsFrame();
+			mainMenuFrame.dispose();
+			
 			break;
 		
-	*/
 		}
 	}
 

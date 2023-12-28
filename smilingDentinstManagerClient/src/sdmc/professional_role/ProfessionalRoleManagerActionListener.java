@@ -6,12 +6,20 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import org.json.JSONObject;
+
 import sdmc.combo_box_management.professional_role.ProfessionalRole;
 import sdmc.main.MainMenuFrame;
 import sdmc.server_connection.HttpConnectionManager;
 import sdmc.server_connection.RequestResponse;
+import sdmc.settings.Setting;
+import sdmc.utils.MessageJsonKey;
+import sdmc.utils.Utils;
 
 public class ProfessionalRoleManagerActionListener implements ActionListener {
+	
+	//
+	private JSONObject messageStrings;
 
 	private ProfessionalRoleManagerFrame professionalRoleManagerFrame;
 
@@ -32,6 +40,7 @@ public class ProfessionalRoleManagerActionListener implements ActionListener {
 	
 	public ProfessionalRoleManagerActionListener(  ProfessionalRoleManagerFrame professionalRoleManagerFrame ) {
 		this.professionalRoleManagerFrame = professionalRoleManagerFrame;
+		messageStrings = Utils.fileToJSONObject( Setting.getSettings().getMessageLanguageFile() );
 	}
 	
 	@Override
@@ -158,7 +167,8 @@ public class ProfessionalRoleManagerActionListener implements ActionListener {
 		if( textFieldProfessionalRoleName == null || textFieldProfessionalRoleName.getText().equals("") ) {
 			
 			System.err.println( "professionalRoleManagerFrameActionListener --> NOME non può essere vuoto " );
-			JOptionPane.showConfirmDialog( professionalRoleManagerFrame, "NOME non può essere vuoto", 
+			
+			JOptionPane.showConfirmDialog( professionalRoleManagerFrame, messageStrings.getString( MessageJsonKey.SERVER_CONNECTION_FAILED ),
 					"Message",JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE );
 			
 			return true;

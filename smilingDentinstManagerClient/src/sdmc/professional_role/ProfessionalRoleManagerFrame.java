@@ -24,6 +24,7 @@ import sdmc.combo_box_management.professional_role.ComboBoxProfessionalRoleListe
 import sdmc.combo_box_management.professional_role.ProfessionalRole;
 import sdmc.settings.Setting;
 import sdmc.utils.ButtonJsonKey;
+import sdmc.utils.LabelJsonKey;
 import sdmc.utils.Utils;
 
 
@@ -33,6 +34,8 @@ public class ProfessionalRoleManagerFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private JSONObject btnNames;
+	private JSONObject labelNames;
+	
 	private ActionListener listener;
 	private ItemListener comboBoxProfessionalRoleListener;
 
@@ -74,6 +77,7 @@ public class ProfessionalRoleManagerFrame extends JFrame {
 		// Listener combo box 
 		comboBoxProfessionalRoleListener = new ComboBoxProfessionalRoleListener( this );
 		btnNames = Utils.fileToJSONObject( Setting.getSettings().getBtnsLanguageFile()  );
+		labelNames = Utils.fileToJSONObject( Setting.getSettings().getLabelsLanguageFile() );
 		
 		// ---------------------------------------------------------------------------
 
@@ -81,7 +85,7 @@ public class ProfessionalRoleManagerFrame extends JFrame {
 		// Panel Name of Professional Role -------------------------------------------
 		panelProfessionalRoleName = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
 		
-		labelProfessionalRoleName = new JLabel("NOME : ");
+		labelProfessionalRoleName = new JLabel( labelNames.getString( LabelJsonKey.PROFESSIONAL_ROLE_NAME ) + labelNames.getString( LabelJsonKey.COLON ) );
 		textFieldProfessionalRoleName = new JTextField(20);
 		
 		panelProfessionalRoleName.add( labelProfessionalRoleName );
@@ -96,7 +100,7 @@ public class ProfessionalRoleManagerFrame extends JFrame {
 
 		panelProfessionalRoleDescription = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
 		
-		labelProfessionalRoleDescrioption = new JLabel("DESCRIPTION : ");
+		labelProfessionalRoleDescrioption = new JLabel( labelNames.getString( LabelJsonKey.PROFESSIONAL_ROLE_DESCRIPTION ) + labelNames.getString( LabelJsonKey.COLON ) );
 		textAreaProfessionalDescription = new JTextArea( 7, 30 );
 		
 		panelProfessionalRoleDescription.add( labelProfessionalRoleDescrioption );
@@ -111,7 +115,7 @@ public class ProfessionalRoleManagerFrame extends JFrame {
 		// Panel Select Professional Role --------------------------------------------
 		panelSelectProfessionalRole = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
 		
-		labelSelectProfessionalRole = new JLabel("RUOLO PROFESSIONALE : ");
+		labelSelectProfessionalRole = new JLabel( labelNames.getString( LabelJsonKey.SELECT_PROFESSIONAL_ROLE ) + labelNames.getString( LabelJsonKey.COLON ) );
 		
 		comboBoxSelectProfessionalRole = new JComboBox<ProfessionalRole>(  ProfessionalRole.getProfessionalRoleArrayWithFirstNull() );
 		// Serve a inserire nel combo Box solo il nome del Professional Role

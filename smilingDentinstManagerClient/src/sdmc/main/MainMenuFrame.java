@@ -30,7 +30,7 @@ public class MainMenuFrame extends JFrame {
 	public MainMenuFrame() {
 		
 		// inizializzazione del frame -----------------------------------------------
-		super("MAIN MENU");	
+		super( Utils.fileToJSONObject( Setting.getSettings().getFrameTitlesLanguageFile() ).getString( FrameTitleJsonKey.MAIN_MENU ) );	
 		this.setSize( 400, 600 );
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		
@@ -38,7 +38,7 @@ public class MainMenuFrame extends JFrame {
 		//
 		Container c = this.getContentPane();
 		
-		c.setLayout( new GridLayout( 6, 1) );
+		c.setLayout( new GridLayout(7, 1) );
 		// ---------------------------------------------------------------------------
 		
 		
@@ -83,13 +83,11 @@ public class MainMenuFrame extends JFrame {
 		btnProfessionalRoleManager.addActionListener( listener );
 		btnProfessionalRoleManager.setActionCommand( MainMenuActionListener.PROFESSIONAL_ROLE_MANAGER );
 	
-		/*
 		
 		btnSetttings = new JButton( btnNames.getString( ButtonJsonKey.MAIN_MENU_SETTING ) );
 		btnSetttings.addActionListener( listener );
 		btnSetttings.setActionCommand( MainMenuActionListener.SETTING );
 		
-		*/
 		
 		// ----------------------------------------------------------------------------
 		
@@ -103,7 +101,7 @@ public class MainMenuFrame extends JFrame {
 		c.add( btnProfessionalRoleManager );
 		// c.add( btnUploadDatabase  );		// implementabile in futuro
 		// c.add( btnDownloadDatabase );	// implementabile in futuro
-		// c.add( btnSetttings );			// implementabile in futuro
+		c.add( btnSetttings );			// implementabile in futuro
 		
 		// ----------------------------------------------------------------------------
 		

@@ -1,5 +1,7 @@
 package sdmc.settings;
 
+import java.io.File;
+
 import org.json.JSONObject;
 
 import sdmc.utils.Utils;
@@ -13,24 +15,31 @@ public class Setting {
 	private String btnsLanguageFile;
 	private String labelsLanguageFile;				// Ancora non implementato
 	private String frameTitlesLanguageFile;			// Ancora non implementato
-	private String jOptionMessageLanguageFile;		// Ancora non implementato
+	private String messageLanguageFile;		// Ancora non implementato
 	private String monthsLanguageFile;
+	private String languagesFile;
 	
 	private String server;
+	private String languageCode;
 	
 	// possibili valori impostazioni
 	
 	//
 	private static final String SETTINGS_FILE = "settings.json";
+	private static final String LANGUAGES_FILE = "languages.json";
 	
 	// chiavi file json
-	private static final String JSON_KEY_BTNS_LANGUAGE_FILE = "btnsLanguageFile";
-	private static final String JSON_KEY_LABELS_LANGUAGE_FILE = "labelsLanguageFile";
-	private static final String JSON_KEY_FRAME_TITLES_LANGUAGE_FILE = "frameTitlesLanguageFile";
-	private static final String JSON_KEY_J_OPTION_MESSAGE_LANGUAGE_FILE = "jOptionMessageLanguageFile";
-	private static final String JSON_KEY_MONTHS_LANGUAGE_FILE = "monthsLanguageFile";
+	public static final String JSON_KEY_LANGUAGE_CODE = "languageCode";
+	public static final String JSON_KEY_LANGUAGE_NAME = "languageName";
 	
-	private static final String JSON_KEY_SERVER = "server";
+	public static final String JSON_KEY_BTNS_LANGUAGE_FILE = "btnsLanguageFile";
+	public static final String JSON_KEY_LABELS_LANGUAGE_FILE = "labelsLanguageFile";
+	public static final String JSON_KEY_FRAME_TITLES_LANGUAGE_FILE = "frameTitlesLanguageFile";
+	public static final String JSON_KEY_J_OPTION_MESSAGE_LANGUAGE_FILE = "messageLanguageFile";
+	public static final String JSON_KEY_MONTHS_LANGUAGE_FILE = "monthsLanguageFile";
+
+	public static final String JSON_KEY_SERVER = "server";
+	
 	
 	// SIGLETON ---------------------------------
 	
@@ -59,18 +68,27 @@ public class Setting {
 		
 		JSONObject joSettings =  Utils.fileToJSONObject( Setting.SETTINGS_FILE );
 		
-		this.setBtnsLanguageFile( joSettings.getString( Setting.JSON_KEY_BTNS_LANGUAGE_FILE ) );
-		this.setLabelsLanguageFile( joSettings.getString( Setting.JSON_KEY_LABELS_LANGUAGE_FILE ) );
-		this.setFrameTitlesLanguageFile( joSettings.getString( Setting.JSON_KEY_FRAME_TITLES_LANGUAGE_FILE) );
-		this.setjOptionMessageLanguageFile( joSettings.getString( Setting.JSON_KEY_J_OPTION_MESSAGE_LANGUAGE_FILE) );
-		this.setMonthsLanguageFile( joSettings.getString( JSON_KEY_MONTHS_LANGUAGE_FILE ));
+		
+		
+		languageCode = joSettings.getString( Setting.JSON_KEY_LANGUAGE_CODE );
+		
 		this.setServer( joSettings.getString( Setting.JSON_KEY_SERVER ));
+		this.setBtnsLanguageFile( "lang" + File.separator + languageCode + File.separator + "btn_strings_" + languageCode + ".json"  );
+		this.setLabelsLanguageFile( "lang" + File.separator +  languageCode + File.separator + "label_strings_" + languageCode + ".json" );
+		this.setFrameTitlesLanguageFile( "lang" + File.separator +  languageCode + File.separator + "frame_title_strings_" + languageCode + ".json"  );
+		this.setMessageLanguageFile( "lang" + File.separator +  languageCode + File.separator + "message_strings_" + languageCode + ".json"  );
+		this.setMonthsLanguageFile( "lang" + File.separator +  languageCode + File.separator + "month_strings_" + languageCode + ".json" );
+		this.setLanguagesFile( "lang" + File.separator + LANGUAGES_FILE );
+		
+		
+		
 		
 		// Check Message
 		System.out.print("\n \n SETTINGS : \n BTNS_LANGUAGE_FILE = " + btnsLanguageFile 
 				+ " \n LABELS_LANGUAGE_FILE = "+ labelsLanguageFile 
 				+" \n TITLES_LANGUAGE_FILE = " + frameTitlesLanguageFile
-				+ " \n J_OPTION_MESSAGE_LANGUAGE_FILE = " + jOptionMessageLanguageFile 
+				+ " \n J_OPTION_MESSAGE_LANGUAGE_FILE = " + messageLanguageFile
+				+ " \n LANGUAGE_CODE = " + languageCode
 				+ " \n SERVER = " + server + "\n \n \n" );
 		
 	}
@@ -82,16 +100,21 @@ public class Setting {
 	public void saveCurrentSettings() {
 		Utils.writeOnFile( this.getJsonObjStringCurrentSetting(), Setting.SETTINGS_FILE, false);
 	}
-	
+
 	private String getJsonObjStringCurrentSetting (){
 		
 		String strSettings = "{";
+
+		// Non servono in quanto i vari path se li ricava da solo, in modo da usare il giusto File.separator 
+		// // sia su windows che su linux in modo automatico
+//		strSettings += "\"" + JSON_KEY_BTNS_LANGUAGE_FILE + "\" : \"" + this.getBtnsLanguageFile() + "\",";
+//		strSettings += "\"" + JSON_KEY_LABELS_LANGUAGE_FILE + "\" : \"" + this.getLabelsLanguageFile() + "\",";
+//		strSettings += "\"" + JSON_KEY_FRAME_TITLES_LANGUAGE_FILE + "\" : \"" + this.getFrameTitlesLanguageFile() + "\",";
+//		strSettings += "\"" + JSON_KEY_J_OPTION_MESSAGE_LANGUAGE_FILE + "\" : \"" + this.getMessageLanguageFile()  + "\",";
 		
-		strSettings += "\"" + JSON_KEY_BTNS_LANGUAGE_FILE + "\" : \"" + this.getBtnsLanguageFile() + "\",";
-		strSettings += "\"" + JSON_KEY_LABELS_LANGUAGE_FILE + "\" : \"" + this.getLabelsLanguageFile() + "\",";
-		strSettings += "\"" + JSON_KEY_FRAME_TITLES_LANGUAGE_FILE + "\" : \"" + this.getFrameTitlesLanguageFile() + "\",";
-		strSettings += "\"" + JSON_KEY_J_OPTION_MESSAGE_LANGUAGE_FILE + "\" : \"" + this.getjOptionMessageLanguageFile()  + "\",";
-		strSettings += "\"" + JSON_KEY_SERVER + "\" : \"" + this.getServer() + "\" ";
+		
+		strSettings += "\"" + JSON_KEY_SERVER + "\" : \"" + this.getServer() + "\" , ";
+		strSettings += "\"" + JSON_KEY_LANGUAGE_CODE + "\" : \"" + this.getLanguageCode() + "\" ";
 		strSettings += "}";
 		return strSettings;
 	}
@@ -122,12 +145,12 @@ public class Setting {
 		this.frameTitlesLanguageFile = frameTitlesLanguageFile;
 	}
 
-	public String getjOptionMessageLanguageFile() {
-		return this.jOptionMessageLanguageFile;
+	public String getMessageLanguageFile() {
+		return this.messageLanguageFile;
 	}
 
-	public void setjOptionMessageLanguageFile(String jOptionMessageLanguageFile) {
-		this.jOptionMessageLanguageFile = jOptionMessageLanguageFile;
+	public void setMessageLanguageFile(String messageLanguageFile) {
+		this.messageLanguageFile = messageLanguageFile;
 	}
 
 	public String getMonthsLanguageFile() {
@@ -145,6 +168,31 @@ public class Setting {
 	public void setServer(String server) {
 		this.server = server;
 	}
+
+	public String getLanguagesFile() {
+		return languagesFile;
+	}
+
+	public void setLanguagesFile(String languagesFile) {
+		this.languagesFile = languagesFile;
+	}
+
+	public String getLanguageCode() {
+		return languageCode;
+	}
+
+	public void setLanguageCode(String languageCode) {
+		this.languageCode = languageCode;
+		
+		this.setBtnsLanguageFile( "lang" + File.separator + languageCode + File.separator + "btn_strings_" + languageCode + ".json"  );
+		this.setLabelsLanguageFile( "lang" + File.separator +  languageCode + File.separator + "label_strings_" + languageCode + ".json" );
+		this.setFrameTitlesLanguageFile( "lang" + File.separator +  languageCode + File.separator + "frame_title_strings_" + languageCode + ".json"  );
+		this.setMessageLanguageFile( "lang" + File.separator +  languageCode + File.separator + "message_strings_" + languageCode + ".json"  );
+		this.setMonthsLanguageFile( "lang" + File.separator +  languageCode + File.separator + "month_strings_" + languageCode + ".json" );
+		
+	}
+	
+	
 	
 	
 }
