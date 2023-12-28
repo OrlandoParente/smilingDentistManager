@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.json.JSONArray;
 // https://github.com/stleary/JSON-java
 import org.json.JSONObject;
 
@@ -62,6 +63,21 @@ public class Utils {
 	}
 	
 	/*
+	 * Ritorna il contenuto di un file in un JSON Array 
+	 */
+	public static JSONArray fileToJSONArray ( String path ) {
+		
+		
+		String jsonString = "";
+		jsonString += Utils.fileToString( path );
+		
+		JSONArray jsonArr = new JSONArray( jsonString );
+		
+		
+		return jsonArr;
+	}
+	
+	/*
 	 * Scrive una stringa su un file
 	 */
 	public static void writeOnFile( String string, String path, boolean append) {
@@ -112,6 +128,7 @@ public class Utils {
 		
 		return str;
 	}
+
 	
 	
 }
