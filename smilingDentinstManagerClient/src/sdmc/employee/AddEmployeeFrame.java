@@ -31,6 +31,7 @@ import sdmc.server_connection.RequestResponse;
 import sdmc.settings.Setting;
 import sdmc.utils.ButtonJsonKey;
 import sdmc.utils.FrameTitleJsonKey;
+import sdmc.utils.LabelJsonKey;
 import sdmc.utils.Utils;
 
 public class AddEmployeeFrame extends JFrame {
@@ -38,6 +39,7 @@ public class AddEmployeeFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private JSONObject btnNames;
+	private JSONObject labelNames;
 	
 	// actionListener
 	private ActionListener listener;
@@ -179,6 +181,7 @@ public class AddEmployeeFrame extends JFrame {
 		c.setLayout( new BorderLayout() );
 		
 		btnNames = Utils.fileToJSONObject( Setting.getSettings().getBtnsLanguageFile()  );
+		labelNames = Utils.fileToJSONObject( Setting.getSettings().getLabelsLanguageFile() );
 		listener = new AddEmployeeActionListener( this );
 		
 		// ----------------------------------------------------------------------------
@@ -218,7 +221,7 @@ public class AddEmployeeFrame extends JFrame {
 		// Panel Name -----
 		
 		textFieldName = new JTextField(20);
-		labelName = new JLabel("NAME : ");
+		labelName = new JLabel( labelNames.getString( LabelJsonKey.NAME ) );
 		panelName = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
 		
 		panelName.add( labelName );
@@ -227,7 +230,7 @@ public class AddEmployeeFrame extends JFrame {
 		
 		// Panel Surname ------
 		textFieldSurname = new JTextField(20);;
-		labelSurname = new JLabel("SURNAME . ");
+		labelSurname = new JLabel( labelNames.getString( LabelJsonKey.SURNAME ) );
 		panelSurname = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
 		
 		panelSurname.add( labelSurname );
@@ -238,7 +241,7 @@ public class AddEmployeeFrame extends JFrame {
 		// Panel Title ----
 		textFieldTitle = new JTextField(20);;  
 		textFieldTitle.setToolTipText("e.g. Sig., Sig.ra, Sig.na, Dott. , Dott.ssa");
-		labelTitle = new JLabel("TITLE : ");    
+		labelTitle = new JLabel( labelNames.getString( LabelJsonKey.TITLE ) );    
 		panelTitle = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
 		
 		panelTitle.add( labelTitle );
@@ -248,7 +251,7 @@ public class AddEmployeeFrame extends JFrame {
 		
 		// Pale Birth Date ------
 		textFieldBirthDate = new JTextField(20);;
-		labelBirthDate= new JLabel("BIRTH DATE : ");
+		labelBirthDate= new JLabel( labelNames.getString( LabelJsonKey.BIRTH_DATE ) );
 		panelBirthDate = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
 		
 		panelBirthDate.add( labelBirthDate );
@@ -258,7 +261,7 @@ public class AddEmployeeFrame extends JFrame {
 		
 		// Panel Phone Number -----
 		textFieldPhoneNumber = new JTextField(20);;
-		labelPhoneNumber = new JLabel("PHONE NUMBER : ");
+		labelPhoneNumber = new JLabel( labelNames.getString( LabelJsonKey.PHONE_NUMBER ) );
 		panelPhoneNumber = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
 		
 		panelPhoneNumber.add( labelPhoneNumber );
@@ -268,7 +271,7 @@ public class AddEmployeeFrame extends JFrame {
 		
 		// Panel Phone Number 2 -----
 		textFieldPhoneNumber2 = new JTextField(20);;
-		labelPhoneNumber2 = new JLabel("PHONE NUMBER 2 : ");
+		labelPhoneNumber2 = new JLabel( labelNames.getString( LabelJsonKey.PHONE_NUMBER_2 ) );
 		panelPhoneNumber2 = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
 		
 
@@ -278,7 +281,7 @@ public class AddEmployeeFrame extends JFrame {
 		
 		// Panel eMail ---
 		textFieldEMail = new JTextField(20);;
-		labelEMail = new JLabel("E-MAIL : ");
+		labelEMail = new JLabel( labelNames.getString( LabelJsonKey.E_MAIL ) );
 		panelEMail = new JPanel( new FlowLayout( FlowLayout.LEADING ) );
 		
 		panelEMail.add( labelEMail );
@@ -347,7 +350,7 @@ public class AddEmployeeFrame extends JFrame {
 		
 		for( int i = 0; i < numProfessionalRole ; i ++ ) {
 			
-			JLabel labelProfessionalRole = new JLabel(" PROFESSIONAL ROLE : ");
+			JLabel labelProfessionalRole = new JLabel( labelNames.getString( LabelJsonKey.SELECT_PROFESSIONAL_ROLE ) );
 			ProfessionalRole arrProfessionalRoles [] = ProfessionalRole.getProfessionalRoleArray();
 			
 			JComboBox<ProfessionalRole> comboBoxSelectProfessionalRole = new JComboBox<ProfessionalRole>( arrProfessionalRoles  );
@@ -355,7 +358,7 @@ public class AddEmployeeFrame extends JFrame {
 			// Serve a inserire nel combo Box solo il nome del Professional Role
 			comboBoxSelectProfessionalRole.setRenderer( new ComboBoxRenderer() );
 			comboBoxSelectProfessionalRole.addActionListener( listener );
-			comboBoxSelectProfessionalRole.setActionCommand( i + "");
+			comboBoxSelectProfessionalRole.setActionCommand( i + "" );
 			
 			// ------ Cerca il Professional Role selezionato per impostarlo nell combo box ----------------
 			
@@ -424,7 +427,7 @@ public class AddEmployeeFrame extends JFrame {
 		
 		for( int i = 0; i < numProfessionalRole ; i ++ ) {
 			
-			JLabel labelProfessionalRole = new JLabel(" PROFESSIONAL ROLE : ");
+			JLabel labelProfessionalRole = new JLabel( labelNames.getString( LabelJsonKey.SELECT_PROFESSIONAL_ROLE ) );
 			ProfessionalRole arrProfessionalRoles [] = ProfessionalRole.getProfessionalRoleArray();
 			
 			JComboBox<ProfessionalRole> comboBoxSelectProfessionalRole = new JComboBox<ProfessionalRole>( arrProfessionalRoles  );
@@ -436,7 +439,7 @@ public class AddEmployeeFrame extends JFrame {
 			comboBoxSelectProfessionalRole.setRenderer( new ComboBoxRenderer() );
 			
 			comboBoxSelectProfessionalRole.addActionListener( listener );
-			comboBoxSelectProfessionalRole.setActionCommand( i + "");
+			comboBoxSelectProfessionalRole.setActionCommand( i + "" );
 
 			JButton btnDeleteProfessionalRolePanel = new JButton( btnNames.getString( ButtonJsonKey.BTN_DELETE ) );
 			btnDeleteProfessionalRolePanel.addActionListener( listener );
