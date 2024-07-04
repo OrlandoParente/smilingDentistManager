@@ -71,7 +71,7 @@ public class AddAppointmentFrame extends JFrame {
 	private JPanel panelForm;
 	private JPanel panelBottomMenu;
 	
-	public AddAppointmentFrame( String day, String month, String year, String hours, String minutes, 
+	public AddAppointmentFrame( long id, String day, String month, String year, String hours, String minutes, 
 								Customer customerSelectedByComboBox ) {
 		
 		this();
@@ -91,7 +91,7 @@ public class AddAppointmentFrame extends JFrame {
 		panelBottomMenu.remove( btnAddAppointment );
 
 		btnEditAppointment = new JButton( btnNames.getString( ButtonJsonKey.BTN_EDIT ) );
-		btnEditAppointment.addActionListener( new AddAppointmentActionListener( this, day, month, year,
+		btnEditAppointment.addActionListener( new AddAppointmentActionListener( this, id, day, month, year,
 																				hours, minutes, customerSelectedByComboBox .getId() + "" ) );
 		btnEditAppointment.setActionCommand( AddAppointmentActionListener.EDIT_APPOINTMENT );
 		

@@ -151,9 +151,10 @@ public class DbManager implements DbManagerInterface {
 		
 		// creazione n-m tra ruolo professionale ed impiegato
 		createDatasTable.execute("CREATE TABLE has_professional_role("
+										+ "id integer,"
 										+ "id_employee integer,"
 										+ "id_professional_role integer,"
-										+ "PRIMARY KEY(id_employee, id_professional_role),"
+										+ "PRIMARY KEY(id AUTOINCREMENT),"
 										+ "FOREIGN KEY(id_employee) REFERENCES employee(id),"
 										+ "FOREIGN KEY(id_professional_role) REFERENCES professional_role(id)"
 										+ ")");
@@ -174,6 +175,7 @@ public class DbManager implements DbManagerInterface {
 
 		// relazione appuntamento per il trattamento
 		createDatasTable.execute("CREATE TABLE appointment("
+										+ "id integer,"
 										+ "date date,"
 										+ "time time,"
 										+ "id_customer integer,"
@@ -185,7 +187,7 @@ public class DbManager implements DbManagerInterface {
 																	 // ( cioè le fatture si possono costruire dai dati già presenti nel db )
 																	 // si limita a segnare quali appuntamenti sono stati già fatturati
 										+ "note varchar(255),"		 // eventualmente se serve specificare qualcosa
-										+ "PRIMARY KEY(date, time, id_customer),"
+										+ "PRIMARY KEY(id AUTOINCREMENT),"
 										+ "FOREIGN KEY(id_doctor) REFERENCES employee(id),"
 										+ "FOREIGN KEY(id_customer) REFERENCES customer(id)"
 										+ "FOREIGN KEY(id_treatment) REFERENCES treatment(id)"
@@ -437,72 +439,60 @@ public class DbManager implements DbManagerInterface {
 	}
 
 	@Override
-	public boolean putSetAppointmentDoneById(String date, String time, String id_customer) throws SQLException {
+	public boolean putSetAppointmentDoneById(long id) throws SQLException {
 		
 		this.connectIfClosed();
 		
 		return conn.createStatement().execute("UPDATE appointment SET appointment.is_done='1' "
-									+" WHERE appointment.date = '"+date+"' "
-									+ "AND appointment.time='"+time+"'"
-									+ "AND appointment.id_customer = '"+ id_customer +"'");
+									+" WHERE appointment.id = '"+id+"'");
 	}
 
 	@Override
-	public boolean putUnsetAppointmentDoneById(String date, String time, String id_customer) throws SQLException {
+	public boolean putUnsetAppointmentDoneById(long id) throws SQLException {
 		
 		this.connectIfClosed();
 		
 		return conn.createStatement().execute("UPDATE appointment SET appointment.is_done='0' "
-									+" WHERE appointment.date = '"+date+"' "
-									+ "AND appointment.time='"+time+"'"
-									+ "AND appointment.id_customer = '"+ id_customer +"'");
+									+" WHERE appointment.id = '"+id+"'");
 	}
 
 	@Override
-	public boolean putAppointmentBillNumberById(String date, String time, String id_customer, String bill_number)
+	public boolean putAppointmentBillNumberById( long id , String bill_number)
 			throws SQLException {
 		
 		this.connectIfClosed();
 		
 		return conn.createStatement().execute("UPDATE appointment SET appointment.bill_number = '"+ bill_number +"' "
-									+" WHERE appointment.date = '"+date+"' "
-									+ "AND appointment.time='"+time+"'"
-									+ "AND appointment.id_customer = '"+ id_customer +"'");
+									+" WHERE appointment.id = '"+id+"'");
 	}
 
 	@Override
-	public boolean putAppointmentNoteById(String date, String time, String id_customer, String note)
+	public boolean putAppointmentNoteById( long id, String note)
 			throws SQLException {
 		
 		this.connectIfClosed();
 		
 		return conn.createStatement().execute("UPDATE appointment SET appointment.note = '"+ note +"' "
-									+" WHERE appointment.date = '"+date+"' "
-									+ "AND appointment.time='"+time+"'"
-									+ "AND appointment.id_customer = '"+ id_customer +"'");
+									+" WHERE appointment.id = '"+id+"'");
 	}
 
 	@Override
-	public boolean putAppointmentTreatmentById(String date, String time, String id_customer, String id_treatment)
+	public boolean putAppointmentTreatmentById( long id, String id_treatment)
 			throws SQLException {
 		
 		this.connectIfClosed();
 		
 		return conn.createStatement().execute("UPDATE appointment SET appointment.id_treatment = '"+ id_treatment +"' "
-									+" WHERE appointment.date = '"+date+"' "
-									+ "AND appointment.time='"+time+"'"
-									+ "AND appointment.id_customer = '"+ id_customer +"'");
+									+" WHERE appointment.id = '"+id+"'");
 	}
 
 	@Override
-	public boolean deleteAppointmentById(String date, String time, String id_customer) throws SQLException {
+	public boolean deleteAppointmentById(long id ) throws SQLException {
 		
 		this.connectIfClosed();
 		
 		return conn.createStatement().execute("DELETE FROM appointment  "
-									+" WHERE appointment.date = '"+date+"' "
-									+ "AND appointment.time='"+time+"'"
-									+ "AND appointment.id_customer = '"+ id_customer +"'");
+									+" WHERE appointment.id = '"+id+"'");
 	}
 
 	@Override

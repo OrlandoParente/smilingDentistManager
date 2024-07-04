@@ -71,18 +71,25 @@ public interface DbManagerInterface {
 			int is_done, String bill_number, String note) throws SQLException;
 	
 	// set is_done = 1
-	boolean putSetAppointmentDoneById( String date, String time, String id_customer ) throws SQLException;
+//	boolean putSetAppointmentDoneById( String date, String time, String id_customer ) throws SQLException;
+	boolean putSetAppointmentDoneById( long id ) throws SQLException;
 	
 	// set is_done = 0
-	boolean putUnsetAppointmentDoneById( String date, String time, String id_customer ) throws SQLException;
-
-	boolean putAppointmentBillNumberById( String date, String time, String id_customer, String bill_number ) throws SQLException;
+//	boolean putUnsetAppointmentDoneById( String date, String time, String id_customer ) throws SQLException;
+	boolean putUnsetAppointmentDoneById( long id ) throws SQLException;
 	
-	boolean putAppointmentNoteById( String date, String time, String id_customer, String note ) throws SQLException;
+//	boolean putAppointmentBillNumberById( String date, String time, String id_customer, String bill_number ) throws SQLException;
+	boolean putAppointmentBillNumberById( long id, String bill_number ) throws SQLException;
 	
-	boolean putAppointmentTreatmentById( String date, String time, String id_customer, String id_treatment ) throws SQLException;
+//	boolean putAppointmentNoteById( String date, String time, String id_customer, String note ) throws SQLException;
+	boolean putAppointmentNoteById( long id, String note ) throws SQLException;
 	
-	boolean deleteAppointmentById( String date, String time, String id_customer ) throws SQLException;
+//	boolean putAppointmentTreatmentById( String date, String time, String id_customer, String id_treatment ) throws SQLException;
+	boolean putAppointmentTreatmentById( long id, String id_treatment ) throws SQLException;
+	
+//	boolean deleteAppointmentById( String date, String time, String id_customer ) throws SQLException;
+	boolean deleteAppointmentById( long id ) throws SQLException;
+	
 	// ------------------------------------------------------
 	
 	// Gestione trattamenti ---------------------------------

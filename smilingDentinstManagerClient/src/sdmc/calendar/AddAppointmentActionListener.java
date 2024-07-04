@@ -17,6 +17,8 @@ public class AddAppointmentActionListener implements ActionListener {
 	public static final String EDIT_APPOINTMENT = "EDIT_APPOINTMENT";
 	public static final String DELETE_APPOINTMENT = "DELETE_APPOINTMENT";
 	
+	private long idAppointment;
+	
 	//
 	private String hour;
 	private String minutes;
@@ -36,11 +38,12 @@ public class AddAppointmentActionListener implements ActionListener {
 	private String params;
 	private int responseCode;
 	
-	public AddAppointmentActionListener(AddAppointmentFrame addAppointmentFrame, String oldDay, String oldMonth, String oldYear,
+	public AddAppointmentActionListener(AddAppointmentFrame addAppointmentFrame, long idAppointment, String oldDay, String oldMonth, String oldYear,
 										String oldHour, String oldMinutes,  String oldIdCustomer ) {
 		
 		this( addAppointmentFrame );
 		
+		this.idAppointment = idAppointment;
 		this.oldHour = oldHour;
 		this.oldMinutes = oldMinutes;
 		this.oldDay = oldDay;
@@ -87,14 +90,14 @@ public class AddAppointmentActionListener implements ActionListener {
 			// Check message
 			System.out.println("AddAppointmentActionListener ---> " + e.getActionCommand() );
 			
-			String parameters = "date=" + this.oldYear + "-" + this.oldMonth + "-" + this.oldDay 
-								+ "&time=" + this.oldHour + ":" + this.oldMinutes 
-								+ "&id_customer=" + this.oldIdCustomer;
-			
-			System.out.println("OLD PARAMETERS --> " + parameters );
-			
-			deleteAppointment( parameters );
-			
+//			String parameters = "date=" + this.oldYear + "-" + this.oldMonth + "-" + this.oldDay 
+//								+ "&time=" + this.oldHour + ":" + this.oldMinutes 
+//								+ "&id_customer=" + this.oldIdCustomer;
+//			
+//			System.out.println("OLD PARAMETERS --> " + parameters );
+//			
+//			deleteAppointment( "id=" + this.idAppointment );
+			deleteAppointment( );
 			addAppointment();
 			
 			
@@ -125,6 +128,7 @@ public class AddAppointmentActionListener implements ActionListener {
 	
 	private void addAppointment() {
 		
+		// recupera i dati dal form
 		this.fetchData();
 		
 		params = "date=" + this.year + "-" + this.month + "-" + this.day + "&time=" + this.hour + ":" + this.minutes 
@@ -139,11 +143,14 @@ public class AddAppointmentActionListener implements ActionListener {
 	}
 	
 	private void deleteAppointment() {
-		this.fetchData();
 		
-		params = "date=" + this.year + "-" + this.month + "-" + this.day + "&time=" + this.hour + ":" + this.minutes 
-				+ "&id_customer=" + this.idCustomer;
+		// recupera i dati dal form
+//		this.fetchData();
+		
+//		params = "date=" + this.year + "-" + this.month + "-" + this.day + "&time=" + this.hour + ":" + this.minutes 
+//					+ "&id_customer=" + this.idCustomer;
 
+		params = "id=" + this.idAppointment;
 		
 		responseCode = HttpConnectionManager.doDelete( HttpConnectionManager.DELETE_APPOINTMENT_BY_ID, params);
 		
@@ -160,6 +167,7 @@ public class AddAppointmentActionListener implements ActionListener {
 
 	}
 	
+	// recupera i dati dal form
 	private void fetchData() {
 		
 		this.day = addAppointmentFrame.getTextFieldDay().getText();

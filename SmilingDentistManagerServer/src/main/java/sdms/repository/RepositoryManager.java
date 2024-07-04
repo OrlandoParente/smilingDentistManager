@@ -226,9 +226,9 @@ public class RepositoryManager implements RepositoryInterface{
 		ResultSet rs = dbManager.getAppointments();
 		
 		while( rs.next() ) {
-			arrayListAppointments.add( new Appointment(rs.getString("date"), rs.getString("time"), rs.getInt("id_customer"),
-														rs.getInt("id_doctor"), rs.getInt("id_treatment"), rs.getInt("is_done"),
-														rs.getString("bill_number"), rs.getString("note") ) );
+			arrayListAppointments.add( new Appointment( rs.getLong("id"), rs.getString("date"), rs.getString("time"), 
+														rs.getInt("id_customer"), rs.getInt("id_doctor"), rs.getInt("id_treatment"), 
+														rs.getInt("is_done"), rs.getString("bill_number"), rs.getString("note") ) );
 		}
 		
 		dbManager.closeConnection();
@@ -245,9 +245,9 @@ public class RepositoryManager implements RepositoryInterface{
 		
 		while( rs.next() ) {
 		
-			arrayListAppointments.add( new Appointment(rs.getString("date"), rs.getString("time"), rs.getInt("id_customer"),
-														rs.getInt("id_doctor"), rs.getInt("id_treatment"), rs.getInt("is_done"),
-														rs.getString("bill_number"), rs.getString("note") ) );
+			arrayListAppointments.add( new Appointment( rs.getLong("id"), rs.getString("date"), rs.getString("time"), 
+					rs.getInt("id_customer"), rs.getInt("id_doctor"), rs.getInt("id_treatment"), 
+					rs.getInt("is_done"), rs.getString("bill_number"), rs.getString("note") ) );
 		}
 		
 		dbManager.closeConnection();
@@ -263,9 +263,9 @@ public class RepositoryManager implements RepositoryInterface{
 		ResultSet rs = dbManager.getAppointmentsByDoctorId( id_doctor );
 		
 		while( rs.next() ) {
-			arrayListAppointments.add( new Appointment(rs.getString("date"), rs.getString("time"), rs.getInt("id_customer"),
-														rs.getInt("id_doctor"), rs.getInt("id_treatment"), rs.getInt("is_done"),
-														rs.getString("bill_number"), rs.getString("note") ) );
+			arrayListAppointments.add( new Appointment( rs.getLong("id"), rs.getString("date"), rs.getString("time"), 
+					rs.getInt("id_customer"), rs.getInt("id_doctor"), rs.getInt("id_treatment"), 
+					rs.getInt("is_done"), rs.getString("bill_number"), rs.getString("note") ) );
 		}
 		
 		dbManager.closeConnection();
@@ -309,9 +309,9 @@ public class RepositoryManager implements RepositoryInterface{
 	}
 
 	@Override
-	public boolean putSetAppointmentDoneById(String date, String time, String id_customer) throws SQLException {
+	public boolean putSetAppointmentDoneById( long id ) throws SQLException {
 		
-		boolean result = dbManager.putSetAppointmentDoneById(date, time, id_customer);
+		boolean result = dbManager.putSetAppointmentDoneById( id );
 		
 		dbManager.closeConnection();
 		
@@ -319,9 +319,9 @@ public class RepositoryManager implements RepositoryInterface{
 	}
 
 	@Override
-	public boolean putUnsetAppointmentDoneById(String date, String time, String id_customer) throws SQLException {
+	public boolean putUnsetAppointmentDoneById( long id ) throws SQLException {
 		
-		boolean result = dbManager.putUnsetAppointmentDoneById(date, time, id_customer);
+		boolean result = dbManager.putUnsetAppointmentDoneById( id );
 		
 		dbManager.closeConnection();
 		
@@ -330,10 +330,10 @@ public class RepositoryManager implements RepositoryInterface{
 	}
 
 	@Override
-	public boolean putAppointmentBillNumberById(String date, String time, String id_customer, String bill_number)
+	public boolean putAppointmentBillNumberById(long id, String bill_number)
 			throws SQLException {
 		
-		boolean result = dbManager.putAppointmentBillNumberById(date, time, id_customer, bill_number);
+		boolean result = dbManager.putAppointmentBillNumberById(id, bill_number);
 		
 		dbManager.closeConnection();
 		
@@ -343,10 +343,10 @@ public class RepositoryManager implements RepositoryInterface{
 	}
 
 	@Override
-	public boolean putAppointmentNoteById(String date, String time, String id_customer, String note)
+	public boolean putAppointmentNoteById(long id, String note)
 			throws SQLException {
 		
-		boolean result = dbManager.putAppointmentNoteById(date, time, id_customer, note);
+		boolean result = dbManager.putAppointmentNoteById(id, note);
 		
 		dbManager.closeConnection();
 		
@@ -355,10 +355,10 @@ public class RepositoryManager implements RepositoryInterface{
 	}
 
 	@Override
-	public boolean putAppointmentTreatmentById(String date, String time, String id_customer, String id_treatment)
+	public boolean putAppointmentTreatmentById(long id, String id_treatment)
 			throws SQLException {
 		
-		boolean result = dbManager.putAppointmentTreatmentById(date, time, id_customer, id_treatment);
+		boolean result = dbManager.putAppointmentTreatmentById(id, id_treatment);
 		
 		dbManager.closeConnection();
 		
@@ -366,9 +366,9 @@ public class RepositoryManager implements RepositoryInterface{
 	}
 
 	@Override
-	public boolean deleteAppointmentById(String date, String time, String id_customer) throws SQLException {
+	public boolean deleteAppointmentById(long id) throws SQLException {
 		
-		boolean result = dbManager.deleteAppointmentById(date, time, id_customer);
+		boolean result = dbManager.deleteAppointmentById(id);
 		
 		dbManager.closeConnection();
 		

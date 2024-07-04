@@ -244,7 +244,7 @@ public class CalendarFrame extends JFrame {
 						
 						int selectedMonth  = calendarManager.getSelectedMonthNum() + 1 ;// perchè il calendario di java parte da 0
 						
-						new AddAppointmentFrame(  calendarManager.getSelectedDayNumber() + "", 
+						new AddAppointmentFrame(  joAppointment.getLong("id"), calendarManager.getSelectedDayNumber() + "", 
 								selectedMonth + "", calendarManager.getSelectedYear() + "",
 								hour, minutes,  selectedCustomer );
 						
@@ -263,8 +263,10 @@ public class CalendarFrame extends JFrame {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						
-						deleteAppointment(joAppointment.getString("date"), joAppointment.getString("time"), 
-											joAppointment.getInt("idCustomer") + "" );
+//						deleteAppointment(joAppointment.getString("date"), joAppointment.getString("time"), 
+//											joAppointment.getInt("idCustomer") + "" );
+						
+						deleteAppointment(joAppointment.getLong("id") );
 						
 						reloadPanelBodyCalendar();
 					}
@@ -312,7 +314,7 @@ public class CalendarFrame extends JFrame {
 		} 
 		
 		// -------------------------------------------------------------------
-		
+	
 		JSONArray jsonArrAppointments = new JSONArray( strAppointmenrs );
 		
 		// Qui si può inserire controllo response.responseCode == HTTP_OK
@@ -372,10 +374,11 @@ public class CalendarFrame extends JFrame {
 		return new JSONObject( strDoctor );
 	}
 	
-	public void deleteAppointment(  String date, String time, String id ) {
+	// public void deleteAppointment(  String date, String time, String id ) {
+	public void deleteAppointment(  long id ) {
 		
-		
-		String params = "date=" + date + "&time=" + time + "&id_customer=" +id ;
+//		String params = "date=" + date + "&time=" + time + "&id_customer=" +id ;
+		String params = "id=" + id;
 		
 		int responseCode = HttpConnectionManager.doDelete( HttpConnectionManager.DELETE_APPOINTMENT_BY_ID, params );
 		

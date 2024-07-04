@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import netscape.javascript.JSObject;
 import sdms.model.Appointment;
 import sdms.repository.RepositoryInterface;
 
@@ -35,6 +36,8 @@ public class AppointmentRestController {
 		
 		try {
 			
+			for( Appointment ap : repository.getAppointments() ) System.out.println( " - " + ap.getId() + ap.getbillNumber() + " - " );
+
 			return repository.getAppointments();
 		
 		} catch (SQLException e) {
@@ -179,17 +182,21 @@ public class AppointmentRestController {
 	
 	
 	// set is_done = 1
-	@PutMapping( value = "/putSetAppointmentDoneById", params = { "date", "time", "id_customer"} )
-	public boolean putSetAppointmentDoneById( @RequestParam("date") String date, @RequestParam("time") String time, 
-									@RequestParam("id_customer") String id_customer ) {
+//	@PutMapping( value = "/putSetAppointmentDoneById", params = { "date", "time", "id_customer"} )
+	@PutMapping( value = "/putSetAppointmentDoneById", params = { "id"} )
+//	public boolean putSetAppointmentDoneById( @RequestParam("date") String date, @RequestParam("time") String time, 
+//									@RequestParam("id_customer") String id_customer ) {
+	public boolean putSetAppointmentDoneById( @RequestParam("id") long id ) {
+
 	
 	// Check Message
 	System.out.println("AppointmentRestController -> putSetAppointmentDoneById ");
 	
 	try {
 		
-		return repository.putSetAppointmentDoneById( date, time, id_customer );
-	
+//		return repository.putSetAppointmentDoneById( date, time, id_customer );
+		return repository.putSetAppointmentDoneById( id );
+		
 	} catch (SQLException e) {
 	
 		e.printStackTrace();
@@ -200,17 +207,20 @@ public class AppointmentRestController {
 	}
 	
 	// set is_done = 0
-	@PutMapping( value = "/putUnsetAppointmentDoneById", params = { "date", "time", "id_customer"} )
-	public boolean putUnsetAppointmentDoneById( @RequestParam("date") String date, @RequestParam("time") String time, 
-									@RequestParam("id_customer") String id_customer ) {
-	
+//	@PutMapping( value = "/putUnsetAppointmentDoneById", params = { "date", "time", "id_customer"} )
+	@PutMapping( value = "/putUnsetAppointmentDoneById", params = { "id"} )
+//	public boolean putUnsetAppointmentDoneById( @RequestParam("date") String date, @RequestParam("time") String time, 
+//									@RequestParam("id_customer") String id_customer ) {
+	public boolean putUnsetAppointmentDoneById( @RequestParam("id") long id ) {
+
 		// Check Message
 		System.out.println("AppointmentRestController -> putUnsetAppointmentDoneById ");
 		
 		try {
 		
-			return repository.putUnsetAppointmentDoneById( date, time, id_customer );
-		
+//			return repository.putUnsetAppointmentDoneById( date, time, id_customer );
+			return repository.putUnsetAppointmentDoneById( id );
+			
 		} catch (SQLException e) {
 		
 			e.printStackTrace();
@@ -221,17 +231,19 @@ public class AppointmentRestController {
 	}
 	
 	
-	@PutMapping( value = "/putAppointmentBillNumberById", params = { "date", "time", "id_customer", "bill_number"} )
-	public boolean putAppointmentBillNumberById( @RequestParam("date") String date, @RequestParam("time") String time, 
-									@RequestParam("id_customer") String id_customer, 
-									@RequestParam("bill_number") String bill_number ) {
+//	@PutMapping( value = "/putAppointmentBillNumberById", params = { "date", "time", "id_customer", "bill_number"} )
+	@PutMapping( value = "/putAppointmentBillNumberById", params = { "id" , "bill_number" } )
+//	public boolean putAppointmentBillNumberById( @RequestParam("date") String date, @RequestParam("time") String time, 
+//									@RequestParam("id_customer") String id_customer, @RequestParam("bill_number") String bill_number ) {
+	public boolean putAppointmentBillNumberById( @RequestParam("id") long id, @RequestParam("bill_number") String bill_number ) {
 		
 		// Check Message
 		System.out.println("AppointmentRestController -> putAppointmentBillNumberById ");
 		
 		try {
 		
-			return repository.putAppointmentBillNumberById( date, time, id_customer, bill_number );
+//			return repository.putAppointmentBillNumberById( date, time, id_customer, bill_number );
+			return repository.putAppointmentBillNumberById( id, bill_number );
 		
 		} catch (SQLException e) {
 		
@@ -245,16 +257,19 @@ public class AppointmentRestController {
 	
 	
 	
-	@PutMapping( value = "/putAppointmentNoteById", params = { "date", "time", "id_customer", "note"} )
-	public boolean putAppointmentNoteById( @RequestParam("date") String date, @RequestParam("time") String time, 
-									@RequestParam("id_customer") String id_customer, @RequestParam("note") String note ) {
+//	@PutMapping( value = "/putAppointmentNoteById", params = { "date", "time", "id_customer", "note"} )
+	@PutMapping( value = "/putAppointmentNoteById", params = { "id", "note"} )
+//	public boolean putAppointmentNoteById( @RequestParam("date") String date, @RequestParam("time") String time, 
+//									@RequestParam("id_customer") String id_customer, @RequestParam("note") String note ) {
+	public boolean putAppointmentNoteById( @RequestParam("id") long id, @RequestParam("note") String note ) {
 		
 		// Check Message
 		System.out.println("AppointmentRestController -> putAppointmentNoteById ");
 		
 		try {
 		
-			return repository.putAppointmentNoteById( date, time, id_customer, note );
+//			return repository.putAppointmentNoteById( date, time, id_customer, note );
+			return repository.putAppointmentNoteById( id, note );
 		
 		} catch (SQLException e) {
 		
@@ -265,17 +280,19 @@ public class AppointmentRestController {
 		return false;
 	}
 	
-	@PutMapping( value = "/putAppointmentTreatmentById", params = { "date", "time", "id_customer", "id_treatment"} )
-	public boolean putAppointmentTreatmentById( @RequestParam("date") String date, @RequestParam("time") String time, 
-									@RequestParam("id_customer") String id_customer, 
-									@RequestParam("id_treatment") String id_treatment  ) {
-		
+//	@PutMapping( value = "/putAppointmentTreatmentById", params = { "date", "time", "id_customer", "id_treatment"} )
+	@PutMapping( value = "/putAppointmentTreatmentById", params = { "id", "id_treatment"} )
+//	public boolean putAppointmentTreatmentById( @RequestParam("date") String date, @RequestParam("time") String time, 
+//									@RequestParam("id_customer") String id_customer, @RequestParam("id_treatment") String id_treatment  ) {
+	public boolean putAppointmentTreatmentById( @RequestParam("id") long id, @RequestParam("id_treatment") String id_treatment  ) {
+	
 		// Check Message
 		System.out.println("AppointmentRestController -> putAppointmentTreatmentById ");
 		
 		try {
 		
-			return repository.putAppointmentTreatmentById( date, time, id_customer , id_treatment );
+//			return repository.putAppointmentTreatmentById( date, time, id_customer , id_treatment );
+			return repository.putAppointmentTreatmentById( id , id_treatment );
 		
 		} catch (SQLException e) {
 		
@@ -287,16 +304,17 @@ public class AppointmentRestController {
 	}
 	
 	
-	@DeleteMapping( value = "/deleteAppointmentById", params = { "date", "time", "id_customer"} )
-	public boolean deleteAppointmentById( @RequestParam("date") String date, @RequestParam("time") String time, 
-									@RequestParam("id_customer") String id_customer ) {
-		
+//	@DeleteMapping( value = "/deleteAppointmentById", params = { "date", "time", "id_customer"} )
+	@DeleteMapping( value = "/deleteAppointmentById", params = { "id"} )
+//	public boolean deleteAppointmentById( @RequestParam("date") String date, @RequestParam("time") String time, @RequestParam("id_customer") String id_customer ) {
+	public boolean deleteAppointmentById( @RequestParam("id") long id ) {
+	
 		// Check Message
 		System.out.println("AppointmentRestController -> deleteAppointmentById ");
 		
 		try {
 	
-			return repository.deleteAppointmentById( date, time, id_customer );
+			return repository.deleteAppointmentById( id );
 		
 		} catch (SQLException e) {
 		
