@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import sdms.repository.RepositoryInterface;
+import sdms.service.ServicesInterface;
 
 @RestController
 public class GeneralRestController {
 	
 	@Autowired
-	@Qualifier("mainRepository")
-	RepositoryInterface repository;
+	@Qualifier("mainService")
+	ServicesInterface service;
 	
 	public GeneralRestController() {
 		
@@ -27,7 +27,7 @@ public class GeneralRestController {
 		
 		try {
 			
-			int lastId = repository.getMaxIdFromTable( table ); 
+			int lastId = service.getMaxIdFromTable( table ); 
 			
 			System.out.println("GeneralRestConetroller -> Last Insert Id -> " + lastId );
 			

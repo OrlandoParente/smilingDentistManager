@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sdms.model.Customer;
-import sdms.repository.RepositoryInterface;
+import sdms.service.ServicesInterface;
 
 @RestController
 public class CustomerRestController {
 	
 	// Spring si occupa di associare la giusta implementazione
 	@Autowired
-	@Qualifier("mainRepository")
-	RepositoryInterface repository;
+	@Qualifier("mainService")
+	ServicesInterface service;
 	//DbManagerInterface dbManager;
 	
 	public CustomerRestController() {
@@ -42,7 +42,7 @@ public class CustomerRestController {
 	public int getMaxIdCustomer() {
 		
 		try {
-			return repository.getMaxIdFromTable("customer");
+			return service.getMaxIdFromTable("customer");
 			
 		} catch (SQLException e) {
 			
@@ -67,7 +67,7 @@ public class CustomerRestController {
 		 
 		 try {
 			 
-			 customerList = repository.getCustomers();
+			 customerList = service.getCustomers();
 		 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -88,7 +88,7 @@ public class CustomerRestController {
 		 
 		 try {
 			 
-			 customerList = repository.getCustomersByPartialKeyWordOverAllFields( key_word );
+			 customerList = service.getCustomersByPartialKeyWordOverAllFields( key_word );
 		 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -109,7 +109,7 @@ public class CustomerRestController {
 		 
 		 try {
 			 
-			 customer = repository.getCustomerById( id );
+			 customer = service.getCustomerById( id );
 		 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -129,7 +129,7 @@ public class CustomerRestController {
 
 		 try {
 			 
-			 return repository.postCustomer(name, surname, phoneNumber);
+			 return service.postCustomer(name, surname, phoneNumber);
 		
 		 } catch (SQLException e) {
 			e.printStackTrace();
@@ -156,7 +156,7 @@ public class CustomerRestController {
 
 		 try {
 			 
-			 return repository.postCustomer(taxIdCode, name, surname, birthCity, birthCityProvince, birthDate, residenceStreet,
+			 return service.postCustomer(taxIdCode, name, surname, birthCity, birthCityProvince, birthDate, residenceStreet,
 					 						houseNumber, residenceProvince, residenceCity, residenceCityCap, phoneNumber, 
 					 						phoneNumber2, EMail);
 		
@@ -185,7 +185,7 @@ public class CustomerRestController {
 
 		 try {
 			 
-			 return repository.putCustomerById(id, taxIdCode, name, surname, birthCity, birthCityProvince, birthDate, 
+			 return service.putCustomerById(id, taxIdCode, name, surname, birthCity, birthCityProvince, birthDate, 
 					 					residenceStreet, houseNumber, residenceProvince, residenceCity, residenceCityCap, 
 					 					phoneNumber,  phoneNumber2, EMail);
 		
@@ -202,7 +202,7 @@ public class CustomerRestController {
 	 public boolean deleteCustomerById( @RequestParam("id") String id ) {
 		 
 		 try {
-			return repository.deleteCustomerById( id );
+			return service.deleteCustomerById( id );
 		} catch (SQLException e) {
 			
 			e.printStackTrace();

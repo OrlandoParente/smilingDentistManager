@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sdms.model.MedicalHistory;
-import sdms.repository.RepositoryInterface;
+import sdms.service.ServicesInterface;
 
 @RestController
 public class MedicalHistoryRestController {
 
 	@Autowired
-	@Qualifier("mainRepository")
-	private RepositoryInterface repository;
+	@Qualifier("mainService")
+	private ServicesInterface service;
 	
 	public MedicalHistoryRestController() {
 	}
@@ -36,7 +36,7 @@ public class MedicalHistoryRestController {
 		ArrayList<MedicalHistory> arrListMedicalHistory = null;
 		
 		try {
-			arrListMedicalHistory = repository.getMedicalsHistoryByCustomer( id_customer );
+			arrListMedicalHistory = service.getMedicalsHistoryByCustomer( id_customer );
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -56,7 +56,7 @@ public class MedicalHistoryRestController {
 		MedicalHistory medicalHistory = null;
 		
 		try {
-			repository.getMedicalHistoryById(id);
+			service.getMedicalHistoryById(id);
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -76,7 +76,7 @@ public class MedicalHistoryRestController {
 		
 		try {
 			
-			repository.postMedicalHistory(id_customer, type, name);
+			service.postMedicalHistory(id_customer, type, name);
 		
 		} catch (SQLException e) {
 			
@@ -97,7 +97,7 @@ public class MedicalHistoryRestController {
 		
 		try {
 			
-			repository.postMedicalHistory( id_customer, type, name, description );
+			service.postMedicalHistory( id_customer, type, name, description );
 		
 		} catch (SQLException e) {
 			
@@ -116,7 +116,7 @@ public class MedicalHistoryRestController {
 		
 		try {
 			
-			repository.deleteMedicalHistoryById( id );
+			service.deleteMedicalHistoryById( id );
 		
 		} catch (SQLException e) {
 			

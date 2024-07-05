@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sdms.model.Treatment;
-import sdms.repository.RepositoryInterface;
+import sdms.service.ServicesInterface;
 
 @RestController
 public class TreatmentRestController {
 	
 	@Autowired
-	@Qualifier("mainRepository")
-	RepositoryInterface repository;
+	@Qualifier("mainService")
+	ServicesInterface service;
 	
 	public TreatmentRestController() {
 	}
@@ -33,7 +33,7 @@ public class TreatmentRestController {
 		Treatment treatment = null;
 		
 		try {
-			repository.getTreatmentById( id );
+			service.getTreatmentById( id );
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -53,7 +53,7 @@ public class TreatmentRestController {
 		Treatment treatment = null;
 		
 		try {
-			repository.getTreatmentsByCustomerId( customer_id );
+			service.getTreatmentsByCustomerId( customer_id );
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -73,7 +73,7 @@ public class TreatmentRestController {
 		Treatment treatment = null;
 		
 		try {
-			repository.getTreatmentsByBillNumber( bill_number );
+			service.getTreatmentsByBillNumber( bill_number );
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -90,7 +90,7 @@ public class TreatmentRestController {
 		System.out.println("TreatmentRestController -> postTreatment");
 		
 		try {
-			return repository.postTreatment(name, cost);
+			return service.postTreatment(name, cost);
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -107,7 +107,7 @@ public class TreatmentRestController {
 		System.out.println("TreatmentRestController -> postTreatment");
 		
 		try {
-			return repository.postTreatment(name, description, cost);
+			return service.postTreatment(name, description, cost);
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -125,7 +125,7 @@ public class TreatmentRestController {
 		System.out.println("TreatmentRestController -> deleteTreatmentById");
 		
 		try {
-			return repository.deleteTreatmentById( id );
+			return service.deleteTreatmentById( id );
 		} catch (SQLException e) {
 		
 			e.printStackTrace();

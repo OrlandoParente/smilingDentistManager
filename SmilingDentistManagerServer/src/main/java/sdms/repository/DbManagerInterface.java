@@ -1,13 +1,14 @@
-package sdms.service;
+package sdms.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 // GET ottieni dati; DELETE elimina dati; POST inserisci dati; PUT modifica dati
 
-@Service
+@Repository
 public interface DbManagerInterface {
 	
 	void closeConnection() throws SQLException;

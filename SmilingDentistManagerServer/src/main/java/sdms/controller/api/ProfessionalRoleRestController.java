@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sdms.model.ProfessionalRole;
-import sdms.repository.RepositoryInterface;
+import sdms.service.ServicesInterface;
 
 @RestController
 public class ProfessionalRoleRestController {
 
-	// Spring si occupa di associare la giusta implementazione dell'interfaccia Repository
+	// Spring si occupa di associare la giusta implementazione dell'interfaccia service
 	@Autowired
-	@Qualifier("mainRepository")
-	RepositoryInterface repository;
+	@Qualifier("mainService")
+	ServicesInterface service;
 	
 	
 	@GetMapping("/getProfessionalRoles")
@@ -33,7 +33,7 @@ public class ProfessionalRoleRestController {
 		 
 		try {
 			
-			return repository.getProfessionalRoles();
+			return service.getProfessionalRoles();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -51,7 +51,7 @@ public class ProfessionalRoleRestController {
 		 
 		try {
 			
-			return repository.getProfessionalRolesAssociatedToIdEmployee( id_employee );
+			return service.getProfessionalRolesAssociatedToIdEmployee( id_employee );
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -71,7 +71,7 @@ public class ProfessionalRoleRestController {
 		System.out.println("ProfessionalRoleRestController --> postProfessionalRoles -> params : " + name );
 		
 		try {
-			return repository.postProfessionalRole(name);
+			return service.postProfessionalRole(name);
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -87,7 +87,7 @@ public class ProfessionalRoleRestController {
 		System.out.println("ProfessionalRoleRestController --> postProfessionalRoles -> params : " + name + "," + description );
 		
 		try {
-			return repository.postProfessionalRole(name, description);
+			return service.postProfessionalRole(name, description);
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -104,7 +104,7 @@ public class ProfessionalRoleRestController {
 		System.out.println("ProfessionalRoleRestController --> putProfessionalRolesById -> params : " + id + "," + name + "," + description );
 		
 		try {
-			return repository.putProfessionalRoleById( id, name,	description );
+			return service.putProfessionalRoleById( id, name,	description );
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -121,7 +121,7 @@ public class ProfessionalRoleRestController {
 		System.out.println("ProfessionalRoleRestController --> deleteProfessionalRoleById --> id -> " + id );	
 		
 		try {
-			repository.deleteProfessionalRoleById( id );
+			service.deleteProfessionalRoleById( id );
 		} catch (SQLException e) {
 			
 			e.printStackTrace();

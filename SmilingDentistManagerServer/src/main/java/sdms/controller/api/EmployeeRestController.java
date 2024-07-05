@@ -15,15 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sdms.model.Employee;
-
-import sdms.repository.RepositoryInterface;
+import sdms.service.ServicesInterface;
 
 @RestController
 public class EmployeeRestController {
 	
 	@Autowired
-	@Qualifier("mainRepository")
-	private RepositoryInterface repository;
+	@Qualifier("mainService")
+	private ServicesInterface service;
 	
 	public EmployeeRestController() {
 	}
@@ -32,7 +31,7 @@ public class EmployeeRestController {
 	public int getMaxIdEmployee( ) {
 		
 		try {
-			return repository.getMaxIdFromTable("employee");
+			return service.getMaxIdFromTable("employee");
 			
 		} catch (SQLException e) {
 			
@@ -51,7 +50,7 @@ public class EmployeeRestController {
 		ArrayList<Employee> employees = null;
 		
 		try {
-			employees = repository.getEmployees();
+			employees = service.getEmployees();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -69,7 +68,7 @@ public class EmployeeRestController {
 		ArrayList<Employee> employees = null;
 		
 		try {
-			employees = repository.getEmployeesByName(name);
+			employees = service.getEmployeesByName(name);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -88,7 +87,7 @@ public class EmployeeRestController {
 		ArrayList<Employee> employees = null;
 		
 		try {
-			employees = repository.getEmployeesByName(surname);
+			employees = service.getEmployeesByName(surname);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -108,7 +107,7 @@ public class EmployeeRestController {
 		ArrayList<Employee> employees = null;
 		
 		try {
-			employees = repository.getEmployeesByProfessionalRoleName(professional_role_name);
+			employees = service.getEmployeesByProfessionalRoleName(professional_role_name);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -129,7 +128,7 @@ public class EmployeeRestController {
 		ArrayList<Employee> employees = null;
 		
 		try {
-			employees = repository.getEmployeesByPartialKeyWordOverAllFields( key_word );
+			employees = service.getEmployeesByPartialKeyWordOverAllFields( key_word );
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -150,7 +149,7 @@ public class EmployeeRestController {
 		Employee employee = null;
 		
 		try {
-			employee = repository.getEmployeeById( id );
+			employee = service.getEmployeeById( id );
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -168,7 +167,7 @@ public class EmployeeRestController {
 				
 		try {
 			
-			return repository.postEmployee(name, surname, title, phone_number);
+			return service.postEmployee(name, surname, title, phone_number);
 		
 		} catch (SQLException e) {
 			
@@ -190,7 +189,7 @@ public class EmployeeRestController {
 		
 		try {
 			
-			return repository.postEmployee(name, surname, title, birth_date, phone_number, phone_number, e_mail);
+			return service.postEmployee(name, surname, title, birth_date, phone_number, phone_number, e_mail);
 		
 		} catch (SQLException e) {
 			
@@ -212,7 +211,7 @@ public class EmployeeRestController {
 		
 		try {
 			
-			return repository.putEmployeeById(id, name, surname, title, birth_date, phone_number, phone_number_2, e_mail);
+			return service.putEmployeeById(id, name, surname, title, birth_date, phone_number, phone_number_2, e_mail);
 		
 		} catch (SQLException e) {
 			
@@ -231,7 +230,7 @@ public class EmployeeRestController {
 		System.out.println("EmployeeRestController --> deleteEmployee ");
 		
 		try {
-			repository.deleteEmployeeById( id );
+			service.deleteEmployeeById( id );
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -1,15 +1,16 @@
-package sdms.service;
+package sdms.repository;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 
 // Mettiamo questa etichetta sull'implementazione da usare
 // e Spring la utilizzerà anche se l'interfaccia ha più di una implementazione
-@Service("mainDbManager")
+@Repository("mainRepository")
 public class DbManager implements DbManagerInterface {
 
 	private static Connection conn;

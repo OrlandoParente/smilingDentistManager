@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import netscape.javascript.JSObject;
 import sdms.model.Appointment;
-import sdms.repository.RepositoryInterface;
+import sdms.service.ServicesInterface;
 
 @RestController
 public class AppointmentRestController {
 
 	@Autowired
-	@Qualifier("mainRepository")
-	RepositoryInterface repository;
+	@Qualifier("mainService")
+	ServicesInterface service;
 	
 	public AppointmentRestController() {
 	}
@@ -36,9 +37,9 @@ public class AppointmentRestController {
 		
 		try {
 			
-			for( Appointment ap : repository.getAppointments() ) System.out.println( " - " + ap.getId() + ap.getbillNumber() + " - " );
+			for( Appointment ap : service.getAppointments() ) System.out.println( " - " + ap.getId() + ap.getbillNumber() + " - " );
 
-			return repository.getAppointments();
+			return service.getAppointments();
 		
 		} catch (SQLException e) {
 		
@@ -58,7 +59,7 @@ public class AppointmentRestController {
 		
 		try {
 			
-			return repository.getAppointmentsByCustomerId( id_customer );
+			return service.getAppointmentsByCustomerId( id_customer );
 		
 		} catch (SQLException e) {
 		
@@ -78,7 +79,7 @@ public class AppointmentRestController {
 		
 		try {
 			
-			return repository.getAppointmentsByDoctorId( id_doctor );
+			return service.getAppointmentsByDoctorId( id_doctor );
 		
 		} catch (SQLException e) {
 		
@@ -98,7 +99,7 @@ public class AppointmentRestController {
 		
 		try {
 		
-			return repository.postAppointment(date, time, id_customer, null, null, "");
+			return service.postAppointment(date, time, id_customer, null, null, "");
 		
 		} catch (SQLException e) {
 		
@@ -121,7 +122,7 @@ public class AppointmentRestController {
 		
 		try {
 		
-			return repository.postAppointment(date, time, id_customer, id_doctor, id_treatment, note);
+			return service.postAppointment(date, time, id_customer, id_doctor, id_treatment, note);
 		
 		} catch (SQLException e) {
 		
@@ -145,7 +146,7 @@ public class AppointmentRestController {
 		
 		try {
 		
-			return repository.postAppointment(date, time, id_customer, id_doctor, id_treatment, bill_number, note);
+			return service.postAppointment(date, time, id_customer, id_doctor, id_treatment, bill_number, note);
 		
 		} catch (SQLException e) {
 		
@@ -169,7 +170,7 @@ public class AppointmentRestController {
 		
 		try {
 	
-			return repository.postAppointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note);
+			return service.postAppointment(date, time, id_customer, id_doctor, id_treatment, is_done, bill_number, note);
 		
 		} catch (SQLException e) {
 		
@@ -194,8 +195,8 @@ public class AppointmentRestController {
 	
 	try {
 		
-//		return repository.putSetAppointmentDoneById( date, time, id_customer );
-		return repository.putSetAppointmentDoneById( id );
+//		return service.putSetAppointmentDoneById( date, time, id_customer );
+		return service.putSetAppointmentDoneById( id );
 		
 	} catch (SQLException e) {
 	
@@ -218,8 +219,8 @@ public class AppointmentRestController {
 		
 		try {
 		
-//			return repository.putUnsetAppointmentDoneById( date, time, id_customer );
-			return repository.putUnsetAppointmentDoneById( id );
+//			return service.putUnsetAppointmentDoneById( date, time, id_customer );
+			return service.putUnsetAppointmentDoneById( id );
 			
 		} catch (SQLException e) {
 		
@@ -242,8 +243,8 @@ public class AppointmentRestController {
 		
 		try {
 		
-//			return repository.putAppointmentBillNumberById( date, time, id_customer, bill_number );
-			return repository.putAppointmentBillNumberById( id, bill_number );
+//			return service.putAppointmentBillNumberById( date, time, id_customer, bill_number );
+			return service.putAppointmentBillNumberById( id, bill_number );
 		
 		} catch (SQLException e) {
 		
@@ -268,8 +269,8 @@ public class AppointmentRestController {
 		
 		try {
 		
-//			return repository.putAppointmentNoteById( date, time, id_customer, note );
-			return repository.putAppointmentNoteById( id, note );
+//			return service.putAppointmentNoteById( date, time, id_customer, note );
+			return service.putAppointmentNoteById( id, note );
 		
 		} catch (SQLException e) {
 		
@@ -291,8 +292,8 @@ public class AppointmentRestController {
 		
 		try {
 		
-//			return repository.putAppointmentTreatmentById( date, time, id_customer , id_treatment );
-			return repository.putAppointmentTreatmentById( id , id_treatment );
+//			return service.putAppointmentTreatmentById( date, time, id_customer , id_treatment );
+			return service.putAppointmentTreatmentById( id , id_treatment );
 		
 		} catch (SQLException e) {
 		
@@ -314,7 +315,7 @@ public class AppointmentRestController {
 		
 		try {
 	
-			return repository.deleteAppointmentById( id );
+			return service.deleteAppointmentById( id );
 		
 		} catch (SQLException e) {
 		

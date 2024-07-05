@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import sdms.repository.RepositoryInterface;
+import sdms.service.ServicesInterface;
 
 @RestController
 public class HasProfessionalRoleRestController {
 
 	@Autowired
-	@Qualifier("mainRepository")
-	private RepositoryInterface repository;
+	@Qualifier("mainService")
+	private ServicesInterface service;
 	
 	public HasProfessionalRoleRestController() {
 		
@@ -29,7 +29,7 @@ public class HasProfessionalRoleRestController {
 		System.out.println( "HasProfessionalRoleRestController ->  postLinkEmployeeToProfessionalRole " );
 		
 		try {
-			return repository.postLinkEmployeeToProfessionalRole( id_employee, id_professional_role );
+			return service.postLinkEmployeeToProfessionalRole( id_employee, id_professional_role );
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -47,7 +47,7 @@ public class HasProfessionalRoleRestController {
 		System.out.println( "HasProfessionalRoleRestController ->  deleteLinkEmployeeWithProfessionalRole " );
 		
 		try {
-			return repository.deleteLinkEmployeeWithProfessionalRole( id_employee, id_professional_role );
+			return service.deleteLinkEmployeeWithProfessionalRole( id_employee, id_professional_role );
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -1,15 +1,16 @@
-package sdms.repository;
+package sdms.service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import sdms.model.*;
 
-@Repository
-public interface RepositoryInterface {
+@Service
+public interface ServicesInterface {
 
 	// Generale
 	int getMaxIdFromTable( String table ) throws SQLException;

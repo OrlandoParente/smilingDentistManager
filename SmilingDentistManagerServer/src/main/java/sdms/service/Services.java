@@ -1,4 +1,4 @@
-package sdms.repository;
+package sdms.service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import sdms.model.Appointment;
 import sdms.model.Customer;
@@ -14,16 +15,17 @@ import sdms.model.Employee;
 import sdms.model.MedicalHistory;
 import sdms.model.ProfessionalRole;
 import sdms.model.Treatment;
-import sdms.service.DbManagerInterface;
+import sdms.repository.DbManagerInterface;
 
-@Repository("mainRepository")
-public class RepositoryManager implements RepositoryInterface{
+
+@Service("mainService")
+public class Services implements ServicesInterface{
 
 	@Autowired
-	@Qualifier("mainDbManager")
+	@Qualifier("mainRepository")
 	private DbManagerInterface dbManager;
 	
-	public RepositoryManager() {
+	public Services() {
 		
 	}
 	
