@@ -218,6 +218,9 @@ public class DbManager implements DbManagerInterface {
 										+ ")");
 		
 		*/
+		
+		
+		
 										
 		
 	} // <- END MAKE NEW DB FUNCTION
