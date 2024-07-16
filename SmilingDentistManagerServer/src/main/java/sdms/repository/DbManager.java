@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.sql.*;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 
 // Mettiamo questa etichetta sull'implementazione da usare
@@ -138,6 +137,7 @@ public class DbManager implements DbManagerInterface {
 										+ "phone_number varchar(15),"
 										+ "phone_number_2 varchar(15)," // Generalmente telefono di casa
 										+ "e_mail varchar(100),"
+										+ "salary double"
 										+ "PRIMARY KEY(id AUTOINCREMENT)"
 										+ ")");
 		
