@@ -1,4 +1,4 @@
-package sdms.repository;
+package sdms.repository.JDBC;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,6 +7,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 // GET ottieni dati; DELETE elimina dati; POST inserisci dati; PUT modifica dati
+
+// Oss.: NON funziona più va in conflitto con JPA, probabilmente è ancora recuperabile 
+// // ma nel passaggio da jdbc a jpa ho cambiato anche il database e la struttura dell'applicativo
+// // pertanto richiede del lavoro extra che attualmente non vale la pena fare!
 
 @Repository
 public interface DbManagerInterface {
