@@ -1,8 +1,31 @@
 package sdms.model;
 
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table( name = "employee" )
 public class Employee {
 	
-	private int id;  					// non uso il cod_fiscale come id perché non so se il dipendente è tenuto a rilasciarlo
+	@Id
+	@GeneratedValue( strategy = GenerationType.IDENTITY )
+	private long id;  					// non uso il cod_fiscale come id perché non so se il dipendente è tenuto a rilasciarlo
+	
+	@OneToMany( mappedBy = "doctor" )
+	private List<Appointment> appointments;
+	
+	@OneToMany( mappedBy = "employee" )
+	private List<Expense> expenses;
+	
+	@OneToMany( mappedBy = "employee" )
+	private List<HasProfessionalRole> hasProfessionalRoles;
+	
 	private String name;
 	private String surname;
 	private String title;				// e.g. Dott. , Dott.ssa, Sig. , Sig.ra , Sig.na,
@@ -11,6 +34,7 @@ public class Employee {
 	private String phoneNumber2; 		// Generalmente telefono di casa
 	private String eMail;
 	
+	public Employee () {}
 	
 	public Employee(int id, String name, String surname, String title, String birthDate, String phoneNumber,
 			String phoneNumber2, String eMail) {
@@ -27,12 +51,12 @@ public class Employee {
 
 	// GETTERS AND SETTERS
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

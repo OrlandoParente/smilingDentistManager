@@ -1,10 +1,29 @@
 package sdms.model;
 
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table( name = "professional_role" )
 public class ProfessionalRole {
 	
-	private int id;
+	@Id
+	@GeneratedValue( strategy = GenerationType.IDENTITY )
+	private long id;
+	
+	@OneToMany( mappedBy = "professionalRole" )
+	private List<HasProfessionalRole> hasProfessionalRoles;
+	
 	private String name;
 	private String description;
+	
+	public ProfessionalRole() {	}
 	
 	public ProfessionalRole(int id, String name, String description) {
 		super();
@@ -16,11 +35,11 @@ public class ProfessionalRole {
 	
 	// GETTERS AND SETTERS 	
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
