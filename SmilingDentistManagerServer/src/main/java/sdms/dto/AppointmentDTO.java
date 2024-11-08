@@ -1,44 +1,14 @@
 package sdms.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
-@Entity
-@Table( name = "appointment" )
 public class AppointmentDTO {
 	
-	@Id
-	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private long id;
 	
 	// FOREIGN KEYS ######################################################
+	private long idCustomer;
+	private long idDoctor;
+	private long idTreatment;
 	
-	// --- Li lascio per mantenere la compatibilità con il Client Swing---
-	// lascio i corrispettivi setter e getter perchè cosi, jpa mi da problemi 
-	// anche senza l'annotazione @Column li mette in conflitto con i rispettivi sotto
-	
-	// private int idCustomer;
-	// private int idDoctor;
-	// private int idTreatment;
-	
-	// -------------------------------------------------------------------
-	
-	@ManyToOne
-	@JoinColumn( name = "id_customer" )
-	private CustomerDTO customer;
-	
-	@ManyToOne
-	@JoinColumn( name = "id_doctor" )
-	private EmployeeDTO doctor;
-	
-	@ManyToOne
-	@JoinColumn( name = "id_treatment" )
-	private TreatmentDTO treatment;
 	
 	// ###################################################################
 	
@@ -54,26 +24,21 @@ public class AppointmentDTO {
 	public AppointmentDTO() {}
 	
 	// isDone = 0 di default
-	public AppointmentDTO(long id, String date, String time, int idCustomer, int idDoctor,
-			int idTreatment, String billNumber, String note) {
+	public AppointmentDTO(long id, String date, String time, long idCustomer, long idDoctor,
+			long idTreatment, String billNumber, String note) {
 		this(  id, date, time, idCustomer, idDoctor, idTreatment, 0, billNumber, note );
 	}
 	
-	public AppointmentDTO(long id, String date, String time, int idCustomer, int idDoctor,
-			int idTreatment, int isDone, String billNumber, String note) {
+	public AppointmentDTO(long id, String date, String time, long idCustomer, long idDoctor,
+			long idTreatment, int isDone, String billNumber, String note) {
 		super();
 		this.id = id;
 		this.date = date;
 		this.time = time;
 		
-		// this.idCustomer = idCustomer;
-		this.setidCustomer(idCustomer);
-		
-		// this.idDoctor = idDoctor;
-		this.setidDoctor(idDoctor);
-		
-		// this.idTreatment = idTreatment;
-		this.setidTreatment(idTreatment);
+		this.idCustomer = idCustomer;
+		this.idDoctor = idDoctor;
+		this.idTreatment = idTreatment;
 		
 		this.isDone = isDone;
 		this.billNumber = billNumber;
@@ -103,79 +68,7 @@ public class AppointmentDTO {
 		this.time = time;
 	}
 	
-	public long getidCustomer() {
 		
-		if( this.customer != null )
-			return this.customer.getId();
-		
-		// errore
-		return -1;
-	}
-
-	public void setidCustomer(long idCustomer) {
-		if( this.customer == null ) this.customer = new CustomerDTO();
-		this.customer.setId(idCustomer);
-	}
-	
-	public CustomerDTO getCustomer() {
-		return this.customer;
-	}
-	
-	public void setCustomer( CustomerDTO customer ) {
-		this.customer = customer;
-	}
-	
-	
-	public long getidDoctor() {
-		
-		if( this.doctor != null )
-			return this.doctor.getId();
-		
-		// errore
-		return -1;
-	}
-	
-	public void setidDoctor(long idDoctor) {
-	
-		if( this.doctor == null )
-			this.doctor = new EmployeeDTO();
-		
-		this.doctor.setId(idDoctor);
-	}
-	
-	public EmployeeDTO getDoctor() {
-		return doctor;
-	}
-
-	public void setDoctor(EmployeeDTO doctor) {
-		this.doctor = doctor;
-	}
-
-	public long getidTreatment() {
-		
-		if( this.treatment != null )
-			return this.treatment.getId();
-		
-		// errore
-		return -1;
-	}
-	
-	public void setidTreatment(long idTreatment) {
-		
-		if( this.treatment == null )
-			this.treatment = new TreatmentDTO();
-		
-		this.treatment.setId(idTreatment);
-	}
-	
-	public TreatmentDTO getTreatment() {
-		return treatment;
-	}
-
-	public void setTreatment(TreatmentDTO treatment) {
-		this.treatment = treatment;
-	}
-	
 	public int getisDone() {
 		return isDone;
 	}
@@ -205,6 +98,39 @@ public class AppointmentDTO {
 		this.billNumber = billNumber;
 	}
 
+	public long getIdCustomer() {
+		return idCustomer;
+	}
+
+	public void setIdCustomer(long idCustomer) {
+		this.idCustomer = idCustomer;
+	}
+
+	public long getIdDoctor() {
+		return idDoctor;
+	}
+
+	public void setIdDoctor(long idDoctor) {
+		this.idDoctor = idDoctor;
+	}
+
+	public long getIdTreatment() {
+		return idTreatment;
+	}
+
+	public void setIdTreatment(long idTreatment) {
+		this.idTreatment = idTreatment;
+	}
+
+	public int getIsDone() {
+		return isDone;
+	}
+
+	public void setIsDone(int isDone) {
+		this.isDone = isDone;
+	}
+
+	
 	
 	
 	
