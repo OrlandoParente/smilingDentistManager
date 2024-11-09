@@ -129,9 +129,5 @@ public class AppointmentDTO {
 	public void setIsDone(int isDone) {
 		this.isDone = isDone;
 	}
-
-	
-	
-	
 	
 }
