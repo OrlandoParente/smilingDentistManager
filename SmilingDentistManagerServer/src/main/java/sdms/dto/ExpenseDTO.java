@@ -5,9 +5,9 @@ public class ExpenseDTO {
 	private long id;
 	
 	// FOREIGN KEYS ######################################################
-	private Long idCustomer;
-	private Long idEmployee;
-	private Long idDentalMaterial;
+	private long idCustomer;
+	private long idEmployee;
+	private long idDentalMaterial;
 	
 	// ###################################################################
 	
@@ -19,7 +19,7 @@ public class ExpenseDTO {
 	public ExpenseDTO() {}
 
 	
-	public ExpenseDTO(long id, Long idCustomer, Long idEmployee, Long idDentalMaterial, String date, String description,
+	public ExpenseDTO(long id, long idCustomer, long idEmployee, long idDentalMaterial, String date, String description,
 			double amount, String tag) {
 		super();
 		this.id = id;
@@ -38,7 +38,7 @@ public class ExpenseDTO {
 	}
 
 
-	public void setIdCustomer(Long idCustomer) {
+	public void setIdCustomer(long idCustomer) {
 		this.idCustomer = idCustomer;
 	}
 
@@ -48,7 +48,7 @@ public class ExpenseDTO {
 	}
 
 
-	public void setIdEmployee(Long idEmployee) {
+	public void setIdEmployee(long idEmployee) {
 		this.idEmployee = idEmployee;
 	}
 
