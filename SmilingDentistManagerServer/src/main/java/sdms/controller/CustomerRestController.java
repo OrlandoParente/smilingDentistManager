@@ -1,214 +1,174 @@
-//package sdms.controller;
-//
-//import java.sql.SQLException;
-//import java.util.ArrayList;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.beans.factory.annotation.Qualifier;
-//import org.springframework.web.bind.annotation.DeleteMapping;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.PutMapping;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
-//import org.springframework.web.bind.annotation.RestController;
-//
-//import sdms.model.Customer;
-//import sdms.service.old.ServicesInterface;
-//
-//@RestController
-//public class CustomerRestController {
-//	
-//	// Spring si occupa di associare la giusta implementazione
-//	@Autowired
-//	@Qualifier("mainService")
-//	ServicesInterface service;
-//	//DbManagerInterface dbManager;
-//	
-//	public CustomerRestController() {
-//		
-//	}
-//	
-//	/*
-//	@RequestMapping("/getCustomers")
-//	public String getDoctors(){
-//		dbManager = DbManager.getDbManager();
-//		return null;
-//	}
-//	*/
-//	
-//	@GetMapping("/getMaxIdCustomer")
-//	public int getMaxIdCustomer() {
-//		
-//		try {
-//			return service.getMaxIdFromTable("customer");
-//			
-//		} catch (SQLException e) {
-//			
-//			e.printStackTrace();
-//		}
-//		
-//		return -1;
-//	}
-//	
-//	
-//	
-//	//
-//	 // @RequestMapping("/getCustomers")
-//	 // @ResponseBody
-//	@GetMapping("/getCustomers") 
-//	public ArrayList<Customer> getCustomers(){
-//		 
-//		 // Stampa di controllo
-//		 System.out.println("CustomerRestController --> getCustomers ");
-//		 
-//		 ArrayList<Customer> customerList = null;
-//		 
-//		 try {
-//			 
-//			 customerList = service.getCustomers();
-//		 
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} 
-//
-//		
-//		return customerList;
-//	 }
-//	 
-//	 @RequestMapping("/getCustomersByPartialKeyWordOverAllFields/{key_word}")
-//	 // @ResponseBody
-//	 public ArrayList<Customer> getCustomersByPartialKeyWordOverAllFields( @PathVariable String key_word ){
-//		 
-//		 // Stampa di controllo
-//		 System.out.println("CustomerRestController --> getCustomersByPartialKeyWordOverAllFields -> key_word = " + key_word );
-//		 
-//		 ArrayList<Customer> customerList = null;
-//		 
-//		 try {
-//			 
-//			 customerList = service.getCustomersByPartialKeyWordOverAllFields( key_word );
-//		 
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} 
-//
-//		
-//		return customerList;
-//	 }
-//	 
-//	 @GetMapping( value = "/getCustomerById/{id}" )
-//	 // @ResponseBody
-//	 public Customer getCustomerById( @PathVariable int id){
-//		 
-//		 // Stampa di controllo
-//		 System.out.println("CustomerRestController --> getCustomer -> id customer = " + id );
-//		 
-//		 Customer customer =  null;
-//		 
-//		 try {
-//			 
-//			 customer = service.getCustomerById( id );
-//		 
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} 
-//
-//		
-//		return customer;
-//	 }
-//	 
-//	 
-//	 // Inserimento dei soli parametri essenziali del cliente
-//	 @PostMapping( value = "/postCustomer" , params = {"name","surname","phone_number"}  )
-//	 public boolean postEssentialCustomer( @RequestParam("name") String name, @RequestParam("surname") String surname, @RequestParam("phone_number") String phoneNumber ) {
-//
-//		 // Stampa di controllo
-//		 System.out.println("CustomerRestController --> getCustomers ");
-//
-//		 try {
-//			 
-//			 return service.postCustomer(name, surname, phoneNumber);
-//		
-//		 } catch (SQLException e) {
-//			e.printStackTrace();
-//		 }
-//		 
-//		 return false;
-//	 }
-//	 
-//	 
-//	 //
-//	 @PostMapping( value = "/postCustomer" , params = {"tax_id_code", "name", "surname", "birth_city" , "birth_city_province", 
-//			 "birth_date","residence_street", "house_number", "residence_city", "residence_city_cap" ,"residence_province", 
-//			 "phone_number" , "phone_number_2", "e_mail" })
-//	 public boolean postCustomer(  @RequestParam("tax_id_code") String taxIdCode , @RequestParam("name") String name, 
-//			 @RequestParam("surname") String surname, @RequestParam("birth_city") String birthCity , @RequestParam("birth_city_province") String birthCityProvince,
-//			 @RequestParam("birth_date") String birthDate,@RequestParam("residence_street") String residenceStreet, 
-//			 @RequestParam("house_number") String houseNumber, @RequestParam("residence_city") String residenceCity, 
-//			 @RequestParam("residence_city_cap") String residenceCityCap,
-//			 @RequestParam("residence_province") String residenceProvince, @RequestParam("phone_number") String phoneNumber, 
-//			 @RequestParam("phone_number_2") String phoneNumber2,  @RequestParam("e_mail") String EMail) {
-//
-//		 // Stampa di controllo
-//		 System.out.println("CustomerRestController --> getCustomers (con tutti i dati) ");
-//
-//		 try {
-//			 
-//			 return service.postCustomer(taxIdCode, name, surname, birthCity, birthCityProvince, birthDate, residenceStreet,
-//					 						houseNumber, residenceProvince, residenceCity, residenceCityCap, phoneNumber, 
-//					 						phoneNumber2, EMail);
-//		
-//		 } catch (SQLException e) {
-//			e.printStackTrace();
-//		 }
-//		 
-//		 return false;
-//	 }
-//	 
-//	 // Aggiorna tutti i valori del Customer associato all'id passato
-//	 @PutMapping( value = "/putCustomerById" , params = {"id","tax_id_code", "name", "surname", "birth_city" , "birth_city_province", 
-//			 "birth_date","residence_street", "house_number", "residence_city", "residence_city_cap" ,"residence_province", 
-//			 "phone_number" , "phone_number_2", "e_mail" })
-//	 public boolean putCustomerById(  @RequestParam("id") String id, @RequestParam("tax_id_code") String taxIdCode , 
-//			 @RequestParam("name") String name, @RequestParam("surname") String surname, 
-//			 @RequestParam("birth_city") String birthCity , @RequestParam("birth_city_province") String birthCityProvince,
-//			 @RequestParam("birth_date") String birthDate,@RequestParam("residence_street") String residenceStreet, 
-//			 @RequestParam("house_number") String houseNumber, @RequestParam("residence_city") String residenceCity, 
-//			 @RequestParam("residence_city_cap") String residenceCityCap,
-//			 @RequestParam("residence_province") String residenceProvince, @RequestParam("phone_number") String phoneNumber, 
-//			 @RequestParam("phone_number_2") String phoneNumber2,  @RequestParam("e_mail") String EMail) {
-//
-//		 // Stampa di controllo
-//		 System.out.println("CustomerRestController --> puCustomerById (con tutti i dati) ");
-//
-//		 try {
-//			 
-//			 return service.putCustomerById(id, taxIdCode, name, surname, birthCity, birthCityProvince, birthDate, 
-//					 					residenceStreet, houseNumber, residenceProvince, residenceCity, residenceCityCap, 
-//					 					phoneNumber,  phoneNumber2, EMail);
-//		
-//		 } catch (SQLException e) {
-//			e.printStackTrace();
-//		 }
-//		 
-//		 return false;
-//	 }
-//	 
-//	 
-//	 // Eliminazione Customer by Id
-//	 @DeleteMapping( value="/deleteCustomer" , params = { "id" } )
-//	 public boolean deleteCustomerById( @RequestParam("id") String id ) {
-//		 
-//		 try {
-//			return service.deleteCustomerById( id );
-//		} catch (SQLException e) {
-//			
-//			e.printStackTrace();
-//		}
-//		 
-//		 return false;
-//		 
-//	 }
-//}
+package sdms.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import sdms.dto.CustomerDTO;
+import sdms.model.Customer;
+import sdms.service.CustomerServiceInterface;
+
+@RestController
+public class CustomerRestController {
+	
+	// Spring si occupa di associare la giusta implementazione
+	@Autowired
+	CustomerServiceInterface service;
+	
+	@Autowired
+	private ModelMapper modelMapper;	// @Bean defined into @SpringBootApplication
+	
+	
+	@GetMapping("/getMaxIdCustomer")
+	public long getMaxIdCustomer() {
+		
+		return service.getLastCustomerId();
+	}
+	
+	// @RequestMapping("/getCustomers")
+	// @ResponseBody
+	@GetMapping("/getCustomers") 
+	public List<CustomerDTO> getCustomers(){
+		 
+		 // Stampa di controllo
+		 System.out.println("CustomerRestController --> getCustomers ");
+		 	 
+		 List<CustomerDTO> custumersDTO = new ArrayList<CustomerDTO>();
+		 List<Customer> custumers = service.getCustomers();
+		 
+		 custumersDTO = custumers.stream().
+				 				map( customer -> modelMapper.map( customer, CustomerDTO.class ) )
+				 				.collect( Collectors.toList() );
+		 
+		 return custumersDTO;
+	 }
+	 
+	 @GetMapping( value = "/getCustomerById/{id}" )
+	 // @ResponseBody
+	 public CustomerDTO getCustomerById( @PathVariable long id){
+		 
+		 // Stampa di controllo
+		 System.out.println("CustomerRestController --> getCustomer -> id customer = " + id );
+		 
+		return modelMapper.map( service.getCustomerById(id) , CustomerDTO.class );
+	 }
+	
+	 @GetMapping("/getCustomersByPartialKeyWordOverAllFields/{keyWord}")
+	 // @ResponseBody
+	 public List<Customer> getCustomersByPartialKeyWordOverAllFields( @PathVariable String keyWord ){
+		 
+		 // Stampa di controllo
+		 System.out.println("CustomerRestController --> getCustomersByPartialKeyWordOverAllFields -> keyWord = " + keyWord );
+		 
+		 return service.getCustomersByPartialKeyWordOverAllFields(keyWord);
+	 }
+
+	 	 
+	 // Inserimento dei soli parametri essenziali del cliente
+	 @PostMapping( value = "/postCustomer" , params = {"name","surname","phoneNumber"}  )
+	 public void postEssentialCustomer( @RequestParam("name") String name, @RequestParam("surname") String surname, 
+			 						@RequestParam("phoneNumber") String phoneNumber ) {
+
+		 // Stampa di controllo
+		 System.out.println("CustomerRestController --> getCustomers ");
+
+		 Customer customer = new Customer();
+		 customer.setName(name);
+		 customer.setSurname(surname);
+		 customer.setPhoneNumber(phoneNumber);
+		 
+		 service.postCustomer(customer);
+		 
+	 }
+ 
+	 
+	 //
+	 @PostMapping( value = "/postCustomer" , params = {"taxIdCode", "name", "surname", "birthCity" , "birthCityProvince", 
+			 "birthDate","residenceStreet", "houseNumber", "residenceCity", "residenceCityCap" ,"residenceProvince", 
+			 "phoneNumber" , "phoneNumber2", "eMail" })
+	 public void postCustomer(  @RequestParam("taxIdCode") String taxIdCode , @RequestParam("name") String name, 
+			 @RequestParam("surname") String surname, @RequestParam("birthCity") String birthCity , 
+			 @RequestParam("birthCityProvince") String birthCityProvince,
+			 @RequestParam("birthDate") String birthDate, @RequestParam("residenceStreet") String residenceStreet, 
+			 @RequestParam("houseNumber") String houseNumber, @RequestParam("residenceCity") String residenceCity, 
+			 @RequestParam("residenceCityCap") String residenceCityCap,
+			 @RequestParam("residenceProvince") String residenceProvince, @RequestParam("phoneNumber") String phoneNumber, 
+			 @RequestParam("phoneNumber2") String phoneNumber2,  @RequestParam("eMail") String EMail) {
+
+		 // Stampa di controllo
+		 System.out.println("CustomerRestController --> getCustomers ");
+		 
+		 Customer customer = new Customer();
+		 customer.setTaxIdCode(taxIdCode);
+		 customer.setName(name);
+		 customer.setSurname(surname);
+		 customer.setBirthCity(birthCity);
+		 customer.setBirthCityProvince(birthCityProvince);
+		 customer.setBirthDate(birthDate);
+		 customer.setResidenceStreet(residenceStreet);
+		 customer.setHouseNumber(houseNumber);
+		 customer.setResidenceProvince(residenceProvince);
+		 customer.setResidenceCity(residenceCity);
+		 customer.setResidenceCityCap(residenceCityCap);
+		 customer.setPhoneNumber(phoneNumber);
+		 customer.setPhoneNumber2(phoneNumber2);
+		 customer.seteMail(EMail);
+		 
+		 service.postCustomer(customer);
+		 
+	 }
+	 
+	 // Aggiorna tutti i valori del Customer associato all'id passato
+	 @PutMapping( value = "/putCustomerById" , params = {"id","taxIdCode", "name", "surname", "birthCity" , "birthCityProvince", 
+			 "birthDate","residenceStreet", "houseNumber", "residenceCity", "residenceCityCap" ,"residenceProvince", 
+			 "phoneNumber" , "phoneNumber2", "eMail" })
+	 public void putCustomerById(  @RequestParam("id") long id, @RequestParam("taxIdCode") String taxIdCode , 
+			 @RequestParam("name") String name, @RequestParam("surname") String surname, 
+			 @RequestParam("birthCity") String birthCity , @RequestParam("birthCityProvince") String birthCityProvince,
+			 @RequestParam("birthDate") String birthDate, @RequestParam("residenceStreet") String residenceStreet, 
+			 @RequestParam("houseNumber") String houseNumber, @RequestParam("residenceCity") String residenceCity, 
+			 @RequestParam("residenceCityCap") String residenceCityCap,
+			 @RequestParam("residenceProvince") String residenceProvince, @RequestParam("phoneNumber") String phoneNumber, 
+			 @RequestParam("phoneNumber2") String phoneNumber2,  @RequestParam("eMail") String eMail) {
+
+		 // Stampa di controllo
+		 System.out.println("CustomerRestController --> putCustomerById  ");
+		 
+		 Customer customer = new Customer();
+		 customer.setId(id);
+		 customer.setTaxIdCode(taxIdCode);
+		 customer.setName(name);
+		 customer.setSurname(surname);
+		 customer.setBirthCity(birthCity);
+		 customer.setBirthCityProvince(birthCityProvince);
+		 customer.setBirthDate(birthDate);
+		 customer.setResidenceStreet(residenceStreet);
+		 customer.setHouseNumber(houseNumber);
+		 customer.setResidenceProvince(residenceProvince);
+		 customer.setResidenceCity(residenceCity);
+		 customer.setResidenceCityCap(residenceCityCap);
+		 customer.setPhoneNumber(phoneNumber);
+		 customer.setPhoneNumber2(phoneNumber2);
+		 customer.seteMail(eMail);
+		 
+		 service.putCustomer(customer);
+	 }	 
+	 
+	 // Delete Customer by Id
+	 @DeleteMapping( value="/deleteCustomer" , params = { "id" } )
+	 public void deleteCustomerById( @RequestParam("id") long id ) {
+		  
+		 service.deleteCustomer(id);
+		 
+	 }
+}
