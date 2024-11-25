@@ -77,6 +77,29 @@ public class Expense {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-	
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	public DentalMaterial getDentalMaterial() {
+		return dentalMaterial;
+	}
+
+	public void setDentalMaterial(DentalMaterial dentalMaterial) {
+		this.dentalMaterial = dentalMaterial;
+	}
 	
 }

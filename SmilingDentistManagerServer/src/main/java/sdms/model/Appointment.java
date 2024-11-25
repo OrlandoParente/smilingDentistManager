@@ -12,6 +12,9 @@ import jakarta.persistence.Table;
 @Table( name = "appointment" )
 public class Appointment {
 	
+	public final static int IS_DONE = 1;
+	public final static int IS_NOT_DONE = 0;
+	
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private long id;
@@ -196,16 +199,6 @@ public class Appointment {
 	public void setNote(String note) {
 		this.note = note;
 	}
-
-	public String getBillNumber() {
-		return billNumber;
-	}
-
-	public void setBillNumber(String billNumber) {
-		this.billNumber = billNumber;
-	}
-
-	
-	
+		
 	
 }

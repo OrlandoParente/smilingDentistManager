@@ -91,32 +91,32 @@ public class Employee {
 	}
 
 
-	public String getbirthDate() {
+	public String getBirthDate() {
 		return birthDate;
 	}
 
 
-	public void setbirthDate(String birthDate) {
+	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
 
 
-	public String getphoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
 
-	public void setphoneNumber(String phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
 
-	public String getphoneNumber2() {
+	public String getPhoneNumber2() {
 		return phoneNumber2;
 	}
 
 
-	public void setphoneNumber2(String phoneNumber2) {
+	public void setPhoneNumber2(String phoneNumber2) {
 		this.phoneNumber2 = phoneNumber2;
 	}
 

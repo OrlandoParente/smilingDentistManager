@@ -92,6 +92,8 @@ public class MedicalHistory {
 	}
 
 	public void setType(String type) {
+		// It could be useful insert a check on the type we set up
+		// type = "generale" o "odontoiatrica" 
 		this.type = type;
 	}
 
