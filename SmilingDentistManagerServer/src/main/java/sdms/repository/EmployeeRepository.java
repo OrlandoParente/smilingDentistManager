@@ -1,46 +1,35 @@
 package sdms.repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface EmployeeRepository {
+import sdms.model.Employee;
 
-	// Create
+@Repository
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+
+
+	// CREATE ---------------------------------------------------------------
 	
-	// Update
+	// UPDATE ---------------------------------------------------------------
 	
-	// Read
+	// READ -----------------------------------------------------------------
+	@Query("SELECT MAX(e.id) FROM Employee e")
+	Long findMaxId();
 	
-	// Delete
+	List<Employee> findByName(String name);
+	List<Employee> findByNameContaining( String name );
 	
-//	// Gestione Dipendenti (Employee) -----------------------
-//	ResultSet getEmployees() throws SQLException;
-//	
-//	ResultSet getEmployeesByName( String name ) throws SQLException;
-//	
-//	ResultSet getEmployeesBySurname( String surname ) throws SQLException;
-//	
-//	ResultSet getEmployeesByProfessionalRoleName( String professiona_role_name ) throws SQLException;
-//	
-//	ResultSet getEmployeesByPartialKeyWordOverAllFields( String key_word ) throws SQLException;
-//	
-//	ResultSet getEmployeeById( String id ) throws SQLException;
-//	
-//	// title e.g. Dott. , Dott.ssa, Sig. , Sig.ra , Sig.na
-//	boolean postEmployee( String name, String surname, String title, String phone_number ) throws SQLException;
-//	boolean postEmployee( String name, String surname, String title, String birth_date, String phone_number, 
-//						String phone_number_2, String e_mail ) throws SQLException;
-//	
-//	boolean putEmployeeById( String id, String name, String surname, String title, String birth_date, String phone_number, 
-//						String phone_number_2, String e_mail ) throws SQLException;
-//	
-//	
-//	boolean deleteEmployeeById( String id ) throws SQLException;
-//	// ------------------------------------------------------
+	List<Employee> findBySurname(String surname);
+	List<Employee> findBySurnameContaining(String surname);
 	
+	List<Employee> findByNameOrSurnameOrBirthDateOrPhoneNumberOrPhoneNumber2OrEMail(String name, String surname, String date, String phoneNum, String phoneNum2, String email);
+	List<Employee> findByNameOrSurnameOrBirthDateOrPhoneNumberOrPhoneNumber2OrEMailContaining(String name, String surname, String date, String phoneNum, String phoneNum2, String email);
 	
+	// DELETE ---------------------------------------------------------------
+		
 	
 }

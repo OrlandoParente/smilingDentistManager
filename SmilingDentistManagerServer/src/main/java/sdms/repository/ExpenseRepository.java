@@ -1,15 +1,20 @@
 package sdms.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface ExpenseRepository {
+import sdms.model.Expense;
 
-	// Create
+@Repository
+public interface ExpenseRepository extends JpaRepository<Expense, Long>{
+
+
+	// CREATE ---------------------------------------------------------------
 	
-	// Update
+	// UPDATE ---------------------------------------------------------------
 	
-	// Read
+	// READ -----------------------------------------------------------------
 	
-	// Delete
+	// DELETE ---------------------------------------------------------------
+
 }

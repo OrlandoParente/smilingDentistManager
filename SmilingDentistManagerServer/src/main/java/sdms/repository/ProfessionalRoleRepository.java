@@ -1,33 +1,29 @@
 package sdms.repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface ProfessionalRoleRepository {
+import sdms.model.ProfessionalRole;
 
-	// Create
-	
-	// Update
-	
-	// Read
-	
-	// Delete
-	
-	
-//	// Gestione Professional Role ---------------------------
-//	ResultSet getProfessionalRoles() throws SQLException;
-//	
-//	ResultSet getProfessionalRolesAssociatedToIdEmployee( String id_employee ) throws SQLException;
-//	
+@Repository
+public interface ProfessionalRoleRepository extends JpaRepository<ProfessionalRole, Long> {
+
+
+	// CREATE ---------------------------------------------------------------
 //	boolean postProfessionalRole( String name ) throws SQLException;
 //	boolean postProfessionalRole( String name, String description ) throws SQLException;
-//	
+	
+	// READ -----------------------------------------------------------------
+//	ResultSet getProfessionalRoles() throws SQLException;
+//	ResultSet getProfessionalRolesAssociatedToIdEmployee( String id_employee ) throws SQLException;	
+	List<ProfessionalRole> findByName(String name);
+	
+	// UPDATE ---------------------------------------------------------------
 //	boolean putProfessionalRoleById(String id, String name, String description ) throws SQLException;
-//	
+		
+	// DELETE ---------------------------------------------------------------
 //	boolean deleteProfessionalRoleById( String id ) throws SQLException;	
-//	// ------------------------------------------------------
-//	
+
 }

@@ -1,26 +1,26 @@
 package sdms.repository;
 
-import java.sql.SQLException;
-
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface HasProfessionalRoleRepository {
+import sdms.model.Employee;
+import sdms.model.HasProfessionalRole;
+import sdms.model.ProfessionalRole;
 
-	// Create
+import java.util.List;
+
+
+@Repository
+public interface HasProfessionalRoleRepository extends JpaRepository<HasProfessionalRole, Long>{
+
+	// CREATE ---------------------------------------------------------------
 	
-	// Update
+	// READ -----------------------------------------------------------------
+	List<HasProfessionalRole> findByEmployee(Employee employee);
+	List<HasProfessionalRole> findByProfessionalRole(ProfessionalRole professionalRole);
 	
-	// Read
+	// UPDATE ---------------------------------------------------------------
 	
-	// Delete
-	
-	
-//	// Gestione Has Professional Role -----------------------
-//	boolean postLinkEmployeeToProfessionalRole( String id_employee, String id_professional_role ) throws SQLException;
-//	
-//	boolean deleteLinkEmployeeWithProfessionalRole( String id_employee, String id_professional_role ) throws SQLException;
-//	// ------------------------------------------------------
-//	
-	
+	// DELETE ---------------------------------------------------------------
+		
 }
