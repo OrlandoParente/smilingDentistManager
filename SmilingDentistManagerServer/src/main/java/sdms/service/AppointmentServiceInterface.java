@@ -1,8 +1,5 @@
 package sdms.service;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import sdms.model.Appointment;
@@ -10,35 +7,46 @@ import sdms.model.Appointment;
 public interface AppointmentServiceInterface {
 	
 	// Gestione Appuntamenti --------------------------------
-	List<Appointment> getAppointments();
+	public Appointment getAppointmentById( long id );
 	
-	List<Appointment> getAppointmentsByCustomerId( long customerId );
+	public List<Appointment> getAppointments();
 	
-	List<Appointment> getAppointmentsByDoctorId( long doctorId );
+	public List<Appointment> getAppointmentsByCustomerId( long customerId );
+	
+	public List<Appointment> getAppointmentsByDoctorId( long doctorId );
 
+	public void postAppointment( Appointment appointment );
 	// per registrare un appuntamento ancora non svolto
-	boolean postAppointment( String date, String time, String id_customer, String id_doctor, String id_treatment, String note) throws SQLException;
+	// boolean postAppointment( String date, String time, String id_customer, String id_doctor, String id_treatment, String note) throws SQLException;
 	
 	// per registrare un appuntamento già svolto
-	boolean postAppointment( String date, String time, String id_customer, String id_doctor, String id_treatment, String bill_number, String note) throws SQLException;
+	// boolean postAppointment( String date, String time, String id_customer, String id_doctor, String id_treatment, String bill_number, String note) throws SQLException;
 	
 	// per registrare un appuntamento potendo scegliere i valori di tutti i campi
-	boolean postAppointment( String date, String time, String id_customer, String id_doctor, String id_treatment, 
-			int is_done, String bill_number, String note);
+	//boolean postAppointment( String date, String time, String id_customer, String id_doctor, String id_treatment, 
+	//		int is_done, String bill_number, String note);
 	
 	// set is_done = 1
-	boolean putSetAppointmentDoneById( long id );
+	public void putSetAppointmentDoneById( long id );
 	
 	// set is_done = 0
-	boolean putUnsetAppointmentDoneById( long id );
+	public void putUnsetAppointmentDoneById( long id );
 
-	boolean putAppointmentBillNumberById( long id, String bill_number );
+	public void putAppointment( Appointment appointment );
 	
-	boolean putAppointmentNoteById( long id , String note );
+	// Volendo se ne può fare a meno, basta il putAppointment
+	// però dato che questa funzionalità è prevista, così si alleggerisce il controller
+	public void putAppointmentBillNumberById( long id, String billNumber );
 	
-	boolean putAppointmentTreatmentById( long id, String id_treatment );
+	// Volendo se ne può fare a meno, basta il putAppointment
+	// però dato che questa funzionalità è prevista, così si alleggerisce il controller
+	public void putAppointmentNoteById( long id , String note );
 	
-	boolean deleteAppointmentById( long id );
+	// Volendo se ne può fare a meno, basta il putAppointment
+	// però dato che questa funzionalità è prevista, così si alleggerisce il controller
+	public void putAppointmentTreatmentById( long id, long idTreatment );
+	
+	public void deleteAppointmentById( long id );
 	// ------------------------------------------------------
 	
 }

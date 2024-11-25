@@ -1,7 +1,5 @@
 package sdms.service;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +7,27 @@ import org.springframework.stereotype.Service;
 
 import sdms.model.Appointment;
 import sdms.repository.AppointmentRepository;
+import sdms.repository.CustomerRepository;
+import sdms.repository.EmployeeRepository;
 
 @Service
 public class AppointmentService implements AppointmentServiceInterface{
 
 	@Autowired
 	AppointmentRepository repository;
+	
+	@Autowired
+	CustomerRepository customerRepository;
+	
+	@Autowired
+	EmployeeRepository employeeRepository;
+	
+	@Override
+	public Appointment getAppointmentById(long id) {
+		
+		return repository.findById(id).get();
+		
+	}
 	
 	@Override
 	public List<Appointment> getAppointments() {
@@ -25,73 +38,84 @@ public class AppointmentService implements AppointmentServiceInterface{
 	@Override
 	public List<Appointment> getAppointmentsByCustomerId(long customerId) {
 		
-//		return repository.findByIdCustomer(customerId);
-		return null;
+		return repository.findByCustomer( customerRepository.findById( customerId ).get() );
 	}
 
 	@Override
-	public ArrayList<Appointment> getAppointmentsByDoctorId(long doctorId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Appointment> getAppointmentsByDoctorId(long doctorId) {
+		
+		return repository.findByDoctor(  employeeRepository.findById( doctorId ).get() );
 	}
 
 	@Override
-	public boolean postAppointment(String date, String time, String id_customer, String id_doctor, String id_treatment,
-			String note) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+	public void postAppointment(Appointment appointment) {
+	
+		repository.save( appointment );
 	}
 
 	@Override
-	public boolean postAppointment(String date, String time, String id_customer, String id_doctor, String id_treatment,
-			String bill_number, String note) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+	// set is_done = 1
+	public void putSetAppointmentDoneById(long id) {
+		
+		Appointment appointment = repository.findById(id).get();
+		appointment.setisDone( Appointment.IS_DONE );
+		repository.save(appointment);
+		
 	}
 
 	@Override
-	public boolean postAppointment(String date, String time, String id_customer, String id_doctor, String id_treatment,
-			int is_done, String bill_number, String note) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean putSetAppointmentDoneById(long id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean putUnsetAppointmentDoneById(long id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean putAppointmentBillNumberById(long id, String bill_number) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean putAppointmentNoteById(long id, String note) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean putAppointmentTreatmentById(long id, String id_treatment) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean deleteAppointmentById(long id) {
-		// TODO Auto-generated method stub
-		return false;
+	// set is_done = 0
+	public void putUnsetAppointmentDoneById(long id) {
+		
+		Appointment appointment = repository.findById(id).get();
+		appointment.setisDone( Appointment.IS_NOT_DONE );
+		repository.save(appointment);
+		
 	}
 	
-	
+	@Override
+	public void putAppointment(Appointment appointment) {
+		
+		repository.save(appointment);
+	}
+
+	// Volendo se ne può fare a meno, basta il putAppointment
+	// però dato che questa funzionalità è prevista, così si alleggerisce il controller
+	@Override
+	public void putAppointmentBillNumberById(long id, String billNumber) {
+		
+		Appointment appointment = repository.findById(id).get();
+		appointment.setbillNumber(billNumber);
+		repository.save(appointment);
+		
+	}
+
+	// Volendo se ne può fare a meno, basta il putAppointment
+	// però dato che questa funzionalità è prevista, così si alleggerisce il controller
+	@Override
+	public void putAppointmentNoteById(long id, String note) {
+		
+		Appointment appointment = repository.findById(id).get();
+		appointment.setNote(note);
+		repository.save(appointment);
+		
+	}
+
+	// Volendo se ne può fare a meno, basta il putAppointment
+	// però dato che questa funzionalità è prevista, così si alleggerisce il controller
+	@Override
+	public void putAppointmentTreatmentById(long id, long idTreatment) {
+		
+		Appointment appointment = repository.findById(id).get();
+		appointment.setidTreatment(idTreatment);
+		repository.save(appointment);
+	}
+
+	@Override
+	public void deleteAppointmentById(long id) {
+		
+		repository.delete( repository.findById( id ).get() );
+	}
+
 	
 }
