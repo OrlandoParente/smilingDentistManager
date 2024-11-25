@@ -84,8 +84,10 @@ public class Customer {
 											jo.getString("birthCityProvince"), jo.getString("birthDate"),
 											jo.getString("residenceStreet"), jo.getString("houseNumber"), 
 											jo.getString("residenceCity"), jo.getString("residenceCityCap"),
-											jo.getString("residenceProvince"), jo.getString("phoneNumber"),
-											jo.getString("phoneNumber2"), jo.getString("eMail"));
+											jo.getString("residenceProvince"),
+											jo.optString("phoneNumber", ""),	// se null assegna ""
+											jo.optString("phoneNumber2", ""),	// se null assegna ""
+											jo.optString("eMail", "") );		// se null assegna ""
 		}
 		
 		return customerArr;
@@ -216,9 +218,5 @@ public class Customer {
 	public void seteMail(String eMail) {
 		this.eMail = eMail;
 	}
-	
-	
-	
-	
 	
 }

@@ -97,6 +97,9 @@ public class HttpConnectionManager {
 			// set properties
 			responseCode = conn.getResponseCode();
 			
+			// Check Message
+			System.out.println("HttpConnectionManager -> DoGet ->" + Setting.getSettings().getServer() + getRequest );
+			
 			if( responseCode == HttpURLConnection.HTTP_OK ) {
 				
 				BufferedReader in = new BufferedReader( new InputStreamReader( conn.getInputStream() ));
@@ -140,7 +143,7 @@ public class HttpConnectionManager {
 		try {
 			
 			// Check Message
-			System.out.println("HttpConnectionManaget -> DoPost --->  URL --->" + Setting.getSettings().getServer() + postRequest );
+			System.out.println("HttpConnectionManager -> DoPost --->  URL --->" + Setting.getSettings().getServer() + postRequest );
 
 			
 			URL url = new URL( Setting.getSettings().getServer() + postRequest );
@@ -154,7 +157,7 @@ public class HttpConnectionManager {
 			if( parameters != null && ! parameters.equals("") ) {
 				
 				// Check Message
-				System.out.println("HttpConnectionManaget -> DoPost --->  IF parameters NOT NULL and NOT EMPTY --->" + parameters );
+				System.out.println("HttpConnectionManager -> DoPost --->  IF parameters NOT NULL and NOT EMPTY --->" + parameters );
 				
 				/*
 				// SECONDO METODO PER SCRIVERE I PARAMETRI
@@ -177,8 +180,8 @@ public class HttpConnectionManager {
 			responseCode = conn.getResponseCode();
 			
 			// Check Message
-			System.out.println("HttpConnectionManaget -> DoPost ---> " + responseCode );
-			System.out.println("HttpConnectionManaget -> DoPost -> parameters ---> " + parameters );
+			System.out.println("HttpConnectionManager -> DoPost ---> " + responseCode );
+			System.out.println("HttpConnectionManager -> DoPost -> parameters ---> " + parameters );
 			
 			if( responseCode == HttpsURLConnection.HTTP_OK ) {
 				

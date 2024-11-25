@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.datatransfer.SystemFlavorMap;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
@@ -210,7 +209,7 @@ public class SearchEmployeeFrame extends JFrame{
 					continue;
 				
 				JTextField textField = new JTextField(20);
-				textField.setText( ( String ) joEmployee.getString( key ) );
+				textField.setText( ( String ) joEmployee.optString(key , "") ); 
 				textField.setToolTipText( key );
 				textField.setEditable( false );
 				

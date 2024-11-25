@@ -167,7 +167,16 @@ public class SearchCustomerFrame extends JFrame {
 					if( key.equals("id") || key.equals("name") || key.equals("surname") ) continue; 
 					
 					JTextField textField = new JTextField(20);
-					textField.setText( jo.getString( key ) );
+					
+					// Restituisce una stringa e in caso il valore è null inserisce ""
+					String value = jo.optString(key, "");
+					textField.setText(value);
+					
+//					if( jo.get( key ) != JSONObject.NULL )
+//						textField.setText( jo.getString( key ) );
+//					else 
+//						textField.setText( "" );
+					
 					textField.setToolTipText( key  );
 					textField.setEditable( false );
 					

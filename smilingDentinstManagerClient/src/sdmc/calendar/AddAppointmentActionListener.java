@@ -130,9 +130,10 @@ public class AddAppointmentActionListener implements ActionListener {
 		
 		// recupera i dati dal form
 		this.fetchData();
-		
+				
 		params = "date=" + this.year + "-" + this.month + "-" + this.day + "&time=" + this.hour + ":" + this.minutes 
-				+ "&id_customer=" + this.idCustomer;
+				+ "&idCustomer=" + this.idCustomer;
+		//		+ "&id_customer=" + this.idCustomer;
 		
 		System.out.println( "APOOINTMENT PARMAS -> " + params );
 		

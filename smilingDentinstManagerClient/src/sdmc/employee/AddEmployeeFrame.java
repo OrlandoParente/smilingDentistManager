@@ -5,9 +5,6 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-
 import javax.net.ssl.HttpsURLConnection;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;

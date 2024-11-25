@@ -59,8 +59,10 @@ public class EditEmployeeActionListener implements ActionListener {
 		
 		new AddEmployeeFrame(  joEmployee.getInt("id") + "", joEmployee.getString("name"), joEmployee.getString("surname"), 
 								joEmployee.getString("title"), joEmployee.getString("birthDate") ,
-								joEmployee.getString("phoneNumber"), joEmployee.getString("phoneNumber2"),
-								joEmployee.getString("eMail") , arrProfessionalRoles );
+								joEmployee.optString("phoneNumber", ""), 	// joEmployee.getString("phoneNumber"), 
+								joEmployee.optString("phoneNumber2", ""), 	// joEmployee.getString("phoneNumber2"),
+								joEmployee.optString("eMail", ""), 	// joEmployee.getString("eMail") 
+								arrProfessionalRoles );
 	
 	}
 

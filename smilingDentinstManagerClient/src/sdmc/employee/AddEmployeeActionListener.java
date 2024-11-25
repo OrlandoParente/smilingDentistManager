@@ -236,21 +236,22 @@ public class AddEmployeeActionListener implements ActionListener {
 			
 			// -----------------------------------------------------------------------------------
 			
-			params = "name=" + name + "&surname=" + surname + "&title=" + title + "&birth_date=" + birth_date
-					+"&phone_number=" + phone_number + "&phone_number_2=" + phone_number_2 + "&e_mail="+ e_mail;
+			params = "name=" + name + "&surname=" + surname + "&title=" + title + "&birthDate=" + birth_date
+					+"&phoneNumber=" + phone_number + "&phoneNumber2=" + phone_number_2 + "&eMail="+ e_mail;
 			
 			HttpConnectionManager.doPost( HttpConnectionManager.POST_EMPLOYEE, params);
 			
-			int lastId = Integer.valueOf( HttpConnectionManager.doGet( HttpConnectionManager.GET_MAX_ID_EMPLOYEE)
-											.getResponseString().trim() );
+			long lastId = Long.valueOf( HttpConnectionManager.doGet( HttpConnectionManager.GET_MAX_ID_EMPLOYEE)
+			 								.getResponseString().trim() );
 			
-			System.out.println("=================> " + HttpConnectionManager.doGet( HttpConnectionManager.GET_MAX_ID_EMPLOYEE)
-			.getResponseString());
+			 System.out.println("=================> " + HttpConnectionManager.doGet( HttpConnectionManager.GET_MAX_ID_EMPLOYEE)
+			 					.getResponseString());
+			
 			
 			for( int i = 0; i < arrProfessionalRoleIds.length; i ++ ) {
 				if( ! isDoubleInArray( i ) ) { // Se non ha duplicati nelle posizioni successive dell'array 
 					
-					params = "id_employee=" + lastId + "&id_professional_role=" + arrProfessionalRoleIds[i];
+					params = "idEmployee=" + lastId + "&idProfessionalRole=" + arrProfessionalRoleIds[i];
 					HttpConnectionManager.doPost( HttpConnectionManager.POST_LINK_EMPLOYEE_TO_PROFESSIONAL_ROLE, params);
 				}
 			}
