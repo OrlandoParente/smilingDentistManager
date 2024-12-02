@@ -5,7 +5,6 @@ import javax.net.ssl.HttpsURLConnection;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import sdmc.combo_box_management.customer.Customer;
 import sdmc.server_connection.HttpConnectionManager;
 import sdmc.server_connection.RequestResponse;
 

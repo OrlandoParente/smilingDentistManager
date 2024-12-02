@@ -1,11 +1,30 @@
 package sdms.model;
 
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table( name = "treatment" )
 public class Treatment {
 
-	private int id; 
+	@Id
+	@GeneratedValue( strategy = GenerationType.IDENTITY )
+	private long id; 
+	
+	@OneToMany( mappedBy = "treatment" )
+	private List<Appointment> appointments;
+	
 	private String name;
 	private String description;
 	private float cost;
+	
+	public Treatment() {}
 	
 	public Treatment(int id, String name, String description, float cost) {
 		super();
@@ -17,10 +36,10 @@ public class Treatment {
 	
 	// GETTERS AND SETTERS
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getName() {

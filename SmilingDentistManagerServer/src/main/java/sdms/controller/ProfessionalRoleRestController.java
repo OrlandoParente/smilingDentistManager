@@ -1,10 +1,9 @@
-package sdms.controller.api;
+package sdms.controller;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,121 +12,95 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import sdms.dto.ProfessionalRoleDTO;
 import sdms.model.ProfessionalRole;
-import sdms.service.ServicesInterface;
+import sdms.service.ProfessionalRoleServiceInterface;
 
 @RestController
 public class ProfessionalRoleRestController {
 
 	// Spring si occupa di associare la giusta implementazione dell'interfaccia service
+
 	@Autowired
-	@Qualifier("mainService")
-	ServicesInterface service;
+	private ProfessionalRoleServiceInterface service;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	
 	@GetMapping("/getProfessionalRoles")
-	public ArrayList<ProfessionalRole> getProfessionalRoles(){
+	public List<ProfessionalRoleDTO> getProfessionalRoles(){
 		
 		// Stampa di controllo
 		System.out.println("ProfessionalRoleRestController --> getProfessionalRoles ");
-		 
-		try {
-			
-			return service.getProfessionalRoles();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		 		
+		List<ProfessionalRole> professionalRoles = service.getProfessionalRoles();
 		
-		return null;
-		
+		return professionalRoles.stream().map( pr -> modelMapper.map( pr, ProfessionalRoleDTO.class ) ).toList();
 	}
 
-	@GetMapping("/getProfessionalRolesAssociatedToIdEmployee/{id_employee}")
-	public ArrayList<ProfessionalRole> getProfessionalRolesAssociatedToIdEmployee( @PathVariable String id_employee ){
+	@GetMapping("/getProfessionalRolesAssociatedToIdEmployee/{idEmployee}")
+	public List<ProfessionalRoleDTO> getProfessionalRolesAssociatedToIdEmployee( @PathVariable long idEmployee ){
 		
 		// Stampa di controllo
 		System.out.println("ProfessionalRoleRestController --> getProfessionalRolesAssociatedToIdEmployee ");
 		 
-		try {
-			
-			return service.getProfessionalRolesAssociatedToIdEmployee( id_employee );
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		List<ProfessionalRole> professionalRoles = service.getProfessionalRolesAssociatedToIdEmployee(idEmployee);
 		
-		return null;
-		
+		return professionalRoles.stream().map( pr -> modelMapper.map( pr, ProfessionalRoleDTO.class ) ).toList();
 	}
 
 	
 	
 	
 	@PostMapping( value="/postProfessionalRole" , params= {"name"} )
-	public boolean postProfessionalRole( @RequestParam("name") String name ) {
+	public void postProfessionalRole( @RequestParam("name") String name ) {
 		
 		// Stampa di controllo
 		System.out.println("ProfessionalRoleRestController --> postProfessionalRoles -> params : " + name );
 		
-		try {
-			return service.postProfessionalRole(name);
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
+		ProfessionalRole professionalRole = new ProfessionalRole();
+		professionalRole.setName(name);
 		
-		return false;
+		service.postProfessionalRole( professionalRole );
 	}
 	
 	@PostMapping( value="/postProfessionalRole" , params= {"name", "description"} )
-	public boolean postProfessionalRole( @RequestParam("name") String name, @RequestParam("description") String description ) {
+	public void postProfessionalRole( @RequestParam("name") String name, @RequestParam("description") String description ) {
 		
 		// Stampa di controllo
 		System.out.println("ProfessionalRoleRestController --> postProfessionalRoles -> params : " + name + "," + description );
 		
-		try {
-			return service.postProfessionalRole(name, description);
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
+		ProfessionalRole professionalRole = new ProfessionalRole();
+		professionalRole.setName(name);
+		professionalRole.setDescription(description);
 		
-		return false;
+		service.postProfessionalRole( professionalRole );
 	}
 	
 	@PutMapping( value="/putProfessionalRoleById", params = {"id", "name", "description"} )
-	public boolean putProfessionalRoleById( @RequestParam("id") String id, @RequestParam("name") String name, 
+	public void putProfessionalRoleById( @RequestParam("id") long id, @RequestParam("name") String name, 
 											@RequestParam("description") String description  ) {
 		
 		// Stampa di controllo
 		System.out.println("ProfessionalRoleRestController --> putProfessionalRolesById -> params : " + id + "," + name + "," + description );
 		
-		try {
-			return service.putProfessionalRoleById( id, name,	description );
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
+		ProfessionalRole professionalRole = new ProfessionalRole();
+		professionalRole.setId(id);
+		professionalRole.setName(name);
+		professionalRole.setDescription(description);
 		
-		return false;
+		service.postProfessionalRole( professionalRole );
 		
 	}
 	
 	@DeleteMapping( value="/deleteProfessionalRoleById", params = {"id"} )
-	public boolean deleteProfessionalRoleById( @RequestParam("id") String id  ) {
+	public void deleteProfessionalRoleById( @RequestParam("id") long id  ) {
 		
 		// Stampa di controllo
 		System.out.println("ProfessionalRoleRestController --> deleteProfessionalRoleById --> id -> " + id );	
 		
-		try {
-			service.deleteProfessionalRoleById( id );
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		
-		return false;
+		service.deleteProfessionalRoleById( id );
 	}
 
 }

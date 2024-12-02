@@ -1,12 +1,32 @@
 package sdms.model;
 
-// @Entity
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table( name = "customer" )
 public class Customer {
 	
-	// @Id
-	// @GeneratedValue( strategy = GenerationType.IDENTITY )
-	private int id;						// non uso il cod_fiscale come id perché non so se il cliente è tenuto a rilasciarlo
-	private String taxIdCode; 		// codice fiscale
+	@Id
+	@GeneratedValue( strategy = GenerationType.IDENTITY )
+	private long id;	// non uso il cod_fiscale come id perché non so se il cliente è tenuto a rilasciarlo
+	
+	@OneToMany( mappedBy = "customer" )
+	private List<Appointment> appointments;
+	
+	@OneToMany( mappedBy = "customer" )
+	private List<MedicalHistory> medicalHistories;
+	
+	@OneToMany( mappedBy = "customer" )
+	private List<Expense> expenses;
+	
+	private String taxIdCode; 			// codice fiscale
 	private String name;
 	private String surname;
 	private String birthCity;
@@ -20,9 +40,13 @@ public class Customer {
 	private String phoneNumber;
 	private String phoneNumber2; 		// Generalmente telefono di casa
 	private String eMail;
+	public double salary;
+	
+	public Customer() {}
+	
 	public Customer(int id, String taxIdCode, String name, String surname, String birthCity, String birthCityProvince,
 			String birthDate, String residenceStreet, String houseNumber, String residenceCity, String residenceCityCap,
-			String residenceProvince, String phoneNumber, String phoneNumber2, String eMail) {
+			String residenceProvince, String phoneNumber, String phoneNumber2, String eMail, double salary) {
 		super();
 		this.id = id;
 		this.taxIdCode = taxIdCode;
@@ -39,6 +63,7 @@ public class Customer {
 		this.phoneNumber = phoneNumber;
 		this.phoneNumber2 = phoneNumber2;
 		this.eMail = eMail;
+		this.salary = salary;
 	}
 	@Override
 	public String toString() {
@@ -46,12 +71,12 @@ public class Customer {
 				+ ", birthCity=" + birthCity + ", birthCityProvince=" + birthCityProvince + ", birthDate=" + birthDate
 				+ ", residenceStreet=" + residenceStreet + ", houseNumber=" + houseNumber + ", residenceCity="
 				+ residenceCity + ", residenceCityCap=" + residenceCityCap + ", residenceProvince=" + residenceProvince
-				+ ", phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 + ", eMail=" + eMail + "]";
+				+ ", phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 + ", eMail=" + eMail + ", salary=" + salary + "]";
 	}
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getTaxIdCode() {

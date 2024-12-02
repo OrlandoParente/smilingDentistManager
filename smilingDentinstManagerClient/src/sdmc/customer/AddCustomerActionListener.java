@@ -106,12 +106,19 @@ public class AddCustomerActionListener implements ActionListener {
 			} else {
 				
 				// Generazione stringa parametri
-				parameters = "tax_id_code=" + taxIdCode + "&name=" + name + "&surname=" + surname + "&birth_city=" + birthCity
-								+ "&birth_city_province=" + birthCityProvince + "&birth_date=" + birthDate 
-								+ "&residence_street=" + residenceStreet + "&house_number=" + houseNumber 
-								+ "&residence_city=" + residenceCity + "&residence_city_cap=" + residenceCityCap 
-								+ "&residence_province=" + residenceProvince + "&phone_number=" + phoneNumber 
-								+ "&phone_number_2=" + phoneNumber2 + "&e_mail=" + eMail ;
+				parameters = "taxIdCode=" + taxIdCode + "&name=" + name + "&surname=" + surname + "&birthCity=" + birthCity
+						+ "&birthCityProvince=" + birthCityProvince + "&birthDate=" + birthDate 
+						+ "&residenceStreet=" + residenceStreet + "&houseNumber=" + houseNumber 
+						+ "&residenceCity=" + residenceCity + "&residenceCityCap=" + residenceCityCap 
+						+ "&residenceProvince=" + residenceProvince + "&phoneNumber=" + phoneNumber 
+						+ "&phoneNumber2=" + phoneNumber2 + "&eMail=" + eMail ;
+				
+//				parameters = "tax_id_code=" + taxIdCode + "&name=" + name + "&surname=" + surname + "&birth_city=" + birthCity
+//								+ "&birth_city_province=" + birthCityProvince + "&birth_date=" + birthDate 
+//								+ "&residence_street=" + residenceStreet + "&house_number=" + houseNumber 
+//								+ "&residence_city=" + residenceCity + "&residence_city_cap=" + residenceCityCap 
+//								+ "&residence_province=" + residenceProvince + "&phone_number=" + phoneNumber 
+//								+ "&phone_number_2=" + phoneNumber2 + "&e_mail=" + eMail ;
 				
 				// Generazione stringa parametri
 				// String parameters = "name=" + name + "&surname=" + surname + "&phone_number=" + phoneNumber ;
@@ -179,13 +186,13 @@ public class AddCustomerActionListener implements ActionListener {
 			
 			
 			// Generazione stringa parametri
-			parameters = "id="+ addCustomerFrame.getIdCustomer() + "&tax_id_code=" + taxIdCode + "&name=" + name 
-							+ "&surname=" + surname + "&birth_city=" + birthCity
-							+ "&birth_city_province=" + birthCityProvince + "&birth_date=" + birthDate 
-							+ "&residence_street=" + residenceStreet + "&house_number=" + houseNumber 
-							+ "&residence_city=" + residenceCity + "&residence_city_cap=" + residenceCityCap 
-							+ "&residence_province=" + residenceProvince + "&phone_number=" + phoneNumber 
-							+ "&phone_number_2=" + phoneNumber2 + "&e_mail=" + eMail ;
+			parameters = "id="+ addCustomerFrame.getIdCustomer() + "&taxIdCode=" + taxIdCode + "&name=" + name 
+							+ "&surname=" + surname + "&birthCity=" + birthCity
+							+ "&birthCityProvince=" + birthCityProvince + "&birthDate=" + birthDate 
+							+ "&residenceStreet=" + residenceStreet + "&houseNumber=" + houseNumber 
+							+ "&residenceCity=" + residenceCity + "&residenceCityCap=" + residenceCityCap 
+							+ "&residenceProvince=" + residenceProvince + "&phoneNumber=" + phoneNumber 
+							+ "&phoneNumber2=" + phoneNumber2 + "&eMail=" + eMail ;
 		
 			
 			resultCode = HttpConnectionManager.doPut(HttpConnectionManager.PUT_CUSTOMER_BY_ID, parameters);

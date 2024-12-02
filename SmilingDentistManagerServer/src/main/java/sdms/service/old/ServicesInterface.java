@@ -1,51 +1,50 @@
-package sdms.repository;
+package sdms.service.old;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-// GET ottieni dati; DELETE elimina dati; POST inserisci dati; PUT modifica dati
+import sdms.model.*;
 
-@Repository
-public interface DbManagerInterface {
-	
-	void closeConnection() throws SQLException;
-	
-	// Query generale -------------------------------------------
+@Service
+public interface ServicesInterface {
+
+	// Generale
 	int getMaxIdFromTable( String table ) throws SQLException;
-	// ----------------------------------------------------------
 	
 	// Gestione clienti -------------------------------------
-	ResultSet getCustomers() throws SQLException;
+	ArrayList<Customer> getCustomers() throws SQLException;
 	
-	ResultSet getCustomerById( String id ) throws SQLException;
+	ArrayList<Customer> getCustomersByPartialKeyWordOverAllFields( String key_word ) throws SQLException;
 	
-	ResultSet getCustomersByPartialKeyWordOverAllFields( String key_word ) throws SQLException;
+	Customer getCustomerById( Integer id ) throws SQLException;
 	
 	// inserimento dati essenziali del cliente
 	boolean postCustomer( String name , String surname ,String phone_number ) throws SQLException;
 	
 	boolean postCustomer( String tax_id_code /* codice fiscale*/, String name , String surname , String birth_city , 
-			String birth_city_province, String birth_date,String residence_street, String house_number,
-			String residence_city , String residence_city_cap, String residence_province, String phone_number , 
-			String phone_number_2, String e_mail ) throws SQLException;
+			String birth_city_province, String birth_date, String residence_street, String house_number, 
+			String residence_city , String residence_city_cap , String residence_province, String phone_number ,
+			String phone_number_2, String e_mail )
+		    throws SQLException;
 	
-	boolean putCustomerById( String id, String tax_id_code /* codice fiscale*/, String name , String surname ,
-			String birth_city , String birth_city_province, String birth_date,String residence_street, String house_number,
-			String residence_city , String residence_city_cap, String residence_province, String phone_number , 
-			String phone_number_2, String e_mail ) throws SQLException;
-	
+	boolean putCustomerById( String id, String tax_id_code /* codice fiscale*/, String name , String surname , String birth_city , 
+			String birth_city_province, String birth_date, String residence_street, String house_number, 
+			String residence_city , String residence_city_cap , String residence_province, String phone_number ,
+			String phone_number_2, String e_mail )
+		    throws SQLException;
 	
 	boolean deleteCustomerById( String id ) throws SQLException;
 	
 	// ------------------------------------------------------
 	
 	// Gestione Medical History (Anamnesi) -----------------
-	ResultSet getMedicalsHistoryByCustomer( String id_customer ) throws SQLException;
+	ArrayList<MedicalHistory> getMedicalsHistoryByCustomer( String id_customer ) throws SQLException;
 	
-	ResultSet getMedicalHistoryById( String id ) throws SQLException;
+	ArrayList<MedicalHistory> getMedicalHistoryById( String id ) throws SQLException;
 	
 	// type = "generale" o "odontoiatrica" 
 	boolean postMedicalHistory( String id_customer, String type , String name ) throws SQLException;
@@ -53,13 +52,13 @@ public interface DbManagerInterface {
 
 	boolean deleteMedicalHistoryById( String id ) throws SQLException;
 	// ------------------------------------------------------
-	
+
 	// Gestione Appuntamenti --------------------------------
-	ResultSet getAppointments() throws SQLException;
+	ArrayList<Appointment> getAppointments() throws SQLException;
 	
-	ResultSet getAppointmentsByCustomerId( String id_customer ) throws SQLException;
+	ArrayList<Appointment> getAppointmentsByCustomerId( String id_customer ) throws SQLException;
 	
-	ResultSet getAppointmentsByDoctorId( String id_doctor ) throws SQLException;
+	ArrayList<Appointment> getAppointmentsByDoctorId( String id_doctor ) throws SQLException;
 	
 	// per registrare un appuntamento ancora non svolto
 	boolean postAppointment( String date, String time, String id_customer, String id_doctor, String id_treatment, String note) throws SQLException;
@@ -72,77 +71,71 @@ public interface DbManagerInterface {
 			int is_done, String bill_number, String note) throws SQLException;
 	
 	// set is_done = 1
-//	boolean putSetAppointmentDoneById( String date, String time, String id_customer ) throws SQLException;
 	boolean putSetAppointmentDoneById( long id ) throws SQLException;
 	
 	// set is_done = 0
-//	boolean putUnsetAppointmentDoneById( String date, String time, String id_customer ) throws SQLException;
 	boolean putUnsetAppointmentDoneById( long id ) throws SQLException;
 	
-//	boolean putAppointmentBillNumberById( String date, String time, String id_customer, String bill_number ) throws SQLException;
 	boolean putAppointmentBillNumberById( long id, String bill_number ) throws SQLException;
 	
-//	boolean putAppointmentNoteById( String date, String time, String id_customer, String note ) throws SQLException;
-	boolean putAppointmentNoteById( long id, String note ) throws SQLException;
+	boolean putAppointmentNoteById( long id , String note ) throws SQLException;
 	
-//	boolean putAppointmentTreatmentById( String date, String time, String id_customer, String id_treatment ) throws SQLException;
 	boolean putAppointmentTreatmentById( long id, String id_treatment ) throws SQLException;
 	
-//	boolean deleteAppointmentById( String date, String time, String id_customer ) throws SQLException;
 	boolean deleteAppointmentById( long id ) throws SQLException;
-	
 	// ------------------------------------------------------
 	
 	// Gestione trattamenti ---------------------------------
-	ResultSet getTreatmentById( String id ) throws SQLException;
+	Treatment getTreatmentById( String id ) throws SQLException;
 	
-	ResultSet getTreatmentsByCustomerId( String id_customer ) throws SQLException;
+	ArrayList<Treatment> getTreatmentsByCustomerId( String id_customer ) throws SQLException;
 	
 	// restituisce i trattamenti associati ad una fattura
-	ResultSet getTreatmentsByBillNumber( String bill_number ) throws SQLException;
+	ArrayList<Treatment> getTreatmentsByBillNumber( String bill_number ) throws SQLException;
 	
 	boolean postTreatment( String name, String cost ) throws SQLException;
 	boolean postTreatment( String name, String description, String cost ) throws SQLException;
 	
 	boolean deleteTreatmentById( String id ) throws SQLException;
-	
+
 	// ------------------------------------------------------
 	
 	
 	// Gestione Dipendenti (Employee) -----------------------
-	ResultSet getEmployees() throws SQLException;
+	ArrayList<Employee> getEmployees() throws SQLException;
 	
-	ResultSet getEmployeesByName( String name ) throws SQLException;
+	ArrayList<Employee> getEmployeesByName( String name ) throws SQLException;
 	
-	ResultSet getEmployeesBySurname( String surname ) throws SQLException;
+	ArrayList<Employee> getEmployeesBySurname( String surname ) throws SQLException;
 	
-	ResultSet getEmployeesByProfessionalRoleName( String professiona_role_name ) throws SQLException;
+	ArrayList<Employee> getEmployeesByProfessionalRoleName( String professiona_role_name ) throws SQLException;
 	
-	ResultSet getEmployeesByPartialKeyWordOverAllFields( String key_word ) throws SQLException;
+	ArrayList<Employee> getEmployeesByPartialKeyWordOverAllFields( String key_word ) throws SQLException;
 	
-	ResultSet getEmployeeById( String id ) throws SQLException;
+	Employee getEmployeeById( String id ) throws SQLException;
 	
 	// title e.g. Dott. , Dott.ssa, Sig. , Sig.ra , Sig.na
 	boolean postEmployee( String name, String surname, String title, String phone_number ) throws SQLException;
-	boolean postEmployee( String name, String surname, String title, String birth_date, String phone_number, 
-						String phone_number_2, String e_mail ) throws SQLException;
+	boolean postEmployee( String name, String surname, String title, String birth_date, String phone_number, String phone_number_2, String e_mail ) throws SQLException;
 	
-	boolean putEmployeeById( String id, String name, String surname, String title, String birth_date, String phone_number, 
-						String phone_number_2, String e_mail ) throws SQLException;
-	
+	boolean putEmployeeById( String id, String name, String surname, String title, String birth_date, 
+							String phone_number, String phone_number_2, String e_mail ) throws SQLException;
+
 	
 	boolean deleteEmployeeById( String id ) throws SQLException;
+	
 	// ------------------------------------------------------
 	
 	// Gestione Professional Role ---------------------------
-	ResultSet getProfessionalRoles() throws SQLException;
+	ArrayList<ProfessionalRole> getProfessionalRoles() throws SQLException;
 	
-	ResultSet getProfessionalRolesAssociatedToIdEmployee( String id_employee ) throws SQLException;
+	ArrayList<ProfessionalRole> getProfessionalRolesAssociatedToIdEmployee( String id_employee ) throws SQLException;
+	
 	
 	boolean postProfessionalRole( String name ) throws SQLException;
 	boolean postProfessionalRole( String name, String description ) throws SQLException;
 	
-	boolean putProfessionalRoleById(String id, String name, String description ) throws SQLException;
+	boolean putProfessionalRoleById( String id, String name, String description ) throws SQLException;
 	
 	boolean deleteProfessionalRoleById( String id ) throws SQLException;	
 	// ------------------------------------------------------
@@ -152,6 +145,6 @@ public interface DbManagerInterface {
 	
 	boolean deleteLinkEmployeeWithProfessionalRole( String id_employee, String id_professional_role ) throws SQLException;
 	// ------------------------------------------------------
+		
 	
-
 }
