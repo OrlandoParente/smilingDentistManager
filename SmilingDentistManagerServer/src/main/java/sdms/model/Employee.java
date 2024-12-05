@@ -33,11 +33,12 @@ public class Employee {
 	private String phoneNumber;
 	private String phoneNumber2; 		// Generalmente telefono di casa
 	private String eMail;
+	private String password;
 	
 	public Employee () {}
 	
 	public Employee(int id, String name, String surname, String title, String birthDate, String phoneNumber,
-			String phoneNumber2, String eMail) {
+			String phoneNumber2, String eMail, String password) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -47,6 +48,7 @@ public class Employee {
 		this.phoneNumber = phoneNumber;
 		this.phoneNumber2 = phoneNumber2;
 		this.eMail = eMail;
+		this.password = password;
 	}
 
 	// GETTERS AND SETTERS
@@ -130,9 +132,36 @@ public class Employee {
 		this.eMail = eMail;
 	}
 
-	
-	
-	
-	
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+
+	public List<Expense> getExpenses() {
+		return expenses;
+	}
+
+	public void setExpenses(List<Expense> expenses) {
+		this.expenses = expenses;
+	}
+
+	public List<HasProfessionalRole> getHasProfessionalRoles() {
+		return hasProfessionalRoles;
+	}
+
+	public void setHasProfessionalRoles(List<HasProfessionalRole> hasProfessionalRoles) {
+		this.hasProfessionalRoles = hasProfessionalRoles;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	
 }

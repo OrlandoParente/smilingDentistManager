@@ -11,11 +11,12 @@ public class EmployeeDTO {
 	private String phoneNumber;
 	private String phoneNumber2; 		// Generalmente telefono di casa
 	private String eMail;
+	private String password;
 	
 	public EmployeeDTO () {}
 	
 	public EmployeeDTO(int id, String name, String surname, String title, String birthDate, String phoneNumber,
-			String phoneNumber2, String eMail) {
+			String phoneNumber2, String eMail, String passowrd) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -25,6 +26,7 @@ public class EmployeeDTO {
 		this.phoneNumber = phoneNumber;
 		this.phoneNumber2 = phoneNumber2;
 		this.eMail = eMail;
+		this.password = passowrd;
 	}
 
 	// GETTERS AND SETTERS
@@ -108,9 +110,36 @@ public class EmployeeDTO {
 		this.eMail = eMail;
 	}
 
-	
-	
-	
-	
+	public String getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getPhoneNumber2() {
+		return phoneNumber2;
+	}
+
+	public void setPhoneNumber2(String phoneNumber2) {
+		this.phoneNumber2 = phoneNumber2;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	
 }
