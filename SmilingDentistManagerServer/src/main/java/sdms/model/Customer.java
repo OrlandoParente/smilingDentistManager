@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import sdms.util.UserRoleManager;
 
 @Entity
 @Table( name = "customer" )
@@ -40,13 +41,14 @@ public class Customer {
 	private String phoneNumber;
 	private String phoneNumber2; 		// Generalmente telefono di casa
 	private String eMail;
-	public double salary;
+	private String password;
+	private int permission;				// Role di Spring Security
 	
 	public Customer() {}
 	
 	public Customer(int id, String taxIdCode, String name, String surname, String birthCity, String birthCityProvince,
 			String birthDate, String residenceStreet, String houseNumber, String residenceCity, String residenceCityCap,
-			String residenceProvince, String phoneNumber, String phoneNumber2, String eMail, double salary) {
+			String residenceProvince, String phoneNumber, String phoneNumber2, String eMail, String password, int permission) {
 		super();
 		this.id = id;
 		this.taxIdCode = taxIdCode;
@@ -63,16 +65,21 @@ public class Customer {
 		this.phoneNumber = phoneNumber;
 		this.phoneNumber2 = phoneNumber2;
 		this.eMail = eMail;
-		this.salary = salary;
+		this.password = password;
+		this.permission = permission;
 	}
+	
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", taxIdCode=" + taxIdCode + ", name=" + name + ", surname=" + surname
+		return "Customer [id=" + id + ", appointments=" + appointments + ", medicalHistories=" + medicalHistories
+				+ ", expenses=" + expenses + ", taxIdCode=" + taxIdCode + ", name=" + name + ", surname=" + surname
 				+ ", birthCity=" + birthCity + ", birthCityProvince=" + birthCityProvince + ", birthDate=" + birthDate
 				+ ", residenceStreet=" + residenceStreet + ", houseNumber=" + houseNumber + ", residenceCity="
 				+ residenceCity + ", residenceCityCap=" + residenceCityCap + ", residenceProvince=" + residenceProvince
-				+ ", phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 + ", eMail=" + eMail + ", salary=" + salary + "]";
+				+ ", phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 + ", eMail=" + eMail + ", password="
+				+ password + ", permission=" + permission + "]";
 	}
+
 	public long getId() {
 		return id;
 	}
@@ -163,9 +170,56 @@ public class Customer {
 	public void seteMail(String eMail) {
 		this.eMail = eMail;
 	}
-	
-	
 
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+
+	public List<MedicalHistory> getMedicalHistories() {
+		return medicalHistories;
+	}
+
+	public void setMedicalHistories(List<MedicalHistory> medicalHistories) {
+		this.medicalHistories = medicalHistories;
+	}
+
+	public List<Expense> getExpenses() {
+		return expenses;
+	}
+
+	public void setExpenses(List<Expense> expenses) {
+		this.expenses = expenses;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	// ----------------------------------------------------------------------------------
+	public int getPermission() {
+		return permission;
+	}
+
+	public void setPermission(int permission) {
+		this.permission = permission;
+	}
 	
+	public String getRole() {
+		return UserRoleManager.getRoleFromPermission( this.getPermission() );
+	}
+	
+	public void setRole( String role ) {
+		this.setPermission( UserRoleManager.getPermissionFromRole(role) );	
+	}
+	
+	// ----------------------------------------------------------------------------------
 	
 }

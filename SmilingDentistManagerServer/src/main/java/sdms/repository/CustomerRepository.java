@@ -1,6 +1,7 @@
 package sdms.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,6 +21,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	// READ -----------------------------------------------------------------
 	@Query("SELECT MAX(c.id) FROM Customer c")
 	Long findMaxId();
+	
+	Optional<Customer> findByEMail(String eMail);
 	
 	// We can use the follow query instead of the JpaInteface =======================================================
 															  

@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import sdms.util.UserRoleManager;
 
 @Entity
 @Table( name = "employee" )
@@ -34,11 +35,12 @@ public class Employee {
 	private String phoneNumber2; 		// Generalmente telefono di casa
 	private String eMail;
 	private String password;
+	private int permission;
 	
 	public Employee () {}
 	
 	public Employee(int id, String name, String surname, String title, String birthDate, String phoneNumber,
-			String phoneNumber2, String eMail, String password) {
+			String phoneNumber2, String eMail, String password, int permission) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -49,6 +51,7 @@ public class Employee {
 		this.phoneNumber2 = phoneNumber2;
 		this.eMail = eMail;
 		this.password = password;
+		this.permission = permission;
 	}
 
 	// GETTERS AND SETTERS
@@ -155,7 +158,7 @@ public class Employee {
 	public void setHasProfessionalRoles(List<HasProfessionalRole> hasProfessionalRoles) {
 		this.hasProfessionalRoles = hasProfessionalRoles;
 	}
-
+	
 	public String getPassword() {
 		return password;
 	}
@@ -163,5 +166,29 @@ public class Employee {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	// ----------------------------------------------------------------------------------
+
+	public int getPermission() {
+		return permission;
+	}
+
+	public void setPermission(int permission) {
+		this.permission = permission;
+	}
+
+	public String getRole() {
+		return UserRoleManager.getRoleFromPermission( this.getPermission() );
+	}
+	
+	public void setRole( String role ) {
+		this.setPermission( UserRoleManager.getPermissionFromRole(role) );
+	}	
+	
+	// ----------------------------------------------------------------------------------
+	
+	
+	
+	
 	
 }
