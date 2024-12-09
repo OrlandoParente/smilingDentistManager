@@ -68,21 +68,6 @@ public class AppointmentDTO {
 		this.time = time;
 	}
 	
-		
-	public int getisDone() {
-		return isDone;
-	}
-	public void setisDone(int isDone) {
-		this.isDone = isDone;
-	}
-	
-	public String getbillNumber() {
-		return billNumber;
-	}
-	public void setbillNumber(String billNumber) {
-		this.billNumber = billNumber;
-	}
-	
 	public String getNote() {
 		return note;
 	}

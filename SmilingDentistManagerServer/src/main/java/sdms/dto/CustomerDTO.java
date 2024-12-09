@@ -18,13 +18,14 @@ public class CustomerDTO {
 	private String phoneNumber;
 	private String phoneNumber2; 		// Generalmente telefono di casa
 	private String eMail;
-	public double salary;
+	private String password;
+	private int permission;				// role per Spring Security
 	
 	public CustomerDTO() {}
 	
 	public CustomerDTO(int id, String taxIdCode, String name, String surname, String birthCity, String birthCityProvince,
 			String birthDate, String residenceStreet, String houseNumber, String residenceCity, String residenceCityCap,
-			String residenceProvince, String phoneNumber, String phoneNumber2, String eMail, double salary) {
+			String residenceProvince, String phoneNumber, String phoneNumber2, String eMail, String password, int permission) {
 		super();
 		this.id = id;
 		this.taxIdCode = taxIdCode;
@@ -41,16 +42,20 @@ public class CustomerDTO {
 		this.phoneNumber = phoneNumber;
 		this.phoneNumber2 = phoneNumber2;
 		this.eMail = eMail;
-		this.salary = salary;
+		this.password = password;
+		this.permission = permission;
 	}
+	
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", taxIdCode=" + taxIdCode + ", name=" + name + ", surname=" + surname
+		return "CustomerDTO [id=" + id + ", taxIdCode=" + taxIdCode + ", name=" + name + ", surname=" + surname
 				+ ", birthCity=" + birthCity + ", birthCityProvince=" + birthCityProvince + ", birthDate=" + birthDate
 				+ ", residenceStreet=" + residenceStreet + ", houseNumber=" + houseNumber + ", residenceCity="
 				+ residenceCity + ", residenceCityCap=" + residenceCityCap + ", residenceProvince=" + residenceProvince
-				+ ", phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 + ", eMail=" + eMail + ", salary=" + salary + "]";
+				+ ", phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 + ", eMail=" + eMail + ", password="
+				+ password + ", permission=" + permission + "]";
 	}
+
 	public long getId() {
 		return id;
 	}
@@ -141,9 +146,22 @@ public class CustomerDTO {
 	public void seteMail(String eMail) {
 		this.eMail = eMail;
 	}
-	
-	
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public int getPermission() {
+		return permission;
+	}
+
+	public void setPermission(int permission) {
+		this.permission = permission;
+	}
 	
 	
 }
