@@ -13,7 +13,8 @@ public class SmilingDentistManagerServerApplication {
 	}
 
 	@Bean
-	public ModelMapper modelMapper() {
+	ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
+	
 }
