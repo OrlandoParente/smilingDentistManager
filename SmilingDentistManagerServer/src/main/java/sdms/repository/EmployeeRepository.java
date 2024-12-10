@@ -1,6 +1,7 @@
 package sdms.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,6 +21,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	@Query("SELECT MAX(e.id) FROM Employee e")
 	Long findMaxId();
 	
+	Optional<Employee> findByEMail(String eMail);
+	
 	List<Employee> findByName(String name);
 	List<Employee> findByNameContaining( String name );
 	
@@ -27,7 +30,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	List<Employee> findBySurnameContaining(String surname);
 	
 	List<Employee> findByNameOrSurnameOrBirthDateOrPhoneNumberOrPhoneNumber2OrEMail(String name, String surname, String date, String phoneNum, String phoneNum2, String email);
-	List<Employee> findByNameOrSurnameOrBirthDateOrPhoneNumberOrPhoneNumber2OrEMailContaining(String name, String surname, String date, String phoneNum, String phoneNum2, String email);
+	List<Employee> findByNameContainingOrSurnameContainingOrBirthDateContainingOrPhoneNumberContainingOrPhoneNumber2ContainingOrEMailContaining(String name, String surname, String date, String phoneNum, String phoneNum2, String email);
 	
 	// DELETE ---------------------------------------------------------------
 		

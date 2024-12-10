@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import sdms.util.UserRoleManager;
 
 @Entity
 @Table( name = "employee" )
@@ -26,6 +27,9 @@ public class Employee {
 	@OneToMany( mappedBy = "employee" )
 	private List<HasProfessionalRole> hasProfessionalRoles;
 	
+	@OneToMany( mappedBy = "employee" )
+	List<WorkPeriod> workPeriods;
+	
 	private String name;
 	private String surname;
 	private String title;				// e.g. Dott. , Dott.ssa, Sig. , Sig.ra , Sig.na,
@@ -33,21 +37,25 @@ public class Employee {
 	private String phoneNumber;
 	private String phoneNumber2; 		// Generalmente telefono di casa
 	private String eMail;
+	private String password;
+	private int permission;
 	
 	public Employee () {}
 	
-	public Employee(int id, String name, String surname, String title, String birthDate, String phoneNumber,
-			String phoneNumber2, String eMail) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.surname = surname;
-		this.title = title;
-		this.birthDate = birthDate;
-		this.phoneNumber = phoneNumber;
-		this.phoneNumber2 = phoneNumber2;
-		this.eMail = eMail;
-	}
+//	public Employee(int id, String name, String surname, String title, String birthDate, String phoneNumber,
+//			String phoneNumber2, String eMail, String password, int permission) {
+//		super();
+//		this.id = id;
+//		this.name = name;
+//		this.surname = surname;
+//		this.title = title;
+//		this.birthDate = birthDate;
+//		this.phoneNumber = phoneNumber;
+//		this.phoneNumber2 = phoneNumber2;
+//		this.eMail = eMail;
+//		this.password = password;
+//		this.permission = permission;
+//	}
 
 	// GETTERS AND SETTERS
 	
@@ -130,6 +138,68 @@ public class Employee {
 		this.eMail = eMail;
 	}
 
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+
+	public List<Expense> getExpenses() {
+		return expenses;
+	}
+
+	public void setExpenses(List<Expense> expenses) {
+		this.expenses = expenses;
+	}
+
+	public List<HasProfessionalRole> getHasProfessionalRoles() {
+		return hasProfessionalRoles;
+	}
+
+	public void setHasProfessionalRoles(List<HasProfessionalRole> hasProfessionalRoles) {
+		this.hasProfessionalRoles = hasProfessionalRoles;
+	}
+	
+	public List<WorkPeriod> getWorkPeriods() {
+		return workPeriods;
+	}
+
+	public void setWorkPeriods(List<WorkPeriod> workPeriods) {
+		this.workPeriods = workPeriods;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
+
+	// ----------------------------------------------------------------------------------
+
+
+	public int getPermission() {
+		return permission;
+	}
+
+	public void setPermission(int permission) {
+		this.permission = permission;
+	}
+
+	public String getRole() {
+		return UserRoleManager.getRoleFromPermission( this.getPermission() );
+	}
+	
+	public void setRole( String role ) {
+		this.setPermission( UserRoleManager.getPermissionFromRole(role) );
+	}	
+	
+	// ----------------------------------------------------------------------------------
 	
 	
 	

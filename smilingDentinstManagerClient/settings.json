@@ -1,1 +1,6 @@
-{"server" : "http://localhost:8080/" , "languageCode" : "en" }
+{
+	"server" : "http://localhost:8080/" ,
+ 	"languageCode" : "en", 
+ 	"username" : "c.conti@email.it", 
+ 	"password" : "1234"
+ }

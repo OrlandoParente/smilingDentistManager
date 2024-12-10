@@ -27,34 +27,31 @@ public class AppointmentRestController {
 	ModelMapper modelMapper;
 		
 	@GetMapping("/getAppointments")
-	List<Appointment> getAppointments() {
+	List<AppointmentDTO> getAppointments() {
 	
 		// Check Message
 		System.out.println("AppointmentRestController -> getAppointment ");
 				
-		return service.getAppointments();
+		return service.getAppointments().stream().map( app -> modelMapper.map(app, AppointmentDTO.class ) ).toList();
 	}
 	
 	@GetMapping("/getAppointmentsByCustomerId/{idCustomer}")
-	List<Appointment> getAppointmentsByCustomerId( @PathVariable long idCustomer ) {
+	List<AppointmentDTO> getAppointmentsByCustomerId( @PathVariable long idCustomer ) {
 	
 		// Check Message
 		System.out.println("AppointmentRestController -> getAppointmentsByCustomerId ");
 		
 				
-		return service.getAppointmentsByCustomerId(idCustomer);
-		
+		return service.getAppointmentsByCustomerId(idCustomer).stream().map( app -> modelMapper.map(app, AppointmentDTO.class ) ).toList();
 	}
 	
 	@GetMapping("/getAppointmentsByDoctorId/{idDoctor}")
-	List<Appointment> getAppointmentsByDoctorId( @PathVariable long idDoctor ) {
+	List<AppointmentDTO> getAppointmentsByDoctorId( @PathVariable long idDoctor ) {
 	
 		// Check Message
 		System.out.println("AppointmentRestController -> getAppointmentsByDoctorId ");
 				
-		return service.getAppointmentsByDoctorId(idDoctor);
-		
-		
+		return service.getAppointmentsByDoctorId(idDoctor).stream().map( app -> modelMapper.map(app, AppointmentDTO.class ) ).toList();
 	}
 	
 	// per registrare un appuntamento ancora non svolto con i dati essenziali

@@ -212,8 +212,10 @@ public class CalendarFrame extends JFrame {
 																	joCustomer.getString("birthCityProvince"), joCustomer.getString("birthDate"),
 																	joCustomer.getString("residenceStreet"), joCustomer.getString("houseNumber"), 
 																	joCustomer.getString("residenceCity"), joCustomer.getString("residenceCityCap"),
-																	joCustomer.getString("residenceProvince"), joCustomer.getString("phoneNumber"),
-																	joCustomer.getString("phoneNumber2"), joCustomer.getString("eMail"));
+																	joCustomer.getString("residenceProvince"), 
+																	joCustomer.optString("phoneNumber", ""),  	// joCustomer.getString("phoneNumber"),
+																	joCustomer.optString("phoneNumber2", ""),   // joCustomer.getString("phoneNumber2"), 
+																	joCustomer.optString("eMail", "") );   		//joCustomer.getString("eMail"));
 						
 						System.out.println( "####################### >>>>>>>>>> " + selectedCustomer.getName() );
 						char [] time = joAppointment.getString("time").toCharArray();

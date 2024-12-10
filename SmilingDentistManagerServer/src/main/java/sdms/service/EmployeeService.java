@@ -8,9 +8,12 @@ import org.springframework.stereotype.Service;
 import sdms.model.Employee;
 import sdms.model.HasProfessionalRole;
 import sdms.model.ProfessionalRole;
+import sdms.repository.AppointmentRepository;
 import sdms.repository.EmployeeRepository;
+import sdms.repository.ExpenseRepository;
 import sdms.repository.HasProfessionalRoleRepository;
 import sdms.repository.ProfessionalRoleRepository;
+import sdms.repository.WorkPeriodRepository;
 
 
 @Service
@@ -24,6 +27,15 @@ public class EmployeeService implements EmployeeServiceInterface {
 	
 	@Autowired
 	HasProfessionalRoleRepository hasProfessionalRoleRepository;
+	
+	@Autowired
+	ExpenseRepository expenseRepository;
+	
+	@Autowired
+	AppointmentRepository appointmentRepository;
+	
+	@Autowired
+	WorkPeriodRepository workPeriodRepository;
 	
 	// We need this for keep the compatibility with the Swing Client
 	@Override
@@ -65,7 +77,7 @@ public class EmployeeService implements EmployeeServiceInterface {
 	@Override
 	public List<Employee> getEmployeesByPartialKeyWordOverAllFields(String keyWord) {
 		
-		return repository.findByNameOrSurnameOrBirthDateOrPhoneNumberOrPhoneNumber2OrEMailContaining(keyWord, keyWord, keyWord, keyWord, keyWord, keyWord);
+		return repository.findByNameContainingOrSurnameContainingOrBirthDateContainingOrPhoneNumberContainingOrPhoneNumber2ContainingOrEMailContaining(keyWord, keyWord, keyWord, keyWord, keyWord, keyWord);
 	}
 
 	@Override
@@ -89,7 +101,37 @@ public class EmployeeService implements EmployeeServiceInterface {
 	@Override
 	public void deleteEmployeeById(Long id) {
 		
-		repository.delete( repository.findById(id).get() );
-	}	
+		Employee employee = repository.findById(id).get();
+		
+		// Delete the constraints -------------------------------------------------------------------------
+		
+		hasProfessionalRoleRepository.findByEmployee( employee ).forEach( hasProfessionalRole ->  { 
+			hasProfessionalRoleRepository.delete( hasProfessionalRole ); 
+		});
+		
+		expenseRepository.findByEmployee(employee).forEach( expense -> {
+			expenseRepository.delete(expense);
+		});
+		
+		appointmentRepository.findByDoctor(employee).forEach( appointment -> {
+			appointmentRepository.delete(appointment);
+		});
+		
+		workPeriodRepository.findByEmployee(employee).forEach(  workPeriod -> {
+			workPeriodRepository.delete(workPeriod);
+		} );
+		
+		// ------------------------------------------------------------------------------------------------
+		
+		repository.delete( employee );
+	}
+
+	@Override
+	public Employee getEmployeeByEMail(String eMail) {
+		
+		return repository.findByEMail( eMail ).get();
+	}
+
+
 	
 }
