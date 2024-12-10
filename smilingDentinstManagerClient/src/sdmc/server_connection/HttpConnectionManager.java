@@ -19,6 +19,9 @@ public class HttpConnectionManager {
 	//
 	public static final String GET_MAX_ID_FROM_TABLE = "getMaxIdFromTable/";
 	
+	// Login
+	public static final String DO_LOGIN = "login";
+	
 	// Requesto for Customer
 	public static final String GET_CUSTOMERS = "getCustomers";
 	public static final String GET_CUSTOMER_BY_ID = "getCustomerById/";
@@ -79,9 +82,110 @@ public class HttpConnectionManager {
 	// Prendo il server dai settings
 	// private final static String URL_SERVER = "http://localhost:8080/";
 	
+	// JSON WEB TOKEN (si potrebbe salvare nei settings)
+	private static String jwt;
+	
 	public HttpConnectionManager() {
+		
+	}
+	
+	private static String getJwt() {
+		if( HttpConnectionManager.jwt == null ) {
+			String username = Setting.getSettings().getUsername();
+			String password = Setting.getSettings().getPassword();
+			
+			// <------ Da gestire se il login non va a buon fine 
+			RequestResponse login = HttpConnectionManager.doLogin(username, password);
+			HttpConnectionManager.jwt = login.getResponseString();
+		}
+		
+		return HttpConnectionManager.jwt;
+	}
+	
+	// DO LOGIN ###################################################################################################
+	// get the JWT
+	public static RequestResponse doLogin( String username, String password ) {
+		String response = "";
+		String parameters = "username=" + username + "&password=" + password;
+		int responseCode = 0;
+		
+		try {
+			
+			// Check Message
+			System.out.println("HttpConnectionManager -> DoLogin --->  URL --->" + Setting.getSettings().getServer() + HttpConnectionManager.DO_LOGIN );
+
+			
+			URL url = new URL( Setting.getSettings().getServer() + HttpConnectionManager.DO_LOGIN );
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
+			//conn.setDoInput(true);
+					
+			// Se ci sono dei parametri li scrive
+			if( parameters != null && ! parameters.equals("") ) {
+				
+				// Check Message
+				System.out.println("HttpConnectionManager -> DoLogin --->  IF parameters NOT NULL and NOT EMPTY --->" + parameters );
+				
+				/*
+				// SECONDO METODO PER SCRIVERE I PARAMETRI
+				BufferedWriter writer = new BufferedWriter( new OutputStreamWriter( conn.getOutputStream() , "UTF-8" ));
+				writer.write(parameters);
+				writer.flush();
+				writer.close();
+				*/
+				
+				
+				 OutputStream os = conn.getOutputStream();
+				 os.write( parameters.getBytes() );
+				 os.flush();
+				 os.close();
+				
+				
+			}
+
+			
+			responseCode = conn.getResponseCode();
+			
+			// Check Message
+			System.out.println("HttpConnectionManager -> DoPost ---> " + responseCode );
+			System.out.println("HttpConnectionManager -> DoPost -> parameters ---> " + parameters );
+			
+			if( responseCode == HttpsURLConnection.HTTP_OK ) {
+				
+				// Check Message
+				System.out.println("HttpConnectionManaget -> DoPost ---> " + responseCode );
+				
+				BufferedReader in = new BufferedReader( new InputStreamReader( conn.getInputStream() ) );
+				String line = null;
+				
+				while( (line = in.readLine()) != null ) {
+					response += line;
+				}
+			}
+			
+			
+			// chiudo la connessione
+			conn.disconnect();
+			
+		} catch ( ConnectException ce ) {
+			
+			response = ce.getMessage();
+			responseCode = RequestResponse.CONNECTION_REFUSED;
+			
+		}catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		
+		
+		
+		return new RequestResponse(response, responseCode);
 
 	}
+	
+	// ############################################################################################################
 	
 	
 	// GET REQUEST ------------------------------------------------------------------------------------------------
@@ -94,6 +198,8 @@ public class HttpConnectionManager {
 			URL url = new URL(Setting.getSettings().getServer() + getRequest );
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Authorization", "Bearer " + HttpConnectionManager.getJwt() );
+
 			// set properties
 			responseCode = conn.getResponseCode();
 			
@@ -150,6 +256,7 @@ public class HttpConnectionManager {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			
 			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Authorization", "Bearer " + HttpConnectionManager.getJwt() );
 			conn.setDoOutput(true);
 			//conn.setDoInput(true);
 					
@@ -229,7 +336,7 @@ public class HttpConnectionManager {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			
 			conn.setRequestMethod("PUT");
-			
+			conn.setRequestProperty("Authorization", "Bearer " + HttpConnectionManager.getJwt() );
 			conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
 			// conn.setDoInput(true);
 			conn.setDoOutput(true);
@@ -270,6 +377,7 @@ public class HttpConnectionManager {
 			URL url = new URL( Setting.getSettings().getServer() + deleteRequest );
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			
+			conn.setRequestProperty("Authorization", "Bearer " + HttpConnectionManager.getJwt() );
 			conn.setRequestMethod("DELETE");
 			// conn.setDoInput(true);
 			conn.setDoOutput(true);

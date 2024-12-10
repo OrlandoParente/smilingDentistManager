@@ -21,6 +21,8 @@ public class Setting {
 	
 	private String server;
 	private String languageCode;
+	private String username;
+	private String password;
 	
 	// possibili valori impostazioni
 	
@@ -39,6 +41,8 @@ public class Setting {
 	public static final String JSON_KEY_MONTHS_LANGUAGE_FILE = "monthsLanguageFile";
 
 	public static final String JSON_KEY_SERVER = "server";
+	public static final String JSON_KEY_USERNAME = "username"; 
+	public static final String JSON_KEY_PASSWORD = "password";
 	
 	
 	// SIGLETON ---------------------------------
@@ -73,6 +77,8 @@ public class Setting {
 		languageCode = joSettings.getString( Setting.JSON_KEY_LANGUAGE_CODE );
 		
 		this.setServer( joSettings.getString( Setting.JSON_KEY_SERVER ));
+		this.setUsername( joSettings.getString(JSON_KEY_USERNAME) );
+		this.setPassword( joSettings.getString(JSON_KEY_PASSWORD) );
 		this.setBtnsLanguageFile( "lang" + File.separator + languageCode + File.separator + "btn_strings_" + languageCode + ".json"  );
 		this.setLabelsLanguageFile( "lang" + File.separator +  languageCode + File.separator + "label_strings_" + languageCode + ".json" );
 		this.setFrameTitlesLanguageFile( "lang" + File.separator +  languageCode + File.separator + "frame_title_strings_" + languageCode + ".json"  );
@@ -89,6 +95,8 @@ public class Setting {
 				+" \n TITLES_LANGUAGE_FILE = " + frameTitlesLanguageFile
 				+ " \n J_OPTION_MESSAGE_LANGUAGE_FILE = " + messageLanguageFile
 				+ " \n LANGUAGE_CODE = " + languageCode
+				+ " \n USER = " + username
+				+ " \n PASSWORD = " + password
 				+ " \n SERVER = " + server + "\n \n \n" );
 		
 	}
@@ -114,6 +122,8 @@ public class Setting {
 		
 		
 		strSettings += "\"" + JSON_KEY_SERVER + "\" : \"" + this.getServer() + "\" , ";
+		strSettings += "\"" + JSON_KEY_USERNAME + "\" : \"" + this.getLanguageCode() + "\" , ";
+		strSettings += "\"" + JSON_KEY_PASSWORD + "\" : \"" + this.getLanguageCode() + "\" , ";
 		strSettings += "\"" + JSON_KEY_LANGUAGE_CODE + "\" : \"" + this.getLanguageCode() + "\" ";
 		strSettings += "}";
 		return strSettings;
@@ -179,6 +189,23 @@ public class Setting {
 
 	public String getLanguageCode() {
 		return languageCode;
+	}
+	
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setLanguageCode(String languageCode) {
