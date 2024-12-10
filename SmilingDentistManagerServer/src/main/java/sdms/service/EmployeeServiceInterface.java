@@ -9,16 +9,13 @@ public interface EmployeeServiceInterface {
 	public long getLastCustomerId();
 	
 	public List<Employee> getEmployees();
-	
 	public List<Employee> getEmployeesByName( String name );
-	
 	public List<Employee> getEmployeesBySurname( String surname );
-	
 	public List<Employee> getEmployeesByProfessionalRoleName( String professionalRoleName );
-	
 	public List<Employee> getEmployeesByPartialKeyWordOverAllFields( String keyWord );
 	
 	public Employee getEmployeeById( Long id );
+	public Employee getEmployeeByEMail( String eMail );
 //	
 //	// title e.g. Dott. , Dott.ssa, Sig. , Sig.ra , Sig.na
 //	boolean postEmployee( String name, String surname, String title, String phone_number ) throws SQLException;

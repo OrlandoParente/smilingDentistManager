@@ -9,8 +9,9 @@ public interface CustomerServiceInterface {
 	public long getLastCustomerId();
 	
 	public Customer getCustomerById( long id );
+	public Customer getCustomerByEMail( String eMail );
+	
 	public List<Customer> getCustomers();
-
 	public List<Customer> getCustomersByPartialKeyWordOverAllFields( String key_word );
 	
 

@@ -27,6 +27,9 @@ public class Employee {
 	@OneToMany( mappedBy = "employee" )
 	private List<HasProfessionalRole> hasProfessionalRoles;
 	
+	@OneToMany( mappedBy = "employee" )
+	List<WorkPeriod> workPeriods;
+	
 	private String name;
 	private String surname;
 	private String title;				// e.g. Dott. , Dott.ssa, Sig. , Sig.ra , Sig.na,
@@ -39,20 +42,20 @@ public class Employee {
 	
 	public Employee () {}
 	
-	public Employee(int id, String name, String surname, String title, String birthDate, String phoneNumber,
-			String phoneNumber2, String eMail, String password, int permission) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.surname = surname;
-		this.title = title;
-		this.birthDate = birthDate;
-		this.phoneNumber = phoneNumber;
-		this.phoneNumber2 = phoneNumber2;
-		this.eMail = eMail;
-		this.password = password;
-		this.permission = permission;
-	}
+//	public Employee(int id, String name, String surname, String title, String birthDate, String phoneNumber,
+//			String phoneNumber2, String eMail, String password, int permission) {
+//		super();
+//		this.id = id;
+//		this.name = name;
+//		this.surname = surname;
+//		this.title = title;
+//		this.birthDate = birthDate;
+//		this.phoneNumber = phoneNumber;
+//		this.phoneNumber2 = phoneNumber2;
+//		this.eMail = eMail;
+//		this.password = password;
+//		this.permission = permission;
+//	}
 
 	// GETTERS AND SETTERS
 	
@@ -159,6 +162,14 @@ public class Employee {
 		this.hasProfessionalRoles = hasProfessionalRoles;
 	}
 	
+	public List<WorkPeriod> getWorkPeriods() {
+		return workPeriods;
+	}
+
+	public void setWorkPeriods(List<WorkPeriod> workPeriods) {
+		this.workPeriods = workPeriods;
+	}
+	
 	public String getPassword() {
 		return password;
 	}
@@ -166,8 +177,11 @@ public class Employee {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	
 
 	// ----------------------------------------------------------------------------------
+
 
 	public int getPermission() {
 		return permission;

@@ -6,13 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sdms.model.Customer;
+import sdms.repository.AppointmentRepository;
 import sdms.repository.CustomerRepository;
+import sdms.repository.ExpenseRepository;
+import sdms.repository.MedicalHistoryRepository;
 
 @Service
 public class CustomerService implements CustomerServiceInterface {
 
 	@Autowired
 	CustomerRepository repository;
+	
+	@Autowired
+	MedicalHistoryRepository medicalHistoryRepository;
+	
+	@Autowired
+	AppointmentRepository appointmentRepository;
+	
+	@Autowired
+	ExpenseRepository expenseRepository;
 	
 	// We need this for keep the compatibility with the Swing Client
 	@Override
@@ -31,7 +43,6 @@ public class CustomerService implements CustomerServiceInterface {
 		return repository.findAll();
 	}
 
-	// <<<<<<<<<<<<<<<<<<<<<----------------------------------------------------------------------------------
 	@Override
 	public List<Customer> getCustomersByPartialKeyWordOverAllFields(String keyWord) {
 				
@@ -56,8 +67,33 @@ public class CustomerService implements CustomerServiceInterface {
 
 	@Override
 	public void deleteCustomer(long id) {
-		repository.delete( repository.findById(id).get() );
 		
+		Customer customer = repository.findById(id).get();
+		
+		// Delete the constraints -------------------------------------------------------------------------
+		
+		medicalHistoryRepository.findByCustomer(customer).forEach( medicalHistory -> {
+			medicalHistoryRepository.delete(medicalHistory);
+		});
+		
+		expenseRepository.findByCustomer(customer).forEach( expense -> {
+			expenseRepository.delete(expense);
+		});
+		
+		appointmentRepository.findByCustomer(customer).forEach( appointment -> {
+			appointmentRepository.delete(appointment);
+		});
+		
+		// ------------------------------------------------------------------------------------------------
+		
+		repository.delete( customer );
+		
+	}
+
+	@Override
+	public Customer getCustomerByEMail(String eMail) {
+		
+		return repository.findByEMail(eMail).get();
 	}
 	
 }
