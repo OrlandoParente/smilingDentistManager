@@ -65,12 +65,15 @@ public class CustomerRestController {
 	
 	 @GetMapping("/getCustomersByPartialKeyWordOverAllFields/{keyWord}")
 	 // @ResponseBody
-	 public List<Customer> getCustomersByPartialKeyWordOverAllFields( @PathVariable String keyWord ){
+	 public List<CustomerDTO> getCustomersByPartialKeyWordOverAllFields( @PathVariable String keyWord ){
 		 
 		 // Stampa di controllo
 		 System.out.println("CustomerRestController --> getCustomersByPartialKeyWordOverAllFields -> keyWord = " + keyWord );
 		 
-		 return service.getCustomersByPartialKeyWordOverAllFields(keyWord);
+		 List<CustomerDTO> listCustomerDTO = service.getCustomersByPartialKeyWordOverAllFields(keyWord).stream()
+				 				.map( customer -> modelMapper.map(customer, CustomerDTO.class) ).toList();
+		 
+		 return listCustomerDTO;
 	 }
 
 	 	 
