@@ -142,6 +142,19 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<!-- Altrimenti mi da errore: java.lang.IllegalArgumentException: Name for argument of type [java.lang.String] not specified, and parameter name information not available via reflection. Ensure that the compiler uses the '-parameters' flag.-->	
+	        <plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+            	<artifactId>maven-compiler-plugin</artifactId>
+            	<version>3.8.1</version>
+	            <configuration>
+	                <source>${java.version}</source>
+	                <target>${java.version}</target>
+	                <parameters>true</parameters>
+	            </configuration>
+	        </plugin>
+			<!-- ################################ -->
 		</plugins>
 	</build>
 	
