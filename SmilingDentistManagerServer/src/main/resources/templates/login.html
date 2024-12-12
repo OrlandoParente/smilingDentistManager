@@ -1,22 +1,49 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <!-- Collegamento al CSS di Bootstrap -->
+<!--     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"> -->
+	<link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <title>Login</title>
+
 </head>
-<body>
-    <h1>Login</h1>
-    <form th:action="@{/login}" method="post">
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required />
+<body >
+
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card shadow p-4" style="width: 25rem;">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">Login</h3>
+                <form  th:action="@{/login}" method="POST">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="username" name="username" placeholder="Enter your email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+                <p class="text-center mt-3">
+                    <a href="#">Forgot password?</a>
+                </p>
+                <p class="text-center">
+                    Don't have an account? <a href="#">Sign up</a>
+                </p>
+            </div>
         </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required />
-        </div>
-        <div>
-            <button type="submit">Login</button>
-        </div>
-    </form>
+    </div>
+
+
+    <!-- Collegamento al JS di Bootstrap e alle sue dipendenze -->
+    <script th:src="@{bootstrap/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>
+
