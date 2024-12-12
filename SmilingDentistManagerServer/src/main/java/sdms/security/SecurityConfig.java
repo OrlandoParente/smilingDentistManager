@@ -27,6 +27,7 @@ public class SecurityConfig  {
         
     	http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
+            	.requestMatchers("/bootstrap/**").permitAll()	// Allow access to static resources like css, js and images
             	.requestMatchers("/").permitAll() 			// Allow free access to home page
 //            	.requestMatchers("/**").permitAll() 
             	// .hasRole("")      . hasAnyRole("", "")
