@@ -20,7 +20,7 @@ public class HttpConnectionManager {
 	public static final String GET_MAX_ID_FROM_TABLE = "getMaxIdFromTable/";
 	
 	// Login
-	public static final String DO_LOGIN = "login";
+	public static final String DO_LOGIN = "api/login";
 	
 	// Requesto for Customer
 	public static final String GET_CUSTOMERS = "getCustomers";

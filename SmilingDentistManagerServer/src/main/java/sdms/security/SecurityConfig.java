@@ -7,13 +7,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import jakarta.servlet.Filter;
+import sdms.util.UserRoleManager;
 
 @Configuration
 @EnableWebSecurity
@@ -27,18 +27,35 @@ public class SecurityConfig  {
         
     	http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-            	.requestMatchers("/bootstrap/**").permitAll()	// Allow access to static resources like css, js and images
-            	.requestMatchers("/").permitAll() 			// Allow free access to home page
+//            	.requestMatchers("/bootstrap/**").permitAll()	// Allow access to static resources like css, js and images
+//            	.requestMatchers("/").permitAll() 			// Allow free access to home page
 //            	.requestMatchers("/**").permitAll() 
-            	// .hasRole("")      . hasAnyRole("", "")
-            	.requestMatchers("/login").permitAll()  	// Allow free access to login page
-//            	.requestMatchers("/login/**").permitAll()  
-                .anyRequest().authenticated()
+//            	.requestMatchers("/login").permitAll()  	// Allow free access to login page
+//            	
+            	.requestMatchers( SecurityPaths.getPermittedPaths().toArray( String[] :: new ) ).permitAll()	
+            		
+            		
+            	// .hasRole("")      . hasAnyRole("", "")	
+            	.requestMatchers("/dashboard/employee").hasRole( UserRoleManager.ROLE_ADMIN  )
+            	.requestMatchers("/dashboard/customer").hasRole( UserRoleManager.ROLE_BASE_CUSTOMER )
+                
+            	
+            	.anyRequest().authenticated()
+
             )
-            .formLogin( form -> form.disable() )
-//            .formLogin( form -> form.loginPage("/login").permitAll() )
-            .addFilterBefore(jwtAuthenticationFilter, (Class<? extends Filter>) UsernamePasswordAuthenticationFilter.class);  // Add JWT Filter
-    		
+            .formLogin( form -> form.disable() )	// I use my login 
+//            .formLogin(form -> form
+//                    .loginPage("/login")
+//                    .defaultSuccessUrl("/dashboard/employee", true)
+//                    .permitAll()
+//             )
+             .logout(logout -> logout
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login?logout")
+                    .permitAll()
+              )
+             .addFilterBefore(jwtAuthenticationFilter, (Class<? extends Filter>) UsernamePasswordAuthenticationFilter.class);  // Add JWT Filter
+
     	
         return http.build();
     }
@@ -49,8 +66,9 @@ public class SecurityConfig  {
     }
     
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-	
+
+    
 }
