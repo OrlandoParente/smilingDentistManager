@@ -1,4 +1,4 @@
-package sdms.controller;
+package sdms.controller.api;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,12 +8,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import sdms.model.Customer;
 import sdms.model.Employee;
@@ -23,11 +21,11 @@ import sdms.service.EmployeeService;
 import sdms.util.UserRoleManager;
 
 
-@Controller
-@RequestMapping("/login")
-public class LoginController {
+@RestController
+@RequestMapping("/api/login")
+public class LoginRestController {
 
-	private static final Logger Logger = LoggerFactory.getLogger( LoginController.class );
+	private static final Logger Logger = LoggerFactory.getLogger( LoginRestController.class );
 	
 	@Autowired
 	EmployeeService employeeService;
@@ -44,18 +42,7 @@ public class LoginController {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
-    @GetMapping
-    public String login() {
-    	
-//    	PasswordEncoder encoder = new BCryptPasswordEncoder();
-//    	String str = "1234";
-//    	System.err.println( encoder.encode(str) );
-    	
-    	return "login";
-    }
-    
     @PostMapping
-    @ResponseBody
     public String login(@RequestParam String username, @RequestParam String password) {
         
     	Logger.info("username : " + username + " -- password : " + password);

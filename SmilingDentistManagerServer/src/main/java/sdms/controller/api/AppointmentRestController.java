@@ -1,4 +1,4 @@
-package sdms.controller;
+package sdms.controller.api;
 
 import java.util.List;
 import org.modelmapper.ModelMapper;

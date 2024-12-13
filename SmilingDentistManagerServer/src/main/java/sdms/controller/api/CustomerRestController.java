@@ -1,4 +1,4 @@
-package sdms.controller;
+package sdms.controller.api;
 
 import java.util.ArrayList;
 import java.util.List;
