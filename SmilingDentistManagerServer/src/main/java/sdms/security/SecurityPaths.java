@@ -10,7 +10,13 @@ import java.util.List;
  */
 public class SecurityPaths {
 
-	private final static List<String> PERMITTED_PATHS = List.of("/", "/bootstrap/**", "/login", "/api/login");
+	private final static List<String> PERMITTED_PATHS = List.of("/",
+																// "/fragments/**",
+																"/bootstrap/**", 
+																"/css/**",
+																"/js/**",
+																"/login", 
+																"/api/login");
 	
 	public SecurityPaths() { }
 	
