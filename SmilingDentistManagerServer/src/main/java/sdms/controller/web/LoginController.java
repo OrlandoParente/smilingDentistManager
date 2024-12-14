@@ -23,6 +23,7 @@ import sdms.security.JwtUtil;
 import sdms.service.CustomerService;
 import sdms.service.EmployeeService;
 import sdms.util.UserRoleManager;
+import sdms.util.WebClientCookieManager;
 
 
 @Controller
@@ -65,6 +66,11 @@ public class LoginController {
     	String dbPsw; // password saved in to the db
     	String role;
     	
+    	// Data to save in the cookies ----
+    	String name;	// I can fetch from the idUser, but I need often so better save it in the cookies
+    	Long idUser;	// It's useful for recovery any information about the user
+    	// --------------------------------
+    	
     	Employee employee = employeeService.getEmployeeByEMail(username);
     	Customer customer;
     	
@@ -72,6 +78,9 @@ public class LoginController {
 
     		dbPsw = employee.getPassword();
     		role = employee.getRole();
+    		
+    		name = employee.getName();
+    		idUser = employee.getId();
     	
     	} else { 
     		
@@ -81,6 +90,8 @@ public class LoginController {
     			dbPsw = customer.getPassword();
     			role = customer.getRole();
     			
+        		name = customer.getName();
+        		idUser = customer.getId();
     		} else {
     			
     			return "User not found on the db";
@@ -108,6 +119,25 @@ public class LoginController {
         	jwtCookie.setMaxAge(24 * 60 * 60); // Imposta una scadenza (ad esempio 1 giorno)
         	response.addCookie(jwtCookie);
     		// ---------------------------------------------------------------------------------
+        	
+
+    		// save name of the user in the cookies -------------------------------------------
+        	Cookie nameCookie = new Cookie(WebClientCookieManager.NAME, name);
+        	// nameCookie.setHttpOnly(true); // Impedisce l'accesso al token tramite JavaScript
+        	// jwtCookie.setSecure(true); // Imposta solo per HTTPS in ambienti di produzione
+        	// nameCookie.setPath("/"); // Disponibile per tutto il dominio
+        	nameCookie.setMaxAge(24 * 60 * 60); // Imposta una scadenza (ad esempio 1 giorno)
+        	response.addCookie(nameCookie);
+    		// ---------------------------------------------------------------------------------
+        	
+    		// save id of the user in the cookies ----------------------------------------------
+        	Cookie userIdCookie = new Cookie(WebClientCookieManager.ID_USER, idUser.toString());
+        	// userIdCookie.setHttpOnly(true); // Impedisce l'accesso al token tramite JavaScript
+        	// jwtCookie.setSecure(true); // Imposta solo per HTTPS in ambienti di produzione
+        	userIdCookie.setPath("/"); // Disponibile per tutto il dominio
+        	userIdCookie.setMaxAge(24 * 60 * 60); // Imposta una scadenza (ad esempio 1 giorno)
+        	response.addCookie(userIdCookie);
+    		// ---------------------------------------------------------------------------------
     	
     		// save authentication in the security context 
     		SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -115,12 +145,6 @@ public class LoginController {
     	} catch( Exception e ) {
     		System.err.println( e.getMessage() );
     	}
-    	
-
-
-    	
-    	
-    	
     	
     	return "redirect:/dashboard/employee";
     	
