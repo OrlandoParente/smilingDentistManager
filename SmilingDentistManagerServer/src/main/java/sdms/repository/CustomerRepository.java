@@ -40,7 +40,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	@Query("SELECT c FROM Customer c WHERE c.taxIdCode LIKE %:keyWord% "
 			+ " OR c.name LIKE %:keyWord% OR c.surname LIKE %:keyWord% "
 			+ " OR c.birthCity LIKE %:keyWord% OR c.birthCityProvince LIKE %:keyWord% "
-			+ " OR c.birthDate LIKE %:keyWord%  OR c.residenceStreet LIKE %:keyWord% "
+			+ " OR c.birthDateString LIKE %:keyWord%  OR c.residenceStreet LIKE %:keyWord% "
 			+ " OR c.houseNumber LIKE %:keyWord% OR c.residenceCity LIKE %:keyWord% "
 			+ " OR c.residenceCityCap LIKE %:keyWord% OR c.residenceProvince LIKE %:keyWord% "
 			+ " OR c.phoneNumber LIKE %:keyWord% OR c.phoneNumber2 LIKE %:keyWord%  OR c.eMail LIKE %:keyWord%")
@@ -49,7 +49,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	// ==============================================================================================================
 	
 	//
-	public List<Customer> findCustomerByTaxIdCodeContainingOrNameContainingOrSurnameContainingOrBirthCityContainingOrBirthCityProvinceContainingOrBirthDateContainingOrResidenceStreetContainingOrHouseNumberContainingOrResidenceCityContainingOrResidenceCityCapContainingOrResidenceProvinceContainingOrPhoneNumberContainingOrPhoneNumber2ContainingOrEMailContaining(
+	public List<Customer> findCustomerByTaxIdCodeContainingOrNameContainingOrSurnameContainingOrBirthCityContainingOrBirthCityProvinceContainingOrBirthDateStringContainingOrResidenceStreetContainingOrHouseNumberContainingOrResidenceCityContainingOrResidenceCityCapContainingOrResidenceProvinceContainingOrPhoneNumberContainingOrPhoneNumber2ContainingOrEMailContaining(
 							String taxIdCode, String name, String surname, String birthCity, String birthCityProvince, String birthDate,
 							String residenceStreet, String houseNumber, String residenceCity, String residenceCityCap,
 							String residenceProvince, String phoneNumber, String phoneNumber2, String eMail );

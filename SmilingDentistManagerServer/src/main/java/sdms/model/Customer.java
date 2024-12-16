@@ -1,5 +1,7 @@
 package sdms.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -32,7 +34,7 @@ public class Customer {
 	private String surname;
 	private String birthCity;
 	private String birthCityProvince;	// preferibilmente la sigla provincia, ma lascio spazio per il nome completo
-	private String birthDate;
+	private LocalDate birthDate;
 	private String residenceStreet;
 	private String houseNumber;
 	private String residenceCity;
@@ -44,30 +46,11 @@ public class Customer {
 	private String password;
 	private int permission;				// Role di Spring Security
 	
+	// for use LocalDate in Containing method of JpaRepository
+	private String birthDateString;
+	
 	public Customer() {}
 	
-	public Customer(int id, String taxIdCode, String name, String surname, String birthCity, String birthCityProvince,
-			String birthDate, String residenceStreet, String houseNumber, String residenceCity, String residenceCityCap,
-			String residenceProvince, String phoneNumber, String phoneNumber2, String eMail, String password, int permission) {
-		super();
-		this.id = id;
-		this.taxIdCode = taxIdCode;
-		this.name = name;
-		this.surname = surname;
-		this.birthCity = birthCity;
-		this.birthCityProvince = birthCityProvince;
-		this.birthDate = birthDate;
-		this.residenceStreet = residenceStreet;
-		this.houseNumber = houseNumber;
-		this.residenceCity = residenceCity;
-		this.residenceCityCap = residenceCityCap;
-		this.residenceProvince = residenceProvince;
-		this.phoneNumber = phoneNumber;
-		this.phoneNumber2 = phoneNumber2;
-		this.eMail = eMail;
-		this.password = password;
-		this.permission = permission;
-	}
 	
 	@Override
 	public String toString() {
@@ -116,12 +99,22 @@ public class Customer {
 	public void setBirthCityProvince(String birthCityProvince) {
 		this.birthCityProvince = birthCityProvince;
 	}
-	public String getBirthDate() {
+	
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
-	public void setBirthDate(String birthDate) {
-		this.birthDate = birthDate;
+	
+	// for use LocalDate in Containing method of JpaRepository
+	public String getBirthDateString() {
+		return this.birthDateString;
 	}
+	
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
+		// for use LocalDate in Containing method of JpaRepository
+		this.birthDateString = birthDate != null ? birthDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))  : null;
+	}
+	
 	public String getResidenceStreet() {
 		return residenceStreet;
 	}

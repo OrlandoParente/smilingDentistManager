@@ -20,22 +20,22 @@ import sdms.model.Employee;
 import sdms.model.WorkPeriod;
 import sdms.service.EmployeeServiceInterface;
 import sdms.service.WorkPeriodServiceInterface;
-import sdms.util.DateManager;
+import sdms.util.DateAndTimeManager;
 
 @RestController
 public class WorkPeriodRestController {
 
 	@Autowired
-	WorkPeriodServiceInterface service;
+	private WorkPeriodServiceInterface service;
 	
 	@Autowired
-	EmployeeServiceInterface employeeService;
+	private EmployeeServiceInterface employeeService;
 	
 	@Autowired
-	ModelMapper modelMapper;
+	private ModelMapper modelMapper;
 	
 	@Autowired
-	DateManager dateManager;
+	private DateAndTimeManager dateAndTimeManager;
 	
 	// GET REQUEST -------------------------------------------------------------------------------------------------
 	
@@ -96,7 +96,7 @@ public class WorkPeriodRestController {
 		
 		try {
 			// Convert date from string to LocalDate 
-			ldStartDate = dateManager.parseDate(startDate);
+			ldStartDate = dateAndTimeManager.parseDate(startDate);
 		} catch (/*DateTimeParseException */ Exception e ) {
 			
 			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );
@@ -132,8 +132,8 @@ public class WorkPeriodRestController {
 		
 		try {
 			// Convert date from string to LocalDate 
-			ldStartDate = dateManager.parseDate(startDate);
-			ldEndDate = dateManager.parseDate(endDate);
+			ldStartDate = dateAndTimeManager.parseDate(startDate);
+			ldEndDate = dateAndTimeManager.parseDate(endDate);
 		} catch (/*DateTimeParseException */ Exception e ) {
 			
 			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );
@@ -177,7 +177,7 @@ public class WorkPeriodRestController {
 		
 		try {
 			// Convert date from string to LocalDate 
-			ldStartDate = dateManager.parseDate(startDate);
+			ldStartDate = dateAndTimeManager.parseDate(startDate);
 		} catch (/*DateTimeParseException */ Exception e ) {
 			
 			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );
@@ -214,8 +214,8 @@ public class WorkPeriodRestController {
 		
 		try {
 			// Convert date from string to LocalDate 
-			ldStartDate = dateManager.parseDate(startDate);
-			ldEndDate = dateManager.parseDate(endDate);
+			ldStartDate = dateAndTimeManager.parseDate(startDate);
+			ldEndDate = dateAndTimeManager.parseDate(endDate);
 		} catch (/*DateTimeParseException */ Exception e ) {
 			
 			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );

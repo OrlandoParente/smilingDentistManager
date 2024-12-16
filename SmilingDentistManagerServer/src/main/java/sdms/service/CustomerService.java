@@ -10,6 +10,7 @@ import sdms.repository.AppointmentRepository;
 import sdms.repository.CustomerRepository;
 import sdms.repository.ExpenseRepository;
 import sdms.repository.MedicalHistoryRepository;
+import sdms.util.DateAndTimeManager;
 
 @Service
 public class CustomerService implements CustomerServiceInterface {
@@ -25,6 +26,9 @@ public class CustomerService implements CustomerServiceInterface {
 	
 	@Autowired
 	ExpenseRepository expenseRepository;
+	
+	@Autowired
+	DateAndTimeManager dateAndTimeManager;
 	
 	// We need this for keep the compatibility with the Swing Client
 	@Override
@@ -45,13 +49,15 @@ public class CustomerService implements CustomerServiceInterface {
 
 	@Override
 	public List<Customer> getCustomersByPartialKeyWordOverAllFields(String keyWord) {
-				
+			
+		
 		// this work as well, this one is done with @Query
 		// return repository.findCustomersByPartialKeyWordOverAllFields( keyWord );
-		
+			
 		// this one is done with JpaInteface 
-		return repository.findCustomerByTaxIdCodeContainingOrNameContainingOrSurnameContainingOrBirthCityContainingOrBirthCityProvinceContainingOrBirthDateContainingOrResidenceStreetContainingOrHouseNumberContainingOrResidenceCityContainingOrResidenceCityCapContainingOrResidenceProvinceContainingOrPhoneNumberContainingOrPhoneNumber2ContainingOrEMailContaining(
-							keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord);
+		return repository.findCustomerByTaxIdCodeContainingOrNameContainingOrSurnameContainingOrBirthCityContainingOrBirthCityProvinceContainingOrBirthDateStringContainingOrResidenceStreetContainingOrHouseNumberContainingOrResidenceCityContainingOrResidenceCityCapContainingOrResidenceProvinceContainingOrPhoneNumberContainingOrPhoneNumber2ContainingOrEMailContaining(
+							keyWord, keyWord, keyWord, keyWord, keyWord, keyWord,
+							keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord);
 	}
 
 	@Override

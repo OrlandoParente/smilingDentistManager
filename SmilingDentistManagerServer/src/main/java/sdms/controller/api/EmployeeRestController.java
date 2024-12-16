@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sdms.dto.EmployeeDTO;
 import sdms.model.Employee;
 import sdms.service.EmployeeServiceInterface;
+import sdms.util.DateAndTimeManager;
 
 @RestController
 public class EmployeeRestController {
@@ -25,7 +26,10 @@ public class EmployeeRestController {
 	private EmployeeServiceInterface service;
 	
 	@Autowired
-	ModelMapper modelMapper;
+	private ModelMapper modelMapper;
+	
+	@Autowired
+	private DateAndTimeManager dateAndTimeManager;
 	
 	@GetMapping("/getMaxIdEmployee")
 	public long getMaxIdEmployee() {
@@ -152,7 +156,7 @@ public class EmployeeRestController {
 		employee.setPhoneNumber(phoneNumber);
 		employee.setPhoneNumber2(phoneNumber2);
 		employee.seteMail(eMail);
-		employee.setBirthDate(birthDate);
+		employee.setBirthDate( dateAndTimeManager.parseDate(birthDate) );
 		
 		service.postEmployee(employee);
 		
@@ -179,7 +183,7 @@ public class EmployeeRestController {
 		employee.setPhoneNumber(phoneNumber);
 		employee.setPhoneNumber2(phoneNumber2);
 		employee.seteMail(eMail);
-		employee.setBirthDate(birthDate);
+		employee.setBirthDate( dateAndTimeManager.parseDate(birthDate) );
 		
 		service.putEmployee(employee);
 		

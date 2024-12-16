@@ -1,5 +1,7 @@
 package sdms.dto;
 
+import java.time.LocalDate;
+
 public class ExpenseDTO {
 
 	private long id;
@@ -11,15 +13,15 @@ public class ExpenseDTO {
 	
 	// ###################################################################
 	
-	private String date;
+	private LocalDate date;
 	private String description;
 	private double amount;
 	private String tag;
 	
 	public ExpenseDTO() {}
 
-	
-	public ExpenseDTO(long id, long idCustomer, long idEmployee, long idDentalMaterial, String date, String description,
+	// We need this? There is already ModelMapper for convert Obj to DTO and vice versa 
+	public ExpenseDTO(long id, long idCustomer, long idEmployee, long idDentalMaterial, LocalDate date, String description,
 			double amount, String tag) {
 		super();
 		this.id = id;
@@ -71,11 +73,11 @@ public class ExpenseDTO {
 		this.id = id;
 	}
 
-	public String getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

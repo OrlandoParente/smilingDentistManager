@@ -1,6 +1,10 @@
 package sdms.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import sdms.util.DateAndTimeManager;
 import sdms.util.UserRoleManager;
 
 @Entity
@@ -33,29 +38,19 @@ public class Employee {
 	private String name;
 	private String surname;
 	private String title;				// e.g. Dott. , Dott.ssa, Sig. , Sig.ra , Sig.na,
-	private String birthDate;
+	private LocalDate birthDate;
 	private String phoneNumber;
 	private String phoneNumber2; 		// Generalmente telefono di casa
 	private String eMail;
 	private String password;
 	private int permission;
 	
+	
+	// for use LocalDate in Containing method of JpaRepository
+	private String birthDateString;
+	
 	public Employee () {}
 	
-//	public Employee(int id, String name, String surname, String title, String birthDate, String phoneNumber,
-//			String phoneNumber2, String eMail, String password, int permission) {
-//		super();
-//		this.id = id;
-//		this.name = name;
-//		this.surname = surname;
-//		this.title = title;
-//		this.birthDate = birthDate;
-//		this.phoneNumber = phoneNumber;
-//		this.phoneNumber2 = phoneNumber2;
-//		this.eMail = eMail;
-//		this.password = password;
-//		this.permission = permission;
-//	}
 
 	// GETTERS AND SETTERS
 	
@@ -99,14 +94,22 @@ public class Employee {
 	}
 
 
-	public String getBirthDate() {
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
 
 
-	public void setBirthDate(String birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
+		// for use LocalDate in Containing method of JpaRepository
+		this.birthDateString = birthDate != null ? birthDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : null;
 	}
+	
+	// for use LocalDate in Containing method of JpaRepository
+	public String getBirthDateString() {
+		return this.birthDateString;
+	}
+	
 
 
 	public String getPhoneNumber() {
@@ -200,9 +203,6 @@ public class Employee {
 	}	
 	
 	// ----------------------------------------------------------------------------------
-	
-	
-	
 	
 	
 }

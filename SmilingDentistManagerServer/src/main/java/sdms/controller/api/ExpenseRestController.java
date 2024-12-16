@@ -24,24 +24,28 @@ import sdms.service.CustomerServiceInterface;
 import sdms.service.DentalMaterialServiceInterface;
 import sdms.service.EmployeeServiceInterface;
 import sdms.service.ExpenseServiceInterface;
+import sdms.util.DateAndTimeManager;
 
 @RestController
 public class ExpenseRestController {
 	
 	@Autowired
-	ExpenseServiceInterface service;
+	private ExpenseServiceInterface service;
 	
 	@Autowired
-	CustomerServiceInterface customerService;
+	private CustomerServiceInterface customerService;
 	
 	@Autowired
-	DentalMaterialServiceInterface dentalMaterialService;
+	private DentalMaterialServiceInterface dentalMaterialService;
 	
 	@Autowired
-	EmployeeServiceInterface employeeService;
+	private EmployeeServiceInterface employeeService;
 	
 	@Autowired
-	ModelMapper modelMapper;
+	private ModelMapper modelMapper;
+	
+	@Autowired
+	private DateAndTimeManager dateAndTimeManager;
 	
 	// READ ------------------------------------------------------
 	@GetMapping("/getExpenseById/{id}")
@@ -84,7 +88,7 @@ public class ExpenseRestController {
 					.body("404 NOT FOUND: Customer with id " + idCustomer + " not found in the database");
 		
 		expense.setCustomer(customer);
-		expense.setDate(date);
+		expense.setDate( dateAndTimeManager.parseDate(date) );
 		expense.setDescription(description);
 		expense.setAmount(amount);
 		expense.setTag(tag);
@@ -107,7 +111,7 @@ public class ExpenseRestController {
 					.body("404 NOT FOUND: Dental Material with id " + idDentalMaterial + " not found in the database");
 		
 		expense.setDentalMaterial(dentalMaterial);
-		expense.setDate(date);
+		expense.setDate( dateAndTimeManager.parseDate(date) );
 		expense.setDescription(description);
 		expense.setAmount(amount);
 		expense.setTag(tag);
@@ -131,7 +135,7 @@ public class ExpenseRestController {
 					.body("404 NOT FOUND: Customer with id " + idEmployee + " not found in the database");
 		
 		expense.setEmployee(employee);
-		expense.setDate(date);
+		expense.setDate( dateAndTimeManager.parseDate(date) );
 		expense.setDescription(description);
 		expense.setAmount(amount);
 		expense.setTag(tag);
@@ -162,7 +166,7 @@ public class ExpenseRestController {
 					.body("404 NOT FOUND: Customer with id " + idCustomer + " not found in the database");
 		
 		expense.setCustomer(customer);
-		expense.setDate(date);
+		expense.setDate( dateAndTimeManager.parseDate(date) );
 		expense.setDescription(description);
 		expense.setAmount(amount);
 		expense.setTag(tag);
@@ -191,7 +195,7 @@ public class ExpenseRestController {
 					.body("404 NOT FOUND: Dental Material with id " + idDentalMaterial + " not found in the database");
 		
 		expense.setDentalMaterial(dentalMaterial);
-		expense.setDate(date);
+		expense.setDate( dateAndTimeManager.parseDate(date) );
 		expense.setDescription(description);
 		expense.setAmount(amount);
 		expense.setTag(tag);
@@ -221,7 +225,7 @@ public class ExpenseRestController {
 					.body("404 NOT FOUND: Customer with id " + idEmployee + " not found in the database");
 		
 		expense.setEmployee(employee);
-		expense.setDate(date);
+		expense.setDate( dateAndTimeManager.parseDate(date) );
 		expense.setDescription(description);
 		expense.setAmount(amount);
 		expense.setTag(tag);

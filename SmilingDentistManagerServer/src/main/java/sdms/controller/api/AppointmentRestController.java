@@ -16,16 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 import sdms.dto.AppointmentDTO;
 import sdms.model.Appointment;
 import sdms.service.AppointmentServiceInterface;
+import sdms.util.DateAndTimeManager;
 
 @RestController
 public class AppointmentRestController {
 
 	@Autowired
-	AppointmentServiceInterface service;
+	private AppointmentServiceInterface service;
 	
 	@Autowired
-	ModelMapper modelMapper;
+	private ModelMapper modelMapper;
 		
+	@Autowired
+	private DateAndTimeManager dateAndTimeManager;
+	
 	@GetMapping("/getAppointments")
 	List<AppointmentDTO> getAppointments() {
 	
@@ -62,8 +66,8 @@ public class AppointmentRestController {
 		System.out.println("AppointmentRestController -> postAppointment ");
 		
 		Appointment appointment = new Appointment();
-		appointment.setDate(date);
-		appointment.setTime(time);
+		appointment.setDate( dateAndTimeManager.parseDate(date) );
+		appointment.setTime( dateAndTimeManager.parseTime(time) );
 		appointment.setidCustomer(idCustomer);
 		
 		service.postAppointment(appointment);
@@ -81,8 +85,8 @@ public class AppointmentRestController {
 		System.out.println("AppointmentRestController -> postAppointment ");
 				
 		Appointment appointment = new Appointment();
-		appointment.setDate(date);
-		appointment.setTime(time);
+		appointment.setDate( dateAndTimeManager.parseDate(date) );
+		appointment.setTime( dateAndTimeManager.parseTime(time) );
 		appointment.setidCustomer(idCustomer);
 		appointment.setidDoctor(idDoctor);
 		appointment.setidTreatment(idTreatment);
@@ -105,8 +109,8 @@ public class AppointmentRestController {
 		System.out.println("AppointmentRestController -> postAppointment ");
 				
 		Appointment appointment = new Appointment();
-		appointment.setDate(date);
-		appointment.setTime(time);
+		appointment.setDate( dateAndTimeManager.parseDate(date) );
+		appointment.setTime( dateAndTimeManager.parseTime(time) );
 		appointment.setidCustomer(idCustomer);
 		appointment.setidDoctor(idDoctor);
 		appointment.setidTreatment(idTreatment);
@@ -129,8 +133,8 @@ public class AppointmentRestController {
 		System.out.println("AppointmentRestController -> postAppointment ");
 		
 		Appointment appointment = new Appointment();
-		appointment.setDate(date);
-		appointment.setTime(time);
+		appointment.setDate( dateAndTimeManager.parseDate(date) );
+		appointment.setTime( dateAndTimeManager.parseTime(time) );
 		appointment.setidCustomer(idCustomer);
 		appointment.setidDoctor(idDoctor);
 		appointment.setidTreatment(idTreatment);
@@ -188,8 +192,8 @@ public class AppointmentRestController {
 			if( appointment == null ) 
 				return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Not Found: The entity to update was not found.");
 			
-			appointment.setDate(date);
-			appointment.setTime(time);
+			appointment.setDate( dateAndTimeManager.parseDate(date) );
+			appointment.setTime( dateAndTimeManager.parseTime(time) );
 			appointment.setidCustomer(idCustomer);
 			appointment.setidDoctor(idDoctor);
 			appointment.setidTreatment(idTreatment);

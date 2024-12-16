@@ -1,5 +1,7 @@
 package sdms.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,7 +33,7 @@ public class Expense {
 	
 	// ###################################################################
 	
-	private String date;
+	private LocalDate date;
 	private String description;
 	private double amount;
 	private String tag;
@@ -46,11 +48,11 @@ public class Expense {
 		this.id = id;
 	}
 
-	public String getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

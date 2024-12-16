@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sdms.dto.CustomerDTO;
 import sdms.model.Customer;
 import sdms.service.CustomerServiceInterface;
+import sdms.util.DateAndTimeManager;
 
 @RestController
 public class CustomerRestController {
@@ -28,6 +29,8 @@ public class CustomerRestController {
 	@Autowired
 	private ModelMapper modelMapper;	// @Bean defined into @SpringBootApplication
 	
+	@Autowired
+	private DateAndTimeManager dateAndTimeManager;
 	
 	@GetMapping("/getMaxIdCustomer")
 	public long getMaxIdCustomer() {
@@ -117,7 +120,7 @@ public class CustomerRestController {
 		 customer.setSurname(surname);
 		 customer.setBirthCity(birthCity);
 		 customer.setBirthCityProvince(birthCityProvince);
-		 customer.setBirthDate(birthDate);
+		 customer.setBirthDate( dateAndTimeManager.parseDate(birthDate) );
 		 customer.setResidenceStreet(residenceStreet);
 		 customer.setHouseNumber(houseNumber);
 		 customer.setResidenceProvince(residenceProvince);
@@ -154,7 +157,7 @@ public class CustomerRestController {
 		 customer.setSurname(surname);
 		 customer.setBirthCity(birthCity);
 		 customer.setBirthCityProvince(birthCityProvince);
-		 customer.setBirthDate(birthDate);
+		 customer.setBirthDate( dateAndTimeManager.parseDate(birthDate) );
 		 customer.setResidenceStreet(residenceStreet);
 		 customer.setHouseNumber(houseNumber);
 		 customer.setResidenceProvince(residenceProvince);

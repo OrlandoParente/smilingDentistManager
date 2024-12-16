@@ -1,5 +1,8 @@
 package sdms.model;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -45,8 +48,8 @@ public class Appointment {
 	
 	// ###################################################################
 	
-	private String date;
-	private String time;
+	private LocalDate date;
+	private LocalTime time;
 	private int isDone;  //bit default 0," 	 // di default l'appuntamento non è ancora avvenuto nel momento della registrazione
 	private String billNumber; // Numero fattura - generalmente ANNO + NUMERO intero
 								 // I db non vuole salvarsi le fatture perché sarebbero dati ritondanti 
@@ -56,34 +59,6 @@ public class Appointment {
 
 	public Appointment() {}
 	
-	// isDone = 0 di default
-	public Appointment(long id, String date, String time, int idCustomer, int idDoctor,
-			int idTreatment, String billNumber, String note) {
-		this(  id, date, time, idCustomer, idDoctor, idTreatment, 0, billNumber, note );
-	}
-	
-	public Appointment(long id, String date, String time, int idCustomer, int idDoctor,
-			int idTreatment, int isDone, String billNumber, String note) {
-		super();
-		this.id = id;
-		this.date = date;
-		this.time = time;
-		
-		// this.idCustomer = idCustomer;
-		this.setidCustomer(idCustomer);
-		
-		// this.idDoctor = idDoctor;
-		this.setidDoctor(idDoctor);
-		
-		// this.idTreatment = idTreatment;
-		this.setidTreatment(idTreatment);
-		
-		this.isDone = isDone;
-		this.billNumber = billNumber;
-		this.note = note;
-	}
-	
-	
 	
 	public long getId() {
 		return this.id;
@@ -92,17 +67,17 @@ public class Appointment {
 		this.id = id;
 	}
 	
-	public String getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 	
-	public String getTime() {
+	public LocalTime getTime() {
 		return time;
 	}
-	public void setTime(String time) {
+	public void setTime(LocalTime time) {
 		this.time = time;
 	}
 	

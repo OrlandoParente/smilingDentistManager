@@ -1,5 +1,8 @@
 package sdms.dto;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class AppointmentDTO {
 	
 	private long id;
@@ -12,8 +15,8 @@ public class AppointmentDTO {
 	
 	// ###################################################################
 	
-	private String date;
-	private String time;
+	private LocalDate date;
+	private LocalTime time;
 	private int isDone;  //bit default 0," 	 // di default l'appuntamento non è ancora avvenuto nel momento della registrazione
 	private String billNumber; // Numero fattura - generalmente ANNO + NUMERO intero
 								 // I db non vuole salvarsi le fatture perché sarebbero dati ritondanti 
@@ -23,13 +26,15 @@ public class AppointmentDTO {
 
 	public AppointmentDTO() {}
 	
+	// We need this? There is already ModelMapper for convert Obj to DTO and vice versa 
 	// isDone = 0 di default
-	public AppointmentDTO(long id, String date, String time, long idCustomer, long idDoctor,
+	public AppointmentDTO(long id, LocalDate date, LocalTime time, long idCustomer, long idDoctor,
 			long idTreatment, String billNumber, String note) {
 		this(  id, date, time, idCustomer, idDoctor, idTreatment, 0, billNumber, note );
 	}
 	
-	public AppointmentDTO(long id, String date, String time, long idCustomer, long idDoctor,
+	// We need this? There is already ModelMapper for convert Obj to DTO and vice versa 
+	public AppointmentDTO(long id, LocalDate date, LocalTime time, long idCustomer, long idDoctor,
 			long idTreatment, int isDone, String billNumber, String note) {
 		super();
 		this.id = id;
@@ -54,17 +59,17 @@ public class AppointmentDTO {
 		this.id = id;
 	}
 	
-	public String getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 	
-	public String getTime() {
+	public LocalTime getTime() {
 		return time;
 	}
-	public void setTime(String time) {
+	public void setTime(LocalTime time) {
 		this.time = time;
 	}
 	

@@ -1,5 +1,7 @@
 package sdms.dto;
 
+import java.time.LocalDate;
+
 public class EmployeeDTO {
 	
 	private long id;  					// non uso il cod_fiscale come id perché non so se il dipendente è tenuto a rilasciarlo
@@ -7,7 +9,7 @@ public class EmployeeDTO {
 	private String name;
 	private String surname;
 	private String title;				// e.g. Dott. , Dott.ssa, Sig. , Sig.ra , Sig.na,
-	private String birthDate;
+	private LocalDate birthDate;
 	private String phoneNumber;
 	private String phoneNumber2; 		// Generalmente telefono di casa
 	private String eMail;
@@ -16,7 +18,8 @@ public class EmployeeDTO {
 	
 	public EmployeeDTO () {}
 	
-	public EmployeeDTO(int id, String name, String surname, String title, String birthDate, String phoneNumber,
+	// We need this? There is already ModelMapper for convert Obj to DTO and vice versa 
+	public EmployeeDTO(int id, String name, String surname, String title, LocalDate birthDate, String phoneNumber,
 			String phoneNumber2, String eMail, String passowrd, int permission) {
 		super();
 		this.id = id;
@@ -81,11 +84,11 @@ public class EmployeeDTO {
 		this.eMail = eMail;
 	}
 
-	public String getBirthDate() {
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(String birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 
