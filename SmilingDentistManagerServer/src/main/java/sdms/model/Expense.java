@@ -19,6 +19,7 @@ public class Expense {
 	private long id;
 	
 	// FOREIGN KEYS ######################################################
+	
 	@ManyToOne
 	@JoinColumn( name = "id_customer" )
 	private Customer customer;
@@ -38,6 +39,7 @@ public class Expense {
 	private double amount;
 	private String tag;
 	
+	// Empty Constructor 
 	public Expense() {}
 
 	public long getId() {

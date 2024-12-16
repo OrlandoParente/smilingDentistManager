@@ -4,15 +4,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import sdms.util.DateAndTimeManager;
 import sdms.util.UserRoleManager;
 
 @Entity
@@ -49,6 +46,7 @@ public class Employee {
 	// for use LocalDate in Containing method of JpaRepository
 	private String birthDateString;
 	
+	// Empty Constructor 
 	public Employee () {}
 	
 

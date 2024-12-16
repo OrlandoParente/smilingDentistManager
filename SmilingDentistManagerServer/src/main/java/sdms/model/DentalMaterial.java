@@ -25,6 +25,7 @@ public class DentalMaterial {
 	private String description;
 	private double cost;
 	
+	// Empty Constructor 
 	public DentalMaterial() {}
 
 	public long getId() {

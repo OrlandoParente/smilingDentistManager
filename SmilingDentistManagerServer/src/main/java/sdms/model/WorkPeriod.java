@@ -17,17 +17,20 @@ public class WorkPeriod {
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private long id;
 	
+	// FOREIGN KEYS ######################################################
+	
 	@ManyToOne
 	@JoinColumn( name = "id_employee" )
 	private Employee employee;
 	
+	// ###################################################################
 	
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private String workingAgreement;
 	private String notes;
 	
-	
+	// Empty Constructor 
 	public WorkPeriod() {}
 
 

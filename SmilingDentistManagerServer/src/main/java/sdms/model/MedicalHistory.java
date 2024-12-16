@@ -18,39 +18,19 @@ public class MedicalHistory {
 	
 	// FOREIGN KEYS ######################################################
 	
-	// --- Li lascio per mantenere la compatibilità con il Client Swing---
-	
-	// lascio i corrispettivi setter e getter perchè cosi, jpa mi da problemi 
-	// anche senza l'annotazione @Column li mette in conflitto con i rispettivi sotto
-	
-	// private int idCustomer;
-	// -------------------------------------------------------------------
-	
 	@ManyToOne
 	@JoinColumn( name = "id_customer" )
 	private Customer customer;
 	
 	// ###################################################################
 	
-	
 	private String type;		   // [ anamnesi generale o odontoiatrica ]
 	private String name;
 	private String description;
 	
 	
+	// Empty Constructor 
 	public MedicalHistory() {}
-	
-	public MedicalHistory(int id, int idCustomer, String type, String name, String description) {
-		super();
-		this.id = id;
-		
-		// this.idCustomer = idCustomer;
-		this.setIdCustomer(idCustomer);
-		
-		this.type = type;
-		this.name = name;
-		this.description = description;
-	}
 
 
 	@Override

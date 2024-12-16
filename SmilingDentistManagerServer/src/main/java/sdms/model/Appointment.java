@@ -24,16 +24,6 @@ public class Appointment {
 	
 	// FOREIGN KEYS ######################################################
 	
-	// --- Li lascio per mantenere la compatibilità con il Client Swing---
-	// lascio i corrispettivi setter e getter perchè cosi, jpa mi da problemi 
-	// anche senza l'annotazione @Column li mette in conflitto con i rispettivi sotto
-	
-	// private int idCustomer;
-	// private int idDoctor;
-	// private int idTreatment;
-	
-	// -------------------------------------------------------------------
-	
 	@ManyToOne
 	@JoinColumn( name = "id_customer" )
 	private Customer customer;
@@ -47,7 +37,7 @@ public class Appointment {
 	private Treatment treatment;
 	
 	// ###################################################################
-	
+
 	private LocalDate date;
 	private LocalTime time;
 	private int isDone;  //bit default 0," 	 // di default l'appuntamento non è ancora avvenuto nel momento della registrazione
@@ -57,6 +47,7 @@ public class Appointment {
 								 // si limita a segnare quali appuntamenti sono stati già fatturati
 	private String note;		 // eventualmente se serve specificare qualcosa
 
+	// Empty Constructor 
 	public Appointment() {}
 	
 	

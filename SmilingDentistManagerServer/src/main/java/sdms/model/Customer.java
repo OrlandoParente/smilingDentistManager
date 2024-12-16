@@ -49,8 +49,8 @@ public class Customer {
 	// for use LocalDate in Containing method of JpaRepository
 	private String birthDateString;
 	
+	// Empty Constructor 
 	public Customer() {}
-	
 	
 	@Override
 	public String toString() {
