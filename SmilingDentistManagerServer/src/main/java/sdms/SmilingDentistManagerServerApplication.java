@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.AntPathMatcher;
 
-import sdms.util.DateManager;
+import sdms.util.DateAndTimeManager;
 
 @SpringBootApplication
 public class SmilingDentistManagerServerApplication {
@@ -21,8 +21,8 @@ public class SmilingDentistManagerServerApplication {
 	}
 	
 	@Bean
-	DateManager dateManager() {
-		return new DateManager();
+	DateAndTimeManager dateManager() {
+		return new DateAndTimeManager();
 	}
 	
 	@Bean
