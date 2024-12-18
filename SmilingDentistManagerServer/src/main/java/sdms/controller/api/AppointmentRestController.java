@@ -2,6 +2,8 @@ package sdms.controller.api;
 
 import java.util.List;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import sdms.util.DateAndTimeManager;
 
 @RestController
 public class AppointmentRestController {
+	
 
 	@Autowired
 	private AppointmentServiceInterface service;
@@ -76,10 +79,10 @@ public class AppointmentRestController {
 	
 	
 	// per registrare un appuntamento ancora non svolto
-	@PostMapping( value = "/postAppointment", params = { "date", "time", "idCustomer", "idDoctor", "idTreatment", "note"} )
+	@PostMapping( value = "/postAppointment", params = { "date", "time", "idCustomer", "idDoctor", "idTreatment", "notes"} )
 	public void postAppointment( @RequestParam("date") String date, @RequestParam("time") String time, 
 									@RequestParam("idCustomer") long idCustomer,@RequestParam("idDoctor")  long idDoctor, 
-									@RequestParam("idTreatment") long idTreatment, @RequestParam("note") String note) {
+									@RequestParam("idTreatment") long idTreatment, @RequestParam("notes") String notes) {
 		
 		// Check Message
 		System.out.println("AppointmentRestController -> postAppointment ");
@@ -90,7 +93,7 @@ public class AppointmentRestController {
 		appointment.setidCustomer(idCustomer);
 		appointment.setidDoctor(idDoctor);
 		appointment.setidTreatment(idTreatment);
-		appointment.setNote(note);
+		appointment.setNotes(notes);
 		
 		service.postAppointment(appointment);
 	}
@@ -99,11 +102,11 @@ public class AppointmentRestController {
 	// per registrare un appuntamento già svolto
 	// cioè registra anche il bill number (numero di fattura)
 	@PostMapping( value = "/postAppointment", params = { "date", "time", "idCustomer", "idDoctor", 
-														"idTreatment", "billNumber", "note"} )
+														"idTreatment", "billNumber", "notes"} )
 	public void postAppointment( @RequestParam("date") String date, @RequestParam("time") String time, 
 									@RequestParam("idCustomer") long idCustomer,@RequestParam("idDoctor") long idDoctor, 
 									@RequestParam("idTreatment") long idTreatment, @RequestParam("billNumber") String billNumber,
-									@RequestParam("note") String note) {
+									@RequestParam("notes") String notes) {
 		
 		// Check Message
 		System.out.println("AppointmentRestController -> postAppointment ");
@@ -114,7 +117,7 @@ public class AppointmentRestController {
 		appointment.setidCustomer(idCustomer);
 		appointment.setidDoctor(idDoctor);
 		appointment.setidTreatment(idTreatment);
-		appointment.setNote(note);
+		appointment.setNotes(notes);
 		appointment.setbillNumber(billNumber);
 		
 		service.postAppointment(appointment);
@@ -123,11 +126,11 @@ public class AppointmentRestController {
 	
 	// per registrare un appuntamento potendo scegliere i valori di tutti i campi
 	@PostMapping( value = "/postAppointment", params = { "date", "time", "idCustomer", "idDoctor", "idTreatment",
-														"isDone", "billNumber", "note"} )
+														"isDone", "billNumber", "notes"} )
 	public void postAppointment( @RequestParam("date") String date, @RequestParam("time") String time, 
 									@RequestParam("idCustomer") long idCustomer,@RequestParam("idDoctor")  long idDoctor, 
 									@RequestParam("idTreatment") long idTreatment, @RequestParam("isDone") int isDone,
-									@RequestParam("billNumber") String billNumber, @RequestParam("note") String note) {
+									@RequestParam("billNumber") String billNumber, @RequestParam("notes") String notes) {
 		
 		// Check Message
 		System.out.println("AppointmentRestController -> postAppointment ");
@@ -138,7 +141,7 @@ public class AppointmentRestController {
 		appointment.setidCustomer(idCustomer);
 		appointment.setidDoctor(idDoctor);
 		appointment.setidTreatment(idTreatment);
-		appointment.setNote(note);
+		appointment.setNotes(notes);
 		appointment.setbillNumber(billNumber);
 		appointment.setisDone(isDone);
 		
@@ -177,11 +180,11 @@ public class AppointmentRestController {
 	
 	// per registrare un appuntamento potendo scegliere i valori di tutti i campi
 		@PutMapping( value = "/putAppointment", params = { "id", "date", "time", "idCustomer", "idDoctor", "idTreatment",
-															"isDone", "billNumber", "note"} )
+															"isDone", "billNumber", "notes"} )
 		public ResponseEntity<?> putAppointment( @RequestParam("date") String date, @RequestParam("time") String time, 
 										@RequestParam("idCustomer") long idCustomer,@RequestParam("idDoctor")  long idDoctor, 
 										@RequestParam("idTreatment") long idTreatment, @RequestParam("isDone") int isDone,
-										@RequestParam("billNumber") String billNumber, @RequestParam("note") String note) {
+										@RequestParam("billNumber") String billNumber, @RequestParam("notes") String notes) {
 			
 			// Check Message
 			System.out.println("AppointmentRestController -> postAppointment ");
@@ -197,7 +200,7 @@ public class AppointmentRestController {
 			appointment.setidCustomer(idCustomer);
 			appointment.setidDoctor(idDoctor);
 			appointment.setidTreatment(idTreatment);
-			appointment.setNote(note);
+			appointment.setNotes(notes);
 			appointment.setbillNumber(billNumber);
 			appointment.setisDone(isDone);
 			

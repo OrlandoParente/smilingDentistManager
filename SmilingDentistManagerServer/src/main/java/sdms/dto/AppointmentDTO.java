@@ -22,20 +22,20 @@ public class AppointmentDTO {
 								 // I db non vuole salvarsi le fatture perché sarebbero dati ritondanti 
 								 // ( cioè le fatture si possono costruire dai dati già presenti nel db )
 								 // si limita a segnare quali appuntamenti sono stati già fatturati
-	private String note;		 // eventualmente se serve specificare qualcosa
+	private String notes;		 // eventualmente se serve specificare qualcosa
 
 	public AppointmentDTO() {}
 	
 	// We need this? There is already ModelMapper for convert Obj to DTO and vice versa 
 	// isDone = 0 di default
 	public AppointmentDTO(long id, LocalDate date, LocalTime time, long idCustomer, long idDoctor,
-			long idTreatment, String billNumber, String note) {
-		this(  id, date, time, idCustomer, idDoctor, idTreatment, 0, billNumber, note );
+			long idTreatment, String billNumber, String notes) {
+		this(  id, date, time, idCustomer, idDoctor, idTreatment, 0, billNumber, notes );
 	}
 	
 	// We need this? There is already ModelMapper for convert Obj to DTO and vice versa 
 	public AppointmentDTO(long id, LocalDate date, LocalTime time, long idCustomer, long idDoctor,
-			long idTreatment, int isDone, String billNumber, String note) {
+			long idTreatment, int isDone, String billNumber, String notes) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -47,7 +47,7 @@ public class AppointmentDTO {
 		
 		this.isDone = isDone;
 		this.billNumber = billNumber;
-		this.note = note;
+		this.notes = notes;
 	}
 	
 	
@@ -73,11 +73,11 @@ public class AppointmentDTO {
 		this.time = time;
 	}
 	
-	public String getNote() {
-		return note;
+	public String getNotes() {
+		return notes;
 	}
-	public void setNote(String note) {
-		this.note = note;
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
 	public String getBillNumber() {

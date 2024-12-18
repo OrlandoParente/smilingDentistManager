@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Dic 16, 2024 alle 22:12
+-- Creato il: Dic 18, 2024 alle 10:19
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -36,24 +36,24 @@ CREATE TABLE `appointment` (
   `id_treatment` bigint(20) DEFAULT NULL,
   `is_done` int(11) NOT NULL,
   `bill_number` varchar(255) DEFAULT NULL,
-  `note` varchar(255) DEFAULT NULL
+  `notes` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `appointment`
 --
 
-INSERT INTO `appointment` (`id`, `date`, `time`, `id_customer`, `id_doctor`, `id_treatment`, `is_done`, `bill_number`, `note`) VALUES
-(1, '2024-11-22', '18:00:00', 1, 1, 1, 0, '', ''),
-(2, '2024-11-22', '12:00:00', 2, 1, 1, 1, '', ''),
-(3, '2023-10-26', '12:00:00', 3, 1, 1, 0, '', ''),
-(4, '2023-10-20', '18:00:00', 4, 1, 1, 0, '', ''),
-(5, '2023-10-25', '12:00:00', 1, 1, 1, 1, '', ''),
-(6, '2023-10-22', '18:00:00', 2, 1, 1, 0, '', ''),
-(7, '2023-10-30', '12:00:00', 2, 1, 1, 1, '', ''),
-(8, '2023-11-22', '12:00:00', 5, 1, 1, 0, '', ''),
-(9, '2023-12-20', '18:00:00', 6, 1, 1, 0, '', ''),
-(10, '2023-12-25', '12:00:00', 7, 1, 1, 1, '', ''),
+INSERT INTO `appointment` (`id`, `date`, `time`, `id_customer`, `id_doctor`, `id_treatment`, `is_done`, `bill_number`, `notes`) VALUES
+(1, '2024-11-22', '18:00:00', 1, 1, 1, 0, '', 'Il dottore potrbbe fare ritardo'),
+(2, '2024-11-22', '12:00:00', 2, 1, 1, 1, '', NULL),
+(3, '2023-10-26', '12:00:00', 3, 1, 1, 0, '', NULL),
+(4, '2023-10-20', '18:00:00', 4, 1, 1, 0, '', NULL),
+(5, '2023-10-25', '12:00:00', 1, 1, 1, 1, '', NULL),
+(6, '2023-10-22', '18:00:00', 2, 1, 1, 0, '', 'Una mela al giorno toglie il medito di torno'),
+(7, '2023-10-30', '12:00:00', 2, 1, 1, 1, '', NULL),
+(8, '2023-11-22', '12:00:00', 5, 1, 1, 0, '', 'Nuovo cliente'),
+(9, '2023-12-20', '18:00:00', 6, 1, 1, 0, '', NULL),
+(10, '2023-12-25', '12:00:00', 7, 1, 1, 1, '', 'Something new'),
 (11, '2024-11-21', '11:00:00', 5, NULL, NULL, 0, NULL, NULL),
 (13, '2024-12-14', '15:00:00', 3, NULL, NULL, 0, NULL, NULL);
 

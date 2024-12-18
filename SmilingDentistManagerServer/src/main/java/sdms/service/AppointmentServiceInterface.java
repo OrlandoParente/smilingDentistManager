@@ -40,7 +40,7 @@ public interface AppointmentServiceInterface {
 	
 	// Volendo se ne può fare a meno, basta il putAppointment
 	// però dato che questa funzionalità è prevista, così si alleggerisce il controller
-	public void putAppointmentNoteById( long id , String note );
+	public void putAppointmentNoteById( long id , String notes );
 	
 	// Volendo se ne può fare a meno, basta il putAppointment
 	// però dato che questa funzionalità è prevista, così si alleggerisce il controller

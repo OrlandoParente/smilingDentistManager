@@ -45,7 +45,7 @@ public class Appointment {
 								 // I db non vuole salvarsi le fatture perché sarebbero dati ritondanti 
 								 // ( cioè le fatture si possono costruire dai dati già presenti nel db )
 								 // si limita a segnare quali appuntamenti sono stati già fatturati
-	private String note;		 // eventualmente se serve specificare qualcosa
+	private String notes;		 // eventualmente se serve specificare qualcosa
 
 	// Empty Constructor 
 	public Appointment() {}
@@ -159,11 +159,11 @@ public class Appointment {
 		this.billNumber = billNumber;
 	}
 	
-	public String getNote() {
-		return note;
+	public String getNotes() {
+		return notes;
 	}
-	public void setNote(String note) {
-		this.note = note;
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 		
 	

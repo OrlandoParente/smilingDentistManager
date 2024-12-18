@@ -93,10 +93,10 @@ public class AppointmentService implements AppointmentServiceInterface{
 	// Volendo se ne può fare a meno, basta il putAppointment
 	// però dato che questa funzionalità è prevista, così si alleggerisce il controller
 	@Override
-	public void putAppointmentNoteById(long id, String note) {
+	public void putAppointmentNoteById(long id, String notes) {
 		
 		Appointment appointment = repository.findById(id).get();
-		appointment.setNote(note);
+		appointment.setNotes(notes);
 		repository.save(appointment);
 		
 	}
