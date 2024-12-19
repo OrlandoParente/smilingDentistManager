@@ -21,7 +21,7 @@ public class SmilingDentistManagerServerApplication {
 	}
 	
 	@Bean
-	DateAndTimeManager dateManager() {
+	DateAndTimeManager dateAndTimeManager() {
 		return new DateAndTimeManager();
 	}
 	
