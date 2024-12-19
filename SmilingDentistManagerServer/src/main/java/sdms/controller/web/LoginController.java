@@ -146,7 +146,8 @@ public class LoginController {
     		System.err.println( e.getMessage() );
     	}
     	
-    	return "redirect:/dashboard/employee";
+//    	return "redirect:/dashboard/employee";
+    	return "redirect:/employee/calendar/day";
     	
     }
 }
