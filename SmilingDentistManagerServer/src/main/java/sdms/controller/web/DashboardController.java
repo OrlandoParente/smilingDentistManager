@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpServletRequest;
 import sdms.util.WebClientCookieManager;
 
+// NOT USED, WE CAN DELETE THIS
+
 @Controller
 @RequestMapping("dashboard")
 public class DashboardController {
