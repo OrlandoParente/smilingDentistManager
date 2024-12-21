@@ -14,6 +14,8 @@ public class DateAndTimeManager {
 	public DateAndTimeManager() {
 		
 		this.dateFormatters = List.of(
+				// Format with / -------------------------------
+				
 				// Italian formats
 				DateTimeFormatter.ofPattern("d/M/yyyy"),
 				DateTimeFormatter.ofPattern("dd/MM/yyyy"),
@@ -23,7 +25,22 @@ public class DateAndTimeManager {
 				DateTimeFormatter.ofPattern("yyyy/M/d"),
 				DateTimeFormatter.ofPattern("yyyy/MM/dd"),
 				DateTimeFormatter.ofPattern("yyyy/M/d"),
-				DateTimeFormatter.ofPattern("yyyy/MM/dd")
+				DateTimeFormatter.ofPattern("yyyy/MM/dd"),
+				
+				// ---------------------------------------------
+				// Format with - -------------------------------
+				
+				// Italian formats
+				DateTimeFormatter.ofPattern("d-M-yyyy"),
+				DateTimeFormatter.ofPattern("dd-MM-yyyy"),
+				DateTimeFormatter.ofPattern("d-M-yy"),
+				DateTimeFormatter.ofPattern("dd-MM-yy"),
+				// American formats
+				DateTimeFormatter.ofPattern("yyyy-M-d"),
+				DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+				DateTimeFormatter.ofPattern("yyyy-M-d"),
+				DateTimeFormatter.ofPattern("yyyy-MM-dd")
+				// ---------------------------------------------
 		);
 		
 		this.timeFormatters = List.of(
@@ -36,7 +53,7 @@ public class DateAndTimeManager {
 				// A = PM or AM
 				DateTimeFormatter.ofPattern("hh:mm A"),
 				
-				// For avoid errors but dangerous -------
+				// For avoid errors but it's dangerous using only 1 letter (e.g.: h instead of HH) -------
 				DateTimeFormatter.ofPattern("H:m"),
 				DateTimeFormatter.ofPattern("HH:m"),
 				DateTimeFormatter.ofPattern("H:mm"),
@@ -44,7 +61,7 @@ public class DateAndTimeManager {
 				DateTimeFormatter.ofPattern("h:m a"),
 				DateTimeFormatter.ofPattern("hh:m a"),
 				DateTimeFormatter.ofPattern("h:mm a")
-				// --------------------------------------
+				// ---------------------------------------------------------------------------------------
 	    );
 		
 	}
