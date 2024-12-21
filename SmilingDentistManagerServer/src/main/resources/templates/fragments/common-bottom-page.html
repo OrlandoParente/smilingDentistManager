@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+ 
+    <!-- In this file I am not define the footer, but the elements right before of the footer -->
+    <div th:fragment="common-bottom-page">
+        
+        <!-- Collegamento al JS di Bootstrap e alle sue dipendenze -->
+        <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <!-- js for the menu-dashboard -->
+        <script th:src="@{/js/menu-dashboard.js}"></script>
+
+        <!-- NOT USED: WE CAN DELETE THIS, but delete also the file associated -->
+        <!-- <script th:src="@{/js/sdm-scripts.js}"></script> -->
+    
+    </div>
+
+</body>
+</html>
