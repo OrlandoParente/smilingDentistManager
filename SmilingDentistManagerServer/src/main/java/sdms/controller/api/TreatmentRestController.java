@@ -37,7 +37,21 @@ public class TreatmentRestController {
 		
 		return modelMapper.map(treatment, TreatmentDTO.class);
 	}
-	
+
+	@GetMapping("/getTreatments")
+	public List<TreatmentDTO> getTreatments( ) {
+		
+		// check message
+		System.out.println("TreatmentRestController -> getTreatments ");
+		
+		List<Treatment> treatments = service.getTreatments();
+		
+		List<TreatmentDTO> listTreatmentDTO = treatments.stream()
+							.map( treatment -> modelMapper.map(treatment, TreatmentDTO.class) )
+							.toList();
+		
+		return listTreatmentDTO;
+	}
 	
 	@GetMapping("/getTreatmentsById/{idCustomer}")
 	public TreatmentDTO getTreatmentsByCustomerId( @PathVariable long idCustomer ) {

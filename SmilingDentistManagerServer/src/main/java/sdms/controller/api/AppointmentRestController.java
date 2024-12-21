@@ -2,8 +2,6 @@ package sdms.controller.api;
 
 import java.util.List;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sdms.dto.AppointmentDTO;
 import sdms.model.Appointment;
 import sdms.service.AppointmentServiceInterface;
+import sdms.service.CustomerServiceInterface;
+import sdms.service.EmployeeServiceInterface;
+import sdms.service.TreatmentServiceInterface;
 import sdms.util.DateAndTimeManager;
 
 @RestController
@@ -27,6 +27,15 @@ public class AppointmentRestController {
 
 	@Autowired
 	private AppointmentServiceInterface service;
+	
+	@Autowired
+	private CustomerServiceInterface customerService;
+	
+	@Autowired
+	private TreatmentServiceInterface treatmentService;
+	
+	@Autowired
+	private EmployeeServiceInterface employeeService;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -84,7 +93,7 @@ public class AppointmentRestController {
 	
 //	 params = { "date", "time", "idCustomer", "idDoctor", "idTreatment", "isDone", "billNumber", "notes"}
 	
-	// Post usign @RequestParam
+	// Post using @RequestParam
 	@PostMapping( value = "/postAppointment", params = {"date", "time", "idCustomer"} )
 	public ResponseEntity<?> postAppointment( 
 								@RequestParam String date, @RequestParam String time, @RequestParam long idCustomer, // Mandatory parameters
@@ -103,14 +112,14 @@ public class AppointmentRestController {
 			// No need to check the default values for this fields
 			appointment.setDate( dateAndTimeManager.parseDate(date) );
 			appointment.setTime( dateAndTimeManager.parseTime(time) );
-			appointment.setidCustomer(idCustomer);
+			appointment.setCustomer( customerService.getCustomerById(idCustomer) );
 			appointment.setisDone(isDone);
 			appointment.setNotes(notes);
 			
 			// TO EDIT: Return 404 Not found if they don't have default value and the service can't find them on the db // <<===================================
 			// Not insert if they have the default value 
-			if( idDoctor != -1 )	appointment.setidDoctor(idDoctor);
-			if( idTreatment != -1 )	appointment.setidTreatment(idTreatment);
+			if( idDoctor != -1 )	appointment.setDoctor( employeeService.getEmployeeById(idDoctor) );
+			if( idTreatment != -1 )	appointment.setTreatment( treatmentService.getTreatmentById(idTreatment) );
 			if( ! billNumber.equals("none") )	appointment.setbillNumber(billNumber);
 			
 			service.postAppointment(appointment);
@@ -231,10 +240,7 @@ public class AppointmentRestController {
 	// ####################################################################################################################################################
 	
 	// set is_done = 1
-//	@PutMapping( value = "/putSetAppointmentDoneById", params = { "date", "time", "id_customer"} )
 	@PutMapping( value = "/putSetAppointmentDoneById", params = { "id"} )
-//	public boolean putSetAppointmentDoneById( @RequestParam("date") String date, @RequestParam("time") String time, 
-//									@RequestParam("id_customer") String id_customer ) {
 	public void putSetAppointmentDoneById( @RequestParam("id") long id ) {
 
 		// Check Message
@@ -244,10 +250,7 @@ public class AppointmentRestController {
 	}
 	
 	// set is_done = 0
-//	@PutMapping( value = "/putUnsetAppointmentDoneById", params = { "date", "time", "id_customer"} )
 	@PutMapping( value = "/putUnsetAppointmentDoneById", params = { "id"} )
-//	public boolean putUnsetAppointmentDoneById( @RequestParam("date") String date, @RequestParam("time") String time, 
-//									@RequestParam("id_customer") String id_customer ) {
 	public void putUnsetAppointmentDoneById( @RequestParam("id") long id ) {
 
 		// Check Message
@@ -259,41 +262,63 @@ public class AppointmentRestController {
 	
 	
 	// per registrare un appuntamento potendo scegliere i valori di tutti i campi
-		@PutMapping( value = "/putAppointment", params = { "id", "date", "time", "idCustomer", "idDoctor", "idTreatment",
-															"isDone", "billNumber", "notes"} )
-		public ResponseEntity<?> putAppointment( @RequestParam("date") String date, @RequestParam("time") String time, 
-										@RequestParam("idCustomer") long idCustomer,@RequestParam("idDoctor")  long idDoctor, 
-										@RequestParam("idTreatment") long idTreatment, @RequestParam("isDone") int isDone,
-										@RequestParam("billNumber") String billNumber, @RequestParam("notes") String notes) {
-			
-			// Check Message
-			System.out.println("AppointmentRestController -> postAppointment ");
+//	@PutMapping( value = "/putAppointment", params = { "id", "date", "time", "idCustomer", "idDoctor", "idTreatment", "isDone", "billNumber", "notes"} )
+	@PutMapping( value = "/putAppointment", params = { "id" } )
+	public ResponseEntity<?> putAppointment( @RequestParam long id,	// Mandatory parameters
+									@RequestParam( defaultValue = "" ) String date, 
+									@RequestParam( defaultValue = "" ) String time, 
+									@RequestParam( defaultValue = "-1" ) long idCustomer, 
+									@RequestParam( defaultValue = "-1" )  long idDoctor, 
+									@RequestParam( defaultValue = "-1" ) long idTreatment, 
+									@RequestParam( defaultValue = "-1" ) int isDone,
+									@RequestParam( defaultValue = "none" ) String billNumber, 
+									// we need a default value which is surely different from a real note
+									@RequestParam( defaultValue = "sdms.nessuna-nota-inviata.ma-proprio-nessuna -1" ) String notes) {
+		
+		// Check Message
+		System.out.println("AppointmentRestController -> postAppointment ");
 
+		
+		Appointment appointment = service.getAppointmentById(id);
+		
+		if( appointment == null ) 
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Not Found: The entity to update was not found.");
+		
+		try {
+			if( ! date.equals("") )	appointment.setDate( dateAndTimeManager.parseDate(date) );
+			if( ! time.equals("") )	appointment.setTime( dateAndTimeManager.parseTime(time) );
 			
-			Appointment appointment = service.getAppointmentById(idTreatment);
+			if( idCustomer == -2 )	// If the user wants delete the link to customer without replace with some else customer
+				appointment.setCustomer( null );
+			else if( idCustomer != -1 )
+				appointment.setCustomer( customerService.getCustomerById(idCustomer) );
 			
-			if( appointment == null ) 
-				return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Not Found: The entity to update was not found.");
+			if( idDoctor == -2 )	// If the user wants delete the link to doctor without replace with some else doctor
+				appointment.setDoctor( null );
+			else if( idDoctor != -1 )	
+				appointment.setDoctor( employeeService.getEmployeeById(idDoctor) );
 			
-			appointment.setDate( dateAndTimeManager.parseDate(date) );
-			appointment.setTime( dateAndTimeManager.parseTime(time) );
-			appointment.setidCustomer(idCustomer);
-			appointment.setidDoctor(idDoctor);
-			appointment.setidTreatment(idTreatment);
-			appointment.setNotes(notes);
-			appointment.setbillNumber(billNumber);
-			appointment.setisDone(isDone);
+			if( idTreatment == -2 )	// If the user wants delete the link to treatment without replace with some else treatment
+				appointment.setTreatment( null );
+			else if( idTreatment != -1 )
+				appointment.setTreatment( treatmentService.getTreatmentById(idTreatment) );
+			
+			if( ! notes.equals("sdms.nessuna-nota-inviata.ma-proprio-nessuna -1") ) appointment.setNotes(notes);
+			if( ! billNumber.equals("none") )	appointment.setbillNumber(billNumber);
+			if( isDone != -1 )	appointment.setisDone(isDone);
 			
 			service.putAppointment(appointment);
-			
-			return ResponseEntity.status( HttpStatus.OK ).body(modelMapper.map(appointment, AppointmentDTO.class));
+				
+		} catch( Exception e ) {
+			System.err.println( "AppointmentRestconstroller -> PutAppointment, error: " + e.getMessage() );
+			// TO EDIT: Return better error response // <<=====================================================================================================
+			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Post Appointment Failed");
 		}
+		
+		return ResponseEntity.status( HttpStatus.OK ).body(modelMapper.map(appointment, AppointmentDTO.class));
+	}
 	
-	
-//	@PutMapping( value = "/putAppointmentBillNumberById", params = { "date", "time", "id_customer", "bill_number"} )
 	@PutMapping( value = "/putAppointmentBillNumberById", params = { "id" , "billNumber" } )
-//	public boolean putAppointmentBillNumberById( @RequestParam("date") String date, @RequestParam("time") String time, 
-//									@RequestParam("id_customer") String id_customer, @RequestParam("bill_number") String bill_number ) {
 	public void putAppointmentBillNumberById( @RequestParam("id") long id, @RequestParam("billNumber") String billNumber ) {
 		
 		// Check Message
@@ -303,12 +328,7 @@ public class AppointmentRestController {
 	}
 	
 	
-	
-	
-//	@PutMapping( value = "/putAppointmentNoteById", params = { "date", "time", "id_customer", "note"} )
 	@PutMapping( value = "/putAppointmentNoteById", params = { "id", "note"} )
-//	public boolean putAppointmentNoteById( @RequestParam("date") String date, @RequestParam("time") String time, 
-//									@RequestParam("id_customer") String id_customer, @RequestParam("note") String note ) {
 	public void putAppointmentNoteById( @RequestParam("id") long id, @RequestParam("note") String note ) {
 		
 		// Check Message
@@ -317,10 +337,7 @@ public class AppointmentRestController {
 		service.putAppointmentNoteById(id, note);
 	}
 	
-//	@PutMapping( value = "/putAppointmentTreatmentById", params = { "date", "time", "id_customer", "id_treatment"} )
 	@PutMapping( value = "/putAppointmentTreatmentById", params = { "id", "idTreatment"} )
-//	public boolean putAppointmentTreatmentById( @RequestParam("date") String date, @RequestParam("time") String time, 
-//									@RequestParam("id_customer") String id_customer, @RequestParam("id_treatment") String id_treatment  ) {
 	public void putAppointmentTreatmentById( @RequestParam("id") long id, @RequestParam("idTreatment") long idTreatment  ) {
 	
 		// Check Message
@@ -329,10 +346,7 @@ public class AppointmentRestController {
 		service.putAppointmentTreatmentById(id, idTreatment);
 	}
 	
-	
-//	@DeleteMapping( value = "/deleteAppointmentById", params = { "date", "time", "id_customer"} )
 	@DeleteMapping( value = "/deleteAppointmentById", params = { "id"} )
-//	public boolean deleteAppointmentById( @RequestParam("date") String date, @RequestParam("time") String time, @RequestParam("id_customer") String id_customer ) {
 	public void deleteAppointmentById( @RequestParam("id") long id ) {
 	
 		// Check Message
