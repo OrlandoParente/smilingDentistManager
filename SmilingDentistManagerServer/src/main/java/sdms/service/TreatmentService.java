@@ -41,6 +41,12 @@ public class TreatmentService implements TreatmentServiceInterface {
 	}
 
 	@Override
+	public List<Treatment> getTreatments() {
+		
+		return repository.findAll();
+	}
+	
+	@Override
 	public List<Treatment> getTreatmentsByBillNumber(String billNumber) {
 
 		List<Appointment> appointments = appointmentRepository.findByBillNumber(billNumber);
@@ -66,6 +72,5 @@ public class TreatmentService implements TreatmentServiceInterface {
 		
 		repository.delete( repository.findById(id).get() );
 	}
-
 
 }
