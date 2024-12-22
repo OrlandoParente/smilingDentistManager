@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/common-head :: common-head('Calendar')"></th:block>
+</head>
+<body>
+    
+    <div th:replace="fragments/common-top-page :: common-top-page"></div>
+
+    <!-- Sidebar and nav for mobile screens -->
+    <div th:replace="fragments/menu-dashboard-employee::side-dashboard-mobile"></div>
+
+	<div class="d-flex">
+
+        <!-- Sidebar for medium and larger screens -->
+        <div th:insert="fragments/menu-dashboard-employee::side-dashboard" class="col-md-3 col-lg-2" ></div>
+
+    
+        <!-- Main Content -->
+        <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
+            <h1>Calendar</h1>
+            <p>This is your main content area. It adapts to screen size.</p>
+
+            <!-- here the page caontent -->
+            <div class="row">
+
+            </div>
+        </main>
+    </div> <!-- end d-flex -->
+
+
+
+    <div th:replace="fragments/common-bottom-page :: common-bottom-page"></div>           
+
+</body>
+</html>
