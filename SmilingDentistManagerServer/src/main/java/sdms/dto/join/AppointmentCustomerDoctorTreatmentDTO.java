@@ -1,9 +1,5 @@
 package sdms.dto.join;
 
-import java.time.LocalTime;
-import java.util.Comparator;
-import java.util.List;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -48,7 +44,9 @@ public class AppointmentCustomerDoctorTreatmentDTO {
 		Appointment appointment = appointmentService.getAppointmentById(idAppointment);
 		
 		this.setAppointmentDTO( modelMapper.map( appointment, AppointmentDTO.class ) );
-		this.setCustomerDTO( modelMapper.map( appointment.getCustomer(), CustomerDTO.class ) );
+		
+		if( appointment.getCustomer() != null )
+			this.setCustomerDTO( modelMapper.map( appointment.getCustomer(), CustomerDTO.class ) );
 		
 		if( appointment.getDoctor() != null )
 			this.setDoctorDTO( modelMapper.map( appointment.getDoctor(), EmployeeDTO.class ) );
