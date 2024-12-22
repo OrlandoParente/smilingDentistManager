@@ -81,10 +81,14 @@ public class Appointment {
 		return -1;
 	}
 
-	public void setidCustomer(long idCustomer) {
-		if( this.customer == null ) this.customer = new Customer();
-		this.customer.setId(idCustomer);
-	}
+	// WARNING: Can bring to error cause you attempt to change an id managed by Hibernate
+//	public void setidCustomer(long idCustomer) {
+//		
+//		if( this.customer == null ) 
+//			this.customer = new Customer();
+//		
+//		this.customer.setId(idCustomer);
+//	}
 	
 	public Customer getCustomer() {
 		return this.customer;
@@ -93,7 +97,6 @@ public class Appointment {
 	public void setCustomer( Customer customer ) {
 		this.customer = customer;
 	}
-	
 	
 	public long getidDoctor() {
 		
@@ -104,13 +107,14 @@ public class Appointment {
 		return -1;
 	}
 	
-	public void setidDoctor(long idDoctor) {
-	
-		if( this.doctor == null )
-			this.doctor = new Employee();
-		
-		this.doctor.setId(idDoctor);
-	}
+	// WARNING: Can bring to error cause you attempt to change an id managed by Hibernate
+//	public void setidDoctor(long idDoctor) {
+//	
+//		if( this.doctor == null )
+//			this.doctor = new Employee();
+//		
+//		this.doctor.setId(idDoctor);
+//	}
 	
 	public Employee getDoctor() {
 		return doctor;
@@ -120,6 +124,7 @@ public class Appointment {
 		this.doctor = doctor;
 	}
 
+	
 	public long getidTreatment() {
 		
 		if( this.treatment != null )
@@ -129,13 +134,14 @@ public class Appointment {
 		return -1;
 	}
 	
-	public void setidTreatment(long idTreatment) {
-		
-		if( this.treatment == null )
-			this.treatment = new Treatment();
-		
-		this.treatment.setId(idTreatment);
-	}
+	// WARNING: Can bring to error cause you attempt to change an id managed by Hibernate
+//	public void setidTreatment(long idTreatment) {
+//		
+//		if( this.treatment == null )
+//			this.treatment = new Treatment();
+//		
+//		this.treatment.setId(idTreatment);
+//	}
 	
 	public Treatment getTreatment() {
 		return treatment;

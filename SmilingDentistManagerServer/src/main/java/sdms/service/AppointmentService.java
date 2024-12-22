@@ -9,6 +9,7 @@ import sdms.model.Appointment;
 import sdms.repository.AppointmentRepository;
 import sdms.repository.CustomerRepository;
 import sdms.repository.EmployeeRepository;
+import sdms.repository.TreatmentRepository;
 
 @Service
 public class AppointmentService implements AppointmentServiceInterface{
@@ -21,6 +22,9 @@ public class AppointmentService implements AppointmentServiceInterface{
 	
 	@Autowired
 	EmployeeRepository employeeRepository;
+	
+	@Autowired
+	TreatmentRepository treatmentRepository;
 	
 	@Override
 	public Appointment getAppointmentById(long id) {
@@ -107,7 +111,7 @@ public class AppointmentService implements AppointmentServiceInterface{
 	public void putAppointmentTreatmentById(long id, long idTreatment) {
 		
 		Appointment appointment = repository.findById(id).get();
-		appointment.setidTreatment(idTreatment);
+		appointment.setTreatment( treatmentRepository.findById( idTreatment ).get() );
 		repository.save(appointment);
 	}
 
