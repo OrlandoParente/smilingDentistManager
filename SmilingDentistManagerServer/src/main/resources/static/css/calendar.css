@@ -1,0 +1,4 @@
+.sdm-calendar-table-responsive {
+    max-height: 88vh; 
+    overflow-y: auto;
+}
