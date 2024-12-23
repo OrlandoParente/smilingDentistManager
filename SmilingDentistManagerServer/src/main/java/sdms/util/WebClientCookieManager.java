@@ -1,5 +1,7 @@
 package sdms.util;
 
+import org.springframework.ui.Model;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -19,6 +21,16 @@ public class WebClientCookieManager {
 				return cookie.getValue();
 		
 		return null;
+	}
+	
+	public static void setUsefulGlobalCookiesInTheModel ( HttpServletRequest request, Model model ) {
+		
+		// fetch useful cookies values
+		String name = WebClientCookieManager.getCookieValue(request, WebClientCookieManager.NAME);
+		
+		// Add the useful cookies value to the model
+		model.addAttribute(WebClientCookieManager.NAME, name);
+		
 	}
 	
 }
