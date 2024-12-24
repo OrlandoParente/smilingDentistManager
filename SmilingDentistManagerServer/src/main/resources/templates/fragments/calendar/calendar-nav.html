@@ -11,8 +11,8 @@
          <!-- (condizione) ? value1 : (condizine2) ? value2 : value3 -->
         <div class="container-fluid"
                 th:with="dateString=${#temporals.format(date, 'dd/MM/yyyy')},
-                        urlNext=(${view} == 'day') ? @{/employee/calendar/day/} + ${date} + '/1' : @{#},
-                        urlPrev=(${view} == 'day') ? @{/employee/calendar/day/} + ${date} + '/-1' : @{#}"
+                        urlNext= @{/employee/calendar/} + ${view} + '/' + ${date} + '/1' ,
+                        urlPrev= @{/employee/calendar/} + ${view} + '/' + ${date} + '/-1' "
 
             >
             <!-- <a class="navbar-brand" href="#">Navbar</a> -->
@@ -40,9 +40,9 @@
                         View
                     </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Day</a></li>
-                    <li><a class="dropdown-item" href="#">Week</a></li>
-                    <li><a class="dropdown-item" href="#">Month</a></li>
+                    <li><a class="dropdown-item" th:href="@{/employee/calendar/day}">Day</a></li>
+                    <li><a class="dropdown-item" th:href="@{/employee/calendar/week} + '/' + ${date}">Week</a></li>
+                    <li><a class="dropdown-item" th:href="@{#}">Month</a></li>
                 </ul>
                 </li>
                 <!-- End Dropdown -->

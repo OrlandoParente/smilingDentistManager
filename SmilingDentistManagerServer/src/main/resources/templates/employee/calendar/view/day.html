@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/common-head :: common-head('Calendar - day view')"></th:block>
+    <link rel="stylesheet" th:href="@{/css/calendar.css}">
 </head>
 <body>
 
@@ -25,11 +26,11 @@
                 <nav th:replace="fragments/calendar/calendar-nav :: calendar-nav( date=${date}, view='day' )">
                 </nav>
 
-                <div class="table-responsive mt-3">
-                    <table class="table table-bordered text-center">
+                <div class="sdm-calendar-table-reponsive table-responsive mt-3">
+                    <table class="table table-striped table-bordered text-center">
                         <thead>
                             <tr>
-                                <th>Hour</th>
+                                <th>Time</th>
                                 <th></th>
                                 <th>Customer</th>
                                 <th>Doctor</th>
