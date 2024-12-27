@@ -2,3 +2,13 @@
     max-height: 88vh; 
     overflow-y: auto;
 }
+
+.sdm-month-calendar-td {
+    min-width: 50px;
+    min-height: 50px;
+}
+
+.sdm-calendar-table-day-number{
+    font-weight: bold;
+    padding: 0.5rem;
+}

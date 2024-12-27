@@ -1,5 +1,7 @@
 package sdms.dto.join;
 
+import java.time.LocalDate;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -54,6 +56,16 @@ public class AppointmentCustomerDoctorTreatmentDTO {
 		if( appointment.getTreatment() != null )
 			this.setTreatmentDTO( modelMapper.map( appointment.getTreatment(), TreatmentDTO.class ) );
 	
+		return this;
+	}
+	
+	public AppointmentCustomerDoctorTreatmentDTO buildWithEmptyAppointment( LocalDate date ) {
+		
+		AppointmentDTO appointmentDTO = new AppointmentDTO();
+		appointmentDTO.setDate(date);
+		
+		this.setAppointmentDTO(appointmentDTO);
+		
 		return this;
 	}
 	

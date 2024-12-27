@@ -5,15 +5,31 @@
 <body>
  
 
+    <!-- dateString=( ${view} == 'month' and ${#temporals.month(date)} == 1 ) ? 'January ' + ${#temporals.year(date)} 
+                            : ( ${view} == 'month' and ${#temporals.month(date)} == 2 ) ? 'February ' + ${#temporals.year(date)}
+                            : ( ${view} == 'month' and ${#temporals.month(date)} == 3 ) ? 'March ' + ${#temporals.year(date)}
+                            : ( ${view} == 'month' and ${#temporals.month(date)} == 4 ) ? 'April ' + ${#temporals.year(date)}
+                            : ( ${view} == 'month' and ${#temporals.month(date)} == 5 ) ? 'May ' + ${#temporals.year(date)}
+                            : ( ${view} == 'month' and ${#temporals.month(date)} == 6 ) ? 'June ' + ${#temporals.year(date)}
+                            : ( ${view} == 'month' and ${#temporals.month(date)} == 7 ) ? 'July ' + ${#temporals.year(date)}
+                            : ( ${view} == 'month' and ${#temporals.month(date)} == 8 ) ? 'August ' + ${#temporals.year(date)}
+                            : ( ${view} == 'month' and ${#temporals.month(date)} == 9 ) ? 'September ' + ${#temporals.year(date)}
+                            : ( ${view} == 'month' and ${#temporals.month(date)} == 10 ) ? 'October ' + ${#temporals.year(date)}
+                            : ( ${view} == 'month' and ${#temporals.month(date)} == 11 ) ? 'November ' + ${#temporals.year(date)}
+                            : ( ${view} == 'month' and ${#temporals.month(date)} == 12 ) ? 'December ' + ${#temporals.year(date)}
+                            : ${#temporals.format(date, 'dd/MM/yyyy')} -->
+
     <nav th:fragment="calendar-nav(date, view)" class="navbar navbar-expand bg-body-tertiary">
-        
+
         <!-- with th:with I defined some th variables -->
          <!-- (condizione) ? value1 : (condizine2) ? value2 : value3 -->
         <div class="container-fluid"
-                th:with="dateString=${#temporals.format(date, 'dd/MM/yyyy')},
-                        urlNext= @{/employee/calendar/} + ${view} + '/' + ${date} + '/1' ,
-                        urlPrev= @{/employee/calendar/} + ${view} + '/' + ${date} + '/-1' "
-
+                th:with="
+                         urlNext= @{/employee/calendar/} + ${view} + '/' + ${date} + '/1' ,
+                         urlPrev= @{/employee/calendar/} + ${view} + '/' + ${date} + '/-1' ,
+                         dateString= ${view} == 'month' 
+                            ? ${#temporals.format(date, 'MMMM yyyy')} 
+                            : ${#temporals.format( date, #locale )}"
             >
             <!-- <a class="navbar-brand" href="#">Navbar</a> -->
             <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +58,7 @@
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" th:href="@{/employee/calendar/day}">Day</a></li>
                     <li><a class="dropdown-item" th:href="@{/employee/calendar/week} + '/' + ${date}">Week</a></li>
-                    <li><a class="dropdown-item" th:href="@{#}">Month</a></li>
+                    <li><a class="dropdown-item" th:href="@{/employee/calendar/month} + '/' + ${date}">Month</a></li>
                 </ul>
                 </li>
                 <!-- End Dropdown -->
@@ -57,6 +73,7 @@
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form> 
             </div> -->
+
         </div>
     </nav>
 

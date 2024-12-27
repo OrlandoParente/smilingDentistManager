@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 import jakarta.servlet.http.HttpServletRequest;
+import sdms.dto.AppointmentDTO;
 import sdms.dto.CustomerDTO;
 import sdms.dto.EmployeeDTO;
 import sdms.dto.TreatmentDTO;
@@ -314,4 +315,228 @@ public class CalendarController {
 		
 		return "employee/calendar/view/week";
 	}
+
+	// Controller for month view
+	@GetMapping({"/calendar/month","/month",
+				"/calendar/month/{date}","/month/{date}",
+				"/calendar/month/{date}/{nextPrevMonths}","/month/{date}/{nextPrevMonths}"})
+	public String monthCalendarPage( HttpServletRequest request, Model model, 
+									@PathVariable( required = false ) String date,
+									@PathVariable( required = false ) Integer nextPrevMonths ) {
+		
+		// Set useful cookies --------------------------------------------------------------------------
+//		String name = WebClientCookieManager.getCookieValue(request, WebClientCookieManager.NAME);
+//		model.addAttribute(WebClientCookieManager.NAME, name);
+		
+		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model);
+		// ---------------------------------------------------------------------------------------------
+		
+		// Set data for filter the appointment list ----------------------------------------------------
+		LocalDate filterDate = LocalDate.now();
+		
+		
+		
+		try {
+			// if date is null, set today date
+			filterDate =  dateAndTimeManager.parseDate(date);
+		} catch(Exception e) {
+			
+			if( date != null ) { // that's mean date is in an invalid format
+				System.err.println( e.getMessage() );
+				// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<==========================================================================
+				// throw httpStatus.BAD_REQUEST
+			}
+		}
+		// ---------------------------------------------------------------------------------------------
+		
+		// change data ---------------------------------------------------------------------------------
+		if( nextPrevMonths != null ) {
+			if( nextPrevMonths > 0 ) {	// Add days
+				filterDate = filterDate.plusMonths( nextPrevMonths );
+			} else if ( nextPrevMonths < 0 ) {  // Remove days
+				filterDate = filterDate.minusMonths( Math.abs(nextPrevMonths) );
+			}
+		}
+		
+		// check print
+		Logger.info( "Date: " + date + "  filteDate: " + filterDate + " nexPrevWeeks: " + nextPrevMonths );
+		// ---------------------------------------------------------------------------------------------
+		
+		List<Appointment> appointments = appointmentService.getAppointments();
+		
+		List<AppointmentCustomerDoctorTreatmentDTO> joinAppointments = new ArrayList<AppointmentCustomerDoctorTreatmentDTO>();
+		
+		// #########################################################################################################################
+		// get first and last date to filter
+		LocalDate firstMondayBeforeOrEqualsFirstDayOfMonth = filterDate.with( TemporalAdjusters.firstDayOfMonth() );
+		if( ! firstMondayBeforeOrEqualsFirstDayOfMonth.getDayOfWeek().equals( DayOfWeek.MONDAY )  )
+			firstMondayBeforeOrEqualsFirstDayOfMonth = firstMondayBeforeOrEqualsFirstDayOfMonth.with( TemporalAdjusters.previousOrSame( DayOfWeek.MONDAY ) );
+		
+		LocalDate lastSundayAfterOrEqualsLastDayOfMonth = filterDate.with( TemporalAdjusters.lastDayOfMonth() );
+		if( ! lastSundayAfterOrEqualsLastDayOfMonth.getDayOfWeek().equals( DayOfWeek.SUNDAY) )
+			lastSundayAfterOrEqualsLastDayOfMonth = lastSundayAfterOrEqualsLastDayOfMonth.with( TemporalAdjusters.nextOrSame( DayOfWeek.SUNDAY ) );
+		
+		Logger.info("MONDAY: " + firstMondayBeforeOrEqualsFirstDayOfMonth + " SUNDAY: " + lastSundayAfterOrEqualsLastDayOfMonth);
+		
+		for( Appointment appointment : appointments ) {
+		
+			// add only appointments that are in the week of the filterDate 
+			if( ( appointment.getDate().isAfter(firstMondayBeforeOrEqualsFirstDayOfMonth) || appointment.getDate().isEqual(firstMondayBeforeOrEqualsFirstDayOfMonth) ) &&
+			    ( appointment.getDate().isBefore(lastSundayAfterOrEqualsLastDayOfMonth) || appointment.getDate().isEqual(lastSundayAfterOrEqualsLastDayOfMonth) ) )
+				
+				joinAppointments.add( 
+						new AppointmentCustomerDoctorTreatmentDTO( )
+							.buildFromAppointmentId(appointment.getId(), appointmentService, modelMapper) 
+						);
+			// Logger.info( "Appointment id: " + appointment.getId() + " Appointment notes: " + appointment.getNotes() );
+		}
+		
+		// Fill empty dates slot ------------------------------------------------------------------------------------------------------------------------------------
+		
+		for( LocalDate indexDate = firstMondayBeforeOrEqualsFirstDayOfMonth; 
+				indexDate.isBefore(lastSundayAfterOrEqualsLastDayOfMonth.plusDays(1)); 
+				indexDate = indexDate.plusDays(1) ) {
+			
+			boolean fillWithEmptyAppointment = true;
+			
+			for( AppointmentCustomerDoctorTreatmentDTO joinAppointment : joinAppointments ) {
+				if( joinAppointment.getAppointmentDTO().getDate().isEqual(indexDate) )
+					fillWithEmptyAppointment = false;
+			}
+			
+			if( fillWithEmptyAppointment ) {
+				joinAppointments.add(
+							new AppointmentCustomerDoctorTreatmentDTO( )
+							.buildWithEmptyAppointment(indexDate)
+						);
+			}
+			
+			Logger.info( "INDEX DATE: " + indexDate );
+			
+		}
+		// ----------------------------------------------------------------------------------------------------------------------------------------------------------
+		
+		// sort by dates
+		joinAppointments = joinAppointments.stream()
+							// .filter( app ->  app.getAppointmentDTO().getDate().isEqual(filterDate) ) // ERROR
+							.sorted( Comparator.comparing(  app -> app.getAppointmentDTO().getDate()  ) )
+							.toList();
+
+		for( AppointmentCustomerDoctorTreatmentDTO joinAppointment : joinAppointments )
+			Logger.info( "JOIN APPOINTMENT DATES " + joinAppointment.getAppointmentDTO().getDate() );
+		
+		// Build a map <time, appointmens> for build the calendar in the week view -------------------------------------------------------------------------------------
+		
+		// I use treeMap instead of hashMap cause I need the keys are sorted by time 
+		Map<Integer, List< AppointmentCustomerDoctorTreatmentDTO > > mapByWeekJoinAppointments = new TreeMap<Integer, List<AppointmentCustomerDoctorTreatmentDTO>>();
+		Map<Integer, LocalDate[]> mapDatesOfWeek = new TreeMap<Integer, LocalDate[]>();
+
+		
+		if( joinAppointments.size() > 0 ) {
+						
+			boolean firstMondayAppointment = true;
+			
+			// generate key/value of the first entry of the map
+			List<AppointmentCustomerDoctorTreatmentDTO> tmpJoinAppointments; // = new ArrayList<AppointmentCustomerDoctorTreatmentDTO>();
+			Integer week = 0;
+			
+			int indexDaysOfWeek = 0;
+			LocalDate [] arrayDatesOfWeek = new LocalDate[7];
+			
+			// mapByWeekJoinAppointments.put(week, tmpJoinAppointments);
+			
+			Logger.info( "first week (key) in the mapByWeekJoinAppointments: " + week );
+			
+			
+			
+			for( AppointmentCustomerDoctorTreatmentDTO joinAppointment : joinAppointments ) {
+				
+				if( joinAppointment.getAppointmentDTO().getDate().getDayOfWeek().equals( DayOfWeek.MONDAY ) && firstMondayAppointment ) {
+				
+					// not first appointment anymore
+					firstMondayAppointment = false;
+					
+					// generate the next key of the map
+					week ++;
+					// reset day of week index
+					indexDaysOfWeek = 0;
+					
+					tmpJoinAppointments = new ArrayList<AppointmentCustomerDoctorTreatmentDTO>();
+					tmpJoinAppointments.add(joinAppointment);
+					
+					arrayDatesOfWeek = new LocalDate[7];
+					arrayDatesOfWeek[indexDaysOfWeek] = joinAppointment.getAppointmentDTO().getDate();
+					
+					// insert values in the maps
+					mapByWeekJoinAppointments.put(week, tmpJoinAppointments);
+					mapDatesOfWeek.put(week, arrayDatesOfWeek);
+					
+				} else {
+					mapByWeekJoinAppointments.get(week).add(joinAppointment);
+					
+					// If the appointment is scheduled for a different date than the previous appointment
+					if( ! joinAppointment.getAppointmentDTO().getDate().equals(arrayDatesOfWeek[ indexDaysOfWeek ]) ) {
+						indexDaysOfWeek ++;
+						mapDatesOfWeek.get(week)[ indexDaysOfWeek ] = joinAppointment.getAppointmentDTO().getDate();
+					}
+					
+					// reset condition for enter in the if condition
+					if( joinAppointment.getAppointmentDTO().getDate().getDayOfWeek().equals( DayOfWeek.FRIDAY ) )
+						firstMondayAppointment = true;
+				}
+				
+				
+			}
+			Logger.info( "week (key) in the mapByTimeJoinAppointments after the loop: " + week );
+			
+			for (Map.Entry<Integer, LocalDate[]> entry : mapDatesOfWeek.entrySet()) {
+			    Integer key = entry.getKey();
+			    LocalDate[] datesArray = entry.getValue();
+
+			    for (int i = 0; i < datesArray.length; i++) {
+			        Logger.info("Key: " + key + ", Index: " + i + ", Date: " + datesArray[i]);
+			    }
+			}
+			
+		}
+		// -------------------------------------------------------------------------------------------------------------------------------------------------------------
+		
+		// Set attributes to the model -------------------------------------------------------------------------
+		
+		List<CustomerDTO> customers = customerService.getCustomers().stream()
+				.map( customer ->  modelMapper.map(customer, CustomerDTO.class) )
+				.toList();
+		
+		// NEED EDIT: We need a filter to filter doctors from employees
+		List<EmployeeDTO> doctors = employeeService.getEmployees().stream()
+				.map( employee -> modelMapper.map(employee, EmployeeDTO.class) )
+				.toList();
+		
+		List<TreatmentDTO> treatments = treatmentService.getTreatments().stream()
+				.map( treatment -> modelMapper.map(treatment, TreatmentDTO.class) )
+				.toList();
+		
+//		LocalDate[] datesOfWeek = { monday, monday.plusDays(1), monday.plusDays(2), monday.plusDays(3), monday.plusDays(4), monday.plusDays(5), monday.plusDays(6) };
+		
+		// Pass to the model a list of appointments joined to Customer, Doctor and Treatment
+		// model.addAttribute("joinAppointments", joinAppointments );	// Not useful in week view
+		// Pass to the model the list of appointments joined to Customer, Doctor and Treatment mapped by time
+		model.addAttribute("mapByWeekJoinAppointments", mapByWeekJoinAppointments);
+		// Pass to dates of the week
+		model.addAttribute("mapDatesOfWeek", mapDatesOfWeek);
+		// Pass date to which we refer
+		model.addAttribute("date", filterDate);
+		// Pass customers to the model
+		model.addAttribute("customers", customers);
+		// Pass doctors to the model
+		model.addAttribute("doctors", doctors);
+		// Pass Treatments to the model
+		model.addAttribute("treatments",treatments);
+		
+		// -----------------------------------------------------------------------------------------------------
+		
+		return "employee/calendar/view/month";
+	}
+	
+	
 }

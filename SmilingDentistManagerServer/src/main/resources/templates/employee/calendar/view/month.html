@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/common-head :: common-head('Calendar - month view')"></th:block>
+    <link rel="stylesheet" th:href="@{/css/calendar.css}">
+</head>
+<body>
+
+    <div th:replace="fragments/common-top-page :: common-top-page"></div>
+
+    <!-- Sidebar and nav for mobile screens -->
+    <div th:replace="fragments/menu-dashboard-employee :: side-dashboard-mobile"></div>
+
+	<div class="d-flex">
+
+        <!-- Sidebar for medium and larger screens -->
+        <div th:insert="fragments/menu-dashboard-employee :: side-dashboard" class="col-md-3 col-lg-2" ></div>
+
+
+        <!-- Main Content -->
+        <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
+
+            <!-- here the page caontent -->
+            <div class="row" >
+
+                <nav th:replace="fragments/calendar/calendar-nav :: calendar-nav( date=${date}, view='month' )">
+                </nav>
+
+                <!-- <h1 class="text-center" >WEEK VIEW</h1> -->
+
+                <div class="sdm-calendar-table-responsive table-responsive sdm-calendar-table mt-3"  >
+                    <table 
+                            class="table table-striped table-bordered text-center">
+                        <thead>
+                            <tr >
+                                <th th:text="Monday"></th>
+                                <th th:text="Tuesday"></th>
+                                <th th:text="Wednesday"></th>
+                                <th th:text="Thursday"></th>
+                                <th th:text="Friday"></th>
+                                <th th:text="Saturday"></th>
+                                <th th:text="Sunday"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <!-- mapByWeekJoinAppointments and mapDatesOfWeek have the same keySet -->
+                            <tr th:each="entry : ${ mapByWeekJoinAppointments } " >
+                                
+                                <!-- <td th:each="mapAppointment: ${entry.value}"
+                                    class="sdm-calendar-td-link sdm-month-calendar-td">
+
+                                    <div th:if="${mapAppointment.customerDTO} != null">
+                                        <span th:text="${mapAppointment.customerDTO.name}"></span> 
+                                        <span th:text="${mapAppointment.customerDTO.surname}"></span>    
+                                    </div>
+                                    <span th:text="hello"></span>
+
+                                </td> -->
+
+                                <!-- Monday -->
+                                <td class="sdm-calendar-td-link sdm-month-calendar-td"
+                                    th:attr="onclick=|window.location.href='@{/employee/calendar/day/}' 
+                                            + '${mapDatesOfWeek[entry.key][0]}'|">
+
+                                    <!-- day number -->
+                                    <div class="sdm-calendar-table-day-number">
+                                        <span th:text="${#temporals.day(mapDatesOfWeek[entry.key][0])}"></span>
+                                    </div>
+
+                                    <!-- appointments -->
+                                    <div th:if="${entry != null}">
+                                        <div th:each="mapAppointment: ${entry.value}">
+                                            <div th:if="${#temporals.dayOfWeek(mapAppointment.appointmentDTO.date) } == 1">  
+                                                
+                                                <div th:if="${mapAppointment.customerDTO} != null">  
+                                                    <span th:text="${mapAppointment.customerDTO.name}"></span> 
+                                                    <span th:text="${mapAppointment.customerDTO.surname}"></span>
+                                                </div>
+                                            </div> 
+                                        </div> 
+                                    </div>
+                                    
+                                </td> 
+
+                                <!-- Tuesday -->
+                                <td class="sdm-calendar-td-link sdm-month-calendar-td"
+                                    th:attr="onclick=|window.location.href='@{/employee/calendar/day/}' 
+                                            + '${mapDatesOfWeek[entry.key][1]}'|">
+
+                                    <!-- day number -->
+                                    <div class="sdm-calendar-table-day-number">
+                                        <span th:text="${#temporals.day(mapDatesOfWeek[entry.key][1])}"></span>
+                                    </div>
+
+                                    <!-- appointments -->
+                                    <div th:if="${entry != null}">
+                                        <div th:each="mapAppointment: ${entry.value}">
+                                            <div th:if="${#temporals.dayOfWeek(mapAppointment.appointmentDTO.date) } == 2">  
+                                                
+                                                <div th:if="${mapAppointment.customerDTO} != null">  
+                                                    <span th:text="${mapAppointment.customerDTO.name}"></span> 
+                                                    <span th:text="${mapAppointment.customerDTO.surname}"></span>
+                                                </div>
+                                            </div> 
+                                        </div> 
+                                    </div>
+
+                                </td>
+
+                                <!-- Wednesday -->
+                                <td class="sdm-calendar-td-link sdm-month-calendar-td"
+                                    th:attr="onclick=|window.location.href='@{/employee/calendar/day/}' 
+                                            + '${mapDatesOfWeek[entry.key][2]}'|">
+
+                                    <!-- day number -->
+                                    <div class="sdm-calendar-table-day-number">
+                                        <span th:text="${#temporals.day(mapDatesOfWeek[entry.key][2])}"></span>
+                                    </div>
+
+                                    <!-- appointments -->
+                                    <div th:if="${entry != null}">
+                                        <div th:each="mapAppointment: ${entry.value}">
+                                            <div th:if="${#temporals.dayOfWeek(mapAppointment.appointmentDTO.date) } == 3">  
+                                                
+                                                <div th:if="${mapAppointment.customerDTO} != null">  
+                                                    <span th:text="${mapAppointment.customerDTO.name}"></span> 
+                                                    <span th:text="${mapAppointment.customerDTO.surname}"></span>
+                                                </div>
+                                            </div> 
+                                        </div> 
+                                    </div>
+                                    
+                                </td> 
+
+                                <!-- Thursday -->
+                                <td class="sdm-calendar-td-link sdm-month-calendar-td"
+                                th:attr="onclick=|window.location.href='@{/employee/calendar/day/}' 
+                                        + '${mapDatesOfWeek[entry.key][3]}'|">
+
+                                    <!-- day number -->
+                                    <div class="sdm-calendar-table-day-number">
+                                        <span th:text="${#temporals.day(mapDatesOfWeek[entry.key][3])}"></span>
+                                    </div>
+
+                                    <!-- appointments -->
+                                    <div th:if="${entry != null}">
+                                        <div th:each="mapAppointment: ${entry.value}">
+                                            <div th:if="${#temporals.dayOfWeek(mapAppointment.appointmentDTO.date) } == 4">  
+                                                
+                                                <div th:if="${mapAppointment.customerDTO} != null">  
+                                                    <span th:text="${mapAppointment.customerDTO.name}"></span> 
+                                                    <span th:text="${mapAppointment.customerDTO.surname}"></span>
+                                                </div>
+                                            </div> 
+                                        </div> 
+                                    </div>
+                                    
+                                </td> 
+
+                                <!-- Friday -->
+                                <td class="sdm-calendar-td-link sdm-month-calendar-td"
+                                    th:attr="onclick=|window.location.href='@{/employee/calendar/day/}' 
+                                            + '${mapDatesOfWeek[entry.key][4]}'|">
+
+                                    <!-- day number -->
+                                    <div class="sdm-calendar-table-day-number">
+                                        <span th:text="${#temporals.day(mapDatesOfWeek[entry.key][4])}"></span>
+                                    </div>
+
+                                    <!-- appointments -->
+                                    <div th:if="${entry != null}">
+                                        <div th:each="mapAppointment: ${entry.value}">
+                                            <div th:if="${#temporals.dayOfWeek(mapAppointment.appointmentDTO.date) } == 5">  
+                                                
+                                                <div th:if="${mapAppointment.customerDTO} != null">  
+                                                    <span th:text="${mapAppointment.customerDTO.name}"></span> 
+                                                    <span th:text="${mapAppointment.customerDTO.surname}"></span>
+                                                </div>
+                                            </div> 
+                                        </div> 
+                                    </div>
+                                    
+                                </td> 
+
+                                <!-- Saturday -->
+                                <td class="sdm-calendar-td-link sdm-month-calendar-td"
+                                    th:attr="onclick=|window.location.href='@{/employee/calendar/day/}' 
+                                            + '${mapDatesOfWeek[entry.key][5]}'|">
+
+                                    <!-- day number -->
+                                    <div class="sdm-calendar-table-day-number">
+                                        <span th:text="${#temporals.day(mapDatesOfWeek[entry.key][5])}"></span>
+                                    </div>
+
+                                    <!-- appointments -->
+                                    <div th:if="${entry != null}">
+                                        <div th:each="mapAppointment: ${entry.value}">
+                                            <div th:if="${#temporals.dayOfWeek(mapAppointment.appointmentDTO.date) } == 6">  
+                                                
+                                                <div th:if="${mapAppointment.customerDTO} != null">  
+                                                    <span th:text="${mapAppointment.customerDTO.name}"></span> 
+                                                    <span th:text="${mapAppointment.customerDTO.surname}"></span>
+                                                </div>
+                                            </div> 
+                                        </div> 
+                                    </div>
+                                    
+                                </td>  
+
+                                <!-- Sunday -->
+                                <td class="sdm-calendar-td-link sdm-month-calendar-td"
+                                    th:attr="onclick=|window.location.href='@{/employee/calendar/day/}' 
+                                            + '${mapDatesOfWeek[entry.key][6]}'|">
+
+                                    <!-- day number -->
+                                    <div class="sdm-calendar-table-day-number">
+                                        <span th:text="${#temporals.day(mapDatesOfWeek[entry.key][6])}"></span>
+                                    </div>
+
+                                    <!-- appointments -->
+                                    <div th:if="${entry != null}">
+                                        <div th:each="mapAppointment: ${entry.value}">
+                                            <div th:if="${#temporals.dayOfWeek(mapAppointment.appointmentDTO.date) } == 7">  
+                                                
+                                                <div th:if="${mapAppointment.customerDTO} != null">  
+                                                    <span th:text="${mapAppointment.customerDTO.name}"></span> 
+                                                    <span th:text="${mapAppointment.customerDTO.surname}"></span>
+                                                </div>
+                                            </div> 
+                                        </div> 
+                                    </div>
+                                    
+                                </td> 
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> <!-- End Table-responsive -->
+
+
+            </div>
+        </main>
+    </div> <!-- end d-flex -->
+
+
+
+       <script>
+
+
+
+        
+    </script>
+
+
+    <!-- Required for put-appointment-modal fragment -->
+    <!-- <div th:replace="fragments/calendar/requires-put-appointment-modal :: requires-put-appointment-modal"></div></div> -->
+
+    <div th:replace="fragments/common-bottom-page :: common-bottom-page"></div>
+
+    <!-- <script th:src="@{/js/appointment/appointment-buttons.js}"></script> -->
+    <script th:src="@{/js/appointment/calendar-table.js}"></script>
+
+</body>
+</html>
