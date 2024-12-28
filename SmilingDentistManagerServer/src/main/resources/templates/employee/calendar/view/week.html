@@ -32,15 +32,15 @@
                     <table 
                             class="table table-striped table-bordered text-center">
                         <thead>
-                            <tr >
+                            <tr > 
                                 <th>Time</th>
-                                <th th:text="'Monday ' + ${ #temporals.day(datesOfWeek[0]) }"></th>
-                                <th th:text="'Tuesday ' + ${ #temporals.day(datesOfWeek[1]) }"></th>
-                                <th th:text="'Wednesday ' + ${ #temporals.day(datesOfWeek[2]) }"></th>
-                                <th th:text="'Thursday '  + ${ #temporals.day(datesOfWeek[3]) }"></th>
-                                <th th:text="'Friday ' + ${ #temporals.day(datesOfWeek[4]) }"></th>
-                                <th th:text="'Saturday ' + ${ #temporals.day(datesOfWeek[5]) }"></th>
-                                <th th:text="'Sunday ' + ${ #temporals.day(datesOfWeek[6]) }"></th>
+                                <th th:text="#{tableHeaderMonday} + ' ' + ${ #temporals.day(datesOfWeek[0]) }"></th>
+                                <th th:text="#{tableHeaderTuesday} + ' ' + ${ #temporals.day(datesOfWeek[1]) }"></th>
+                                <th th:text="#{tableHeaderWednesday} + ' ' + ${ #temporals.day(datesOfWeek[2]) }"></th>
+                                <th th:text="#{tableHeaderThursday} + ' '  + ${ #temporals.day(datesOfWeek[3]) }"></th>
+                                <th th:text="#{tableHeaderFriday} + ' ' + ${ #temporals.day(datesOfWeek[4]) }"></th>
+                                <th th:text="#{tableHeaderSaturday} + ' ' + ${ #temporals.day(datesOfWeek[5]) }"></th>
+                                <th th:text="#{tableHeaderSunday} + ' ' + ${ #temporals.day(datesOfWeek[6]) }"></th>
                             </tr>
                         </thead>
 

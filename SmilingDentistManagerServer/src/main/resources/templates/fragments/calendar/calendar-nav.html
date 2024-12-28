@@ -4,21 +4,6 @@
 </head>
 <body>
  
-
-    <!-- dateString=( ${view} == 'month' and ${#temporals.month(date)} == 1 ) ? 'January ' + ${#temporals.year(date)} 
-                            : ( ${view} == 'month' and ${#temporals.month(date)} == 2 ) ? 'February ' + ${#temporals.year(date)}
-                            : ( ${view} == 'month' and ${#temporals.month(date)} == 3 ) ? 'March ' + ${#temporals.year(date)}
-                            : ( ${view} == 'month' and ${#temporals.month(date)} == 4 ) ? 'April ' + ${#temporals.year(date)}
-                            : ( ${view} == 'month' and ${#temporals.month(date)} == 5 ) ? 'May ' + ${#temporals.year(date)}
-                            : ( ${view} == 'month' and ${#temporals.month(date)} == 6 ) ? 'June ' + ${#temporals.year(date)}
-                            : ( ${view} == 'month' and ${#temporals.month(date)} == 7 ) ? 'July ' + ${#temporals.year(date)}
-                            : ( ${view} == 'month' and ${#temporals.month(date)} == 8 ) ? 'August ' + ${#temporals.year(date)}
-                            : ( ${view} == 'month' and ${#temporals.month(date)} == 9 ) ? 'September ' + ${#temporals.year(date)}
-                            : ( ${view} == 'month' and ${#temporals.month(date)} == 10 ) ? 'October ' + ${#temporals.year(date)}
-                            : ( ${view} == 'month' and ${#temporals.month(date)} == 11 ) ? 'November ' + ${#temporals.year(date)}
-                            : ( ${view} == 'month' and ${#temporals.month(date)} == 12 ) ? 'December ' + ${#temporals.year(date)}
-                            : ${#temporals.format(date, 'dd/MM/yyyy')} -->
-
     <nav th:fragment="calendar-nav(date, view)" class="navbar navbar-expand bg-body-tertiary">
 
         <!-- with th:with I defined some th variables -->
@@ -52,13 +37,26 @@
                 </li>
                 <!-- Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                        th:text="#{btnView}">
                         View
                     </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" th:href="@{/employee/calendar/day}">Day</a></li>
-                    <li><a class="dropdown-item" th:href="@{/employee/calendar/week} + '/' + ${date}">Week</a></li>
-                    <li><a class="dropdown-item" th:href="@{/employee/calendar/month} + '/' + ${date}">Month</a></li>
+                    <li>
+                        <a class="dropdown-item" th:href="@{/employee/calendar/day}" th:text="#{btnDay}">
+                            Day
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" th:href="@{/employee/calendar/week} + '/' + ${date}" th:text="#{btnWeek}">
+                            Week
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" th:href="@{/employee/calendar/month} + '/' + ${date}" th:text="#{btnMonth}">
+                            Month
+                        </a>
+                    </li>
                 </ul>
                 </li>
                 <!-- End Dropdown -->

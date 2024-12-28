@@ -3,11 +3,9 @@ package sdms.controller.web.employee;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -22,10 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-
 import jakarta.servlet.http.HttpServletRequest;
-import sdms.dto.AppointmentDTO;
 import sdms.dto.CustomerDTO;
 import sdms.dto.EmployeeDTO;
 import sdms.dto.TreatmentDTO;
@@ -84,7 +79,7 @@ public class CalendarController {
 		
 		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model);
 		// ---------------------------------------------------------------------------------------------
-		
+			
 		// Set data for filter the appointment list ----------------------------------------------------
 		LocalDate filterDate = LocalDate.now();
 		

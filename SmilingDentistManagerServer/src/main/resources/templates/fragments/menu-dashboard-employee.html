@@ -12,18 +12,55 @@
         </nav>
         <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="mobileSidebarLabel">Hello <span th:text="${name}"></span></h5>
+                <h5 class="offcanvas-title" id="mobileSidebarLabel">
+                    <span th:text="#{labelHi} + ' ' + ${name}"></span>
+                </h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a th:href="@{/employee/calendar/day}" class="nav-link">Calendar</a></li>
-                    <li class="nav-item"><a th:href="@{/employee/customer/customer}" class="nav-link">Customer</a></li>
-                    <li class="nav-item"><a th:href="@{/employee/employee/employee}" class="nav-link">Employee</a></li>
-                    <li class="nav-item"><a th:href="@{/employee/dental-materials/dental-materials}" class="nav-link">Dental Materials</a></li>
-                    <li class="nav-item"><a th:href="@{/employee/settings/settings}" class="nav-link">Settings</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">Logout</a></li>
-                                    
+                    <li class="nav-item">
+                        <a th:href="@{/employee/calendar/day}" class="nav-link" th:text="#{btnCalendar}">
+                        Calendar
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/employee/customer/customer}" class="nav-link" th:text="#{btnCustomers}">
+                        Customer
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/employee/employee/employee}" class="nav-link" th:text="#{btnEmployees}">
+                        Employee
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/employee/dental-materials/dental-materials}" class="nav-link" th:text="#{btnDentalMaterials}">
+                        Dental Materials
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/employee/settings/settings}" class="nav-link" th:text="#{btnSettings}">
+                        Settings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" th:text="#{btnLogout}">
+                        Logout
+                        </a>
+                    </li>
+                    <!-- ############################################################### -->
+                    <li class="nav-item">
+                        <a th:href="@{/employee/settings/changeLanguage(lang='it')}" class="nav-link">
+                        Italiano
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/employee/settings/changeLanguage(lang='en')}" class="nav-link">
+                        English
+                        </a>
+                    </li>
+                            
                     <!-- Dropdown Menu -->
                     <!-- dropdown -->
                     <!-- data-bs-toggle="dropdown" -->
@@ -49,21 +86,71 @@
         
 <!--         <div class="sidebar d-none d-md-block col-md-3 col-lg-2 vh-100"> -->
 		<div class="container-fluid sidebar d-none d-md-block  vh-100">
-            <h3 class="text-center mt-3">Hello <span th:text="${name}"></span></h3>
+            <h3 class="text-center mt-3">
+                <span th:text="#{labelHi} + ' ' + ${name}"></span>
+            </h3>
             <hr>
             <ul class="nav flex-column">
-                <li class="nav-item"><a th:href="@{/employee/calendar/day}" class="nav-link">Calendar</a></li>
-                <li class="nav-item"><a th:href="@{/employee/customer/customer}" class="nav-link">Customer</a></li>
+                <li class="nav-item">
+                    <a th:href="@{/employee/calendar/day}" class="nav-link" th:text="#{btnCalendar}">
+                        Calendar
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/employee/customer/customer}" class="nav-link" th:text="#{btnCustomers}">
+                        Customer
+                    </a>
+                </li>
                 <!--Should I put this in Settings ? -->
-                <li class="nav-item"><a th:href="@{#}" class="nav-link">Treatments</a></li>
-                <li class="nav-item"><a th:href="@{/employee/employee/employee}" class="nav-link">Employee</a></li>
+                <li class="nav-item">
+                    <a th:href="@{#}" class="nav-link" th:text="#{btnTreatments}">
+                        Treatments
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/employee/employee/employee}" class="nav-link" th:text="#{btnEmployees}">
+                        Employees
+                    </a>
+                </li>
                 <!--Should I put this in Settings ? -->
-                <li class="nav-item"><a th:href="@{#}" class="nav-link">Professional Roles</a></li>
+                <li class="nav-item">
+                    <a th:href="@{#}" class="nav-link" th:text="#{btnProfessionalRoles}">
+                        Professional Roles
+                    </a>
+                </li>
                 <!--Should I put this in Settings ? -->
-                <li class="nav-item"><a th:href="@{#}" class="nav-link">Expenses</a></li>
-                <li class="nav-item"><a th:href="@{/employee/dental-materials/dental-materials}" class="nav-link">Dental Materials</a></li>
-                <li class="nav-item"><a th:href="@{/employee/settings/settings}" class="nav-link">Settings</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Logout</a></li>
+                <li class="nav-item">
+                    <a th:href="@{#}" class="nav-link" th:text="#{btnExpenses}">
+                    Expenses
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/employee/dental-materials/dental-materials}" class="nav-link" th:text="#{btnDentalMaterials}">
+                        Dental Materials
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/employee/settings/settings}" class="nav-link" th:text="#{btnSettings}">
+                    Settings
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" th:text="#{btnLogout}">
+                    Logout
+                    </a>
+                </li>
+                <!-- ############################################################### -->
+                <li class="nav-item">
+                    <a th:href="@{/employee/settings/changeLanguage(lang='it')}" class="nav-link" >
+                        Italian
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/employee/settings/changeLanguage(lang='en')}" class="nav-link">
+                        English
+                    </a>
+                </li>
+
 
                 <!-- Dropdown Menu -->
                 <!-- dropdown -->

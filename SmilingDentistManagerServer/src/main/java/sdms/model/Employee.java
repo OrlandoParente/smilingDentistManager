@@ -38,6 +38,7 @@ public class Employee {
 	private LocalDate birthDate;
 	private String phoneNumber;
 	private String phoneNumber2; 		// Generalmente telefono di casa
+	private String language;
 	private String eMail;
 	private String password;
 	private int permission;
@@ -179,9 +180,19 @@ public class Employee {
 		this.password = password;
 	}
 	
+
+	public String getLanguage() {
+		return language;
+	}
+
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 	
 
 	// ----------------------------------------------------------------------------------
+
 
 
 	public int getPermission() {

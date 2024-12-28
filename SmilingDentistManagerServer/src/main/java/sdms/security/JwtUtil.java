@@ -13,6 +13,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Component
 public class JwtUtil {
@@ -56,6 +58,37 @@ public class JwtUtil {
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
+    }
+    
+    // ------------------------------------------------------------------
+    public String extractJwtFromRequest(HttpServletRequest request) {
+    	
+		// Get Authorization from the cookies
+		Cookie[] cookies = request.getCookies();
+		
+		String jwtToken = null;
+    	
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            jwtToken = bearerToken.substring(7);  // Rimuove il "Bearer " dalla stringa
+        
+        } 
+        else if (cookies != null) { // Check if there are the Authorization in the cookies
+            
+			for (Cookie cookie : cookies) {
+				
+                if ("Authorization".equals(cookie.getName())) {
+                    jwtToken = cookie.getValue();
+                    try {
+                    	validateToken(jwtToken,  extractUsername(jwtToken));
+                    } catch (Exception e) {	// if token not valid return null
+						jwtToken = null;
+					}
+                    
+                }
+            }
+        }
+        return jwtToken;
     }
 
     private boolean isTokenExpired(String token) {

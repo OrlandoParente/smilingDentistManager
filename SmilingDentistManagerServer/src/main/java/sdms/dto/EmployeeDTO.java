@@ -12,28 +12,14 @@ public class EmployeeDTO {
 	private LocalDate birthDate;
 	private String phoneNumber;
 	private String phoneNumber2; 		// Generalmente telefono di casa
+	private String language;
 	private String eMail;
 	private String password;
 	private int permission;				// il role di Spring Secure
 	
 	public EmployeeDTO () {}
 	
-	// We need this? There is already ModelMapper for convert Obj to DTO and vice versa 
-	public EmployeeDTO(int id, String name, String surname, String title, LocalDate birthDate, String phoneNumber,
-			String phoneNumber2, String eMail, String passowrd, int permission) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.surname = surname;
-		this.title = title;
-		this.birthDate = birthDate;
-		this.phoneNumber = phoneNumber;
-		this.phoneNumber2 = phoneNumber2;
-		this.eMail = eMail;
-		this.password = passowrd;
-		this.permission = permission;
-	}
-
+	
 	// GETTERS AND SETTERS
 	
 	public long getId() {
@@ -106,6 +92,15 @@ public class EmployeeDTO {
 
 	public void setPhoneNumber2(String phoneNumber2) {
 		this.phoneNumber2 = phoneNumber2;
+	}
+	
+	public String getLanguage() {
+		return language;
+	}
+
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 	public String getPassword() {
