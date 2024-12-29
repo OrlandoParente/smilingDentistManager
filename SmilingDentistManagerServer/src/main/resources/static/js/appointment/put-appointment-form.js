@@ -2,17 +2,11 @@
 
     document.addEventListener('DOMContentLoaded', function () {
 
-      var i = 1;
-
-      var arr = Array.from( document.getElementsByClassName("appointmentIds") );
-
       console.log( "Array lenght: " + arr.length );
 
       Array.from( 
         document.getElementsByClassName("appointmentIds") 
       ).forEach( element => {
-
-        console.log( i ++ );  
 
         // var appointmentId = element.getAttribute("appointmentId");
         var appointmentId = element.innerText;
