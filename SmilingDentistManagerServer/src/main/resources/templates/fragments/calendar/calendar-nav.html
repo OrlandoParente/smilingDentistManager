@@ -24,7 +24,7 @@
             <!-- me-auto -->
             <ul class="navbar-nav mb-2 mx-auto mb-lg-0">
                 <li class="nav-item">
-                    <div th:replace="fragments/calendar/add-appointment-modal :: add-appointment-modal">Add</div>
+                    <div th:replace="~{fragments/calendar/add-appointment-modal :: add-appointment-modal}">Add</div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="${urlPrev}"><span class="fs-6">&larr;</span></a>
