@@ -11,9 +11,9 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/employee/settings")
-public class Settings {
+public class SettingsController {
 	
-	public final Logger LOGGER = LoggerFactory.getLogger( Settings.class );
+	public final Logger LOGGER = LoggerFactory.getLogger( SettingsController.class );
 
 	@GetMapping({"/settings","","/"})
 	public String mainCalendarPage() {
