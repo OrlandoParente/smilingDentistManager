@@ -16,11 +16,10 @@
         <!-- Sidebar for medium and larger screens -->
         <div th:insert="~{fragments/menu-dashboard-employee :: side-dashboard}" class="col-md-3 col-lg-2" ></div>
 
-
         <!-- Main Content -->
         <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
 
-            <!-- here the page caontent -->
+            <!-- here the page content -->
             <div class="row">
 
                 <nav th:replace="fragments/calendar/calendar-nav :: calendar-nav( date=${date}, view='day' )">
@@ -44,8 +43,7 @@
                                 <td th:text="${appointment.appointmentDTO.time}" ></td>
                                 <td class="d-flex justify-content-center">
                                     
-                                    <button th:request-id="${appointment.appointmentDTO.id}"
-                                        onclick="deleteAppointmentById(this)"
+                                    <button th:id="'btnDeleteAppointment' + ${appointment.appointmentDTO.id}"
                                         class="btn btn-danger sdm-onclick-reload me-2"
                                         th:text="#{btnDelete}">
                                         
@@ -76,12 +74,11 @@
         </main>
     </div> <!-- end d-flex -->
 
-    <!-- Required for put-appointment-modal fragment -->
-    <div th:replace="fragments/calendar/requires-put-appointment-modal :: requires-put-appointment-modal"></div></div>
+
+    <!-- Required for put-appointment-modal fragment and delete appointment buttons  -->
+    <div th:replace="fragments/calendar/requires-appointment :: requires-appointment"></div>
 
     <div th:replace="fragments/common-bottom-page :: common-bottom-page"></div>
-
-    <script th:src="@{/js/appointment/appointment-buttons.js}"></script>
 
 </body>
 </html>

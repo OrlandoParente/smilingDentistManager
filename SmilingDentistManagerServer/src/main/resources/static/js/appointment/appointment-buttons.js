@@ -1,30 +1,49 @@
-// with IIFE the button can't see the function 
-// ( function() {
+//  IIFEs Immediately Invoked Function Expressions
+( function() {
 
-    // Button for delete the appointment
-    function deleteAppointmentById(btn){
+    document.addEventListener( 'DOMContentLoaded' , function (){
 
-        var id = btn.getAttribute('request-id');
-        var url = document.getElementById('urlDeleteAppointment').getAttribute('href') + '?id=' + id;
-        console.log(url);
+        // Add 
+        Array.from( 
+            document.getElementsByClassName("appointmentIds") 
+        ).forEach( element => {
 
-        fetch( url,{
-            method: 'DELETE',
-            headers: {
-                  'Content-Type': 'application/json'
-            }
-            // body:{
-            //     'id':id
-            // }
-        })
-        .then( response => {
-            if( response.ok ){
-                window.location.reload();
-            } else {
-                alert("Failed to Delete Appointment");
-            }
+            var appointmentId = element.innerText;
+
+            btnDelete = document.getElementById('btnDeleteAppointment' + appointmentId);
+          
+            btnDelete.addEventListener('click', function(){
+                // we need the anonymous function otherwise it call immediatly the function  
+                deleteAppointmentById(appointmentId);
+            });
+
         });
-    }
 
+        // Button for delete the appointment
+        function deleteAppointmentById(id){
 
-// } )();
+            // from common-top-page fragment
+            var url = document.getElementById('urlDeleteAppointment').getAttribute('href') + '?id=' + id;
+            console.log(url);
+
+            fetch( url,{
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+                // body:{
+                //     'id':id
+                // }
+            })
+            .then( response => {
+                if( response.ok ){
+                    window.location.reload();
+                } else {
+                    alert("Failed to Delete Appointment");
+                }
+            });
+        }
+
+    });
+
+ } )();
