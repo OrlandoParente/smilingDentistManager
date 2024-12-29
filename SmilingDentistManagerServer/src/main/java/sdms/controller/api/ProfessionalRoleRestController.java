@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,22 +54,8 @@ public class ProfessionalRoleRestController {
 	}
 
 	
-	
-	
 	@PostMapping( value="/postProfessionalRole" , params= {"name"} )
-	public void postProfessionalRole( @RequestParam("name") String name ) {
-		
-		// Stampa di controllo
-		System.out.println("ProfessionalRoleRestController --> postProfessionalRoles -> params : " + name );
-		
-		ProfessionalRole professionalRole = new ProfessionalRole();
-		professionalRole.setName(name);
-		
-		service.postProfessionalRole( professionalRole );
-	}
-	
-	@PostMapping( value="/postProfessionalRole" , params= {"name", "description"} )
-	public void postProfessionalRole( @RequestParam("name") String name, @RequestParam("description") String description ) {
+	public ResponseEntity<?> postProfessionalRole( @RequestParam("name") String name, @RequestParam( defaultValue = "" ) String description ) {
 		
 		// Stampa di controllo
 		System.out.println("ProfessionalRoleRestController --> postProfessionalRoles -> params : " + name + "," + description );
@@ -75,7 +64,14 @@ public class ProfessionalRoleRestController {
 		professionalRole.setName(name);
 		professionalRole.setDescription(description);
 		
-		service.postProfessionalRole( professionalRole );
+		try {
+			service.postProfessionalRole( professionalRole );
+		} catch( Exception e ) {
+			// needs a best error code ?
+			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).build();
+		}
+		
+		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(professionalRole, ProfessionalRoleDTO.class) );
 	}
 	
 	@PutMapping( value="/putProfessionalRoleById", params = {"id", "name", "description"} )
