@@ -20,7 +20,7 @@
                 </div>
                 <div class="modal-body">
 
-                  <div th:replace="fragments/messages/error-msg :: error-msg('')"></div>
+                  <div th:replace="~{fragments/messages/error-msg :: error-msg(${joinAppointment.appointmentDTO.id},'')}"></div>
 
                   <!-- get data for create the appointment -->
                   <form th:id="'putAppointmentForm' + ${joinAppointment.appointmentDTO.id}" method="PUT" th:action="@{/putAppointment}" > 
@@ -128,6 +128,7 @@
                 th:text="#{btnEdit}">Edit</button>
 
         <!-- Add script for manage add appointment request with js -->
+         <!-- This is in requires-put-appointment-modal.html -->
         <!-- <script th:src="@{/js/appointment/put-appointment-form.js}"></script>  -->
 
     </div>

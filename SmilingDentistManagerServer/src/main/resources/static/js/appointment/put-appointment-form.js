@@ -25,8 +25,10 @@
         console.log( "formPutAppointment: " + formPutAppointment + " ID: " + "putAppointmentForm" + appointmentId );
         const btnPutAppointment = document.getElementById( "btnPutAppointment" + appointmentId );
         console.log( "btnPutAppointment: " + btnPutAppointment );
-        const errMsg = document.getElementById("errMsg");
-        const errMsgText = document.getElementById("errMsgText");
+        const errMsg = document.getElementById("errMsg" + appointmentId );
+        const errMsgText = document.getElementById("errMsgText" + appointmentId );
+
+        
 
         const btnXCloseModal = document.getElementById( "btnXCloseModal" + appointmentId );
 
@@ -34,7 +36,7 @@
       
         // block preventDefault and do post request for manage response messages
         btnPutAppointment.addEventListener('click', function( event ){
-         
+
           // prevent default behavior 
           event.preventDefault();
 
@@ -48,6 +50,16 @@
           // const formDataObj = Object.fromEntries(formDataPutAppointment.entries());
           // const jsonFormData = JSON.stringify(formDataObj);
 
+          // check if mandatory fields are not empty
+          if( formDataPutAppointment.get('date') === "" || formDataPutAppointment.get('date') === " " ||  
+              formDataPutAppointment.get('time') === "" || formDataPutAppointment.get('time') === " " ||
+              formDataPutAppointment.get('idCustomer') === -1 ){
+
+            errMsg.style.display = "block";
+            errMsgText.innerText = "Failed to put appointment";
+
+            return;
+          }
 
           // control print
           console.log("PUT url: " + formPutAppointment.action);
@@ -68,7 +80,7 @@
                 window.location.reload();
               } else {
                 errMsg.style.display = "block";
-                errMsgText.innerText = "Failed to post appointment";
+                errMsgText.innerText = "Failed to put appointment";
               }
             });
             // .then( response => response.json() )
@@ -79,7 +91,7 @@
         });
 
         // Reset messages on modal close
-        btnXCloseModal.addEventListener("click", resetMessages)
+        btnXCloseModal.addEventListener("click", resetMessages);
 
         // Reset messages
         function resetMessages(){
