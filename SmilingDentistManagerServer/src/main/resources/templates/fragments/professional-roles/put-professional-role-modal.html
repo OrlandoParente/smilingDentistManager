@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="put-professional-role-modal(professionalRole)">
+        <div class="modal fade" th:id="'putProfessionalRoleModalToggle' + ${professionalRole.id}" 
+                th:aria-labelledby="'putProfessionalRoleModalToggleLabel' + ${professionalRole.id}" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" 
+                      th:id="'putProfessionalRoleModalToggleLabel' + ${professionalRole.id}"
+                      th:text="#{titleEditProfessionalRole}">
+                      Edit ProfessionalRole
+                  </h1>
+                  <button th:id="'btnXCloseModal' + ${professionalRole.id}" type="button" 
+                          class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                  <div th:replace="~{fragments/messages/error-msg :: error-msg(${professionalRole.id},'')}"></div>
+
+                  <!-- get data for create the Professional Role -->
+                  <form th:id="'putProfessionalRoleForm' + ${professionalRole.id}" method="PUT" th:action="@{/putProfessionalRole}" > 
+
+
+                    <!-- For sent the idProfessionalRole in the put request -->
+                    <div><input type="hidden" name="id" th:value="${professionalRole.id}"></div>
+
+                    
+                    <div class="col-12 d-flex align-items-center">  
+                      <!-- <div class="row g-3 mt-3"> -->
+                      <label for="name" class="form-label me-2" th:text="#{formLabelNameMandatory}">
+                        Name*:
+                      </label> 
+                      <!-- <input type="text" class="form-control " id="name" name="name" > -->
+                      <input type="text" class="form-control w-100" id="name" name="name" 
+                        th:value="${professionalRole.name}"> 
+                    </div> 
+                    
+                          
+                    <div class="form-group row g-3 mt-3">
+                      <label class="form-label mb-1" for="description" th:text="#{formLabelDescription}">
+                          Description: 
+                      </label>
+                      <input class="form-control" name="description" id="description" type="textarea"
+                            th:value="${professionalRole.description}">
+                    </div>
+
+                  </form>
+
+                </div>
+                <div class="modal-footer">
+                  <!-- Button edit ProfessionalRole -->  
+                  <button th:id="'btnPutProfessionalRole' + ${professionalRole.id}" 
+                          type="submit" 
+                          th:form="'putProfessionalRoleForm' + ${professionalRole.id}" 
+                          class="btn btn-primary" 
+                          th:text="#{btnEdit}">
+                    Edit Professional Role
+                  </a>
+                
+                </div>
+              </div>
+            </div>
+        </div>
+        
+        <!-- Button for open the Modal -->
+        <button class="btn btn-primary" 
+                th:data-bs-target="'#putProfessionalRoleModalToggle'+ ${professionalRole.id}" 
+                data-bs-toggle="modal"
+                th:text="#{btnEdit}">Edit</button>
+
+        <!-- Add script for manage add professional role request with js -->
+         <!-- This is in requires-put-professional-role-modal.html -->
+        <!-- <script th:src="@{/js/professional-roles/put-professional-role-form.js}"></script>  -->
+
+    </div>
+
+</body>
+</html>

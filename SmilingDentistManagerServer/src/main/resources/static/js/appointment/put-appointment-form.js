@@ -2,8 +2,6 @@
 
     document.addEventListener('DOMContentLoaded', function () {
 
-      console.log( "Array lenght: " + arr.length );
-
       Array.from( 
         document.getElementsByClassName("appointmentIds") 
       ).forEach( element => {

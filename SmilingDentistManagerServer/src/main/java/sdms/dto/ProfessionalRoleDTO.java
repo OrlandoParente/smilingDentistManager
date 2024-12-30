@@ -16,6 +16,10 @@ public class ProfessionalRoleDTO {
 		this.description = description;
 	}
 
+	@Override
+	public String toString() {
+		return "ProfessionalRoleDTO [id=" + id + ", name=" + name + ", description=" + description + "]";
+	}
 	
 	// GETTERS AND SETTERS 	
 	

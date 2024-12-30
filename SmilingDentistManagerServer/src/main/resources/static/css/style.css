@@ -1,3 +1,4 @@
-.sdm-onclick-reload{
-
+.sdm-table-scrollable {
+    max-height: 88vh; 
+    overflow-y: auto;
 }

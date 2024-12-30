@@ -5,7 +5,6 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,21 +73,49 @@ public class ProfessionalRoleRestController {
 		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(professionalRole, ProfessionalRoleDTO.class) );
 	}
 	
-	@PutMapping( value="/putProfessionalRoleById", params = {"id", "name", "description"} )
-	public void putProfessionalRoleById( @RequestParam("id") long id, @RequestParam("name") String name, 
-											@RequestParam("description") String description  ) {
+	@PutMapping( value="/putProfessionalRole", params = {"id"} )
+	public ResponseEntity<?> putProfessionalRoleById( @RequestParam("id") long id, 
+										 @RequestParam( defaultValue = "" ) String name, 
+										 // we need a string that the user don't want to use
+										 @RequestParam( defaultValue = "sdm-server_nessuna_description_inserita-123" ) String description ) {
 		
 		// Stampa di controllo
 		System.out.println("ProfessionalRoleRestController --> putProfessionalRolesById -> params : " + id + "," + name + "," + description );
 		
-		ProfessionalRole professionalRole = new ProfessionalRole();
-		professionalRole.setId(id);
-		professionalRole.setName(name);
-		professionalRole.setDescription(description);
+		ProfessionalRole professionalRole = service.getProfessionalRoleById(id);
 		
-		service.postProfessionalRole( professionalRole );
+		if( professionalRole == null )
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("NOT FOUND: Professional role with id " + id + " not found in the db");
 		
+//		professionalRole.setId(id);
+		if( ! name.equals("") )	professionalRole.setName(name);
+		if( ! description.equals("sdm-server_nessuna_description_inserita-123") ) professionalRole.setDescription(description);
+		
+		try {
+			service.postProfessionalRole( professionalRole );
+		} catch( Exception e) {
+			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).build();
+		}
+		
+		
+		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(professionalRole, ProfessionalRoleDTO.class) );
 	}
+	
+//	@PutMapping( value="/putProfessionalRoleById", params = {"id", "name", "description"} )
+//	public void putProfessionalRoleById( @RequestParam("id") long id, @RequestParam("name") String name, 
+//											@RequestParam("description") String description  ) {
+//		
+//		// Stampa di controllo
+//		System.out.println("ProfessionalRoleRestController --> putProfessionalRolesById -> params : " + id + "," + name + "," + description );
+//		
+//		ProfessionalRole professionalRole = new ProfessionalRole();
+//		professionalRole.setId(id);
+//		professionalRole.setName(name);
+//		professionalRole.setDescription(description);
+//		
+//		service.postProfessionalRole( professionalRole );
+//		
+//	}
 	
 	@DeleteMapping( value="/deleteProfessionalRoleById", params = {"id"} )
 	public void deleteProfessionalRoleById( @RequestParam("id") long id  ) {

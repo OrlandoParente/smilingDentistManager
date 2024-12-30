@@ -29,9 +29,27 @@
                         Customer
                         </a>
                     </li>
+                    <!--Should I put this in Settings ? -->
+                    <li class="nav-item">
+                        <a th:href="@{#}" class="nav-link" th:text="#{btnTreatments}">
+                            Treatments
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a th:href="@{/employee/employee/employee}" class="nav-link" th:text="#{btnEmployees}">
                         Employee
+                        </a>
+                    </li>
+                    <!--Should I put this in Settings ? -->
+                    <li class="nav-item">
+                        <a th:href="@{/employee/professionalRoles/professionalRoles}" class="nav-link" th:text="#{btnProfessionalRoles}">
+                        Professional Roles
+                        </a>
+                    </li>
+                    <!--Should I put this in Settings ? -->
+                    <li class="nav-item">
+                        <a th:href="@{#}" class="nav-link" th:text="#{btnExpenses}">
+                        Expenses
                         </a>
                     </li>
                     <li class="nav-item">
@@ -114,7 +132,7 @@
                 </li>
                 <!--Should I put this in Settings ? -->
                 <li class="nav-item">
-                    <a th:href="@{#}" class="nav-link" th:text="#{btnProfessionalRoles}">
+                    <a th:href="@{/employee/professionalRoles/professionalRoles}" class="nav-link" th:text="#{btnProfessionalRoles}">
                         Professional Roles
                     </a>
                 </li>

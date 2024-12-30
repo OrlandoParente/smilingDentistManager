@@ -64,7 +64,7 @@ public class HttpConnectionManager {
 	// Request for Professional Role
 	public static final String GET_PROFESSIONAL_ROLES = "getProfessionalRoles";
 	public static final String POST_PROFESSIONAL_ROLE = "postProfessionalRole";
-	public static final String PUT_PROFESSIONAL_ROLE_BY_ID = "putProfessionalRoleById";
+	public static final String PUT_PROFESSIONAL_ROLE_BY_ID = "putProfessionalRole";
 	public static final String DELETE_PROFESSIONAL_ROLE_BY_ID = "deleteProfessionalRoleById";
 	
 	// Request for Appointment
