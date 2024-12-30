@@ -70,7 +70,19 @@ public class TreatmentService implements TreatmentServiceInterface {
 	@Override
 	public void deleteTreatmentById(long id) {
 		
-		repository.delete( repository.findById(id).get() );
+		Treatment treatment = repository.findById(id).get();
+		
+		// first delete the constraints --------------------
+		List<Appointment> appointments = appointmentRepository.findByTreatment( treatment );
+		
+		for( Appointment appointment : appointments ) {
+			appointment.setTreatment( null );
+			appointmentRepository.save( appointment );
+		}
+		
+		// -------------------------------------------------
+		
+		repository.delete( treatment );
 	}
 
 }

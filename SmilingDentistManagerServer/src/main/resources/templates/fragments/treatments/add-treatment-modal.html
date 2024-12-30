@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="add-treatment-modal">
+        <div class="modal fade" id="addTreatmentModalToggle" aria-hidden="true"
+                aria-labelledby="addAddTreatmentModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="addTreatmentModalToggleLabel" th:text="#{titleAddTreatment}">
+                    Add Treatment
+                  </h1>
+                  <button id="btnXCloseModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- fragment err-msg($id, $msg) , 
+                        in this case $id='' cause in err-msg id = 'errMsg' + ${id} 
+                        but we have only one modal so we don't need different ids -->
+                    <div th:replace="~{fragments/messages/error-msg :: error-msg('','')}"></div>
+
+                    <!-- get data for create the professional role -->
+                    <form id="addTreatmentForm" method="POST" th:action="@{/postTreatment}" > 
+                        
+                        <div class="row g-3">
+
+                          <div class="col-12 col-md-8 d-flex align-items-center">  
+                      
+                            <label for="name" class="form-label me-2" th:text="#{formLabelNameMandatory}">
+                            Name*:
+                            </label> 
+                            <!-- <input type="text" class="form-control" id="name" name="name" > -->
+                            <input type="text" class="form-control w-100" id="name" name="name" > 
+                          </div>
+                          
+                          <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 
+                            
+                            <label for="cost" class="form-label me-2" th:text="#{formLabelCost}">
+                            Cost*:
+                            </label> 
+                            <!-- <input type="text" class="form-control" id="name" name="name" > -->
+                            <input type="number" class="form-control w-100" id="cost" name="cost" >
+                          </div> 
+                            
+                          
+                        </div>
+                            
+                        <div class="row g-3 mt-3">
+                          <label class="form-label mb-1" for="description" th:text="#{formLabelDescription}">
+                              Description: 
+                          </label>
+                          <input class="form-control" name="description" id="description" type="textarea">
+                        </div>
+                    
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                  <button id="btnAddTreatment" type="submit" form="addTreatmentForm" class="btn btn-primary" th:text="#{btnAdd}">
+                    Add Treatment
+                  </a>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!-- If there are many buttons on the nav use this: 
+            th:text="#{btnAddAbbreviation}"
+            for a better web responsive web application  -->
+          <a href="#" class="nav-link active" data-bs-target="#addTreatmentModalToggle" 
+                data-bs-toggle="modal" th:text="#{btnAdd}">
+            Add
+          </a>
+
+        <!-- Add script for manage add professional role request with js -->
+        <script th:src="@{/js/treatments/add-treatment-form.js}"></script> 
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="put-treatment-modal(treatment)">
+        <div class="modal fade" th:id="'putTreatmentModalToggle' + ${treatment.id}" 
+                th:aria-labelledby="'putTreatmentModalToggleLabel' + ${treatment.id}" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" 
+                      th:id="'putTreatmentModalToggleLabel' + ${treatment.id}"
+                      th:text="#{titleEditTreatment}">
+                      Edit Treatment
+                  </h1>
+                  <button th:id="'btnXCloseModal' + ${treatment.id}" type="button" 
+                          class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                  <div th:replace="~{fragments/messages/error-msg :: error-msg(${treatment.id},'')}"></div>
+
+                  <!-- get data for create the Treatment -->
+                  <form th:id="'putTreatmentForm' + ${treatment.id}" method="PUT" th:action="@{/putTreatment}" > 
+
+
+                    <!-- For sent the idTreatment in the put request -->
+                    <div><input type="hidden" name="id" th:value="${treatment.id}"></div>
+
+                    <div class="row g-3">
+
+                      <div class="col-12 col-md-8 d-flex align-items-center">  
+                  
+                        <label for="name" class="form-label me-2" th:text="#{formLabelNameMandatory}">
+                        Name*:
+                        </label> 
+                        <!-- <input type="text" class="form-control" id="name" name="name" > -->
+                        <input type="text" class="form-control w-100" id="name" name="name" 
+                               th:value="${treatment.name}" > 
+                      </div>
+                      
+                      <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 
+                        
+                        <label for="cost" class="form-label me-2" th:text="#{formLabelCost}">
+                        Cost*:
+                        </label> 
+                        <!-- <input type="text" class="form-control" id="name" name="name" > -->
+                        <input type="number" class="form-control w-100" id="cost" name="cost" 
+                               th:value="${treatment.cost}" >
+                      </div> 
+                        
+                      
+                    </div>
+                        
+                    <div class="row g-3 mt-3">
+                      <label class="form-label mb-1" for="description" th:text="#{formLabelDescription}">
+                          Description: 
+                      </label>
+                      <input class="form-control" name="description" id="description" type="textarea"
+                             th:value="${treatment.description}" >
+                    </div>
+
+
+
+                  </form>
+
+                </div>
+                <div class="modal-footer">
+                  <!-- Button edit Treatment -->  
+                  <button th:id="'btnPutTreatment' + ${treatment.id}" 
+                          type="submit" 
+                          th:form="'putTreatmentForm' + ${treatment.id}" 
+                          class="btn btn-primary" 
+                          th:text="#{btnEdit}">
+                    Edit Treatment
+                  </a>
+                
+                </div>
+              </div>
+            </div>
+        </div>
+        
+        <!-- Button for open the Modal -->
+        <button class="btn btn-primary" 
+                th:data-bs-target="'#putTreatmentModalToggle'+ ${treatment.id}" 
+                data-bs-toggle="modal"
+                th:text="#{btnEdit}">Edit</button>
+
+        <!-- Add script for manage add professional role request with js -->
+         <!-- This is in requires-put-professional-role-modal.html -->
+        <!-- <script th:src="@{/js/treatments/put-treatment-form.js}"></script>  -->
+
+    </div>
+
+</body>
+</html>
