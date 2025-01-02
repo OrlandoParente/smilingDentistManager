@@ -57,13 +57,38 @@ public class HasProfessionalRoleService implements HasProfessionalRoleServiceInt
 		repository.delete(hasProfessionalRole);
 	}
 
+	@Override
+	public List<ProfessionalRole> getProfessionalRolesByEmployee(long idEmployee) {
+		
+		List<HasProfessionalRole> hasProfessionalRoles = repository.findByEmployee( employeeRepository.findById(idEmployee).get() );
+		
+		List<ProfessionalRole> professionalRoles = hasProfessionalRoles.stream().map( hpr ->  hpr.getProfessionalRole() ).toList();
+		
+		return professionalRoles;
+	}
 
-	
-//	// Gestione Has Professional Role -----------------------
-//	boolean postLinkEmployeeToProfessionalRole( String id_employee, String id_professional_role ) throws SQLException;
-//	
-//	boolean deleteLinkEmployeeWithProfessionalRole( String id_employee, String id_professional_role ) throws SQLException;
-//	// ------------------------------------------------------
-//	
+	@Override
+	public List<Employee> getEmployeesByProfessionalRole(long idProfessionalRole) {
+		
+		List<HasProfessionalRole> hasProfessionalRoles = repository.findByProfessionalRole( professionalRoleRepository.findById( idProfessionalRole ).get() );
+		
+		List<Employee> employees = hasProfessionalRoles.stream().map( hpr ->  hpr.getEmployee()  ).toList(); 
+		
+		return employees;
+	}
+
+	@Override
+	public List<Employee> getEmployeesByProfessionalRoleName(String professionalRoleName) {
+		
+		List<HasProfessionalRole> hasProfessionalRoles = repository.findByProfessionalRole( professionalRoleRepository.findByName( professionalRoleName ).get(0) );
+		
+		List<Employee> employees = hasProfessionalRoles.stream().map( hpr ->  hpr.getEmployee()  ).toList(); 
+		
+		return employees;
+
+	}
+
+
+
 
 }
