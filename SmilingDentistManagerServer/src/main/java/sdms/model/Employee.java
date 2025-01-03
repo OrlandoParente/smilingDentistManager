@@ -36,6 +36,7 @@ public class Employee {
 	private String surname;
 	private String title;				// e.g. Dott. , Dott.ssa, Sig. , Sig.ra , Sig.na,
 	private LocalDate birthDate;
+	private Double salary;
 	private String phoneNumber;
 	private String phoneNumber2; 		// Generalmente telefono di casa
 	private String language;
@@ -190,10 +191,19 @@ public class Employee {
 		this.language = language;
 	}
 	
+	
+	public Double getSalary() {
+		return salary;
+	}
+
+
+	public void setSalary(Double salary) {
+		this.salary = salary;
+	}
+
+	
 
 	// ----------------------------------------------------------------------------------
-
-
 
 	public int getPermission() {
 		return permission;

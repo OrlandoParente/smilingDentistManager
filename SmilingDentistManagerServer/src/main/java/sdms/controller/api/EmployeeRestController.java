@@ -1,5 +1,7 @@
 package sdms.controller.api;
 
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import sdms.dto.EmployeeDTO;
 import sdms.model.Employee;
+import sdms.model.WorkPeriod;
 import sdms.service.EmployeeServiceInterface;
+import sdms.service.WorkPeriodServiceInterface;
 import sdms.util.DateAndTimeManager;
 
 @RestController
@@ -24,6 +28,9 @@ public class EmployeeRestController {
 	
 	@Autowired
 	private EmployeeServiceInterface service;
+	
+	@Autowired
+	private WorkPeriodServiceInterface workPeriodService;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -122,47 +129,103 @@ public class EmployeeRestController {
 		return ResponseEntity.status( HttpStatus.OK ).body( employeeDTO );
 	}
 	
-	@PostMapping( value="/postEmployee", params = {"name","surname","title", "phoneNumber"} )
-	public void postEmployee( @RequestParam("name") String name, @RequestParam("surname") String surname ,
-								@RequestParam("title") String title, @RequestParam("phoneNumber") String phoneNumber) {
-
+	
+	@PostMapping( value="/postEmployee", params = {"name","surname","eMail"} )
+	public ResponseEntity<?>  postEmployee( @RequestParam String name, @RequestParam String surname ,@RequestParam String eMail,
+								@RequestParam(defaultValue = "") String title, 
+								@RequestParam(defaultValue = "") String birthDate,
+								@RequestParam(defaultValue = "") String phoneNumber, 
+								@RequestParam(defaultValue = "") String phoneNumber2,
+								@RequestParam(defaultValue = "-1") Double salary,
+								@RequestParam(defaultValue = "-1" ) Integer permission,
+								@RequestParam(defaultValue = "") String startWorkDate
+	 ) {
 		// Messaggio di controllo
 		System.out.println("EmployeeRestController --> postEmployee ");
 		
-		Employee employee = new Employee();
-		employee.setName(name);
-		employee.setSurname(surname);
-		employee.setTitle(title);
-		employee.setPhoneNumber(phoneNumber);
-		
-		service.postEmployee(employee);
-		
-	}
-	
-
-	@PostMapping( value="/postEmployee", params = {"name","surname","title", "birthDate","phoneNumber", "phoneNumber2","eMail"} )
-	public void postEmployee( @RequestParam("name") String name, @RequestParam("surname") String surname ,
-							@RequestParam("title") String title, @RequestParam("birthDate") String birthDate,
-							@RequestParam("phoneNumber") String phoneNumber, @RequestParam("phoneNumber2") String phoneNumber2,
-							@RequestParam("eMail") String eMail ) {
-
-		// Messaggio di controllo
-		System.out.println("EmployeeRestController --> postEmployee ");
 		
 		Employee employee = new Employee();
-		employee.setName(name);
-		employee.setSurname(surname);
-		employee.setTitle(title);
-		employee.setPhoneNumber(phoneNumber);
-		employee.setPhoneNumber2(phoneNumber2);
-		employee.seteMail(eMail);
-		employee.setBirthDate( dateAndTimeManager.parseDate(birthDate) );
 		
-		service.postEmployee(employee);
+		try {
+			
+			employee.setName(name);
+			employee.setSurname(surname);
+			employee.seteMail(eMail);
+			
+			if( ! title.equals(""))	employee.setTitle(title);
+			if( ! phoneNumber.equals(""))	employee.setPhoneNumber(phoneNumber);
+			if( ! phoneNumber2.equals(""))	employee.setPhoneNumber2(phoneNumber2);
+			if( ! birthDate.equals("") )	employee.setBirthDate( dateAndTimeManager.parseDate(birthDate) );
+			
+			if( salary != -1 ) employee.setSalary(salary);
+			if( permission != -1 ) employee.setPermission(permission);
+			
+			
+			service.postEmployee(employee);
+			
+			
+			if( ! startWorkDate.equals("") ) {
+				
+				WorkPeriod workPeriod = new WorkPeriod();
+				workPeriod.setStartDate( dateAndTimeManager.parseDate(startWorkDate) );
+				workPeriod.setEmployee(employee);
+				
+				workPeriodService.postWorkPeriod(workPeriod);
+			}
+			
+			
+			
 		
+		} catch ( DateTimeParseException e ) {
+			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Error: invalid format data");
+		} catch ( Exception e ) {
+			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).build();
+		}
+		
+		return ResponseEntity.status( HttpStatus.OK ).body( employee );		
 	}
 	
-	
+//	@PostMapping( value="/postEmployee", params = {"name","surname","title", "phoneNumber"} )
+//	public void postEmployee( @RequestParam("name") String name, @RequestParam("surname") String surname ,
+//								@RequestParam("title") String title, @RequestParam("phoneNumber") String phoneNumber) {
+//
+//		// Messaggio di controllo
+//		System.out.println("EmployeeRestController --> postEmployee ");
+//		
+//		Employee employee = new Employee();
+//		employee.setName(name);
+//		employee.setSurname(surname);
+//		employee.setTitle(title);
+//		employee.setPhoneNumber(phoneNumber);
+//		
+//		service.postEmployee(employee);
+//		
+//	}
+//	
+//
+//	@PostMapping( value="/postEmployee", params = {"name","surname","title", "birthDate","phoneNumber", "phoneNumber2","eMail"} )
+//	public void postEmployee( @RequestParam("name") String name, @RequestParam("surname") String surname ,
+//							@RequestParam("title") String title, @RequestParam("birthDate") String birthDate,
+//							@RequestParam("phoneNumber") String phoneNumber, @RequestParam("phoneNumber2") String phoneNumber2,
+//							@RequestParam("eMail") String eMail ) {
+//
+//		// Messaggio di controllo
+//		System.out.println("EmployeeRestController --> postEmployee ");
+//		
+//		Employee employee = new Employee();
+//		employee.setName(name);
+//		employee.setSurname(surname);
+//		employee.setTitle(title);
+//		employee.setPhoneNumber(phoneNumber);
+//		employee.setPhoneNumber2(phoneNumber2);
+//		employee.seteMail(eMail);
+//		employee.setBirthDate( dateAndTimeManager.parseDate(birthDate) );
+//		
+//		service.postEmployee(employee);
+//		
+//	}
+//	
+//	
 	@PutMapping( value="/putEmployee", params = {"id", "name","surname","title", "birthDate","phoneNumber", "phoneNumber2","eMail"} )
 	public ResponseEntity<?> postEmployee( @RequestParam("id") long id, @RequestParam("name") String name, 
 							@RequestParam("surname") String surname , @RequestParam("title") String title, 
