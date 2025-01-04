@@ -47,6 +47,7 @@ public class Employee {
 	
 	// for use LocalDate in Containing method of JpaRepository
 	private String birthDateString;
+	private String salaryString;
 	
 	// Empty Constructor 
 	public Employee () {}
@@ -196,9 +197,13 @@ public class Employee {
 		return salary;
 	}
 
+	public String getSalaryString() {
+		return salaryString;
+	}
 
 	public void setSalary(Double salary) {
 		this.salary = salary;
+		this.salaryString = String.valueOf(salary);
 	}
 
 	

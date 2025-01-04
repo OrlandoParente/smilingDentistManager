@@ -1,4 +1,12 @@
 .sdm-table-scrollable {
     max-height: 88vh; 
     overflow-y: auto;
+    /* 
+    max-width: 80vw;
+    overflow-x: auto; 
+    */
+}
+
+.sdm-table-scrollable th{
+    min-width: 10rem;
 }
