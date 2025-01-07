@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +38,8 @@ public class WorkPeriodRestController {
 	
 	@Autowired
 	private DateAndTimeManager dateAndTimeManager;
+	
+	private final Logger LOGGER = LoggerFactory.getLogger(  WorkPeriodRestController.class );
 	
 	// GET REQUEST -------------------------------------------------------------------------------------------------
 	
@@ -81,45 +85,11 @@ public class WorkPeriodRestController {
 	
 	// POST REQUEST ------------------------------------------------------------------------------------------------
 	
-	// Without end period date
-	@PostMapping( value = "/postWorkPeriod", params = {"idEmployee","startDate", "workingAgreement", "notes"} )
+	@PostMapping( value = "/postWorkPeriod", params = {"idEmployee","startDate"} )
 	public ResponseEntity<?> postWorkPeriod( @RequestParam long idEmployee, @RequestParam String startDate, 
-											@RequestParam String workingAgreement, @RequestParam String notes ) {
-		
-		// Searches for employee to associate the work period
-		Employee employee = employeeService.getEmployeeById(idEmployee);
-		
-		if( employee == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Employee not found");
-		
-		
-		LocalDate ldStartDate = null;
-		
-		try {
-			// Convert date from string to LocalDate 
-			ldStartDate = dateAndTimeManager.parseDate(startDate);
-		} catch (/*DateTimeParseException */ Exception e ) {
-			
-			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );
-		}
-		
-		
-		// Creato entity to save
-		WorkPeriod workPeriod = new WorkPeriod();
-		
-		workPeriod.setEmployee( employee );
-		workPeriod.setStartDate( ldStartDate );
-		workPeriod.setWorkingAgreement(workingAgreement);
-		workPeriod.setNotes(notes);
-		
-		service.postWorkPeriod(workPeriod);
-		
-		return ResponseEntity.status( HttpStatus.OK ).body( workPeriod );
-	}
-	
-	// with end period date
-	@PostMapping( value = "/postWorkPeriod", params = {"idEmployee","startDate", "endDate", "workingAgreement", "notes"} )
-	public ResponseEntity<?> postWorkPeriod( @RequestParam long idEmployee, @RequestParam String startDate, @RequestParam String endDate, 
-											@RequestParam String workingAgreement, @RequestParam String notes ) {
+												@RequestParam ( defaultValue = "" ) String endDate, 
+												@RequestParam ( defaultValue = "" ) String workingAgreement, 
+												@RequestParam ( defaultValue = "" ) String notes ) {
 		
 		// Searches for employee to associate the work period
 		Employee employee = employeeService.getEmployeeById(idEmployee);
@@ -133,7 +103,8 @@ public class WorkPeriodRestController {
 		try {
 			// Convert date from string to LocalDate 
 			ldStartDate = dateAndTimeManager.parseDate(startDate);
-			ldEndDate = dateAndTimeManager.parseDate(endDate);
+			
+			if( ! endDate.equals("") ) ldEndDate = dateAndTimeManager.parseDate(endDate);
 		} catch (/*DateTimeParseException */ Exception e ) {
 			
 			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );
@@ -145,7 +116,8 @@ public class WorkPeriodRestController {
 		
 		workPeriod.setEmployee( employee );
 		workPeriod.setStartDate( ldStartDate );
-		workPeriod.setEndDate(ldEndDate);
+		
+		if( ! endDate.equals("") )	workPeriod.setEndDate(ldEndDate);
 		workPeriod.setWorkingAgreement(workingAgreement);
 		workPeriod.setNotes(notes);
 		
@@ -153,69 +125,121 @@ public class WorkPeriodRestController {
 		
 		return ResponseEntity.status( HttpStatus.OK ).body( workPeriod );
 	}
+	
+//	
+//	// Without end period date
+//	@PostMapping( value = "/postWorkPeriod", params = {"idEmployee","startDate", "workingAgreement", "notes"} )
+//	public ResponseEntity<?> postWorkPeriod( @RequestParam long idEmployee, @RequestParam String startDate, 
+//											@RequestParam String workingAgreement, @RequestParam String notes ) {
+//		
+//		// Searches for employee to associate the work period
+//		Employee employee = employeeService.getEmployeeById(idEmployee);
+//		
+//		if( employee == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Employee not found");
+//		
+//		
+//		LocalDate ldStartDate = null;
+//		
+//		try {
+//			// Convert date from string to LocalDate 
+//			ldStartDate = dateAndTimeManager.parseDate(startDate);
+//		} catch (/*DateTimeParseException */ Exception e ) {
+//			
+//			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );
+//		}
+//		
+//		
+//		// Creato entity to save
+//		WorkPeriod workPeriod = new WorkPeriod();
+//		
+//		workPeriod.setEmployee( employee );
+//		workPeriod.setStartDate( ldStartDate );
+//		workPeriod.setWorkingAgreement(workingAgreement);
+//		workPeriod.setNotes(notes);
+//		
+//		service.postWorkPeriod(workPeriod);
+//		
+//		return ResponseEntity.status( HttpStatus.OK ).body( workPeriod );
+//	}
+//	
+//	// with end period date
+//	@PostMapping( value = "/postWorkPeriod", params = {"idEmployee","startDate", "endDate", "workingAgreement", "notes"} )
+//	public ResponseEntity<?> postWorkPeriod( @RequestParam long idEmployee, @RequestParam String startDate, @RequestParam String endDate, 
+//											@RequestParam String workingAgreement, @RequestParam String notes ) {
+//		
+//		// Searches for employee to associate the work period
+//		Employee employee = employeeService.getEmployeeById(idEmployee);
+//		
+//		if( employee == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Employee not found");
+//		
+//		
+//		LocalDate ldStartDate = null;
+//		LocalDate ldEndDate = null;
+//		
+//		try {
+//			// Convert date from string to LocalDate 
+//			ldStartDate = dateAndTimeManager.parseDate(startDate);
+//			ldEndDate = dateAndTimeManager.parseDate(endDate);
+//		} catch (/*DateTimeParseException */ Exception e ) {
+//			
+//			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );
+//		}
+//		
+//		
+//		// Creato entity to save
+//		WorkPeriod workPeriod = new WorkPeriod();
+//		
+//		workPeriod.setEmployee( employee );
+//		workPeriod.setStartDate( ldStartDate );
+//		workPeriod.setEndDate(ldEndDate);
+//		workPeriod.setWorkingAgreement(workingAgreement);
+//		workPeriod.setNotes(notes);
+//		
+//		service.postWorkPeriod(workPeriod);
+//		
+//		return ResponseEntity.status( HttpStatus.OK ).body( workPeriod );
+//	}
 	
 	// -------------------------------------------------------------------------------------------------------------
 
 
 	// PUT REQUEST -------------------------------------------------------------------------------------------------
 
-	// Without end period date
-	@PutMapping( value = "/putWorkPeriod", params = {"id", "idEmployee","startDate", "workingAgreement", "notes"} )
-	public ResponseEntity<?> postWorkPeriod( @RequestParam long id, @RequestParam long idEmployee, @RequestParam String startDate, 
-											@RequestParam String workingAgreement, @RequestParam String notes ) {
+	@PutMapping( value = "/putWorkPeriod", params = {"id"} )
+	public ResponseEntity<?> putWorkPeriod( @RequestParam long id, 
+												@RequestParam( defaultValue = "-1" ) long idEmployee, 
+												@RequestParam( defaultValue = "sdm-none-nessuna" ) String startDate, 
+												@RequestParam( defaultValue = "sdm-none-nessuna" ) String endDate, 
+												@RequestParam( defaultValue = "sdm-none-nessuna" ) String workingAgreement, 
+												@RequestParam( defaultValue = "sdm-none-nessuna" ) String notes ) {
+		
+		// I use "sdm-none-nessuna" cause i need a string that the user don't use as imput 
+		
+		LOGGER.info("/putWorkPeriod -> params= id:" + id + ", idEmployee:" + idEmployee + ", startDate:" + startDate + ", endDate:" + endDate
+						+ ", workingAgreement:" + workingAgreement + ", notes:" + notes);
 		
 		// Searches for workPeriod to update
 		WorkPeriod workPeriod = service.getWorkPeriodById(id);
 		if( workPeriod == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Work period to update not found");
 		
-		// Searches for employee to associate the work period
-		Employee employee = employeeService.getEmployeeById(idEmployee);
-		if( employee == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Employee not found");
+		Employee employee = null;
 		
-		
-		LocalDate ldStartDate = null;
-		
-		try {
-			// Convert date from string to LocalDate 
-			ldStartDate = dateAndTimeManager.parseDate(startDate);
-		} catch (/*DateTimeParseException */ Exception e ) {
-			
-			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );
+		if( idEmployee != -1 ) {
+			// Searches for employee to associate the work period
+			employee = employeeService.getEmployeeById(idEmployee);
+			if( employee == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Employee not found");
 		}
-		
-		
-		// Update entity field
-		workPeriod.setEmployee( employee );
-		workPeriod.setStartDate( ldStartDate );
-		workPeriod.setWorkingAgreement(workingAgreement);
-		workPeriod.setNotes(notes);
-		
-		service.putWorkPeriod(workPeriod);
-		
-		return ResponseEntity.status( HttpStatus.OK ).body( workPeriod );
-	}
-	
-	// with end period date
-	@PutMapping( value = "/putWorkPeriod", params = {"id", "idEmployee","startDate", "endDate", "workingAgreement", "notes"} )
-	public ResponseEntity<?> postWorkPeriod( @RequestParam long id, @RequestParam long idEmployee, @RequestParam String startDate, 
-											 @RequestParam String endDate, @RequestParam String workingAgreement, @RequestParam String notes ) {
-		
-		// Searches for workPeriod to update
-		WorkPeriod workPeriod = service.getWorkPeriodById(id);
-		if( workPeriod == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Work period to update not found");
-		
-		// Searches for employee to associate the work period
-		Employee employee = employeeService.getEmployeeById(idEmployee);
-		if( employee == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Employee not found");
-		
 		
 		LocalDate ldStartDate = null;
 		LocalDate ldEndDate = null;
 		
 		try {
 			// Convert date from string to LocalDate 
-			ldStartDate = dateAndTimeManager.parseDate(startDate);
-			ldEndDate = dateAndTimeManager.parseDate(endDate);
+			if( ! startDate.equals("del") &&  ! startDate.equals("") &&  ! startDate.equals("sdm-none-nessuna") ) 
+				ldStartDate = dateAndTimeManager.parseDate(startDate);
+			
+			if( !endDate.equals("del") &&  !endDate.equals("")  && ! endDate.equals("sdm-none-nessuna") ) 
+				ldEndDate = dateAndTimeManager.parseDate(endDate);
 		} catch (/*DateTimeParseException */ Exception e ) {
 			
 			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );
@@ -223,16 +247,99 @@ public class WorkPeriodRestController {
 		
 		
 		// Update entity field
-		workPeriod.setEmployee( employee );
-		workPeriod.setStartDate( ldStartDate );
-		workPeriod.setEndDate(ldEndDate);
-		workPeriod.setWorkingAgreement(workingAgreement);
-		workPeriod.setNotes(notes);
+		if( idEmployee != -1 )	workPeriod.setEmployee( employee );
+		
+		// if  string "del", set date to null <<------------ TO EDIT, in this case we should delete the whole work period ?
+		if( startDate.equals("del") ) workPeriod.setStartDate(null);
+		else if( ldStartDate != null )	workPeriod.setStartDate( ldStartDate );
+		
+		// if string "del", set date to null
+		if( endDate.equals("del") )	workPeriod.setEndDate(null);
+		else if( ldEndDate != null )	workPeriod.setEndDate(ldEndDate);
+		
+		if( ! workingAgreement.equals("sdm-none-nessuna") ) workPeriod.setWorkingAgreement(workingAgreement);
+		if( ! notes.equals("sdm-none-nessuna") ) workPeriod.setNotes(notes);
 		
 		service.putWorkPeriod(workPeriod);
 		
 		return ResponseEntity.status( HttpStatus.OK ).body( workPeriod );
 	}	
+	
+	
+//	// Without end period date
+//	@PutMapping( value = "/putWorkPeriod", params = {"id", "idEmployee","startDate", "workingAgreement", "notes"} )
+//	public ResponseEntity<?> postWorkPeriod( @RequestParam long id, @RequestParam long idEmployee, @RequestParam String startDate, 
+//											@RequestParam String workingAgreement, @RequestParam String notes ) {
+//		
+//		// Searches for workPeriod to update
+//		WorkPeriod workPeriod = service.getWorkPeriodById(id);
+//		if( workPeriod == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Work period to update not found");
+//		
+//		// Searches for employee to associate the work period
+//		Employee employee = employeeService.getEmployeeById(idEmployee);
+//		if( employee == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Employee not found");
+//		
+//		
+//		LocalDate ldStartDate = null;
+//		
+//		try {
+//			// Convert date from string to LocalDate 
+//			ldStartDate = dateAndTimeManager.parseDate(startDate);
+//		} catch (/*DateTimeParseException */ Exception e ) {
+//			
+//			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );
+//		}
+//		
+//		
+//		// Update entity field
+//		workPeriod.setEmployee( employee );
+//		workPeriod.setStartDate( ldStartDate );
+//		workPeriod.setWorkingAgreement(workingAgreement);
+//		workPeriod.setNotes(notes);
+//		
+//		service.putWorkPeriod(workPeriod);
+//		
+//		return ResponseEntity.status( HttpStatus.OK ).body( workPeriod );
+//	}
+//	
+//	// with end period date
+//	@PutMapping( value = "/putWorkPeriod", params = {"id", "idEmployee","startDate", "endDate", "workingAgreement", "notes"} )
+//	public ResponseEntity<?> postWorkPeriod( @RequestParam long id, @RequestParam long idEmployee, @RequestParam String startDate, 
+//											 @RequestParam String endDate, @RequestParam String workingAgreement, @RequestParam String notes ) {
+//		
+//		// Searches for workPeriod to update
+//		WorkPeriod workPeriod = service.getWorkPeriodById(id);
+//		if( workPeriod == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Work period to update not found");
+//		
+//		// Searches for employee to associate the work period
+//		Employee employee = employeeService.getEmployeeById(idEmployee);
+//		if( employee == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Employee not found");
+//		
+//		
+//		LocalDate ldStartDate = null;
+//		LocalDate ldEndDate = null;
+//		
+//		try {
+//			// Convert date from string to LocalDate 
+//			ldStartDate = dateAndTimeManager.parseDate(startDate);
+//			ldEndDate = dateAndTimeManager.parseDate(endDate);
+//		} catch (/*DateTimeParseException */ Exception e ) {
+//			
+//			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );
+//		}
+//		
+//		
+//		// Update entity field
+//		workPeriod.setEmployee( employee );
+//		workPeriod.setStartDate( ldStartDate );
+//		workPeriod.setEndDate(ldEndDate);
+//		workPeriod.setWorkingAgreement(workingAgreement);
+//		workPeriod.setNotes(notes);
+//		
+//		service.putWorkPeriod(workPeriod);
+//		
+//		return ResponseEntity.status( HttpStatus.OK ).body( workPeriod );
+//	}	
 	// -------------------------------------------------------------------------------------------------------------
 
 	// DELETE REQUEST ----------------------------------------------------------------------------------------------

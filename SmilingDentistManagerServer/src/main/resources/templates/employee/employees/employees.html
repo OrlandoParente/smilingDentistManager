@@ -57,10 +57,36 @@
                                         th:text="#{btnDelete}">
                                         Delete
                                     </button>
-                                    <button 
-                                        class="btn btn-primary  me-2 mt-2">
-                                        Dismiss
-                                    </button>
+
+                                    <!-- || #lists.last(joinEmployee.workPeriodsDTO).endDate != null -->
+                                    <!-- #lists.size(joinEmployee.workPeriodsDTO) == 0 -->
+                                    <div 
+                                            th:if="${
+                                                #lists.size(joinEmployee.workPeriodsDTO) == 0
+                                                || joinEmployee.workPeriodsDTO[ #lists.size( joinEmployee.workPeriodsDTO ) -1 ]?.endDate != null
+                                                }" 
+                                            >
+
+                                        <button  class="btn btn-success  me-2 mt-2">
+                                            Assume
+                                        </button>
+
+                                    </div>  
+
+                                    <div 
+                                        th:if="${
+                                            #lists.size(joinEmployee.workPeriodsDTO) > 0
+                                            && joinEmployee.workPeriodsDTO[ #lists.size( joinEmployee.workPeriodsDTO ) -1 ]?.endDate == null
+                                            }" 
+                                        th:insert="~{/fragments/employees/dismiss-employee-modal :: dismiss-employee-modal(${joinEmployee})}"
+                                    >
+                                        <span class="dismissEmployeeIds d-none" 
+                                              th:text="${joinEmployee.employeeDTO.id}">
+
+                                        </span>
+                                    </div>
+                                    
+
                                     <div 
                                         th:replace="~{/fragments/employees/put-employee-modal :: put-employee-modal(${joinEmployee})}">
                                     </div> 

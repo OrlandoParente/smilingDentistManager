@@ -28,10 +28,15 @@ public class HasProfessionalRoleRestController {
 	private ProfessionalRoleServiceInterface professionalRoleService;
 		
 	@PostMapping( value = "/postLinkEmployeeToProfessionalRole", params = {"idEmployee", "idProfessionalRole"} )
-	public ResponseEntity<?> postLinkEmployeeToProfessionalRole( @RequestParam("idEmployee") long idEmployee, 
-													    @RequestParam("idProfessionalRole")	long idProfessionalRole ) {
+	public ResponseEntity<?> postLinkEmployeeToProfessionalRole( @RequestParam long idEmployee, 
+													    		 @RequestParam( defaultValue = "-1")	long idProfessionalRole ) {
 		// check message
 		System.out.println( "HasProfessionalRoleRestController ->  postLinkEmployeeToProfessionalRole " );
+		
+		// if idProfessionalRole Do Nothing 
+		if( idProfessionalRole == -1 )
+			return ResponseEntity.status(HttpStatus.OK).build();
+		
 		
 		HasProfessionalRole hasProfessionalRole = new HasProfessionalRole();
 		

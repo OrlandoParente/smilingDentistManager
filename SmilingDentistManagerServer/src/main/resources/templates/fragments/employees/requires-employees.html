@@ -14,6 +14,17 @@
         <!-- -->
         <div th:each="joinEmployee : ${ joinEmployees }">
           <span class="employeeIds d-none" th:text="${joinEmployee.employeeDTO.id}" ></span>
+
+          <span th:each="employeeProfessionalRole : ${ joinEmployee.professionalRolesDTO }"
+                th:attr="class='professionalRolesIds' + ${ joinEmployee.employeeDTO.id } + ' ' +  'd-none'"
+                th:text="${employeeProfessionalRole.id}">
+          </span>
+
+          <span th:each="employeeWorkPeriod : ${ joinEmployee.workPeriodsDTO }"
+                th:attr="class='workPeriodIds' + ${ joinEmployee.employeeDTO.id } + ' ' +  'd-none'"
+                th:text="${ employeeWorkPeriod.id }">
+          </span>
+
         </div> 
 
         <div th:each="professionalRole: ${ professionalRoles }">
@@ -25,6 +36,9 @@
 
         <!-- Add script for manage add employee request with js -->
         <script th:src="@{/js/employees/put-employee-form.js}"></script>  
+
+        <!-- Add script for manage add employee request with js -->
+        <script th:src="@{/js/employees/dismiss-employee-form.js}"></script>  
 
         <!-- Add script for manage delete buttons -->
         <script th:src="@{/js/employees/employees-buttons.js}"></script>
