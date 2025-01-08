@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+
+    <!-- fragment -->
+    <div th:fragment="dismiss-employee-modal(joinEmployee, workPeriod)">
+
+        <!-- I need this for get (in js script) ids of employees who can be dismiss -->
+        <span class="dismissEmployeeIds d-none" th:text="${joinEmployee.employeeDTO.id}"></span>
+
+        <!-- MODAL -->
+        <div class="modal fade" th:id="'dismissEmployeeModalToggle' + ${joinEmployee.employeeDTO.id}" 
+                th:aria-labelledby="'dismissEmployeeModalToggleLabel' + ${joinEmployee.employeeDTO.id}" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" 
+                      th:id="'dismissEmployeeModalToggleLabel' + ${joinEmployee.employeeDTO.id}"
+                      th:text="#{titleDismissEmployee}">
+                      Dismiss Employee
+                  </h1>
+                  <button th:id="'btnXCloseModal' + ${joinEmployee.employeeDTO.id}" type="button" 
+                          class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                  <div th:replace="~{fragments/messages/error-msg :: error-msg(${joinEmployee.employeeDTO.id},'')}"></div>
+
+                  <!-- get data for create the Employee -->
+                  <form th:id="'dismissEmployeeForm' + ${joinEmployee.employeeDTO.id}" method="PUT" th:action="@{/putWorkPeriod}" > 
+
+                    <!-- For sent the id of work period in the dismiss request -->
+                    <div><input type="hidden" name="id" th:value="${workPeriod.id}"></div> 
+                    <!-- For sent the idEmployee in the dismiss request -->
+                    <div><input type="hidden" name="idEmployee" th:value="${joinEmployee.employeeDTO.id}"></div>
+
+                    <div class="row g-3">
+
+                      <div class="col-12  d-flex align-items-center">  
+                  
+                        <label for="dateStartWork" class="form-label col-md-auto me-2" th:text="#{formLabelEndWorkDate}">
+                        End work date*:
+                        </label> 
+                        <input type="text" class="form-control w-100" id="endDate" name="endDate" 
+                              th:placeholder="#{formPlaceholderDate}"> 
+                      </div>
+
+                      
+                    </div>
+
+                   
+                  </form>
+
+                  
+               
+                </div>
+                <div class="modal-footer">
+
+                  <!-- Button add professional role select -->  
+                  <button th:id="'btnDismissEmployee' + ${joinEmployee.employeeDTO.id}" 
+                          class="btn btn-danger" th:text="#{btnDismiss}">
+                    Dismiss
+                  </button>
+
+                
+                </div>
+              </div>
+            </div>
+        </div>
+        
+        <!-- Button for open the Modal -->
+        <button class="btn btn-danger mt-2" 
+                th:data-bs-target="'#dismissEmployeeModalToggle'+ ${joinEmployee.employeeDTO.id}" 
+                data-bs-toggle="modal"
+                th:text="#{btnDismiss}">Dismiss</button>
+
+        <!-- Add script for manage dismiss employee request with js -->
+         <!-- This is in requires-employees -->
+       <script th:src="@{/js/employees/dismiss-employee-form.js}"></script>  
+
+    </div>
+
+</body>
+</html>

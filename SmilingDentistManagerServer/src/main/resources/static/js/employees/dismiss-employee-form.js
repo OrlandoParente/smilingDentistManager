@@ -2,11 +2,9 @@
 
     document.addEventListener('DOMContentLoaded', function () {
 
-      var arr = Array.from( 
+      Array.from( 
         document.getElementsByClassName("dismissEmployeeIds") 
-      );
-      
-      arr.forEach( element => {
+      ).forEach( element => {
 
     
         var employeeId = element.innerText;
@@ -92,8 +90,6 @@
         }
       
       });
-
-      console.log('ARR SIZE : ' + arr.length )
 
     });
         

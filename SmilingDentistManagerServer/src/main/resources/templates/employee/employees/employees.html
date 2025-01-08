@@ -78,12 +78,13 @@
                                             #lists.size(joinEmployee.workPeriodsDTO) > 0
                                             && joinEmployee.workPeriodsDTO[ #lists.size( joinEmployee.workPeriodsDTO ) -1 ]?.endDate == null
                                             }" 
-                                        th:insert="~{/fragments/employees/dismiss-employee-modal :: dismiss-employee-modal(${joinEmployee})}"
+                                        th:with="lastWorkPeriod=${ joinEmployee.workPeriodsDTO[ #lists.size( joinEmployee.workPeriodsDTO ) -1 ] }"
+                                        
                                     >
-                                        <span class="dismissEmployeeIds d-none" 
-                                              th:text="${joinEmployee.employeeDTO.id}">
-
-                                        </span>
+                                        <div th:insert="~{/fragments/employees/dismiss-employee-modal 
+                                            :: dismiss-employee-modal( ${joinEmployee}, ${lastWorkPeriod} )}"
+                                            >
+                                        </div>
                                     </div>
                                     
 
