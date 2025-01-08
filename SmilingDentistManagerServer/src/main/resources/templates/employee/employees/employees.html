@@ -64,13 +64,18 @@
                                             th:if="${
                                                 #lists.size(joinEmployee.workPeriodsDTO) == 0
                                                 || joinEmployee.workPeriodsDTO[ #lists.size( joinEmployee.workPeriodsDTO ) -1 ]?.endDate != null
-                                                }" 
+                                                }"
+                                            th:with="lastWorkPeriod= 
+                                                        ( ${#lists.size( joinEmployee.workPeriodsDTO ) -1  >= 0 
+                                                        && joinEmployee.workPeriodsDTO[ #lists.size( joinEmployee.workPeriodsDTO ) -1 ]?.endDate == null} ) 
+                                                            ? ${ joinEmployee.workPeriodsDTO[ #lists.size( joinEmployee.workPeriodsDTO ) -1 ] }
+                                                            : null"
                                             >
 
-                                        <button  class="btn btn-success  me-2 mt-2">
-                                            Assume
-                                        </button>
-
+                                            <div th:insert="~{/fragments/employees/assume-employee-modal 
+                                                            :: assume-employee-modal( ${joinEmployee}, ${lastWorkPeriod} )}"
+                                                >
+                                            </div>
                                     </div>  
 
                                     <div 
