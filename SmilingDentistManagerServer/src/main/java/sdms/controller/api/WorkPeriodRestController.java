@@ -260,6 +260,17 @@ public class WorkPeriodRestController {
 		if( ! workingAgreement.equals("sdm-none-nessuna") ) workPeriod.setWorkingAgreement(workingAgreement);
 		if( ! notes.equals("sdm-none-nessuna") ) workPeriod.setNotes(notes);
 		
+		
+		// check that startDate is before endDate ---------------------------
+		
+		if( workPeriod.getStartDate() != null && workPeriod.getEndDate() != null ) {
+			if( workPeriod.getStartDate().isAfter( workPeriod.getEndDate() ) )
+				return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( "Error: start date is after than end date" );
+		}
+		
+		// ------------------------------------------------------------------
+		
+		// Put the work period
 		service.putWorkPeriod(workPeriod);
 		
 		return ResponseEntity.status( HttpStatus.OK ).body( workPeriod );

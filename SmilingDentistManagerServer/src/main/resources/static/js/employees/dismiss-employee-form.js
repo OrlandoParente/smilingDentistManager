@@ -73,9 +73,18 @@
               } else {
                 errMsg.style.display = "block";
                 errMsgText.innerText = "Failed to put Employee ";
+                
+                // return response.json().then(err => { throw new Error(err.message || 'Failed to put Employee') });
+                // return response.text();
               }
             }).catch( error => {
-             console.log('Error: ' + error ); 
+            
+              // errMsg.style.display = "block";
+              // errMsgText.innerText = "Failed to put Employee ";
+              // errMsgText.innerHTML += "<br>Server error: " + error;
+              // errMsgText.innerHTML += "<br>Server error message: " + error.message;
+              console.log('Error: ' + error );
+
             });
 
         });

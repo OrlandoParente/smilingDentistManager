@@ -41,10 +41,13 @@
 
                       <div class="col-12  d-flex align-items-center">  
                   
-                        <label for="dateStartWork" class="form-label col-md-auto me-2" th:text="#{formLabelEndWorkDate}">
+                        <label  class="form-label col-md-auto me-2"
+                                th:for="'endDate' + ${joinEmployee.employeeDTO.id} " 
+                                th:text="#{formLabelEndWorkDateMandatory}">
                         End work date*:
                         </label> 
-                        <input type="text" class="form-control w-100" id="endDate" name="endDate" 
+                        <input type="text" class="form-control w-100" name="endDate"
+                              th:id="'endDate' + ${joinEmployee.employeeDTO.id}" 
                               th:placeholder="#{formPlaceholderDate}"> 
                       </div>
 
