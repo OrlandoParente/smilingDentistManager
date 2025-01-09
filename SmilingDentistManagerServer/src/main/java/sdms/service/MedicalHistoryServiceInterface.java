@@ -11,6 +11,7 @@ public interface MedicalHistoryServiceInterface {
 	public void postMedicalHistory( MedicalHistory medicalHistory );
 	
 	// READ
+	public List<MedicalHistory> getMedicalHistories();
 	public List<MedicalHistory> getMedicalsHistoryByCustomerId( long idCustomer );
 	public MedicalHistory getMedicalHistoryById( Long id );
 	

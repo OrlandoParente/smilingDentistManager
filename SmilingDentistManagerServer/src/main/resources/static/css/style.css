@@ -10,3 +10,7 @@
 .sdm-table-scrollable th{
     min-width: 10rem;
 }
+
+.sdm-table-header-bg {
+    background-color: #c4e3ed !important; 
+}

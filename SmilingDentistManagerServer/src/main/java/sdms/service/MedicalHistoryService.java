@@ -25,6 +25,12 @@ public class MedicalHistoryService implements MedicalHistoryServiceInterface {
 	
 	
 	@Override
+	public List<MedicalHistory> getMedicalHistories() {
+		
+		return repository.findAll();
+	}
+	
+	@Override
 	public List<MedicalHistory> getMedicalsHistoryByCustomerId(long idCustomer) {
 		
 		Customer customer = customerRepository.findById(idCustomer).get();

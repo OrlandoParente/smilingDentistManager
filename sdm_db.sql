@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Gen 09, 2025 alle 11:20
+-- Creato il: Gen 09, 2025 alle 20:38
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -250,10 +250,24 @@ INSERT INTO `has_professional_role` (`id`, `id_employee`, `id_professional_role`
 CREATE TABLE `medical_history` (
   `id` bigint(20) NOT NULL,
   `type` varchar(255) NOT NULL,
-  `category` varchar(255) NOT NULL,
+  `category` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL
+  `description` varchar(255) DEFAULT NULL,
+  `id_customer` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `medical_history`
+--
+
+INSERT INTO `medical_history` (`id`, `type`, `category`, `name`, `description`, `id_customer`) VALUES
+(1, 'Generale', 'malattia', 'Affezioni cardiache', NULL, NULL),
+(2, 'Odontoiatrica', 'Sintomo', 'Sensibilità denti', NULL, NULL),
+(3, 'Generale', 'Allergia farmaci', 'dsfdsfdsfsdfsd', NULL, NULL),
+(4, 'Odontoiatrica', 'igiene domiciliare', '2 volte al giorno', NULL, NULL),
+(5, 'Generale', 'malattia', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'dfgfdhgfhg', NULL),
+(8, 'Odontoiatrica', 'Sintomo', 'plpkppmmkm,.m ', '', NULL),
+(9, 'Odontoiatrica', 'Sintomo', 'rrrrrrrrrr', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -328,7 +342,8 @@ INSERT INTO `work_period` (`id`, `id_employee`, `start_date`, `end_date`, `worki
 (33, 2, '2002-12-12', '2029-02-01', '', ''),
 (34, 1, '2030-03-04', '2049-02-01', '', ''),
 (35, 1, '2030-03-04', '2035-02-01', '', ''),
-(36, 31, '2030-03-04', '2035-02-01', '', '');
+(36, 31, '2030-03-04', '2035-02-01', '', ''),
+(37, 2, '2002-12-12', NULL, '', '');
 
 --
 -- Indici per le tabelle scaricate
@@ -390,7 +405,8 @@ ALTER TABLE `has_professional_role`
 -- Indici per le tabelle `medical_history`
 --
 ALTER TABLE `medical_history`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK1qj29sucrojlr34vibp1a8cq6` (`id_customer`);
 
 --
 -- Indici per le tabelle `professional_role`
@@ -461,7 +477,7 @@ ALTER TABLE `has_professional_role`
 -- AUTO_INCREMENT per la tabella `medical_history`
 --
 ALTER TABLE `medical_history`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT per la tabella `professional_role`
@@ -479,7 +495,7 @@ ALTER TABLE `treatment`
 -- AUTO_INCREMENT per la tabella `work_period`
 --
 ALTER TABLE `work_period`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- Limiti per le tabelle scaricate
@@ -514,6 +530,12 @@ ALTER TABLE `has_medical_history`
 ALTER TABLE `has_professional_role`
   ADD CONSTRAINT `fk_employee` FOREIGN KEY (`id_employee`) REFERENCES `employee` (`id`),
   ADD CONSTRAINT `fk_professional_role` FOREIGN KEY (`id_professional_role`) REFERENCES `professional_role` (`id`);
+
+--
+-- Limiti per la tabella `medical_history`
+--
+ALTER TABLE `medical_history`
+  ADD CONSTRAINT `FK1qj29sucrojlr34vibp1a8cq6` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`);
 
 --
 -- Limiti per la tabella `work_period`

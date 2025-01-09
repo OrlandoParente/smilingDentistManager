@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="add-medical-history-modal">
+        <div class="modal fade" id="addMedicalHistoryModalToggle" aria-hidden="true"
+                aria-labelledby="addAddMedicalHistoryModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="addMedicalHistoryModalToggleLabel" th:text="#{titleAddMedicalHistory}">
+                    Add Medical History
+                  </h1>
+                  <button id="btnXCloseModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- fragment err-msg($id, $msg) , 
+                        in this case $id='' cause in err-msg id = 'errMsg' + ${id} 
+                        but we have only one modal so we don't need different ids -->
+                    <div th:replace="~{fragments/messages/error-msg :: error-msg('','')}"></div>
+
+                    <!-- get data for create the medical history -->
+                    <form id="addMedicalHistoryForm" method="POST" th:action="@{/postMedicalHistory}" > 
+
+                        <div class="col-12 d-flex align-items-center">  
+                        <!-- <div class="row g-3 mt-3"> -->
+                            <label for="medicalHistorySelectType" class="form-label me-2" th:text="#{formLabelTypeMandatory}">
+                            Type*:
+                            </label> 
+                            <!-- <input type="text" class="form-control" id="name" name="name" > -->
+                            <select class="form-control form-select me-2 mt-2" id="medicalHistorySelectType" >
+                              <option value="" selected ></option>
+                              <option th:each="type : ${ medicalHistoryTypes }"
+                                      th:value="${type}"
+                                      th:text="${type}"
+                                      >
+                              </option>
+                            </select>
+                            <input type="text" class="form-control mt-2" id="medicalHistoryInputTextType" name="type" > 
+                            
+                        </div> 
+
+                        <div class="col-12 d-flex align-items-center mt-3">  
+                          <!-- <div class="row g-3 mt-3"> -->
+                              <label for="medicalHistorySelectCategory" class="form-label me-2" 
+                                      th:text="#{formLabelCategoryMandatory}">
+                              Category*:
+                              </label> 
+                              <!-- <input type="text" class="form-control" id="name" name="name" > -->
+                              <select class="form-control form-select me-2 mt-2" id="medicalHistorySelectCategory" >
+                                <option value="" selected ></option>
+                                <option th:each="category : ${ medicalHistoryCategories }"
+                                        th:value="${category}"
+                                        th:text="${category}"
+                                        >
+                                </option>
+                              </select>
+                              <input type="text" class="form-control mt-2" id="medicalHistoryInputTextCategory" name="category" > 
+                              
+                          </div> 
+
+                        <div class="col-12 d-flex align-items-center mt-3">  
+                        <!-- <div class="row g-3 mt-3"> -->
+                            <label for="name" class="form-label me-2" th:text="#{formLabelNameMandatory}">
+                            Name*:
+                            </label> 
+                            <!-- <input type="text" class="form-control" id="name" name="name" > -->
+                            <input type="text" class="form-control w-100" id="name" name="name" > 
+                        </div> 
+                      
+                            
+                        <div class="row g-3 mt-3">
+                        <label class="form-label mb-1" for="description" th:text="#{formLabelDescription}">
+                            Description: 
+                        </label>
+                        <input class="form-control" name="description" id="description" type="textarea">
+                        </div>
+                    
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                  <button id="btnAddMedicalHistory" type="submit" form="addMedicalHistoryForm" class="btn btn-primary" th:text="#{btnAdd}">
+                    Add Professional Role
+                  </a>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!-- If there are many buttons on the nav use this: 
+            th:text="#{btnAddAbbreviation}"
+            for a better web responsive web application  -->
+          <a href="#" class="nav-link active" data-bs-target="#addMedicalHistoryModalToggle" 
+                data-bs-toggle="modal" th:text="#{btnAdd}">
+            Add
+          </a>
+
+        <!-- Add script for manage add medical history request with js -->
+        <!-- <script th:src="@{/js/medical-histories/add-medical-history-form.js}"></script>  -->
+
+    </div>
+
+</body>
+</html>
