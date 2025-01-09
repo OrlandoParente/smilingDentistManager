@@ -1,11 +1,12 @@
 package sdms.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,13 +19,13 @@ public class MedicalHistory {
 	
 	// FOREIGN KEYS ######################################################
 	
-	@ManyToOne
-	@JoinColumn( name = "id_customer" )
-	private Customer customer;
+	@OneToMany( mappedBy = "medicalHistory" )
+	private List<HasMedicalHistory> hasMedicalHistories;
 	
 	// ###################################################################
 	
 	private String type;		   // [ anamnesi generale o odontoiatrica ]
+	private String category;
 	private String name;
 	private String description;
 	
@@ -35,12 +36,13 @@ public class MedicalHistory {
 
 	@Override
 	public String toString() {
-		return "MedicalHistory [id=" + id + ", idCustomer=" + this.getIdCustomer() + ", type=" + type + ", name=" + name
-				+ ", description=" + description + "]";
+		return "MedicalHistory [id=" + id + ", hasMedicalHistories=" + hasMedicalHistories + ", type=" + type
+				+ ", category=" + category + ", name=" + name + ", description=" + description + "]";
 	}
 
+
 	// GETTERS AND SETTERS 
-	
+
 
 	public long getId() {
 		return id;
@@ -50,22 +52,6 @@ public class MedicalHistory {
 		this.id = id;
 	}
 
-	public long getIdCustomer() {
-		
-		if( this.customer != null )
-			return this.customer.getId();
-		
-		// errore
-		return -1;
-	}
-
-	public void setIdCustomer(long idCustomer) {
-		
-		if( this.customer == null )
-			this.customer = new Customer();
-		
-		this.customer.setId(idCustomer);
-	}
 
 	public String getType() {
 		return type;
@@ -94,12 +80,23 @@ public class MedicalHistory {
 		this.description = description;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+
+	public List<HasMedicalHistory> getHasMedicalHistories() {
+		return hasMedicalHistories;
+	}
+
+
+	public void setHasMedicalHistories(List<HasMedicalHistory> hasMedicalHistories) {
+		this.hasMedicalHistories = hasMedicalHistories;
 	}
 
 

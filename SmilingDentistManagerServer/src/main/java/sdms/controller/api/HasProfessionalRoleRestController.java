@@ -33,7 +33,7 @@ public class HasProfessionalRoleRestController {
 		// check message
 		System.out.println( "HasProfessionalRoleRestController ->  postLinkEmployeeToProfessionalRole " );
 		
-		// if idProfessionalRole Do Nothing 
+		// if idProfessionalRole == -1 Do Nothing 
 		if( idProfessionalRole == -1 )
 			return ResponseEntity.status(HttpStatus.OK).build();
 		

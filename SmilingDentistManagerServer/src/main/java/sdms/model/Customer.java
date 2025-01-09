@@ -24,7 +24,7 @@ public class Customer {
 	private List<Appointment> appointments;
 	
 	@OneToMany( mappedBy = "customer" )
-	private List<MedicalHistory> medicalHistories;
+	private List<HasMedicalHistory> hasMedicalHistories;
 	
 	@OneToMany( mappedBy = "customer" )
 	private List<Expense> expenses;
@@ -55,7 +55,7 @@ public class Customer {
 	
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", appointments=" + appointments + ", medicalHistories=" + medicalHistories
+		return "Customer [id=" + id + ", appointments=" + appointments + ", medicalHistories=" + hasMedicalHistories
 				+ ", expenses=" + expenses + ", taxIdCode=" + taxIdCode + ", name=" + name + ", surname=" + surname
 				+ ", birthCity=" + birthCity + ", birthCityProvince=" + birthCityProvince + ", birthDate=" + birthDate
 				+ ", residenceStreet=" + residenceStreet + ", houseNumber=" + houseNumber + ", residenceCity="
@@ -173,12 +173,12 @@ public class Customer {
 		this.appointments = appointments;
 	}
 
-	public List<MedicalHistory> getMedicalHistories() {
-		return medicalHistories;
+	public List<HasMedicalHistory> getHasMedicalHistories() {
+		return hasMedicalHistories;
 	}
 
-	public void setMedicalHistories(List<MedicalHistory> medicalHistories) {
-		this.medicalHistories = medicalHistories;
+	public void setHasMedicalHistories(List<HasMedicalHistory> hasMedicalHistories) {
+		this.hasMedicalHistories = hasMedicalHistories;
 	}
 
 	public List<Expense> getExpenses() {

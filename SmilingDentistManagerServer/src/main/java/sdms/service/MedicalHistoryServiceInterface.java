@@ -6,24 +6,26 @@ import sdms.model.MedicalHistory;
 
 public interface MedicalHistoryServiceInterface {
 
-//	// Gestione Medical History (Anamnesi) -----------------
-//	ArrayList<MedicalHistory> getMedicalsHistoryByCustomer( String id_customer ) throws SQLException;
-	public List<MedicalHistory> getMedicalsHistoryByCustomerId( long idCustomer );
-	
-//	ArrayList<MedicalHistory> getMedicalHistoryById( String id ) throws SQLException;
-	public MedicalHistory getMedicalHistoryById( Long id );
-		
-//	// type = "generale" o "odontoiatrica" 
-//	boolean postMedicalHistory( String id_customer, String type , String name ) throws SQLException;
-//	boolean postMedicalHistory( String id_customer, String type , String name, String descriprion ) throws SQLException;
-	public void postMedicalHistory( MedicalHistory medicalHistory );
 
+	// CREATE
+	public void postMedicalHistory( MedicalHistory medicalHistory );
+	
+	// READ
+	public List<MedicalHistory> getMedicalsHistoryByCustomerId( long idCustomer );
+	public MedicalHistory getMedicalHistoryById( Long id );
+	
+	public List<String> getMedicalHistoryTypes();
+	public List<String> getMedicalHistoryCategories();
+	
+	public List<MedicalHistory> getMedicalsHistoryByType( String type );
+	public List<MedicalHistory> getMedicalsHistoryByCategory( String category );
+	public List<MedicalHistory> getMedicalsHistoryByTypeAndCategory( String type, String category );
+	
+	// UPDATE
 	public void putMedicalHistory( MedicalHistory medicalHistory );
 	
-//	boolean deleteMedicalHistoryById( String id ) throws SQLException;
+	// DELETE
 	public void deleteMedicalHistoryById( Long id );
-//	// ------------------------------------------------------
-
 	
 	
 }

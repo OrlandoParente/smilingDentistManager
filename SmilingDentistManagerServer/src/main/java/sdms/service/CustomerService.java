@@ -9,7 +9,7 @@ import sdms.model.Customer;
 import sdms.repository.AppointmentRepository;
 import sdms.repository.CustomerRepository;
 import sdms.repository.ExpenseRepository;
-import sdms.repository.MedicalHistoryRepository;
+import sdms.repository.HasMedicalHistoryRepository;
 import sdms.util.DateAndTimeManager;
 
 @Service
@@ -19,10 +19,11 @@ public class CustomerService implements CustomerServiceInterface {
 	CustomerRepository repository;
 	
 	@Autowired
-	MedicalHistoryRepository medicalHistoryRepository;
+	HasMedicalHistoryRepository hasMedicalHistoryRepository;
 	
 	@Autowired
 	AppointmentRepository appointmentRepository;
+	
 	
 	@Autowired
 	ExpenseRepository expenseRepository;
@@ -78,8 +79,8 @@ public class CustomerService implements CustomerServiceInterface {
 		
 		// Delete the constraints -------------------------------------------------------------------------
 		
-		medicalHistoryRepository.findByCustomer(customer).forEach( medicalHistory -> {
-			medicalHistoryRepository.delete(medicalHistory);
+		hasMedicalHistoryRepository.findByCustomer(customer).forEach( hasMedicalHistory -> {
+			hasMedicalHistoryRepository.delete(hasMedicalHistory);
 		});
 		
 		expenseRepository.findByCustomer(customer).forEach( expense -> {
