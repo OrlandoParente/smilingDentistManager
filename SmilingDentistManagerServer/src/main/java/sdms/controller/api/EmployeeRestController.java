@@ -226,34 +226,83 @@ public class EmployeeRestController {
 //	}
 //	
 //	
-	@PutMapping( value="/putEmployee", params = {"id", "name","surname","title", "birthDate","phoneNumber", "phoneNumber2","eMail"} )
-	public ResponseEntity<?> postEmployee( @RequestParam("id") long id, @RequestParam("name") String name, 
-							@RequestParam("surname") String surname , @RequestParam("title") String title, 
-							@RequestParam("birthDate") String birthDate, @RequestParam("phoneNumber") String phoneNumber, 
-							@RequestParam("phoneNumber2") String phoneNumber2, @RequestParam("eMail") String eMail ) {
-
+	
+	@PutMapping( value="/putEmployee", params = {"id"} )
+	public ResponseEntity<?>  putEmployee( @RequestParam Long id,
+			@RequestParam(defaultValue = "") String name, 
+			@RequestParam(defaultValue = "") String surname ,
+			@RequestParam(defaultValue = "") String eMail,
+			@RequestParam(defaultValue = "") String title, 
+			@RequestParam(defaultValue = "") String birthDate,
+			@RequestParam(defaultValue = "") String phoneNumber, 
+			@RequestParam(defaultValue = "") String phoneNumber2,
+			@RequestParam(defaultValue = "-1") Double salary,
+			@RequestParam(defaultValue = "-1" ) Integer permission,
+			@RequestParam(defaultValue = "") String startWorkDate
+	) {
 		// Messaggio di controllo
 		System.out.println("EmployeeRestController --> putEmployee ");
+		
 		
 		Employee employee = service.getEmployeeById(id);
 		
 		if( employee == null )
-			return ResponseEntity.status( HttpStatus.NOT_FOUND ).build();
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Employee with id " + id + " not found in the database" );
 		
-		employee.setName(name);
-		employee.setSurname(surname);
-		employee.setTitle(title);
-		employee.setPhoneNumber(phoneNumber);
-		employee.setPhoneNumber2(phoneNumber2);
-		employee.seteMail(eMail);
-		employee.setBirthDate( dateAndTimeManager.parseDate(birthDate) );
+		try {
 		
-		service.putEmployee(employee);
+			if( ! name.equals(""))	employee.setName(name);
+			if( ! surname.equals(""))	employee.setSurname(surname);
+			if( ! eMail.equals(""))	employee.seteMail(eMail);
+			
+			if( ! title.equals(""))	employee.setTitle(title);
+			if( ! phoneNumber.equals(""))	employee.setPhoneNumber(phoneNumber);
+			if( ! phoneNumber2.equals(""))	employee.setPhoneNumber2(phoneNumber2);
+			if( ! birthDate.equals("") )	employee.setBirthDate( dateAndTimeManager.parseDate(birthDate) );
+			
+			if( salary != -1 ) employee.setSalary(salary);
+			if( permission != -1 ) employee.setPermission(permission);
+			
+			
+			service.postEmployee(employee);
+			
+		} catch ( DateTimeParseException e ) {
+			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Error: invalid format data");
+		} catch ( Exception e ) {
+			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).build();
+		}
 		
-		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(employee, EmployeeDTO.class) );
-		
-		
+		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(employee, EmployeeDTO.class) );		
 	}
+	
+//	@PutMapping( value="/putEmployee", params = {"id", "name","surname","title", "birthDate","phoneNumber", "phoneNumber2","eMail"} )
+//	public ResponseEntity<?> postEmployee( @RequestParam("id") long id, @RequestParam("name") String name, 
+//							@RequestParam("surname") String surname , @RequestParam("title") String title, 
+//							@RequestParam("birthDate") String birthDate, @RequestParam("phoneNumber") String phoneNumber, 
+//							@RequestParam("phoneNumber2") String phoneNumber2, @RequestParam("eMail") String eMail ) {
+//
+//		// Messaggio di controllo
+//		System.out.println("EmployeeRestController --> putEmployee ");
+//		
+//		Employee employee = service.getEmployeeById(id);
+//		
+//		if( employee == null )
+//			return ResponseEntity.status( HttpStatus.NOT_FOUND ).build();
+//		
+//		employee.setName(name);
+//		employee.setSurname(surname);
+//		employee.setTitle(title);
+//		employee.setPhoneNumber(phoneNumber);
+//		employee.setPhoneNumber2(phoneNumber2);
+//		employee.seteMail(eMail);
+//		employee.setBirthDate( dateAndTimeManager.parseDate(birthDate) );
+//		
+//		service.putEmployee(employee);
+//		
+//		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(employee, EmployeeDTO.class) );
+//		
+//		
+//	}
 	
 
 	@DeleteMapping( value="/deleteEmployeeById", params = {"id"} )
