@@ -26,7 +26,7 @@
         function deleteAppointmentById(id){
 
             // from common-top-page fragment
-            var url = document.getElementById('urlDeleteEmployeeById').getAttribute('href') + '?id=' + id;
+            var url = document.getElementById('urlDeleteEmployee').getAttribute('href') + '?id=' + id;
             console.log(url);
 
             fetch( url,{
