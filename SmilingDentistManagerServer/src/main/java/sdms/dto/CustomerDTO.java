@@ -1,5 +1,7 @@
 package sdms.dto;
 
+import java.time.LocalDate;
+
 public class CustomerDTO {
 	
 	private long id;	// non uso il cod_fiscale come id perché non so se il cliente è tenuto a rilasciarlo
@@ -9,7 +11,7 @@ public class CustomerDTO {
 	private String surname;
 	private String birthCity;
 	private String birthCityProvince;	// preferibilmente la sigla provincia, ma lascio spazio per il nome completo
-	private String birthDate;
+	private LocalDate birthDate;
 	private String residenceStreet;
 	private String houseNumber;
 	private String residenceCity;
@@ -82,11 +84,11 @@ public class CustomerDTO {
 		this.birthCityProvince = birthCityProvince;
 	}
 	
-	public String getBirthDate() {
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
 	
-	public void setBirthDate(String birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 	

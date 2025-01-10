@@ -57,8 +57,8 @@ public class CustomerService implements CustomerServiceInterface {
 			
 		// this one is done with JpaInteface 
 		return repository.findCustomerByTaxIdCodeContainingOrNameContainingOrSurnameContainingOrBirthCityContainingOrBirthCityProvinceContainingOrBirthDateStringContainingOrResidenceStreetContainingOrHouseNumberContainingOrResidenceCityContainingOrResidenceCityCapContainingOrResidenceProvinceContainingOrPhoneNumberContainingOrPhoneNumber2ContainingOrEMailContaining(
-							keyWord, keyWord, keyWord, keyWord, keyWord, keyWord,
-							keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord);
+							keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, 
+							keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord);
 	}
 
 	@Override
