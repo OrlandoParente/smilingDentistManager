@@ -19,11 +19,106 @@
         <!-- Main Content -->
         <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
             
-            <!-- Customer nav -->
-            <nav th:replace="~{fragments/customers/customers-nav :: customers-nav}"></nav>
-
             <!-- here the page content -->
             <div class="row sdm-work-area-scollable">
+
+                <!-- Customer nav -->
+                <!-- <nav th:replace="~{fragments/customers/customers-nav :: customers-nav}"></nav> -->
+
+                <!-- Customer Personal Data -->
+                <div>
+
+                    <h1 class="text-center mt-3" > 
+                        <span th:text="${customer.name} + ' ' + ${customer.surname}"></span> 
+                    </h1>
+    
+                    <div class=" ">
+                        <span class="fw-bold" th:text="#{formLabelEMailMandatory}"></span>
+                        <span th:text="' ' + ${customer.eMail} + ' '"></span>
+                        <span class="fw-bold" th:text="#{formLabelTaxIdCode}"></span>
+                        <span th:text=" ' ' + ${customer.taxIdCode} + ' '"></span>
+                    </div>
+    
+                    <div class="">
+                        <span th:text="#{formLegendBirthplace} + ' ' + ${customer.birthCity} + ' (' + ${customer.birthCityProvince} + ') '"></span>
+                        <span th:text="#{formLabelBirthDate} + ' ' + ${customer.birthDate}"></span>
+                    </div>
+    
+                    <div class="" >
+                        <span class="fw-bold">Reseidenza, cap , etc , etc ...  </span>
+                    </div>
+    
+
+                </div>
+
+                <h2 class="text-center">Anamnesi</h2>
+                <!-- Medical History -->
+                <div class="row">
+
+                    <div class="sdm-table-scrollable table-responsive mt-3">
+                        <table class="table table-striped table-bordered text-center mt-3"
+                                th:each="entry : ${ joinCustomer.mapByTypeJoinMedicalHistoriesDTO }">
+    
+                                <thead>
+                                    <!-- Medical History Type -->
+                                    <tr  >
+                                        <th colspan="5" class="sdm-table-header-bg" >
+                                            <span th:text="${entry.key}">Medical History Type</span>
+                                        </th>
+                                    </tr>
+                                    <!-- Medical History table header -->
+                                    <tr>
+                                        <th></th>
+                                        <th th:text="#{tableHeaderCategory}">Category</th>
+                                        <th th:text="#{tableHeaderName}">Name</th>
+                                        <th th:text="#{tableHeaderDescription}">Description</th>  
+                                        <th>Notes</th>                                  
+                                    </tr>
+                                </thead>
+    
+                                <tbody>
+                                    <tr th:each="joinMedicalHistory : ${ entry.value }">
+    
+                                        <td class="text-center align-middle ">
+                                            <button th:id="'btnDeleteMedicalHistory' + ${ joinMedicalHistory.medicalHistoryDTO.id }"
+                                                    class="btn btn-danger" 
+                                                    th:text="#{btnDelete}">
+                                                Delete
+                                            </button>
+                                            <div class="d-inline-block" th:insert="~{fragments/medical-histories/put-medical-history-modal
+                                                :: put-medical-history-modal( ${joinMedicalHistory.medicalHistoryDTO} )}">
+                                            </div>
+                                        </td>
+    
+                                        <td>
+                                            <span th:text="${joinMedicalHistory.medicalHistoryDTO.category}"></span>
+                                        </td>
+    
+                                        <td>
+                                            <span th:text="${joinMedicalHistory.medicalHistoryDTO.name}"></span>
+                                        </td>
+    
+                                        <td>
+                                            <span th:text="${joinMedicalHistory.medicalHistoryDTO.description}"></span>
+                                        </td>
+
+                                        <td>
+                                            <span th:text="${joinMedicalHistory.hasMedicalHistoryDTO.notes}"></span>
+                                        </td>
+    
+                                    </tr>
+                                </tbody>
+    
+                        </table>
+                    </div>
+
+                </div>
+                
+                <h2 class="text-center">Appuntamenti</h2>
+                <!-- Appointments -->
+                <div class="row">
+
+                </div>
 
             </div>
         </main>

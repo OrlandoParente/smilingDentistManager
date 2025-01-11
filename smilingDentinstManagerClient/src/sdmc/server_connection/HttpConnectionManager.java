@@ -27,7 +27,7 @@ public class HttpConnectionManager {
 	public static final String GET_CUSTOMER_BY_ID = "getCustomerById/";
 	public static final String GET_CUSTOMER_BY_PARTIAL_KEY_WORD_OVER_ALL_FIELDS = "getCustomersByPartialKeyWordOverAllFields/";
 	public static final String POST_CUSTOMER = "postCustomer";
-	public static final String PUT_CUSTOMER_BY_ID = "putCustomerById";
+	public static final String PUT_CUSTOMER_BY_ID = "putCustomer";
 	public static final String DELETE_CUSTOMER = "deleteCustomer";
 	public static final String GET_MAX_ID_CUSTOMER = "getMaxIdCustomer";
 	

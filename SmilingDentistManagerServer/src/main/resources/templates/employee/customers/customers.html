@@ -47,13 +47,20 @@
                             <tr th:each="customer : ${customers}">
                                 <td class="text-center align-middle">
                                     <button class="btn btn-danger"
+                                            th:id="'btnDeleteCustomer' + ${customer.id}"
                                             th:text="#{btnDelete}">
                                             Delete
                                     </button>
 
-                                    <button class="btn btn-primary">Edit</button>
+                                    <div class="d-inline-block"
+                                         th:insert="~{fragments/customers/put-customer-modal :: put-customer-modal( ${ customer } )}">
+                                    </div>
 
-                                    <button class="btn btn-primary">Details</button>
+                                    <a th:href="@{'/employee/customer/customer/details/' + ${customer.id} }" 
+                                        class="btn btn-primary mt-2">
+                                        Details
+                                    </a>
+
                                 </td>
 
                                 <td>
@@ -98,7 +105,7 @@
                                 </td>
 
                                 <td>
-                                    <span th:text="${customer.permission }" ></span>
+                                    <span th:text="#{${customer.permission }}" ></span>
                                 </td>
 
                             </tr>
@@ -116,6 +123,8 @@
     </div> <!-- end d-flex -->
 
 
+    <!-- for put, add, delete, details buttons -->
+    <div th:replace="~{fragments/customers/requires-customers :: requires-customers}"></div>
 
     <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           
 

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="add-customer-modal">
+        <div class="modal fade" id="addCustomerModalToggle" aria-hidden="true"
+                aria-labelledby="addAddCustomerModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="addCustomerModalToggleLabel" th:text="#{titleAddCustomer}">
+                    Add Customer
+                  </h1>
+                  <button id="btnXCloseModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- fragment err-msg($id, $msg) , 
+                        in this case $id='' cause in err-msg id = 'errMsg' + ${id} 
+                        but we have only one modal so we don't need different ids -->
+                    <div th:replace="~{fragments/messages/error-msg :: error-msg('','')}"></div>
+
+                    <!-- get data for create the professional role -->
+                    <form id="addCustomerForm" method="POST" th:action="@{/postCustomer}" > 
+                        
+                        <div class="row g-3">
+
+  
+                          <div class="col-12 col-md-6 d-flex align-items-center">  
+                      
+                            <label for="name" class="form-label me-2" th:text="#{formLabelNameMandatory}">
+                            Name*:
+                            </label> 
+                            <!-- <input type="text" class="form-control" id="name" name="name" > -->
+                            <input type="text" class="form-control w-100" id="name" name="name" > 
+                          </div>
+                          
+                          <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
+                            
+                            <label for="surname" class="form-label me-2" th:text="#{formLabelSurnameMandatory}">
+                            Surname*:
+                            </label> 
+                            <!-- <input type="text" class="form-control" id="name" name="name" > -->
+                            <input type="text" class="form-control w-100" id="surname" name="surname" >
+                          </div> 
+                          
+                        </div>
+
+                        <div class="row g-3 mt-3">
+
+                          <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
+                            
+                            <label for="eMail" class="form-label me-2 col-md-2" th:text="#{formLabelEMailMandatory}">
+                            E-mail*:
+                            </label> 
+                            <input type="text" class="form-control w-100" id="eMail" name="eMail" >
+                          </div> 
+
+                          <div class="col-12 col-md-6 d-flex align-items-center">  
+                      
+                            <label for="taxIdCode" class="form-label me-2 col-md-4" th:text="#{formLabelTaxIdCode}">
+                              Tax id code:
+                            </label> 
+                            <input type="text" class="form-control w-100" id="taxIdCode" name="taxIdCode" > 
+                          </div>
+
+
+                        </div>
+
+
+                        <div class="row g-3 mt-3">
+
+                          <div class="col-12 col-md-6 d-flex align-items-center">  
+                      
+                            <label for="phoneNumber" class="form-label me-2 col-md-4" th:text="#{formLabelPhoneNumber}">
+                            Phone Number:
+                            </label> 
+                            <input type="number" class="form-control w-100" id="phoneNumber" name="phoneNumber" > 
+                          </div>
+                          
+                          <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
+                            
+                            <label for="phoneNumber2" class="form-label me-2 col-md-4" th:text="#{formLabelPhoneNumber2}">
+                            Phone number 2:
+                            </label> 
+                            <input type="number" class="form-control w-100" id="phoneNumber2" name="phoneNumber2" >
+                          </div> 
+                          
+                        </div>
+
+
+                        <div class="row g-3 mt-3">
+
+                          <div class="col-12 col-md-6 d-flex align-items-center">
+                            <label for="birthDate" class="form-label me-2 col-md-auto" th:text="#{formLabelBirthDate}">
+                              Birth Date*:
+                            </label> 
+                            <input type="text" class="form-control w-100" id="birthDate" name="birthDate" 
+                                      th:placeholder="#{formPlaceholderDate}"> 
+                          </div>
+
+                          <div class="col-12 col-md-6 d-flex align-items-center">  
+                      
+                            <label class="form-label mb-1 col-md-auto me-2" for="permission" th:text="#{formLabelPermissions}">
+                              Permissions: 
+                            </label>
+                            <select class="form-select" name="permission" id="permission" >
+                              <option selected value=""></option>
+                              <option th:each="permission : ${customerPermissions}" 
+                                    th:value="${permission}"
+                                    th:text="#{ ${permission} }">
+                              </option>
+                            </select>
+                          </div>
+                          
+                        </div>
+
+                        
+                        <fieldset class="border p-3 mt-3">
+
+                          <legend th:text="#{formLegendBirthplace}">Birthplace</legend>
+
+                          <div class="row g-3 mt-3">
+
+                            <div class="col-12 col-md-8 d-flex align-items-center mt-3"> 
+                              <label class="form-label mb-1 col-md-auto me-2" for="birthCity" 
+                                      th:text="#{formLabelBirthCity}">
+                                  Birth city: 
+                              </label>
+                              <input class="form-control" id="birthCity" name="birthCity" type="text" >
+                            </div>
+
+                            <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 
+                              <label class="form-label mb-1 col-md-auto me-2" for="birthCityProvince" 
+                                      th:text="#{formLabelBirthCityProvince}">
+                                  Birth city province: 
+                              </label>
+                              <input class="form-control" name="birthCityProvince" id="birthCityProvince" type="text">
+                            </div>
+
+                          </div>
+
+                        </fieldset>
+
+                        <fieldset class="border p-3 mt-3">
+
+                          <legend th:text="#{formLegendResidence}">Residence</legend>
+
+                          <div class="row g-3 mt-3">
+
+                            <div class="col-12 col-md-8 d-flex align-items-center mt-3"> 
+                              <label class="form-label mb-1 col-md-auto me-2" for="residenceStreet" 
+                                      th:text="#{formLabelResidenceStreet}">
+                                  Street/square:  
+                              </label>
+                              <input class="form-control" name="residenceStreet" id="residenceStreet" type="text" >
+                            </div>
+
+                            <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 
+                              <label class="form-label mb-1 col-md-auto me-2" for="houseNumber" 
+                                      th:text="#{formLabelResidenceHouseNumber}">
+                                  N.: 
+                              </label>
+                              <input class="form-control" name="houseNumber" id="houseNumber" type="text">
+                            </div>
+
+                          </div>
+
+                          <div class="row g-3 mt-3">
+
+                            <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
+                              <label class="form-label mb-1 col-md-auto me-2" for="residenceCity" 
+                                      th:text="#{formLabelResidenceCity}">
+                                  City: 
+                              </label>
+                              <input class="form-control" name="residenceCity" id="residenceCity" type="text" >
+                            </div>
+
+                            <div class="col-12 col-md-3 d-flex align-items-center mt-3"> 
+                              <label class="form-label mb-1 col-md-auto me-2" for="residenceCityCap" 
+                                      th:text="#{formLabelResidenceCap}">
+                                  CAP: 
+                              </label>
+                              <input class="form-control" name="residenceCityCap" id="residenceCityCap" type="text">
+                            </div>
+
+
+                            <div class="col-12 col-md-3 d-flex align-items-center mt-3"> 
+                              <label class="form-label mb-1 col-md-auto me-2" for="residenceCityProvince" 
+                                      th:text="#{formLabelResidenceCityProvince}">
+                                  Province: 
+                              </label>
+                              <input class="form-control" name="residenceProvince" id="residenceCityProvince" type="text">
+                            </div>
+
+
+                          </div>
+
+                        </fieldset>
+
+                        
+
+                    
+                    </form>
+
+
+                </div>
+
+                <div class="modal-footer">
+                  
+                  <!-- 
+                  <button id="btnAddProfessionalRoleSlot" class="btn btn-primary" th:text="#{btnAddProfessionalRoleSlot}">
+                    Add Professional Role
+                  </button> 
+                  -->
+                  
+                  <button id="btnAddCustomer" type="submit" form="addCustomerForm" class="btn btn-primary" th:text="#{btnAdd}">
+                    Add Customer
+                  </button>
+                
+                </div>
+
+              </div>
+            </div>
+        </div>
+        <!-- If there are many buttons on the nav use this: 
+            th:text="#{btnAddAbbreviation}"
+            for a better web responsive web application  -->
+          <a href="#" class="nav-link active" data-bs-target="#addCustomerModalToggle" 
+                data-bs-toggle="modal" th:text="#{btnAddAbbreviation}">
+            Add
+          </a>
+
+        <!-- Add script for manage add customer request with js -->
+         <!-- I put this in requires-customers -->
+        <!-- <script th:src="@{/js/customers/add-customer-form.js}"></script>  -->
+
+    </div>
+
+</body>
+</html>
