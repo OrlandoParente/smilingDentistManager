@@ -36,7 +36,7 @@ public class MedicalHistory {
 
 	@Override
 	public String toString() {
-		return "MedicalHistory [id=" + id + ", hasMedicalHistories=" + hasMedicalHistories + ", type=" + type
+		return "MedicalHistory [id=" + id + ", hasMedicalHistories= [ has medical histories ... ] " + /* hasMedicalHistories + */ ", type=" + type
 				+ ", category=" + category + ", name=" + name + ", description=" + description + "]";
 	}
 

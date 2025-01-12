@@ -1,17 +1,22 @@
 package sdms.dto.join;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collector;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import sdms.dto.AppointmentDTO;
 import sdms.dto.CustomerDTO;
 import sdms.dto.ExpenseDTO;
 import sdms.dto.MedicalHistoryDTO;
 import sdms.model.Customer;
+import sdms.model.HasMedicalHistory;
 import sdms.model.MedicalHistory;
 import sdms.service.AppointmentServiceInterface;
 import sdms.service.CustomerServiceInterface;
@@ -20,6 +25,8 @@ import sdms.service.HasMedicalHistoryServiceInterface;
 import sdms.service.MedicalHistoryServiceInterface;
 
 public class CustomerMedicalHistoryExpenseAppointmentDTO {
+	
+	private final Logger LOGGER = LoggerFactory.getLogger( CustomerMedicalHistoryExpenseAppointmentDTO.class );
 
 	private CustomerDTO customerDTO;
 	private Map<String, List<MedicalHistoryHasMedicalHistoryDTO>>  mapByTypeJoinMedicalHistoriesDTO;
@@ -47,33 +54,50 @@ public class CustomerMedicalHistoryExpenseAppointmentDTO {
 		
 		// Build th map of MedicalHistories mapped by the type ---------------------------------------------------------------------
 			
-		List<MedicalHistory> medicalHistories = medicalHistoryService.getMedicalsHistoryByCustomerId(idCustomer);
+//		List<MedicalHistory> medicalHistories = medicalHistoryService.getMedicalsHistoryByCustomerId(idCustomer);
 		
+		List<HasMedicalHistory> hasMedicalHistories = hasMedicalHistoryService.getHasMedicalHistoriesByCustomer( customer )
+																					.stream()
+																					.sorted( Comparator.comparing( hmh -> hmh.getMedicalHistory().getType() ) )
+																					.toList();
+		
+		for( HasMedicalHistory hmh : hasMedicalHistories ) {
+			LOGGER.info( "" + hmh );
+		}
+
 		String keyType = "";
 		List<MedicalHistoryHasMedicalHistoryDTO> tmpJoinMedicalHistoriesDTO = null;
 		
-		for( MedicalHistory mh : medicalHistories ) {
+		int loop = 0;
+		for( HasMedicalHistory hmh : hasMedicalHistories ) {
 			
-			if( ! mh.getType().equals(keyType) ) {
+			if( ! hmh.getMedicalHistory().getType().equals(keyType) ) {
 				
-				keyType = mh.getType();
+				keyType = hmh.getMedicalHistory().getType();
 				tmpJoinMedicalHistoriesDTO = new ArrayList<MedicalHistoryHasMedicalHistoryDTO>();
-				tmpJoinMedicalHistoriesDTO.add( new MedicalHistoryHasMedicalHistoryDTO().buildFromMedicalHistoryId(
-																								mh.getId(), 
+				tmpJoinMedicalHistoriesDTO.add( new MedicalHistoryHasMedicalHistoryDTO().buildFromHasMedicalHistoryId(
+																								hmh.getId(), 
 																								hasMedicalHistoryService, 
 																								medicalHistoryService, 
 																								modelMapper) );
 				
 				this.mapByTypeJoinMedicalHistoriesDTO.put(keyType, tmpJoinMedicalHistoriesDTO);
 				
+				LOGGER.info("KeyType loop " + loop + " : " + keyType );
+				loop ++;
+				
 			} else {
 				this.mapByTypeJoinMedicalHistoriesDTO.get(keyType)
 														.add( new MedicalHistoryHasMedicalHistoryDTO()
-																.buildFromMedicalHistoryId(
-																	mh.getId(), 
+																.buildFromHasMedicalHistoryId(
+																    hmh.getId(), 
 																	hasMedicalHistoryService, 
 																	medicalHistoryService, 
 																	modelMapper) );
+				
+				
+				LOGGER.info("KeyType loop " + loop + " : " + keyType );
+				loop ++;
 			}
 			
 		}

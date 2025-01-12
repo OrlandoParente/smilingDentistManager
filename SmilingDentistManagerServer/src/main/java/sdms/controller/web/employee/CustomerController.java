@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpServletRequest;
 import sdms.dto.CustomerDTO;
 import sdms.dto.join.CustomerMedicalHistoryExpenseAppointmentDTO;
-
 import sdms.model.Customer;
 import sdms.service.AppointmentServiceInterface;
 import sdms.service.CustomerServiceInterface;
@@ -30,6 +31,8 @@ import sdms.util.WebClientCookieManager;
 @RequestMapping("/employee/customer")
 public class CustomerController {
 
+	private final Logger LOGGER = LoggerFactory.getLogger( CustomerController.class );
+	
 	@Autowired
 	CustomerServiceInterface service;
 	
@@ -104,6 +107,18 @@ public class CustomerController {
 		
 		joinCustomer.buildFromCustomerId(customerId, service, hasMedicalHistoryService, medicalHistoryService, expenseService, appointmentService, modelMapper);
 		
+		
+//		List<MedicalHistoryHasMedicalHistoryDTO> listGenerale = joinCustomer.getMapByTypeJoinMedicalHistoriesDTO().get("Generale");
+//		
+//		List<MedicalHistoryHasMedicalHistoryDTO> listOdontoiatrica = joinCustomer.getMapByTypeJoinMedicalHistoriesDTO().get("Odontoiatrica");
+//		
+//		for( MedicalHistoryHasMedicalHistoryDTO obj : listGenerale  ) {
+//			LOGGER.info( "GENERALE #####################>>>>>>>>>>> " +obj.getHasMedicalHistoryDTO().getNotes()  );
+//		}
+//		
+//		for( MedicalHistoryHasMedicalHistoryDTO obj : listOdontoiatrica  ) {
+//			LOGGER.info( "ODONTOIATRICA #####################>>>>>>>>>>> " +obj.getHasMedicalHistoryDTO().getNotes()  );
+//		}
 		
 		// ---------------------------------------------------------------------------------------------
 				

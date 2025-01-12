@@ -55,7 +55,7 @@ public class Customer {
 	
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", appointments=" + appointments + ", medicalHistories=" + hasMedicalHistories
+		return "Customer [id=" + id + ", appointments=" + appointments + ", medicalHistories= [ medical histories ... ]" /* + hasMedicalHistories */
 				+ ", expenses=" + expenses + ", taxIdCode=" + taxIdCode + ", name=" + name + ", surname=" + surname
 				+ ", birthCity=" + birthCity + ", birthCityProvince=" + birthCityProvince + ", birthDate=" + birthDate
 				+ ", residenceStreet=" + residenceStreet + ", houseNumber=" + houseNumber + ", residenceCity="

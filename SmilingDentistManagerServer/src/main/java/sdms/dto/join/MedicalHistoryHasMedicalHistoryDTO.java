@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 
 import sdms.dto.HasMedicalHistoryDTO;
 import sdms.dto.MedicalHistoryDTO;
+import sdms.model.HasMedicalHistory;
 import sdms.model.MedicalHistory;
 import sdms.service.HasMedicalHistoryServiceInterface;
 import sdms.service.MedicalHistoryServiceInterface;
@@ -18,16 +19,18 @@ public class MedicalHistoryHasMedicalHistoryDTO {
 		this.medicalHistoryDTO = new MedicalHistoryDTO();
 	}
 	
-	public MedicalHistoryHasMedicalHistoryDTO buildFromMedicalHistoryId( Long id, 
+	public MedicalHistoryHasMedicalHistoryDTO buildFromHasMedicalHistoryId( Long id, 
 														HasMedicalHistoryServiceInterface hasMedicalHistoryService, 
 														MedicalHistoryServiceInterface medicalHistoryService,
 														ModelMapper modelMapper) {
 		
-		MedicalHistory medicalHistory = medicalHistoryService.getMedicalHistoryById(id);
+		HasMedicalHistory hasMedicalHistory = hasMedicalHistoryService.getHasMedicalHistoryById(id);
+		MedicalHistory medicalHistory = medicalHistoryService.getMedicalHistoryById( hasMedicalHistory.getMedicalHistory().getId() );
 		
+		
+		this.hasMedicalHistoryDTO = modelMapper.map( hasMedicalHistory, HasMedicalHistoryDTO.class );
 		this.medicalHistoryDTO = modelMapper.map( medicalHistory, MedicalHistoryDTO.class );
-		this.hasMedicalHistoryDTO = modelMapper.map( hasMedicalHistoryService.getHasMedicalHistoriesByMedicalHistory( medicalHistory ), HasMedicalHistoryDTO.class);
-		
+
 		return this;
 	}
 

@@ -26,26 +26,48 @@
                 <!-- <nav th:replace="~{fragments/customers/customers-nav :: customers-nav}"></nav> -->
 
                 <!-- Customer Personal Data -->
-                <div>
 
-                    <h1 class="text-center mt-3" > 
-                        <span th:text="${customer.name} + ' ' + ${customer.surname}"></span> 
-                    </h1>
-    
+                <nav th:replace="~{fragments/customers/customer-details/customer-details-navs
+                    :: customer-info( ${customer} )}">
+                </nav>
+
+                <div class="p-3">
+
+
                     <div class=" ">
-                        <span class="fw-bold" th:text="#{formLabelEMailMandatory}"></span>
+                        <span class="fw-bold" th:text="#{labelEMail}"></span>
                         <span th:text="' ' + ${customer.eMail} + ' '"></span>
-                        <span class="fw-bold" th:text="#{formLabelTaxIdCode}"></span>
+                        &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
+                        <span class="fw-bold" th:text="#{labelTaxIdCode}"></span>
                         <span th:text=" ' ' + ${customer.taxIdCode} + ' '"></span>
+                        &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
+                        <span class="fw-bold" th:text="#{labelPhoneNumber}"></span>
+                        <span th:text=" ' ' + ${customer.phoneNumber} + ' '"></span>
+                        &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
+                        <span class="fw-bold" th:text="#{labelPhoneNumber2}"></span>
+                        <span th:text=" ' ' + ${customer.phoneNumber2} + ' '"></span>
                     </div>
     
                     <div class="">
-                        <span th:text="#{formLegendBirthplace} + ' ' + ${customer.birthCity} + ' (' + ${customer.birthCityProvince} + ') '"></span>
-                        <span th:text="#{formLabelBirthDate} + ' ' + ${customer.birthDate}"></span>
+                        <span class="fw-bold" th:text="#{labelBirthplace}"></span>
+                        <span th:text=" ' ' + ${customer.birthCity} + ' (' + ${customer.birthCityProvince} + ') '"></span>
+                        &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
+                        <span class="fw-bold" th:text="#{labelBirthDate}"></span>
+                        <span th:text=" ' ' + ${customer.birthDate}"></span>
+                        &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
+                        
+                        <span class="fw-bold" th:text="#{labelPlaceOfResidence}"> </span>
+
+                        <span th:text="' ' + #{labelStreet} + ' ' + ${customer.residenceStreet} + ' ' 
+                                        + ${customer.houseNumber} + ' ' + ${customer.residenceCity} + ' ' 
+                                        + ${customer.residenceCityCap} + ' ' + ${customer.residenceProvince}">
+                        </span>
+                        &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
                     </div>
-    
-                    <div class="" >
-                        <span class="fw-bold">Reseidenza, cap , etc , etc ...  </span>
+
+                    <div class="">
+                        <span class="fw-bold" th:text="#{labelPermissions}"> </span>
+                        <span th:text="#{ ${customer.permission} }"></span>
                     </div>
     
 
@@ -124,6 +146,9 @@
         </main>
     </div> <!-- end d-flex -->
 
+
+    <!-- for put, add, delete  buttons -->
+    <div th:replace="~{fragments/customers/requires-customers :: requires-customers}"></div>
 
 
     <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           

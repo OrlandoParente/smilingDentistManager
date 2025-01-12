@@ -33,6 +33,16 @@ public class HasMedicalHistory {
 	private String notes;
 
 	public HasMedicalHistory() {}
+	
+
+	@Override
+	public String toString() {
+		return "HasMedicalHistory [id=" + id + ", customer=" + customer + ", medicalHistory=" + medicalHistory
+				+ ", notes=" + notes + "]";
+	}
+
+
+	// GETTERS AND SETTERS 
 
 	public long getId() {
 		return id;
