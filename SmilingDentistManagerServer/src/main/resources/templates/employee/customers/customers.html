@@ -56,8 +56,10 @@
                                          th:insert="~{fragments/customers/put-customer-modal :: put-customer-modal( ${ customer } )}">
                                     </div>
 
-                                    <a th:href="@{'/employee/customer/customer/details/' + ${customer.id} }" 
-                                        class="btn btn-primary mt-2">
+                                    <a class="btn btn-primary mt-2"
+                                        th:href="@{'/employee/customer/customer/details/' + ${customer.id} }"
+                                        th:text="#{btnDetails}" 
+                                        >
                                         Details
                                     </a>
 
