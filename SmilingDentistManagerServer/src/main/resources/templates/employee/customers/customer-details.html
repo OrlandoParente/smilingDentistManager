@@ -25,10 +25,10 @@
                 <!-- Customer nav -->
                 <!-- <nav th:replace="~{fragments/customers/customers-nav :: customers-nav}"></nav> -->
 
-                <!-- Customer Personal Data -->
+                <!-- Customer Personal Datas -->
 
                 <nav th:replace="~{fragments/customers/customer-details/customer-details-navs
-                    :: customer-info( ${customer} )}">
+                    :: customer-info( ${joinCustomer.customerDTO} )}">
                 </nav>
 
                 <div class="p-3">
@@ -36,45 +36,49 @@
 
                     <div class=" ">
                         <span class="fw-bold" th:text="#{labelEMail}"></span>
-                        <span th:text="' ' + ${customer.eMail} + ' '"></span>
+                        <span th:text="' ' + ${joinCustomer.customerDTO.eMail} + ' '"></span>
                         &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
                         <span class="fw-bold" th:text="#{labelTaxIdCode}"></span>
-                        <span th:text=" ' ' + ${customer.taxIdCode} + ' '"></span>
+                        <span th:text=" ' ' + ${joinCustomer.customerDTO.taxIdCode} + ' '"></span>
                         &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
                         <span class="fw-bold" th:text="#{labelPhoneNumber}"></span>
-                        <span th:text=" ' ' + ${customer.phoneNumber} + ' '"></span>
+                        <span th:text=" ' ' + ${joinCustomer.customerDTO.phoneNumber} + ' '"></span>
                         &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
                         <span class="fw-bold" th:text="#{labelPhoneNumber2}"></span>
-                        <span th:text=" ' ' + ${customer.phoneNumber2} + ' '"></span>
+                        <span th:text=" ' ' + ${joinCustomer.customerDTO.phoneNumber2} + ' '"></span>
                     </div>
     
                     <div class="">
                         <span class="fw-bold" th:text="#{labelBirthplace}"></span>
-                        <span th:text=" ' ' + ${customer.birthCity} + ' (' + ${customer.birthCityProvince} + ') '"></span>
+                        <span th:text=" ' ' + ${joinCustomer.customerDTO.birthCity} + ' (' + ${joinCustomer.customerDTO.birthCityProvince} + ') '"></span>
                         &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
                         <span class="fw-bold" th:text="#{labelBirthDate}"></span>
-                        <span th:text=" ' ' + ${customer.birthDate}"></span>
+                        <span th:text=" ' ' + ${joinCustomer.customerDTO.birthDate}"></span>
                         &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
                         
                         <span class="fw-bold" th:text="#{labelPlaceOfResidence}"> </span>
 
-                        <span th:text="' ' + #{labelStreet} + ' ' + ${customer.residenceStreet} + ' ' 
-                                        + ${customer.houseNumber} + ' ' + ${customer.residenceCity} + ' ' 
-                                        + ${customer.residenceCityCap} + ' ' + ${customer.residenceProvince}">
+                        <span th:text="' ' + #{labelStreet} + ' ' + ${joinCustomer.customerDTO.residenceStreet} + ' ' 
+                                        + ${joinCustomer.customerDTO.houseNumber} + ' ' + ${joinCustomer.customerDTO.residenceCity} + ' ' 
+                                        + ${joinCustomer.customerDTO.residenceCityCap} + ' ' + ${joinCustomer.customerDTO.residenceProvince}">
                         </span>
                         &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
                     </div>
 
                     <div class="">
                         <span class="fw-bold" th:text="#{labelPermissions}"> </span>
-                        <span th:text="#{ ${customer.permission} }"></span>
+                        <span th:text="#{ ${joinCustomer.customerDTO.permission} }"></span>
                     </div>
     
 
                 </div>
 
-                <h2 class="text-center">Anamnesi</h2>
                 <!-- Medical History -->
+
+                <nav th:replace="~{fragments/customers/customer-details/customer-details-navs
+                                    :: customer-medical-histories }">
+                </nav> 
+
                 <div class="row">
 
                     <div class="sdm-table-scrollable table-responsive mt-3">
@@ -102,13 +106,17 @@
                                     <tr th:each="joinMedicalHistory : ${ entry.value }">
     
                                         <td class="text-center align-middle ">
-                                            <button th:id="'btnDeleteMedicalHistory' + ${ joinMedicalHistory.medicalHistoryDTO.id }"
+                                            <button th:id="'btnDeleteHasMedicalHistory' + ${ joinMedicalHistory.hasMedicalHistoryDTO.id }"
                                                     class="btn btn-danger" 
                                                     th:text="#{btnDelete}">
                                                 Delete
                                             </button>
-                                            <div class="d-inline-block" th:insert="~{fragments/medical-histories/put-medical-history-modal
-                                                :: put-medical-history-modal( ${joinMedicalHistory.medicalHistoryDTO} )}">
+                                            <div class="d-inline-block" 
+                                                    th:insert="~{fragments/customers/customer-details/medical-histories/put-has-medical-history-modal
+                                                        :: put-has-medical-history-modal( 
+                                                            ${ joinMedicalHistory.hasMedicalHistoryDTO.idCustomer },
+                                                            ${ joinMedicalHistory}  ) }">
+                                                Edit
                                             </div>
                                         </td>
     
@@ -148,7 +156,8 @@
 
 
     <!-- for put, add, delete  buttons -->
-    <div th:replace="~{fragments/customers/requires-customers :: requires-customers}"></div>
+    <div th:replace="~{fragments/customers/customer-details/requires-customer-details 
+                        :: requires-customer-details}"></div>
 
 
     <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           

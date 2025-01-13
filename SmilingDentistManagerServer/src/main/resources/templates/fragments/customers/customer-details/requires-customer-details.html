@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+      
+      <!-- Requires for customer-details page -->
+      <div th:fragment="requires-customer-details">
+        
+            <!-- joinMedicalHistory Ids -->
+            <div th:each="entry : ${ joinCustomer.mapByTypeJoinMedicalHistoriesDTO }">
+
+                  <div th:each="joinMedicalHistory : ${ entry.value }">
+                        <span class="hasMedicalHistoryIds d-none" th:text="${ joinMedicalHistory?.hasMedicalHistoryDTO.id }" ></span>
+                        <span class="medicalHistoryIds d-none" th:text="${ joinMedicalHistory?.medicalHistoryDTO.id }" ></span>
+                  </div>
+                  
+            </div>
+            
+            
+            
+            <!-- -->
+            <!-- <div th:each="customer : ${ customers }">
+                  <span class="customerIds d-none" th:text="${customer.id}" ></span>
+
+            </div> -->
+
+
+            <!-- Add script for manage add link customer to medical history request with js -->
+            <script th:src="@{/js/customers/customer-details/medical-history/add-has-medical-history-form.js}"></script>  
+
+            <!-- Add script for manage put link customer to medical history request with js -->
+            <script th:src="@{/js/customers/customer-details/medical-history/put-has-medical-history-form.js}"></script>  
+
+            <!-- Add script for manage delete buttons -->
+            <script th:src="@{/js/customers/customer-details/medical-history/customer-details-buttons.js}"></script> 
+
+      </div>
+
+</body>
+</html>

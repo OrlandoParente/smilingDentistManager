@@ -114,6 +114,31 @@ public class CustomerMedicalHistoryExpenseAppointmentDTO {
 		return this;
 	}
 	
+	
+	// Returns true if the customer has the medical history ------------------------------------------------------------------
+
+	public boolean containsMedicaHistory( MedicalHistoryDTO mhDTO ) {
+		return containsMedicaHistory( mhDTO.getId() );
+	}
+	
+	public boolean containsMedicaHistory( MedicalHistory mh ) {
+		return containsMedicaHistory( mh.getId() );
+	}
+	
+	public boolean containsMedicaHistory( long idMedicalHistory ) {
+	
+		for( String key : mapByTypeJoinMedicalHistoriesDTO.keySet() ) {
+			for( MedicalHistoryHasMedicalHistoryDTO joinMedicalHistory : mapByTypeJoinMedicalHistoriesDTO.get(key)  ) {
+				if( joinMedicalHistory.getMedicalHistoryDTO().getId() == idMedicalHistory )
+					return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	// -----------------------------------------------------------------------------------------------------------------------
+	
 	// GETTERS AND SETTERS 
 
 	public CustomerDTO getCustomerDTO() {

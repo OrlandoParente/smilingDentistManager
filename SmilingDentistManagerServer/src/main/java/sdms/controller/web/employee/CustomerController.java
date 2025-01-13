@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
 import sdms.dto.CustomerDTO;
+import sdms.dto.MedicalHistoryDTO;
 import sdms.dto.join.CustomerMedicalHistoryExpenseAppointmentDTO;
 import sdms.model.Customer;
 import sdms.service.AppointmentServiceInterface;
@@ -132,10 +133,22 @@ public class CustomerController {
 		// ---------------------------------------------------------------------------------------------
 		
 		
+		// ---------------------------------------------------------------------------------------------
+		
+		List<MedicalHistoryDTO> addableMedicalHistories = medicalHistoryService.getMedicalHistories().stream()
+															.filter( mh -> ! joinCustomer.containsMedicaHistory(mh) )
+															.sorted( Comparator.comparing( mh -> mh.getName() ) )
+															.map( mh -> modelMapper.map( mh, MedicalHistoryDTO.class) )
+															.toList();
+		
+		// ---------------------------------------------------------------------------------------------
+		
+		
 		// Add stuff to the model
-		model.addAttribute("customer", customerDTO);	// <<<<<<<<<<<<<--------------- NON SERVE
+//		model.addAttribute("customer", customerDTO);	
 //		model.addAttribute("medicalHistories", medicalHistories);
 		model.addAttribute("joinCustomer", joinCustomer);
+		model.addAttribute("addableMedicalHistories", addableMedicalHistories);
 		
 		// serve?
 		model.addAttribute("customerPermissions", UserRoleManager.getCustomerPermissions());
