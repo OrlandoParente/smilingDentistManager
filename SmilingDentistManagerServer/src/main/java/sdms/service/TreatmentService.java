@@ -47,9 +47,9 @@ public class TreatmentService implements TreatmentServiceInterface {
 	}
 	
 	@Override
-	public List<Treatment> getTreatmentsByBillNumber(String billNumber) {
+	public List<Treatment> getTreatmentsByBillNumber(String invoiceNumber) {
 
-		List<Appointment> appointments = appointmentRepository.findByBillNumber(billNumber);
+		List<Appointment> appointments = appointmentRepository.findByInvoiceNumber(invoiceNumber);
 		List<Treatment> treatments = appointments.stream().map( a -> a.getTreatment() ).toList();
 		
 		return treatments;

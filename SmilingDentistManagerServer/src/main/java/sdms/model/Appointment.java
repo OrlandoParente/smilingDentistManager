@@ -41,10 +41,11 @@ public class Appointment {
 	private LocalDate date;
 	private LocalTime time;
 	private int isDone;  //bit default 0," 	 // di default l'appuntamento non è ancora avvenuto nel momento della registrazione
-	private String billNumber; // Numero fattura - generalmente ANNO + NUMERO intero
+	private String invoiceNumber; // Numero fattura - generalmente ANNO + NUMERO intero
 								 // I db non vuole salvarsi le fatture perché sarebbero dati ritondanti 
 								 // ( cioè le fatture si possono costruire dai dati già presenti nel db )
 								 // si limita a segnare quali appuntamenti sono stati già fatturati
+	private Double payment;
 	private String notes;		 // eventualmente se serve specificare qualcosa
 
 	// Empty Constructor 
@@ -158,13 +159,28 @@ public class Appointment {
 		this.isDone = isDone;
 	}
 	
-	public String getbillNumber() {
-		return billNumber;
+	
+
+
+	public String getInvoiceNumber() {
+		return invoiceNumber;
 	}
-	public void setbillNumber(String billNumber) {
-		this.billNumber = billNumber;
+
+
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+
+
+	public Double getPayment() {
+		return payment;
 	}
 	
+	public void setPayment(Double payment) {
+		this.payment = payment;
+	}
+
+
 	public String getNotes() {
 		return notes;
 	}

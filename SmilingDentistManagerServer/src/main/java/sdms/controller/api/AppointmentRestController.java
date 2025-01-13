@@ -100,7 +100,8 @@ public class AppointmentRestController {
 									@RequestParam( defaultValue = "-1" )  long idDoctor, 
 									@RequestParam( defaultValue = "-1" ) long idTreatment, 
 									@RequestParam( defaultValue = "0" ) int isDone,
-									@RequestParam( defaultValue = "none" ) String billNumber, 
+									@RequestParam( defaultValue = "none" ) String invoiceNumber,
+									@RequestParam( defaultValue = "-1" ) double payment,
 									@RequestParam( defaultValue = "" ) String notes) {
 									
 		// Check Message (Use the Logger)
@@ -120,7 +121,8 @@ public class AppointmentRestController {
 			// Not insert if they have the default value 
 			if( idDoctor != -1 )	appointment.setDoctor( employeeService.getEmployeeById(idDoctor) );
 			if( idTreatment != -1 )	appointment.setTreatment( treatmentService.getTreatmentById(idTreatment) );
-			if( ! billNumber.equals("none") )	appointment.setbillNumber(billNumber);
+			if( ! invoiceNumber.equals("none") )	appointment.setInvoiceNumber(invoiceNumber);
+			if( payment != -1 ) appointment.setPayment(payment);
 			
 			service.postAppointment(appointment);
 		
@@ -271,7 +273,8 @@ public class AppointmentRestController {
 									@RequestParam( defaultValue = "-1" )  long idDoctor, 
 									@RequestParam( defaultValue = "-1" ) long idTreatment, 
 									@RequestParam( defaultValue = "-1" ) int isDone,
-									@RequestParam( defaultValue = "none" ) String billNumber, 
+									@RequestParam( defaultValue = "none" ) String invoiceNumber, 
+									@RequestParam( defaultValue = "-1" ) double payment,
 									// we need a default value which is surely different from a real note
 									@RequestParam( defaultValue = "sdms.nessuna-nota-inviata.ma-proprio-nessuna -1" ) String notes) {
 		
@@ -304,7 +307,8 @@ public class AppointmentRestController {
 				appointment.setTreatment( treatmentService.getTreatmentById(idTreatment) );
 			
 			if( ! notes.equals("sdms.nessuna-nota-inviata.ma-proprio-nessuna -1") ) appointment.setNotes(notes);
-			if( ! billNumber.equals("none") )	appointment.setbillNumber(billNumber);
+			if( ! invoiceNumber.equals("none") )	appointment.setInvoiceNumber(invoiceNumber);
+			if( payment != -1 )	appointment.setPayment(payment);
 			if( isDone != -1 )	appointment.setisDone(isDone);
 			
 			service.putAppointment(appointment);

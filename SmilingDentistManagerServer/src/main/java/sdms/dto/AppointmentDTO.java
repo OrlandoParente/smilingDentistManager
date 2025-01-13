@@ -18,39 +18,16 @@ public class AppointmentDTO {
 	private LocalDate date;
 	private LocalTime time;
 	private int isDone;  //bit default 0," 	 // di default l'appuntamento non è ancora avvenuto nel momento della registrazione
-	private String billNumber; // Numero fattura - generalmente ANNO + NUMERO intero
+	private String invoiceNumber; // Numero fattura - generalmente ANNO + NUMERO intero
 								 // I db non vuole salvarsi le fatture perché sarebbero dati ritondanti 
 								 // ( cioè le fatture si possono costruire dai dati già presenti nel db )
 								 // si limita a segnare quali appuntamenti sono stati già fatturati
+	private Double payment;
 	private String notes;		 // eventualmente se serve specificare qualcosa
 
 	public AppointmentDTO() {}
 	
-	// We need this? There is already ModelMapper for convert Obj to DTO and vice versa 
-	// isDone = 0 di default
-	public AppointmentDTO(long id, LocalDate date, LocalTime time, long idCustomer, long idDoctor,
-			long idTreatment, String billNumber, String notes) {
-		this(  id, date, time, idCustomer, idDoctor, idTreatment, 0, billNumber, notes );
-	}
-	
-	// We need this? There is already ModelMapper for convert Obj to DTO and vice versa 
-	public AppointmentDTO(long id, LocalDate date, LocalTime time, long idCustomer, long idDoctor,
-			long idTreatment, int isDone, String billNumber, String notes) {
-		super();
-		this.id = id;
-		this.date = date;
-		this.time = time;
-		
-		this.idCustomer = idCustomer;
-		this.idDoctor = idDoctor;
-		this.idTreatment = idTreatment;
-		
-		this.isDone = isDone;
-		this.billNumber = billNumber;
-		this.notes = notes;
-	}
-	
-	
+
 	
 	public long getId() {
 		return this.id;
@@ -80,13 +57,6 @@ public class AppointmentDTO {
 		this.notes = notes;
 	}
 
-	public String getBillNumber() {
-		return billNumber;
-	}
-
-	public void setBillNumber(String billNumber) {
-		this.billNumber = billNumber;
-	}
 
 	public long getIdCustomer() {
 		return idCustomer;
@@ -119,5 +89,31 @@ public class AppointmentDTO {
 	public void setIsDone(int isDone) {
 		this.isDone = isDone;
 	}
+
+
+
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
+
+
+
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+
+
+
+	public Double getPayment() {
+		return payment;
+	}
+
+
+
+	public void setPayment(Double payment) {
+		this.payment = payment;
+	}
+	
+	
 	
 }
