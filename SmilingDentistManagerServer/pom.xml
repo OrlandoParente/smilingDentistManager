@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>sdms</groupId>
 	<artifactId>SmilingDentistManagerServer</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>1.0.0-ALPHA</version>
 	<name>SmilingDentistManagerServer</name>
 	<description>Server for Smile Dentist Manager</description>
 	<properties>
