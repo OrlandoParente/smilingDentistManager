@@ -138,10 +138,12 @@ public class CalendarController {
 		
 		// NEED EDIT: We need a filter to filter doctors from employees
 		List<EmployeeDTO> doctors = employeeService.getEmployees().stream()
+				.sorted( Comparator.comparing( emp -> emp.getSurname() ) )
 				.map( employee -> modelMapper.map(employee, EmployeeDTO.class) )
 				.toList();
 		
 		List<TreatmentDTO> treatments = treatmentService.getTreatments().stream()
+				.sorted( Comparator.comparing( treat -> treat.getName() ) )
 				.map( treatment -> modelMapper.map(treatment, TreatmentDTO.class) )
 				.toList();
 		

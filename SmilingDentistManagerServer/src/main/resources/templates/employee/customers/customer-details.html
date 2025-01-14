@@ -144,9 +144,68 @@
 
                 </div>
                 
-                <h2 class="text-center">Appuntamenti</h2>
                 <!-- Appointments -->
+                
+                <nav th:replace="~{fragments/customers/customer-details/customer-details-navs
+                                    :: customer-appointments( ${ joinCustomer.customerDTO.id } ) }">
+                </nav> 
+                
                 <div class="row">
+
+                    <div class="sdm-calendar-table-reponsive table-responsive mt-3">
+                        <table class="table table-striped table-bordered text-center">
+                            <thead>
+                                <tr>
+                                    
+                                    <th></th>
+                                    <th th:text="#{tableHeaderDate}">Date</th>
+                                    <th th:text="#{tableHeaderDoctor}">Doctor</th>
+                                    <th th:text="#{tableHeaderTreatment}">Treatment</th>
+                                    <th th:text="#{tableHeaderPayment}">Payment</th>
+                                    <th th:text="#{tableHeaderInvoiceNumber}">Invoice Number</th>
+                                    <th th:text="#{tableHeaderNotes}">Notes</th>
+                                </tr>
+                            </thead>
+    
+                            <tbody>
+                                <tr th:each="appointment : ${ joinCustomer.joinAppointmentsDTO }">
+                                    
+                                    <td class="d-flex justify-content-center">
+                                        
+                                        <button th:id="'btnDeleteAppointment' + ${appointment.appointmentDTO.id}"
+                                            class="btn btn-danger sdm-onclick-reload me-2"
+                                            th:text="#{btnDelete}">
+                                            
+                                        </button>
+
+                                        <div class="d-inline-block"
+                                             th:insert="~{fragments/customers/customer-details/appointments/put-appointment-modal
+                                                            :: put-appointment-modal( ${ joinCustomer.customerDTO.id }, ${appointment} )}">
+                                        </div>
+
+                                    </td>
+                                    <td th:text="${appointment.appointmentDTO.date}" ></td>
+                                    <td>
+                                        <span th:text="${appointment.doctorDTO.name}"></span> <span th:text="${appointment.doctorDTO.surname}"></span>
+                                    </td>
+                                    <td>
+                                        <span th:text="${appointment.treatmentDTO.name}"></span>
+                                    </td>
+                                    <td>
+                                        <span th:text="${appointment.appointmentDTO.payment}"></span> 
+                                    </td>
+                                    <td>
+                                        <span th:text="${appointment.appointmentDTO.invoiceNumber}"></span> 
+                                    </td>
+                                    <td>
+                                        <span th:text="${appointment.appointmentDTO.notes}"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> <!-- End Table-responsive -->
+    
+    
 
                 </div>
 

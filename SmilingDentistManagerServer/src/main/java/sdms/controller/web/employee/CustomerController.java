@@ -17,14 +17,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
 import sdms.dto.CustomerDTO;
+import sdms.dto.EmployeeDTO;
 import sdms.dto.MedicalHistoryDTO;
+import sdms.dto.TreatmentDTO;
 import sdms.dto.join.CustomerMedicalHistoryExpenseAppointmentDTO;
 import sdms.model.Customer;
 import sdms.service.AppointmentServiceInterface;
 import sdms.service.CustomerServiceInterface;
+import sdms.service.EmployeeServiceInterface;
 import sdms.service.ExpenseServiceInterface;
 import sdms.service.HasMedicalHistoryServiceInterface;
 import sdms.service.MedicalHistoryServiceInterface;
+import sdms.service.TreatmentServiceInterface;
 import sdms.util.UserRoleManager;
 import sdms.util.WebClientCookieManager;
 
@@ -48,6 +52,12 @@ public class CustomerController {
 	
 	@Autowired
 	AppointmentServiceInterface appointmentService;
+	
+	@Autowired
+	TreatmentServiceInterface treatmentService;
+	
+	@Autowired
+	EmployeeServiceInterface employeeService;
 	
 	@Autowired
 	ModelMapper modelMapper;
@@ -143,12 +153,27 @@ public class CustomerController {
 		
 		// ---------------------------------------------------------------------------------------------
 		
+		// fetch doctors and treatments -----------------------------------------------------------------
+		// NEED EDIT: We need a filter to filter doctors from employees
+		List<EmployeeDTO> doctors = employeeService.getEmployees().stream()
+				.sorted( Comparator.comparing( emp -> emp.getSurname() ) )
+				.map( employee -> modelMapper.map(employee, EmployeeDTO.class) )
+				.toList();
 		
+		List<TreatmentDTO> treatments = treatmentService.getTreatments().stream()
+				.sorted( Comparator.comparing( treat -> treat.getName() ) )
+				.map( treatment -> modelMapper.map(treatment, TreatmentDTO.class) )
+				.toList();
+		// ---------------------------------------------------------------------------------------------
+				
+
 		// Add stuff to the model
 //		model.addAttribute("customer", customerDTO);	
 //		model.addAttribute("medicalHistories", medicalHistories);
 		model.addAttribute("joinCustomer", joinCustomer);
 		model.addAttribute("addableMedicalHistories", addableMedicalHistories);
+		model.addAttribute("doctors", doctors);
+		model.addAttribute("treatments",treatments);
 		
 		// serve?
 		model.addAttribute("customerPermissions", UserRoleManager.getCustomerPermissions());

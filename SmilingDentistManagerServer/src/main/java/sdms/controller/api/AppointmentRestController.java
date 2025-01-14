@@ -1,5 +1,6 @@
 package sdms.controller.api;
 
+import java.time.DateTimeException;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +127,11 @@ public class AppointmentRestController {
 			
 			service.postAppointment(appointment);
 		
-		} catch( Exception e ) {
+		} catch( DateTimeException e ) {
+			System.err.println( "AppointmentRestconstroller -> PostAppointment, error: " + e.getMessage() );
+			// TO EDIT: Return better error response // <<=====================================================================================================
+			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Format date not valid");
+		}catch( Exception e ) {
 			System.err.println( "AppointmentRestconstroller -> PostAppointment, error: " + e.getMessage() );
 			// TO EDIT: Return better error response // <<=====================================================================================================
 			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Post Appointment Failed");
@@ -350,7 +355,7 @@ public class AppointmentRestController {
 		service.putAppointmentTreatmentById(id, idTreatment);
 	}
 	
-	@DeleteMapping( value = "/deleteAppointmentById", params = { "id"} )
+	@DeleteMapping( value = "/deleteAppointment", params = { "id"} )
 	public void deleteAppointmentById( @RequestParam("id") long id ) {
 	
 		// Check Message

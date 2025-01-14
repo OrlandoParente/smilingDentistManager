@@ -31,13 +31,13 @@ public class CustomerMedicalHistoryExpenseAppointmentDTO {
 	private CustomerDTO customerDTO;
 	private Map<String, List<MedicalHistoryHasMedicalHistoryDTO>>  mapByTypeJoinMedicalHistoriesDTO;
 	private List<ExpenseDTO> expensesDTO;
-	private List<AppointmentDTO> appointmentsDTO;
+	private List<AppointmentCustomerDoctorTreatmentDTO> joinAppointmentsDTO;
 	
 	public CustomerMedicalHistoryExpenseAppointmentDTO() {
 		this.customerDTO = new CustomerDTO();
 		this.mapByTypeJoinMedicalHistoriesDTO = new TreeMap<String, List<MedicalHistoryHasMedicalHistoryDTO>>();
 		this.expensesDTO = new ArrayList<ExpenseDTO>();
-		this.appointmentsDTO = new ArrayList<AppointmentDTO>();
+		this.joinAppointmentsDTO = new ArrayList<AppointmentCustomerDoctorTreatmentDTO>();
 	}
 	
 	public CustomerMedicalHistoryExpenseAppointmentDTO buildFromCustomerId( Long idCustomer,
@@ -108,8 +108,13 @@ public class CustomerMedicalHistoryExpenseAppointmentDTO {
 		// <<<<<<<<<<<<<---------------------------- MANCA EXPENSES 
 		
 		appointmentService.getAppointmentsByCustomerId( idCustomer ).forEach( app -> {
-			this.appointmentsDTO.add( modelMapper.map(app, AppointmentDTO.class) );
+			this.joinAppointmentsDTO.add( new AppointmentCustomerDoctorTreatmentDTO()
+											.buildFromAppointmentId(app.getId(), appointmentService, modelMapper));
 		});
+		
+		// sort appointments by decreasing date  
+		this.joinAppointmentsDTO = this.joinAppointmentsDTO.stream()
+				.sorted( Comparator.comparing( ja -> ja.getAppointmentDTO().getDate(), Comparator.reverseOrder() ) ).toList();
 		
 		return this;
 	}
@@ -168,15 +173,15 @@ public class CustomerMedicalHistoryExpenseAppointmentDTO {
 		this.expensesDTO = expensesDTO;
 	}
 
-	public List<AppointmentDTO> getAppointmentsDTO() {
-		return appointmentsDTO;
+	public List<AppointmentCustomerDoctorTreatmentDTO> getJoinAppointmentsDTO() {
+		return joinAppointmentsDTO;
 	}
 
-	public void setAppointmentsDTO(List<AppointmentDTO> appointmentsDTO) {
-		this.appointmentsDTO = appointmentsDTO;
+	public void setJoinAppointmentsDTO(List<AppointmentCustomerDoctorTreatmentDTO> joinAppointmentsDTO) {
+		this.joinAppointmentsDTO = joinAppointmentsDTO;
 	}
-	
-	
+
+
 	
 	
 }

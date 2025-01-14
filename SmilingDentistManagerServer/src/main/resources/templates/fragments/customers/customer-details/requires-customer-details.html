@@ -16,16 +16,14 @@
                   </div>
                   
             </div>
-            
-            
-            
-            <!-- -->
-            <!-- <div th:each="customer : ${ customers }">
-                  <span class="customerIds d-none" th:text="${customer.id}" ></span>
 
-            </div> -->
+            <!-- joinAppointment.appointmentDTO Ids -->
+            <div th:each="appointment : ${ joinCustomer.joinAppointmentsDTO }">
+                  <span class="appointmentIds d-none" th:text="${appointment.appointmentDTO.id}" ></span>
+            </div> 
+            
 
-
+            <!-- ---------------- MEDICAL HISTORIES SCRIPTS ----------------------------------- -->
             <!-- Add script for manage add link customer to medical history request with js -->
             <script th:src="@{/js/customers/customer-details/medical-history/add-has-medical-history-form.js}"></script>  
 
@@ -35,6 +33,20 @@
             <!-- Add script for manage delete buttons -->
             <script th:src="@{/js/customers/customer-details/medical-history/customer-details-buttons.js}"></script> 
 
+            <!-- ------------------------------------------------------------------------------- -->
+
+            <!-- ----------------- APPOINTMRNTS SCRIPS ----------------------------------------- -->
+            <!-- Script for post appointment -->
+            <script th:src="@{/js/customers/customer-details/appointments/add-appointment-form.js}"></script>  
+
+            <!-- Script for put appointment -->
+            <script th:src="@{/js/customers/customer-details/appointments/put-appointment-form.js}"></script>
+
+            <!-- Script for appointment buttons -->
+            <script th:src="@{/js/customers/customer-details/appointments/appointment-buttons.js}"></script>  
+
+
+            <!-- ------------------------------------------------------------------------------- -->
       </div>
 
 </body>
