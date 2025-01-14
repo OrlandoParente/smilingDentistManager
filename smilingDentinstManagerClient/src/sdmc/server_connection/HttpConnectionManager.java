@@ -77,7 +77,7 @@ public class HttpConnectionManager {
 	public static final String PUT_APPOINTMENT_BILL_NUMBER_BY_ID = "putAppointmentBillNumberById";
 	public static final String PUT_APPOINTMENT_NOTE_BY_ID = "putAppointmentNoteById";
 	public static final String PUT_APPOINTMENT_TREATMENT_BY_ID = "putAppointmentTreatmentById";
-	public static final String DELETE_APPOINTMENT_BY_ID = "deleteAppointmentById";
+	public static final String DELETE_APPOINTMENT_BY_ID = "deleteAppointment";
 	
 	// Prendo il server dai settings
 	// private final static String URL_SERVER = "http://localhost:8080/";
