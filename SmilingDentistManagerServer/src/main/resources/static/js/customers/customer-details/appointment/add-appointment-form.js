@@ -11,8 +11,8 @@
 
         const btnXCloseModal = document.getElementById("btnXCloseModal");
 
-
-      
+        console.log("formAddAppointment -> " + formAddAppointment);
+   
         // block preventDefault and do post request for manage response messages
         btnAddAppointment.addEventListener('click', function( event ){
          
@@ -33,11 +33,8 @@
           // control print
           console.log("POST url: " + formAddAppointment.action);
           console.log("date=" + formDataAddAppointment.get("date") 
-                        + "; time=" + formDataAddAppointment.get("time") 
-                        + "; idCustomer=" + formDataAddAppointment.get("idCustomer")
-                        + "; payment=" + formDataAddAppointment.get("payment")
-                        + "; invoiceNumber=" + formDataAddAppointment.get("invoiceNumber"));
-
+                      + "; time=" + formDataAddAppointment.get("time") 
+                      + "; idCustomer=" + formDataAddAppointment.get("idCustomer"));
 
           // Do post AJAX request
           fetch( formAddAppointment.action, { 

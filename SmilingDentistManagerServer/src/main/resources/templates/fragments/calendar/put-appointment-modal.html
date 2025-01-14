@@ -94,14 +94,36 @@
                     </div>
 
                     <div class="row g-3 mt-3">
+            
+                      <div class="col-12 col-md-6 d-flex align-items-center"> 
+                          <label class="form-label me-2 col-md-auto" 
+                                  th:text="#{formLabelPaymentAmount}"
+                                  for="payment">
+                              Payment:
+                          </label> 
+                          <input type="number" class="form-control w-100" name="payment" id="payment" 
+                                  th:value="${joinAppointment.appointmentDTO.payment}" >
+                      </div> 
+          
+                      <div class="col-12 col-md-6 d-flex align-items-center"> 
+                          <label class="form-label me-2 col-md-auto" 
+                                  th:text="#{formLabelInvoiceNumber}" 
+                                  for="invoiceNumber">
+                              Invoice Num.:
+                          </label> 
+                          <input type="text" class="form-control w-100" name="invoiceNumber" id="invoiceNumber" 
+                                  th:value="${joinAppointment.appointmentDTO.invoiceNumber}"> 
+                      </div> 
+          
+                    </div> 
+
+                    <div class="row g-3 mt-3">
                       <label class="form-label mb-1" for="notes" th:text="#{formLabelNotes}">
                         Notes: 
                       </label>
                       <input class="form-control" name="notes" id="notes" type="textarea"
                               th:value="${joinAppointment.appointmentDTO.notes}">
                     </div>
-
-
 
                   </form>
 
