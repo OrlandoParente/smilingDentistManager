@@ -18,6 +18,12 @@ public class TreatmentDTO {
 		this.cost = cost;
 	}
 	
+	// ToString 
+	@Override
+	public String toString() {
+		return "TreatmentDTO [id=" + id + ", name=" + name + ", description=" + description + ", cost=" + cost + "]";
+	}
+	
 	// GETTERS AND SETTERS
 	
 	public long getId() {

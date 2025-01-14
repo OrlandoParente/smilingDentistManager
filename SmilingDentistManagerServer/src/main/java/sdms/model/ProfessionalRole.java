@@ -23,15 +23,8 @@ public class ProfessionalRole {
 	private String name;
 	private String description;
 	
+	// Empty Constructor 
 	public ProfessionalRole() {	}
-	
-	public ProfessionalRole(int id, String name, String description) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-	}
-
 	
 	// GETTERS AND SETTERS 	
 	

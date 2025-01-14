@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="put-employee-modal(joinEmployee)">
+        <div class="modal fade" th:id="'putEmployeeModalToggle' + ${joinEmployee.employeeDTO.id}" 
+                th:aria-labelledby="'putEmployeeModalToggleLabel' + ${joinEmployee.employeeDTO.id}" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" 
+                      th:id="'putEmployeeModalToggleLabel' + ${joinEmployee.employeeDTO.id}"
+                      th:text="#{titleEditEmployee}">
+                      Edit Employee
+                  </h1>
+                  <button th:id="'btnXCloseModal' + ${joinEmployee.employeeDTO.id}" type="button" 
+                          class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                  <div th:replace="~{fragments/messages/error-msg :: error-msg(${joinEmployee.employeeDTO.id},'')}"></div>
+
+                  <!-- get data for create the Employee -->
+                  <form th:id="'putEmployeeForm' + ${joinEmployee.employeeDTO.id}" method="PUT" th:action="@{/putEmployee}" > 
+
+
+                    <!-- For sent the idEmployee in the put request -->
+                    <div><input type="hidden" name="id" th:value="${joinEmployee.employeeDTO.id}"></div>
+
+                    <div class="row g-3">
+
+                      <div class="col-12 col-md-4 d-flex align-items-center">  
+                  
+                        <label for="title" class="form-label me-2" th:text="#{formLabelTitle}">
+                        Title*:
+                        </label> 
+                        <!-- <input type="text" class="form-control" id="name" name="name" > -->
+                        <input type="text" class="form-control w-100" id="title" name="title" 
+                              th:value="${joinEmployee.employeeDTO.title}"> 
+                      </div>
+
+                      <div class="col-12 col-md-4 d-flex align-items-center">  
+                  
+                        <label for="name" class="form-label me-2" th:text="#{formLabelNameMandatory}">
+                        Name*:
+                        </label> 
+                        <!-- <input type="text" class="form-control" id="name" name="name" > -->
+                        <input type="text" class="form-control w-100" id="name" name="name" 
+                                th:value="${joinEmployee.employeeDTO.name}"> 
+                      </div>
+                      
+                      <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 
+                        
+                        <label for="surname" class="form-label me-2" th:text="#{formLabelSurnameMandatory}">
+                        Surname*:
+                        </label> 
+                        <!-- <input type="text" class="form-control" id="name" name="name" > -->
+                        <input type="text" class="form-control w-100" id="surname" name="surname" 
+                                th:value="${joinEmployee.employeeDTO.surname}">
+                      </div> 
+                        
+                      
+                    </div>
+
+                    <div class="row g-3 mt-3">
+
+                      <div class="col-12 col-md-6 d-flex align-items-center">  
+                  
+                        <label for="birthDate" class="form-label me-2 col-md-4" th:text="#{formLabelBirthDate}">
+                        Birth Date*:
+                        </label> 
+                        <input type="text" class="form-control w-100" id="birthDate" name="birthDate" 
+                                th:placeholder="#{formPlaceholderDate}"
+                                th:value="${joinEmployee.employeeDTO.birthDate}"> 
+                      </div>
+                      
+                      <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
+                        
+                        <label for="eMail" class="form-label me-2 col-md-2" th:text="#{formLabelEMailMandatory}">
+                        E-mail*:
+                        </label> 
+                        <input type="text" class="form-control w-100" id="eMail" name="eMail" 
+                                th:value="${joinEmployee.employeeDTO.eMail}">
+                      </div> 
+                        
+                      
+                    </div>
+
+                    <div class="row g-3 mt-3">
+
+                      <div class="col-12 col-md-6 d-flex align-items-center">  
+                  
+                        <label for="phoneNumber" class="form-label me-2 col-md-4" th:text="#{formLabelPhoneNumber}">
+                        Phone Number:
+                        </label> 
+                        <input type="number" class="form-control w-100" id="phoneNumber" name="phoneNumber" 
+                                th:value="${joinEmployee.employeeDTO.phoneNumber}"> 
+                      </div>
+                      
+                      <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
+                        
+                        <label for="phoneNumber2" class="form-label me-2 col-md-4" th:text="#{formLabelPhoneNumber2}">
+                        Phone number 2:
+                        </label> 
+                        <input type="number" class="form-control w-100" id="phoneNumber2" name="phoneNumber2" 
+                                th:value="${joinEmployee.employeeDTO.phoneNumber2}">
+                      </div> 
+                      
+                    </div>
+                      
+                    <div class="row g-3 mt-3">
+
+                      <div class="col-12 col-md-5 d-flex align-items-center mt-3"> 
+                        <label class="form-label mb-1 col-md-auto me-2" for="salary" 
+                                th:text="#{formLabelSalary}"
+                                th:value="${joinEmployee.employeeDTO.salary}">
+                            Salary: 
+                        </label>
+                        <input class="form-control" name="salary" id="salary" type="number" 
+                                th:value="${joinEmployee.employeeDTO.salary}">
+                      </div>
+
+                      <div class="col-12 col-md-7 d-flex align-items-center mt-3"> 
+                        <label class="form-label mb-1 col-md-auto me-2" for="permission" th:text="#{formLabelPermissions}">
+                            Permissions: 
+                        </label>
+                        <select class="form-select" name="permission" id="permission" >
+                          <!-- <option value=""></option> -->
+                          <option th:each="permission : ${permissions}" 
+                                  th:if="( ${joinEmployee.employeeDTO.permission} == ${permission} )" selected
+                                  th:value="${permission}"
+                                  th:text="#{ ${permission} }"
+                          >
+                          <option th:each="permission : ${permissions}" 
+                                  th:if="( ${joinEmployee.employeeDTO.permission} != ${permission} )"
+                                  th:value="${permission}"
+                                  th:text="#{ ${permission} }"
+                          >
+                          
+                          </option>
+                        </select>
+                      </div>
+
+
+                    </div>
+
+                  </form>
+
+                  
+                  <!-- Work Periods -->
+                  <div  th:each="wp : ${joinEmployee.workPeriodsDTO}"
+                    class="row g-3 mt-3">
+
+                    <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
+                      <label class="form-label mb-1 col-md-auto me-2" for="startWorkDate" 
+                              th:text="#{formLabelStartWorkDate}">
+                          Start work date: 
+                      </label>
+                      <input class="form-control" name="startWorkDate" type="text"
+                              th:id="'startWorkDate' + ${wp.id}"
+                              th:placeholder="#{formPlaceholderDate}"
+                              th:value="${wp.startDate}"
+                              >
+                    </div>
+
+                    <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
+                      <label class="form-label mb-1 col-md-auto me-2" for="endWorkDate" 
+                              th:text="#{formLabelEndWorkDate}">
+                          End work date: 
+                      </label>
+                      <input class="form-control" name="endWorkDate" type="text"
+                              th:id="'endWorkDate' + ${wp.id}"
+                              th:placeholder="#{formPlaceholderDate}"
+                              th:value="${wp.endDate}"
+                              >
+                    </div>
+
+                  </div>
+
+
+                    <!-- <form> -->
+
+                      <!-- I need this out of the loop for get #{formLabelProfessionalRole} text for js script -->
+                      <span class="d-none" th:id="'professionalRoleLabel' + ${joinEmployee.employeeDTO.id}"
+                            th:text="#{formLabelProfessionalRole}">
+                      </span>
+                      
+                      <!-- Professional role has to be out of the form cause is another call -->
+                      <div  th:each="pr : ${joinEmployee.professionalRolesDTO}"
+                            class="row g-3 mt-3">
+
+                        <div class="col-12 d-flex align-items-center mt-3"> 
+                          <label class="form-label mb-1 col-md-auto me-2" 
+                                  th:id="'professionalRoleLabel' + ${pr.id}" 
+                                  for="description" th:text="#{formLabelProfessionalRole}">
+                              Professional role: 
+                          </label>
+                          <select th:attr="class='form-select' + ' ' + 'professionalRoleSelects' + ${joinEmployee.employeeDTO.id}" 
+                                  name="idProfessionalRole" 
+                                  th:id="'professionalRoleSelect' + ${pr.id}" >
+                            <option selected value="-1"></option>
+                            <option th:each="professionalRole : ${professionalRoles}"
+                                    th:if="${professionalRole.id} == ${pr.id}" 
+                                      selected 
+                                      th:value="${professionalRole.id}"
+                                      th:text="${professionalRole.name}"
+                                    
+                            >
+                            <option th:each="professionalRole : ${professionalRoles}" 
+                                    th:if="${professionalRole.id} != ${pr.id}" 
+                                      th:value="${professionalRole.id}"
+                                      th:text="${professionalRole.name}"
+                            >
+                            </option>
+                          </select>
+                        </div>
+
+                      </div>
+
+                      <div th:id="'hereAppendProfessionalRoleSlot' + ${joinEmployee.employeeDTO.id}"></div>
+
+                    <!-- </form> -->
+
+
+
+
+
+                </div>
+                <div class="modal-footer">
+
+                  <!-- Button add professional role select -->  
+                  <button th:id="'btnAddProfessionalRoleSlot' + ${joinEmployee.employeeDTO.id}" 
+                          class="btn btn-primary" th:text="#{btnAddProfessionalRoleSlot}">
+                    Add Professional Role
+                  </button>
+
+                  <!-- Button edit Employee -->  
+                  <button th:id="'btnPutEmployee' + ${joinEmployee.employeeDTO.id}" 
+                          type="submit" 
+                          th:form="'putEmployeeForm' + ${joinEmployee.employeeDTO.id}" 
+                          class="btn btn-primary me-2 mt-1" 
+                          th:text="#{btnEdit}">
+                    Edit Employee
+                  </a>
+                
+                </div>
+              </div>
+            </div>
+        </div>
+        
+        <!-- Button for open the Modal -->
+        <button class="btn btn-primary mt-2" 
+                th:data-bs-target="'#putEmployeeModalToggle'+ ${joinEmployee.employeeDTO.id}" 
+                data-bs-toggle="modal"
+                th:text="#{btnEdit}">Edit</button>
+
+        <!-- Add script for manage add professional role request with js -->
+         <!-- This is in requires-put-professional-role-modal.html -->
+        <!-- <script th:src="@{/js/employees/put-employee-form.js}"></script>  -->
+
+    </div>
+
+</body>
+</html>

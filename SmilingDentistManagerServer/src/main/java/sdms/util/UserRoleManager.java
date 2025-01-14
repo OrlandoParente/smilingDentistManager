@@ -1,5 +1,8 @@
 package sdms.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserRoleManager {
 	
 	// PERMISSION_ = numeric form (as on the database) of what the user is allowed to read, write and add 
@@ -15,6 +18,33 @@ public class UserRoleManager {
 	
 	public final static int PERMISSION_ADMIN = 10;
 	public final static String ROLE_ADMIN = "ADMIN"; // "ROLE_ADMIN";
+	
+	// Useful in the webClient
+	// used as key in messages like 10=ADMIN
+	// return the list of permissions that can have a customer
+	public static List<Integer> getCustomerPermissions(){
+		
+		List<Integer> permissions = new ArrayList<Integer>();
+		
+		permissions.add( UserRoleManager.PERMISSION_ACCESS_NOT_ALLOWED );
+		permissions.add( UserRoleManager.PERMISSION_BASE_CUSTOMER );
+		
+		return permissions;
+	}
+	
+	// Useful in the webClient
+	// used as key in messages like 10=ADMIN
+	// return the list of permissions that can have an employee
+	public static List<Integer> getEmployeePermissions(){
+		
+		List<Integer> permissions = new ArrayList<Integer>();
+		
+		permissions.add( UserRoleManager.PERMISSION_ACCESS_NOT_ALLOWED );
+		permissions.add( UserRoleManager.PERMISSION_ADMIN );
+		
+		return permissions;
+	}
+	
 	
 	public static String getRoleFromPermission( int permission ) {
 		

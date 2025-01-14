@@ -1,18 +1,28 @@
 package sdms.service;
 
+import java.util.List;
+
+import sdms.model.Employee;
 import sdms.model.HasProfessionalRole;
+import sdms.model.ProfessionalRole;
 
 public interface HasProfessionalRoleServiceInterface {
 	
-//	// Gestione Has Professional Role -----------------------
-//	boolean postLinkEmployeeToProfessionalRole( String id_employee, String id_professional_role ) throws SQLException;
+
+	// CREATE
 	public void postLinkEmployeeToProfessionalRole( HasProfessionalRole hasProfessionalRole );
 	
-//	
-//	boolean deleteLinkEmployeeWithProfessionalRole( String id_employee, String id_professional_role ) throws SQLException;
+	// READ
+	public List<ProfessionalRole> getProfessionalRolesByEmployee( long idEmployee );
+	public List<Employee> getEmployeesByProfessionalRole( long idProfessionalRole );
+	public List<Employee> getEmployeesByProfessionalRoleName( String professionalRoleName );
+	
+	// UPDATE
+	
+	
+	// DELETE
 	public void deleteLinkEmployeeWithProfessionalRole( long idEmployee, long idProfessionalRole );
 	public void deleteLinkEmployeeWithProfessionalRole( long id );
-//	// ------------------------------------------------------
 
 	
 	

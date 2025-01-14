@@ -24,15 +24,8 @@ public class Treatment {
 	private String description;
 	private float cost;
 	
+	// Empty Constructor 
 	public Treatment() {}
-	
-	public Treatment(int id, String name, String description, float cost) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.cost = cost;
-	}
 	
 	// GETTERS AND SETTERS
 	

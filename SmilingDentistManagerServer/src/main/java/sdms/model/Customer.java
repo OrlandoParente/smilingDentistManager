@@ -1,5 +1,7 @@
 package sdms.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -22,7 +24,7 @@ public class Customer {
 	private List<Appointment> appointments;
 	
 	@OneToMany( mappedBy = "customer" )
-	private List<MedicalHistory> medicalHistories;
+	private List<HasMedicalHistory> hasMedicalHistories;
 	
 	@OneToMany( mappedBy = "customer" )
 	private List<Expense> expenses;
@@ -32,7 +34,7 @@ public class Customer {
 	private String surname;
 	private String birthCity;
 	private String birthCityProvince;	// preferibilmente la sigla provincia, ma lascio spazio per il nome completo
-	private String birthDate;
+	private LocalDate birthDate;
 	private String residenceStreet;
 	private String houseNumber;
 	private String residenceCity;
@@ -40,38 +42,20 @@ public class Customer {
 	private String residenceProvince;   
 	private String phoneNumber;
 	private String phoneNumber2; 		// Generalmente telefono di casa
+	private String language;
 	private String eMail;
 	private String password;
 	private int permission;				// Role di Spring Security
 	
-	public Customer() {}
+	// for use LocalDate in Containing method of JpaRepository
+	private String birthDateString;
 	
-	public Customer(int id, String taxIdCode, String name, String surname, String birthCity, String birthCityProvince,
-			String birthDate, String residenceStreet, String houseNumber, String residenceCity, String residenceCityCap,
-			String residenceProvince, String phoneNumber, String phoneNumber2, String eMail, String password, int permission) {
-		super();
-		this.id = id;
-		this.taxIdCode = taxIdCode;
-		this.name = name;
-		this.surname = surname;
-		this.birthCity = birthCity;
-		this.birthCityProvince = birthCityProvince;
-		this.birthDate = birthDate;
-		this.residenceStreet = residenceStreet;
-		this.houseNumber = houseNumber;
-		this.residenceCity = residenceCity;
-		this.residenceCityCap = residenceCityCap;
-		this.residenceProvince = residenceProvince;
-		this.phoneNumber = phoneNumber;
-		this.phoneNumber2 = phoneNumber2;
-		this.eMail = eMail;
-		this.password = password;
-		this.permission = permission;
-	}
+	// Empty Constructor 
+	public Customer() {}
 	
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", appointments=" + appointments + ", medicalHistories=" + medicalHistories
+		return "Customer [id=" + id + ", appointments=" + appointments + ", medicalHistories= [ medical histories ... ]" /* + hasMedicalHistories */
 				+ ", expenses=" + expenses + ", taxIdCode=" + taxIdCode + ", name=" + name + ", surname=" + surname
 				+ ", birthCity=" + birthCity + ", birthCityProvince=" + birthCityProvince + ", birthDate=" + birthDate
 				+ ", residenceStreet=" + residenceStreet + ", houseNumber=" + houseNumber + ", residenceCity="
@@ -116,12 +100,22 @@ public class Customer {
 	public void setBirthCityProvince(String birthCityProvince) {
 		this.birthCityProvince = birthCityProvince;
 	}
-	public String getBirthDate() {
+	
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
-	public void setBirthDate(String birthDate) {
-		this.birthDate = birthDate;
+	
+	// for use LocalDate in Containing method of JpaRepository
+	public String getBirthDateString() {
+		return this.birthDateString;
 	}
+	
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
+		// for use LocalDate in Containing method of JpaRepository
+		this.birthDateString = birthDate != null ? birthDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))  : null;
+	}
+	
 	public String getResidenceStreet() {
 		return residenceStreet;
 	}
@@ -179,12 +173,12 @@ public class Customer {
 		this.appointments = appointments;
 	}
 
-	public List<MedicalHistory> getMedicalHistories() {
-		return medicalHistories;
+	public List<HasMedicalHistory> getHasMedicalHistories() {
+		return hasMedicalHistories;
 	}
 
-	public void setMedicalHistories(List<MedicalHistory> medicalHistories) {
-		this.medicalHistories = medicalHistories;
+	public void setHasMedicalHistories(List<HasMedicalHistory> hasMedicalHistories) {
+		this.hasMedicalHistories = hasMedicalHistories;
 	}
 
 	public List<Expense> getExpenses() {
@@ -203,6 +197,15 @@ public class Customer {
 		this.password = password;
 	}
 
+	public String getLanguage() {
+		return language;
+	}
+
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	
 	// ----------------------------------------------------------------------------------
 	public int getPermission() {
 		return permission;

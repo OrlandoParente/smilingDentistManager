@@ -9,6 +9,7 @@ import sdms.model.Appointment;
 import sdms.repository.AppointmentRepository;
 import sdms.repository.CustomerRepository;
 import sdms.repository.EmployeeRepository;
+import sdms.repository.TreatmentRepository;
 
 @Service
 public class AppointmentService implements AppointmentServiceInterface{
@@ -21,6 +22,9 @@ public class AppointmentService implements AppointmentServiceInterface{
 	
 	@Autowired
 	EmployeeRepository employeeRepository;
+	
+	@Autowired
+	TreatmentRepository treatmentRepository;
 	
 	@Override
 	public Appointment getAppointmentById(long id) {
@@ -82,10 +86,10 @@ public class AppointmentService implements AppointmentServiceInterface{
 	// Volendo se ne può fare a meno, basta il putAppointment
 	// però dato che questa funzionalità è prevista, così si alleggerisce il controller
 	@Override
-	public void putAppointmentBillNumberById(long id, String billNumber) {
+	public void putAppointmentBillNumberById(long id, String invoiceNumber) {
 		
 		Appointment appointment = repository.findById(id).get();
-		appointment.setbillNumber(billNumber);
+		appointment.setInvoiceNumber(invoiceNumber);
 		repository.save(appointment);
 		
 	}
@@ -93,10 +97,10 @@ public class AppointmentService implements AppointmentServiceInterface{
 	// Volendo se ne può fare a meno, basta il putAppointment
 	// però dato che questa funzionalità è prevista, così si alleggerisce il controller
 	@Override
-	public void putAppointmentNoteById(long id, String note) {
+	public void putAppointmentNoteById(long id, String notes) {
 		
 		Appointment appointment = repository.findById(id).get();
-		appointment.setNote(note);
+		appointment.setNotes(notes);
 		repository.save(appointment);
 		
 	}
@@ -107,7 +111,7 @@ public class AppointmentService implements AppointmentServiceInterface{
 	public void putAppointmentTreatmentById(long id, long idTreatment) {
 		
 		Appointment appointment = repository.findById(id).get();
-		appointment.setidTreatment(idTreatment);
+		appointment.setTreatment( treatmentRepository.findById( idTreatment ).get() );
 		repository.save(appointment);
 	}
 

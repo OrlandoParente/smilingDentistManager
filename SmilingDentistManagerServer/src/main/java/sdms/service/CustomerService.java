@@ -9,7 +9,8 @@ import sdms.model.Customer;
 import sdms.repository.AppointmentRepository;
 import sdms.repository.CustomerRepository;
 import sdms.repository.ExpenseRepository;
-import sdms.repository.MedicalHistoryRepository;
+import sdms.repository.HasMedicalHistoryRepository;
+import sdms.util.DateAndTimeManager;
 
 @Service
 public class CustomerService implements CustomerServiceInterface {
@@ -18,13 +19,17 @@ public class CustomerService implements CustomerServiceInterface {
 	CustomerRepository repository;
 	
 	@Autowired
-	MedicalHistoryRepository medicalHistoryRepository;
+	HasMedicalHistoryRepository hasMedicalHistoryRepository;
 	
 	@Autowired
 	AppointmentRepository appointmentRepository;
 	
+	
 	@Autowired
 	ExpenseRepository expenseRepository;
+	
+	@Autowired
+	DateAndTimeManager dateAndTimeManager;
 	
 	// We need this for keep the compatibility with the Swing Client
 	@Override
@@ -45,13 +50,15 @@ public class CustomerService implements CustomerServiceInterface {
 
 	@Override
 	public List<Customer> getCustomersByPartialKeyWordOverAllFields(String keyWord) {
-				
+			
+		
 		// this work as well, this one is done with @Query
 		// return repository.findCustomersByPartialKeyWordOverAllFields( keyWord );
-		
+			
 		// this one is done with JpaInteface 
-		return repository.findCustomerByTaxIdCodeContainingOrNameContainingOrSurnameContainingOrBirthCityContainingOrBirthCityProvinceContainingOrBirthDateContainingOrResidenceStreetContainingOrHouseNumberContainingOrResidenceCityContainingOrResidenceCityCapContainingOrResidenceProvinceContainingOrPhoneNumberContainingOrPhoneNumber2ContainingOrEMailContaining(
-							keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord);
+		return repository.findCustomerByTaxIdCodeContainingOrNameContainingOrSurnameContainingOrBirthCityContainingOrBirthCityProvinceContainingOrBirthDateStringContainingOrResidenceStreetContainingOrHouseNumberContainingOrResidenceCityContainingOrResidenceCityCapContainingOrResidenceProvinceContainingOrPhoneNumberContainingOrPhoneNumber2ContainingOrEMailContaining(
+							keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, 
+							keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord);
 	}
 
 	@Override
@@ -72,8 +79,8 @@ public class CustomerService implements CustomerServiceInterface {
 		
 		// Delete the constraints -------------------------------------------------------------------------
 		
-		medicalHistoryRepository.findByCustomer(customer).forEach( medicalHistory -> {
-			medicalHistoryRepository.delete(medicalHistory);
+		hasMedicalHistoryRepository.findByCustomer(customer).forEach( hasMedicalHistory -> {
+			hasMedicalHistoryRepository.delete(hasMedicalHistory);
 		});
 		
 		expenseRepository.findByCustomer(customer).forEach( expense -> {

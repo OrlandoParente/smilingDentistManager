@@ -41,9 +41,15 @@ public class TreatmentService implements TreatmentServiceInterface {
 	}
 
 	@Override
-	public List<Treatment> getTreatmentsByBillNumber(String billNumber) {
+	public List<Treatment> getTreatments() {
+		
+		return repository.findAll();
+	}
+	
+	@Override
+	public List<Treatment> getTreatmentsByBillNumber(String invoiceNumber) {
 
-		List<Appointment> appointments = appointmentRepository.findByBillNumber(billNumber);
+		List<Appointment> appointments = appointmentRepository.findByInvoiceNumber(invoiceNumber);
 		List<Treatment> treatments = appointments.stream().map( a -> a.getTreatment() ).toList();
 		
 		return treatments;
@@ -64,8 +70,19 @@ public class TreatmentService implements TreatmentServiceInterface {
 	@Override
 	public void deleteTreatmentById(long id) {
 		
-		repository.delete( repository.findById(id).get() );
+		Treatment treatment = repository.findById(id).get();
+		
+		// first delete the constraints --------------------
+		List<Appointment> appointments = appointmentRepository.findByTreatment( treatment );
+		
+		for( Appointment appointment : appointments ) {
+			appointment.setTreatment( null );
+			appointmentRepository.save( appointment );
+		}
+		
+		// -------------------------------------------------
+		
+		repository.delete( treatment );
 	}
-
 
 }

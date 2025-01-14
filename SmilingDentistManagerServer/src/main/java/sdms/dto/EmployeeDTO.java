@@ -1,5 +1,7 @@
 package sdms.dto;
 
+import java.time.LocalDate;
+
 public class EmployeeDTO {
 	
 	private long id;  					// non uso il cod_fiscale come id perché non so se il dipendente è tenuto a rilasciarlo
@@ -7,30 +9,18 @@ public class EmployeeDTO {
 	private String name;
 	private String surname;
 	private String title;				// e.g. Dott. , Dott.ssa, Sig. , Sig.ra , Sig.na,
-	private String birthDate;
+	private LocalDate birthDate;
+	private Double salary;
 	private String phoneNumber;
 	private String phoneNumber2; 		// Generalmente telefono di casa
+	private String language;
 	private String eMail;
 	private String password;
 	private int permission;				// il role di Spring Secure
 	
 	public EmployeeDTO () {}
 	
-	public EmployeeDTO(int id, String name, String surname, String title, String birthDate, String phoneNumber,
-			String phoneNumber2, String eMail, String passowrd, int permission) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.surname = surname;
-		this.title = title;
-		this.birthDate = birthDate;
-		this.phoneNumber = phoneNumber;
-		this.phoneNumber2 = phoneNumber2;
-		this.eMail = eMail;
-		this.password = passowrd;
-		this.permission = permission;
-	}
-
+	
 	// GETTERS AND SETTERS
 	
 	public long getId() {
@@ -81,14 +71,27 @@ public class EmployeeDTO {
 		this.eMail = eMail;
 	}
 
-	public String getBirthDate() {
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(String birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 
+	public Double getSalary() {
+		return salary;
+	}
+
+
+	public void setSalary(Double salary) {
+		this.salary = salary;
+	}
+	
+	
+	
+	
+	
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -103,6 +106,15 @@ public class EmployeeDTO {
 
 	public void setPhoneNumber2(String phoneNumber2) {
 		this.phoneNumber2 = phoneNumber2;
+	}
+	
+	public String getLanguage() {
+		return language;
+	}
+
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 	public String getPassword() {
@@ -120,7 +132,5 @@ public class EmployeeDTO {
 	public void setPermission(int permission) {
 		this.permission = permission;
 	}
-	
-	
-	
+
 }

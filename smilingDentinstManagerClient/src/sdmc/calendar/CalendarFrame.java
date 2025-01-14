@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -170,8 +172,13 @@ public class CalendarFrame extends JFrame {
 			
 			// System.out.println( joAppointment.getString("date") + " EQUALS " + currentDate );
 			
+			// Converto in LocalDate per evitare problemi di formattazione date diverse ( utilizzando il metodo isEqual di LocalDate )
+			LocalDate ldAppointmentDate = LocalDate.parse( joAppointment.getString("date"));
+			LocalDate ldCurrentDate = LocalDate.parse(currentDate, DateTimeFormatter.ofPattern("yyyy-M-d"));
+			
 			// Salta gli appuntamenti non fissati nella currentDate
-			if(  joAppointment.getString("date").equals( currentDate ) ) {
+			// if(  joAppointment.getString("date").equals( currentDate ) ) {
+			if(  ldAppointmentDate.isEqual(ldCurrentDate) ) {
 				
 				JSONObject joCustomer = this.getJObjCustomer( joAppointment.getInt("idCustomer") + "" );
 				
@@ -207,15 +214,22 @@ public class CalendarFrame extends JFrame {
 						
 						
 						
-						Customer selectedCustomer = new Customer( joCustomer.getInt("id"), joCustomer.getString("taxIdCode"), joCustomer.getString("name"),
-																	joCustomer.getString("surname"), joCustomer.getString("birthCity"),
-																	joCustomer.getString("birthCityProvince"), joCustomer.getString("birthDate"),
-																	joCustomer.getString("residenceStreet"), joCustomer.getString("houseNumber"), 
-																	joCustomer.getString("residenceCity"), joCustomer.getString("residenceCityCap"),
-																	joCustomer.getString("residenceProvince"), 
-																	joCustomer.optString("phoneNumber", ""),  	// joCustomer.getString("phoneNumber"),
-																	joCustomer.optString("phoneNumber2", ""),   // joCustomer.getString("phoneNumber2"), 
-																	joCustomer.optString("eMail", "") );   		//joCustomer.getString("eMail"));
+						Customer selectedCustomer = new Customer( joCustomer.getInt("id"), 
+																	joCustomer.getString("name"),
+																	joCustomer.getString("surname"),
+																	
+																	joCustomer.optString("taxIdCode", ""),			//getString("taxIdCode"), 
+																	joCustomer.optString("birthCity", ""),			//getString("birthCity"),
+																	joCustomer.optString("birthCityProvince", ""),	//getString("birthCityProvince"), 
+																	joCustomer.optString("birthDate", ""),			//getString("birthDate"),
+																	joCustomer.optString("residenceStreet", ""),	//getString("residenceStreet"), 
+																	joCustomer.optString("houseNumber", ""),		//getString("houseNumber"), 
+																	joCustomer.optString("residenceCity", ""),		//getString("residenceCity"), 
+																	joCustomer.optString("residenceCityCap", ""),	//getString("residenceCityCap"),
+																	joCustomer.optString("residenceProvince", ""),	//getString("residenceProvince"),
+																	joCustomer.optString("phoneNumber", ""),  		// joCustomer.getString("phoneNumber"),
+																	joCustomer.optString("phoneNumber2", ""),   	// joCustomer.getString("phoneNumber2"), 
+																	joCustomer.optString("eMail", "") );   			//joCustomer.getString("eMail"));
 						
 						System.out.println( "####################### >>>>>>>>>> " + selectedCustomer.getName() );
 						char [] time = joAppointment.getString("time").toCharArray();

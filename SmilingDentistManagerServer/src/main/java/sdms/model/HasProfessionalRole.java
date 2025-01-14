@@ -16,16 +16,7 @@ public class HasProfessionalRole {
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private long id;
 	
-	// FOREIGN KEYS #######################################################
-	
-	// --- Li lascio per mantenere la compatibilità con il Client Swing---
-	// lascio i corrispettivi setter e getter perchè cosi, jpa mi da problemi 
-	// anche senza l'annotazione @Column li mette in conflitto con i rispettivi sotto
-	
-	// private int idEmployee; 
-	// private int idProfessionalRole;
-	
-	// --------------------------------------------------------------------
+	// FOREIGN KEYS ######################################################
 	
 	@ManyToOne
 	@JoinColumn( name = "id_employee" )
@@ -35,22 +26,11 @@ public class HasProfessionalRole {
 	@JoinColumn( name = "id_professional_role" )
 	private ProfessionalRole professionalRole;
 	
-	// ####################################################################
+	// ###################################################################
 	
+	// Empty Constructor 
 	public HasProfessionalRole() {}
-	
-	public HasProfessionalRole(long id, int idEmployee, int idProfessionalRole) {
-		super();
 		
-		this.id = id;
-		
-		// this.idEmployee = idEmployee;
-		this.setIdEmployee(idEmployee);
-
-		//this.idProfessionalRole = idProfessionalRole;
-		this.setIdProfessionalRole(idProfessionalRole);
-	}
-	
 	// GETTERS AND SETTERS
 	public long getId() {
 		return this.id;

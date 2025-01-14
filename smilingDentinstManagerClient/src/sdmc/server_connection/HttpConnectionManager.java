@@ -20,14 +20,14 @@ public class HttpConnectionManager {
 	public static final String GET_MAX_ID_FROM_TABLE = "getMaxIdFromTable/";
 	
 	// Login
-	public static final String DO_LOGIN = "login";
+	public static final String DO_LOGIN = "api/login";
 	
 	// Requesto for Customer
 	public static final String GET_CUSTOMERS = "getCustomers";
 	public static final String GET_CUSTOMER_BY_ID = "getCustomerById/";
 	public static final String GET_CUSTOMER_BY_PARTIAL_KEY_WORD_OVER_ALL_FIELDS = "getCustomersByPartialKeyWordOverAllFields/";
 	public static final String POST_CUSTOMER = "postCustomer";
-	public static final String PUT_CUSTOMER_BY_ID = "putCustomerById";
+	public static final String PUT_CUSTOMER_BY_ID = "putCustomer";
 	public static final String DELETE_CUSTOMER = "deleteCustomer";
 	public static final String GET_MAX_ID_CUSTOMER = "getMaxIdCustomer";
 	
@@ -64,7 +64,7 @@ public class HttpConnectionManager {
 	// Request for Professional Role
 	public static final String GET_PROFESSIONAL_ROLES = "getProfessionalRoles";
 	public static final String POST_PROFESSIONAL_ROLE = "postProfessionalRole";
-	public static final String PUT_PROFESSIONAL_ROLE_BY_ID = "putProfessionalRoleById";
+	public static final String PUT_PROFESSIONAL_ROLE_BY_ID = "putProfessionalRole";
 	public static final String DELETE_PROFESSIONAL_ROLE_BY_ID = "deleteProfessionalRoleById";
 	
 	// Request for Appointment
@@ -77,7 +77,7 @@ public class HttpConnectionManager {
 	public static final String PUT_APPOINTMENT_BILL_NUMBER_BY_ID = "putAppointmentBillNumberById";
 	public static final String PUT_APPOINTMENT_NOTE_BY_ID = "putAppointmentNoteById";
 	public static final String PUT_APPOINTMENT_TREATMENT_BY_ID = "putAppointmentTreatmentById";
-	public static final String DELETE_APPOINTMENT_BY_ID = "deleteAppointmentById";
+	public static final String DELETE_APPOINTMENT_BY_ID = "deleteAppointment";
 	
 	// Prendo il server dai settings
 	// private final static String URL_SERVER = "http://localhost:8080/";

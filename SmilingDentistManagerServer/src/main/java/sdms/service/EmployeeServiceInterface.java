@@ -12,6 +12,7 @@ public interface EmployeeServiceInterface {
 	public List<Employee> getEmployeesByName( String name );
 	public List<Employee> getEmployeesBySurname( String surname );
 	public List<Employee> getEmployeesByProfessionalRoleName( String professionalRoleName );
+	public List<Employee> getEmployeesByProfessionalRoleId( long professionalRoleId );
 	public List<Employee> getEmployeesByPartialKeyWordOverAllFields( String keyWord );
 	
 	public Employee getEmployeeById( Long id );

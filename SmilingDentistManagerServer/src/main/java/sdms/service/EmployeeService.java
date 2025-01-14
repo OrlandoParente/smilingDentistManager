@@ -1,5 +1,7 @@
 package sdms.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import sdms.repository.ExpenseRepository;
 import sdms.repository.HasProfessionalRoleRepository;
 import sdms.repository.ProfessionalRoleRepository;
 import sdms.repository.WorkPeriodRepository;
+import sdms.util.DateAndTimeManager;
 
 
 @Service
@@ -36,6 +39,9 @@ public class EmployeeService implements EmployeeServiceInterface {
 	
 	@Autowired
 	WorkPeriodRepository workPeriodRepository;
+	
+	@Autowired
+	DateAndTimeManager dateAndTimeManager;
 	
 	// We need this for keep the compatibility with the Swing Client
 	@Override
@@ -73,11 +79,23 @@ public class EmployeeService implements EmployeeServiceInterface {
 		
 		return listHasProfessionalRole.stream().map( hpr -> hpr.getEmployee() ).toList();
 	}
+	
+	@Override
+	public List<Employee> getEmployeesByProfessionalRoleId(long professionalRoleId) {
+		
+		ProfessionalRole professionalRole = professionalRoleRepository.findById(professionalRoleId).get();
+		
+		List<HasProfessionalRole> listHasProfessionalRole = hasProfessionalRoleRepository.findByProfessionalRole(professionalRole);
+		
+		return listHasProfessionalRole.stream().map( hpr -> hpr.getEmployee() ).toList();
+	}
+
 
 	@Override
 	public List<Employee> getEmployeesByPartialKeyWordOverAllFields(String keyWord) {
-		
-		return repository.findByNameContainingOrSurnameContainingOrBirthDateContainingOrPhoneNumberContainingOrPhoneNumber2ContainingOrEMailContaining(keyWord, keyWord, keyWord, keyWord, keyWord, keyWord);
+			
+		return repository.findByTitleContainingOrNameContainingOrSurnameContainingOrBirthDateStringContainingOrPhoneNumberContainingOrPhoneNumber2ContainingOrEMailContainingOrSalaryStringContaining(
+				keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord, keyWord);
 	}
 
 	@Override
@@ -131,7 +149,6 @@ public class EmployeeService implements EmployeeServiceInterface {
 		
 		return repository.findByEMail( eMail ).get();
 	}
-
 
 	
 }

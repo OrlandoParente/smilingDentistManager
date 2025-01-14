@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="add-customer-modal">
+        <div class="modal fade" id="addCustomerModalToggle" aria-hidden="true"
+                aria-labelledby="addAddCustomerModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="addCustomerModalToggleLabel" th:text="#{titleAddCustomer}">
+                    Add Customer
+                  </h1>
+                  <button id="btnXCloseModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- fragment err-msg($id, $msg) , 
+                        in this case $id='' cause in err-msg id = 'errMsg' + ${id} 
+                        but we have only one modal so we don't need different ids -->
+                    <div th:replace="~{fragments/messages/error-msg :: error-msg('','')}"></div>
+
+                    <!-- get data for create the professional role -->
+                    <form id="addCustomerForm" method="POST" th:action="@{/postCustomer}" > 
+                        
+                    <!-- Common fields of the form customer -->
+                    <div th:replace="~{fragments/customers/common-fields-form-customer
+                                      :: common-fields-form-customer( null )}">
+                    </div>
+                    
+                    </form>
+
+
+                </div>
+
+                <div class="modal-footer">
+                  
+                  <!-- 
+                  <button id="btnAddProfessionalRoleSlot" class="btn btn-primary" th:text="#{btnAddProfessionalRoleSlot}">
+                    Add Professional Role
+                  </button> 
+                  -->
+                  
+                  <button id="btnAddCustomer" type="submit" form="addCustomerForm" class="btn btn-primary" th:text="#{btnAdd}">
+                    Add Customer
+                  </button>
+                
+                </div>
+
+              </div>
+            </div>
+        </div>
+        <!-- If there are many buttons on the nav use this: 
+            th:text="#{btnAddAbbreviation}"
+            for a better web responsive web application  -->
+          <a href="#" class="nav-link active" data-bs-target="#addCustomerModalToggle" 
+                data-bs-toggle="modal" th:text="#{btnAddAbbreviation}">
+            Add
+          </a>
+
+        <!-- Add script for manage add customer request with js -->
+         <!-- I put this in requires-customers -->
+        <!-- <script th:src="@{/js/customers/add-customer-form.js}"></script>  -->
+
+    </div>
+
+</body>
+</html>

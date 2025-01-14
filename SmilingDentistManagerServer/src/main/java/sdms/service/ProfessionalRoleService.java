@@ -60,7 +60,17 @@ public class ProfessionalRoleService implements ProfessionalRoleServiceInterface
 	@Override
 	public void deleteProfessionalRoleById(Long id) {
 		
-		repository.delete( repository.findById(id).get() );
+		ProfessionalRole professionalRole = repository.findById(id).get(); 
+		
+		// first delete constraints ----------------------		
+		List<HasProfessionalRole> hasProfessionalRoles = hasProfessionalRoleRepository.findByProfessionalRole( professionalRole );
+		
+		for( HasProfessionalRole hasProfessionalRole : hasProfessionalRoles ) {
+			hasProfessionalRoleRepository.delete(hasProfessionalRole);
+		}
+		// -----------------------------------------------
+		
+		repository.delete( professionalRole );
 	}
 	
 	

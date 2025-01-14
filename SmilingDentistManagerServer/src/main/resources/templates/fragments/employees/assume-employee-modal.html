@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+
+    <!-- fragment -->
+    <div th:fragment="assume-employee-modal(joinEmployee, workPeriod)">
+
+        <!-- I need this for get (in js script) ids of employees who can be assume -->
+        <span class="assumeEmployeeIds d-none" th:text="${joinEmployee.employeeDTO.id}"></span>
+
+        <!-- MODAL -->
+        <div class="modal fade" th:id="'assumeEmployeeModalToggle' + ${joinEmployee.employeeDTO.id}" 
+                th:aria-labelledby="'assumeEmployeeModalToggleLabel' + ${joinEmployee.employeeDTO.id}" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" 
+                      th:id="'assumeEmployeeModalToggleLabel' + ${joinEmployee.employeeDTO.id}"
+                      th:text="#{titleAssumeEmployee}">
+                      Assume Employee
+                  </h1>
+                  <button th:id="'btnXCloseModalAssume' + ${joinEmployee.employeeDTO.id}" type="button" 
+                          class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                  <div th:replace="~{fragments/messages/error-msg :: error-msg(${joinEmployee.employeeDTO.id},'')}"></div>
+
+                  <!-- get data for create the Employee -->
+                  <form th:id="'assumeEmployeeForm' + ${joinEmployee.employeeDTO.id}" method="PUT" th:action="@{/putWorkPeriod}" > 
+
+                    <!-- For sent the id of work period in the assume request -->
+                    <div th:if="${workPeriod != null}">
+                      <input  name="id"
+                              th:id="'assumeIdPeriod' + ${joinEmployee.employeeDTO.id}" 
+                              th:value="${workPeriod.id}">
+                    </div> 
+                    
+                    <!-- For sent the idEmployee in the assume request -->
+                    <div><input type="hidden" name="idEmployee" th:value="${joinEmployee.employeeDTO.id}"></div>
+
+                    <div class="row g-3">
+
+                      <div class="col-12  d-flex align-items-center">  
+                  
+                        <label  class="form-label col-md-auto me-2"
+                                th:for="'startDate' + ${joinEmployee.employeeDTO.id}" 
+                                th:text="#{formLabelStartWorkDateMandatory}">
+                        Start work date*:
+                        </label> 
+                        <input type="text" class="form-control w-100"  name="startDate"
+                              th:id="'startDate' + ${joinEmployee.employeeDTO.id} " 
+                              th:placeholder="#{formPlaceholderDate}"> 
+                      </div>
+
+                      
+                    </div>
+
+                   
+                  </form>
+
+                  
+               
+                </div>
+                <div class="modal-footer">
+
+                  <!-- Button add professional role select -->  
+                  <button th:id="'btnAssumeEmployee' + ${joinEmployee.employeeDTO.id}" 
+                          class="btn btn-danger" th:text="#{btnAssume}">
+                    Assume
+                  </button>
+
+                
+                </div>
+              </div>
+            </div>
+        </div>
+        
+        <!-- Button for open the Modal -->
+        <button class="btn btn-success mt-2 me-2" 
+                th:data-bs-target="'#assumeEmployeeModalToggle'+ ${joinEmployee.employeeDTO.id}" 
+                data-bs-toggle="modal"
+                th:text="#{btnAssume}">Assume</button>
+
+        <!-- Add script for manage assume employee request with js -->
+         <!-- This is in requires-employees -->
+       <!-- <script th:src="@{/js/employees/assume-employee-form.js}"></script>   -->
+
+    </div>
+
+</body>
+</html>

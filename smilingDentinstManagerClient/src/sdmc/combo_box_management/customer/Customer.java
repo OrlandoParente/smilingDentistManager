@@ -79,15 +79,22 @@ public class Customer {
 		for( int i = 0; i < arrLength; i ++ ) {
 			
 			JSONObject jo = jsonArrCustomers.getJSONObject(i);
-			customerArr [i] = new Customer( jo.getInt("id"), jo.getString("taxIdCode"), jo.getString("name"),
-											jo.getString("surname"), jo.getString("birthCity"),
-											jo.getString("birthCityProvince"), jo.getString("birthDate"),
-											jo.getString("residenceStreet"), jo.getString("houseNumber"), 
-											jo.getString("residenceCity"), jo.getString("residenceCityCap"),
-											jo.getString("residenceProvince"),
-											jo.optString("phoneNumber", ""),	// se null assegna ""
-											jo.optString("phoneNumber2", ""),	// se null assegna ""
-											jo.optString("eMail", "") );		// se null assegna ""
+			customerArr [i] = new Customer(  jo.getInt("id"), 
+											 jo.getString("name"),
+											 jo.getString("surname"),
+					
+											 jo.optString("taxIdCode", ""),				// se è null assegna "" //getString("taxIdCode"), 
+											 jo.optString("birthCity", ""),				// se è null assegna "" //getString("birthCity"),
+											 jo.optString("birthCityProvince", ""),		// se è null assegna "" //getString("birthCityProvince"), 
+											 jo.optString("birthDate", ""),				// se è null assegna "" //getString("birthDate"),
+											 jo.optString("residenceStreet", ""),		// se è null assegna "" //getString("residenceStreet"), 
+											 jo.optString("houseNumber", ""),			// se è null assegna "" //getString("houseNumber"), 
+											 jo.optString("residenceCity", ""),			// se è null assegna "" //getString("residenceCity"), 
+											 jo.optString("residenceCityCap", ""),		// se è null assegna "" //getString("residenceCityCap"),
+											 jo.optString("residenceProvince", ""),		// se è null assegna "" //getString("residenceProvince"),
+											 jo.optString("phoneNumber", ""),  			// se è null assegna "" // joCustomer.getString("phoneNumber"),
+											 jo.optString("phoneNumber2", ""),   		// se è null assegna "" // joCustomer.getString("phoneNumber2"), 
+											 jo.optString("eMail", "") );   			// se è null assegna "" //joCustomer.getString("eMail"));
 		}
 		
 		return customerArr;
