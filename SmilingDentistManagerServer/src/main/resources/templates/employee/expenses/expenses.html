@@ -19,7 +19,7 @@
         <!-- Main Content -->
         <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
             
-            <h1 th:text="#{titleExpenses}">Expenses</h1>
+            <nav th:replace="~{fragments/expenses/expenses-nav :: expenses-nav}" ></nav>
 
             <!-- here the page content -->
             <div class="row">
