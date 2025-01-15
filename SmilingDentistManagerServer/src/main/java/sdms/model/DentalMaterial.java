@@ -21,7 +21,7 @@ public class DentalMaterial {
 	private List<Expense> expenses;
 	
 	private String name;
-	private String quantity;
+	private double quantity;
 	private String description;
 	private double cost;
 	
@@ -44,11 +44,11 @@ public class DentalMaterial {
 		this.name = name;
 	}
 
-	public String getQuantity() {
+	public double getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(String quantity) {
+	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
 

@@ -45,5 +45,28 @@ public class DentalMaterialService implements DentalMaterialServiceInterface {
 		repository.delete( repository.findById(id).get() );
 	}
 
+	@Override
+	public void increaseDentalMaterialQuantity(long idDentalMaterial, double quantity) {
+		
+		DentalMaterial dentalMaterial = repository.findById(idDentalMaterial).get();
+		
+		double newQuantity = dentalMaterial.getQuantity() + quantity;
+		dentalMaterial.setQuantity(newQuantity);
+		
+		this.putDentalMaterial(dentalMaterial);
+	}
+
+	@Override
+	public void decreaseDentalMaterialQuantity(long idDentalMaterial, double quantity) {
+		
+		DentalMaterial dentalMaterial = repository.findById(idDentalMaterial).get();
+		
+		double newQuantity = dentalMaterial.getQuantity() - quantity;
+		dentalMaterial.setQuantity(newQuantity);
+		
+		this.putDentalMaterial(dentalMaterial);
+		
+	}
+
 	
 }

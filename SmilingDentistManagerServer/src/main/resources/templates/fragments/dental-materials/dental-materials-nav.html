@@ -15,12 +15,9 @@
             <!-- me-auto -->
             <ul class="navbar-nav mb-2 mx-auto mb-lg-0">
                 <li class="nav-item">
-                    <!-- <div th:replace="~{fragments/employees/add-employee-modal :: add-employee-modal}">
-                        Add
-                    </div>  -->
-                    <a href="#" class="nav-link" th:text="#{btnAddNewDentalMaterial}">
-                        Add
-                    </a>
+                    <div th:insert="~{fragments/dental-materials/add-dental-material-modal
+                                        :: add-dental-material-modal}">
+                    </div>
                 </li>
                 <!-- <form class="d-flex" role="search">
 

@@ -1,7 +1,11 @@
 package sdms.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import sdms.model.Customer;
+import sdms.model.DentalMaterial;
+import sdms.model.Employee;
 import sdms.model.Expense;
 
 public interface ExpenseServiceInterface {
@@ -12,6 +16,9 @@ public interface ExpenseServiceInterface {
 
 	// CREATE ----------------------------------------------------
 	public void postExpense( Expense expense );
+	public void postDentalMaterialPurchase( long idDentalMaterial , double amountExpense, double quantity, LocalDate date, String tag );
+	public void postEmployeeSalaryPayment( Employee employee );
+	public void postCustomerRefund( Customer customer );
 	
 	// UPDATE ----------------------------------------------------
 	public void putExpense( Expense expense );

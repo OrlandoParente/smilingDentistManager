@@ -5,22 +5,11 @@ public class DentalMaterialDTO {
 	private long id;
 	
 	private String name;
-	private String quantity;
+	private double quantity;
 	private String description;
 	private double cost;
 	
 	public DentalMaterialDTO() {}
-	
-	public DentalMaterialDTO(long id, String name, String quantity, String description, double cost) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.quantity = quantity;
-		this.description = description;
-		this.cost = cost;
-	}
-
-
 
 
 	public long getId() {
@@ -39,11 +28,11 @@ public class DentalMaterialDTO {
 		this.name = name;
 	}
 
-	public String getQuantity() {
+	public double getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(String quantity) {
+	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
 

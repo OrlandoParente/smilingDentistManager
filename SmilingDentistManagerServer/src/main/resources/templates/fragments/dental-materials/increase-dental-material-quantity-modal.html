@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="increase-dental-material-quantity-modal( dentalMaterial )">
+        <div class="modal fade" th:id="'increaseDentalMaterialModalToggle' + ${dentalMaterial.id}" 
+                th:aria-labelledby="'increaseDentalMaterialModalToggleLabel' + ${dentalMaterial.id}" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" 
+                      th:id="'increaseDentalMaterialModalToggleLabel' + ${dentalMaterial.id}"
+                      th:text="#{titleIncreaseDentalMaterialsQuantity}">
+                      Decreases dental materials
+                  </h1>
+                  <button th:id="'btnXCloseModal' + ${dentalMaterial.id}" type="button" 
+                          class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                  <div th:replace="~{fragments/messages/error-msg :: error-msg2(${dentalMaterial.id},'increaseDentalMaterialQuantity','')}"></div>
+
+                  <!-- get data for create the IncreaseDentalMaterial -->
+                  <form th:id="'increaseDentalMaterialForm' + ${dentalMaterial.id}" method="PATCH" th:action="@{/increaseDentalMaterialQuantity}" > 
+
+                    <input type="hidden" name="id" th:value="${dentalMaterial.id}">
+
+                    <input type="hidden" name="tag" th:value="#{tagExpenseDentalMaterialPurchase}">
+
+                    <div class="row g-3">
+
+                      <div class="col-12 col-md-6 d-flex align-items-center mt-3">  
+                        
+                        <label th:for="'quantity' + ${dentalMaterial?.id}" class="form-label col-md-auto me-2" 
+                                th:text="#{formLabelQuantityToIncreaseMandatory}">
+                        Quantity to increase*:
+                        </label> 
+              
+                        <input type="number" class="form-control w-100" name="quantity"
+                                th:id="'quantity' + ${dentalMaterial?.id}"  >
+                      </div>  
+
+                      <div class="col-12 col-md-6 d-flex align-items-center mt-3">  
+                        
+                        <label th:for="'amount' + ${dentalMaterial?.id}" class="form-label col-md-auto me-2" 
+                                th:text="#{formLabelExpenseMandatory}">
+                        Expense*:
+                        </label> 
+              
+                        <input type="number" class="form-control w-100" name="amount"
+                                th:id="'amount' + ${dentalMaterial?.id}"  >
+                      </div>  
+                      
+                    </div>
+
+                    <div class="row g-3 mt-3">
+
+                      <div class="col-12 col-md-12 d-flex align-items-center mt-3">  
+                    
+                        <label th:for="'date' + ${dentalMaterial?.id}" class="form-label col-md-auto me-2" 
+                        th:text="#{formLabelDateMandatory}">
+                          Date*:
+                        </label> 
+              
+                        <input type="text" class="form-control w-100" name="date"
+                                th:id="'date' + ${dentalMaterial?.id}" 
+                                th:placeholder="#{formPlaceholderDate}" >
+                      </div>  
+
+                    </div>
+              
+
+                  </form>
+
+                </div>
+
+                <div class="modal-footer">
+
+                  <!-- TO EDIT:  add button add  Medical History -->  
+                  <!-- <button th:id="'btnAddProfessionalRoleSlot' + ${dentalMaterial.id}" 
+                          class="btn btn-primary" th:text="#{btnAddProfessionalRoleSlot}">
+                    Add Professional Role
+                  </button> -->
+
+                  <!-- Button edit DentalMaterial -->  
+                  <button th:id="'btnIncreaseDentalMaterial' + ${dentalMaterial.id}" 
+                          type="submit" 
+                          th:form="'increaseDentalMaterialForm' + ${dentalMaterial.id}" 
+                          class="btn btn-primary me-2 mt-1" 
+                          th:text="#{btnIncreaseDentalMaterials}">
+                      Increase
+                  </a>
+                
+                </div>
+              </div>
+            </div>
+        </div>
+        
+        <!-- Button for open the Modal -->
+        <button class="btn btn-success mt-1" 
+                th:data-bs-target="'#increaseDentalMaterialModalToggle'+ ${dentalMaterial.id}" 
+                data-bs-toggle="modal"
+                th:text="#{btnAddQuantity}"> - </button>
+
+        <!-- Add script for manage put request with js -->
+        <!-- This is in requires-dental-materials.html -->
+        <!-- <script th:src="@{/js/dental-materials/put-dental-material-form.js}"></script>    -->
+
+    </div>
+
+</body>
+</html>

@@ -3,11 +3,23 @@
 <head>
 </head>
 <body>
-    
+
+    <!-- NEEDS TO BE RE-WRITTED GOOD (but for know works, it take time change every 'err-msg' fragment in the application) -->
+
     <div th:fragment="error-msg(id, message)">
-        <div style="display: none" th:id="'errMsg' + ${id}" 
+        <div style="display: none" 
+             th:id="'errMsg' + ${id}" 
              class="text-danger text-center bg-danger-subtle border border-danger p-2 mx-auto my-2 w-90" >
             <span th:id="'errMsgText' + ${id}" th:text="${message}"></span>
+        </div>
+    </div>
+
+    <!-- "idWord" ->  To make the ID truly unique, sometimes we need another word in the ID -->
+    <div th:fragment="error-msg2(id, idWord, message)">
+        <div style="display: none" 
+                th:id="'errMsg' + ${idWord} + ${id}" 
+                class="text-danger text-center bg-danger-subtle border border-danger p-2 mx-auto my-2 w-90" >
+            <span th:id="'errMsgText' + ${idWord} +  ${id}" th:text="${message}"></span>
         </div>
     </div>
 
