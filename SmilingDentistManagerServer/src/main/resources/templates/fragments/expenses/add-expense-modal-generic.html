@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="add-expense-modal-generic">
+
+      <!-- expense id, this is need for the js script -->
+      <div class="postExpenseTypes d-none" >Generic</div>
+
+        <div class="modal fade" id="addExpenseModalToggleGeneric" aria-hidden="true"
+                aria-labelledby="addAddExpenseModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="addExpenseModalToggleLabelGeneric" 
+                      th:text="#{titleAddExpense}">
+                    Add Expense 
+                  </h1>
+                  <button id="btnXCloseModalGeneric" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- fragment err-msg($id, $msg) , 
+                        in this case $id='' cause in err-msg id = 'errMsg' + ${id} 
+                        but we have only one modal so we don't need different ids -->
+                    <div th:replace="~{fragments/messages/error-msg :: error-msg('Generic','')}"></div>
+
+                    <!-- get data for create the professional role -->
+                    <form id="addExpenseFormGeneric" method="POST" th:action="@{/postExpense}" > 
+                        
+                    <!-- Common fields of the form expenses -->
+                    <div th:replace="~{fragments/expenses/common-fields-form-expense
+                                      :: common-fields-form-expense( formExpense = null, postExpenseType = 'Generic' )}">
+                    </div>
+                    
+                    </form>
+
+
+                </div>
+
+                <div class="modal-footer">
+                  
+                  <!-- 
+                  <button id="btnAddProfessionalRoleSlot" class="btn btn-primary" th:text="#{btnAddProfessionalRoleSlot}">
+                    Add Professional Role
+                  </button> 
+                  -->
+                  
+                  <button id="btnAddExpenseGeneric" type="submit" 
+                          form="addExpenseFormGeneric" class="btn btn-primary" 
+                          th:text="#{btnAdd}">
+                    Add Expense
+                  </button>
+                
+                </div>
+
+              </div>
+            </div>
+        </div>
+        <!-- If there are many buttons on the nav use this: 
+            th:text="#{btnAddAbbreviation}"
+            for a better web responsive web application  -->
+          <a href="#" class="btn btn-primary " data-bs-target="#addExpenseModalToggleGeneric" 
+                data-bs-toggle="modal" th:text="#{btnAddGenericExpense}">
+            Add 
+          </a>
+
+        <!-- Add script for manage add dental-material request with js -->
+         <!-- I put this in requires-dental-materials -->
+        <!-- <script th:src="@{/js/dental-materials/add-dental-material-form.js}"></script>  -->
+
+    </div>
+
+</body>
+</html>

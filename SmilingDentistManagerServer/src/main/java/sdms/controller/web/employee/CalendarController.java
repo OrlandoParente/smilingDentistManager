@@ -133,6 +133,7 @@ public class CalendarController {
 		// Set attributes to the model -------------------------------------------------------------------------
 		
 		List<CustomerDTO> customers = customerService.getCustomers().stream()
+				.sorted( Comparator.comparing( c -> c.getSurname() ) )
 				.map( customer ->  modelMapper.map(customer, CustomerDTO.class) )
 				.toList();
 		

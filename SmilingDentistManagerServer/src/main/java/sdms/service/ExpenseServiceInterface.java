@@ -13,10 +13,11 @@ public interface ExpenseServiceInterface {
 	// READ ------------------------------------------------------
 	public Expense getExpenseById( long id );
 	public List<Expense> getExpenses();
+	public List<String> getExpenseTags();
 
 	// CREATE ----------------------------------------------------
 	public void postExpense( Expense expense );
-	public void postDentalMaterialPurchase( long idDentalMaterial , double amountExpense, double quantity, LocalDate date, String tag );
+	public void postDentalMaterialPurchase( long idDentalMaterial , double amountExpense, int quantity, LocalDate date, String tag );
 	public void postEmployeeSalaryPayment( Employee employee );
 	public void postCustomerRefund( Customer customer );
 	

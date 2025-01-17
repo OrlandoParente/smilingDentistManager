@@ -17,18 +17,177 @@
 
     
         <!-- Main Content -->
-        <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
+        <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4 sdm-work-area-included-nav-scollable ">
             
-            <nav th:replace="~{fragments/expenses/expenses-nav :: expenses-nav}" ></nav>
+            <nav class="fixed-top col-md-9 ms-sm-auto col-lg-10 col-12 p-3 bg-white" 
+                 th:insert="~{fragments/expenses/expenses-nav :: expenses-nav}" ></nav>
 
             <!-- here the page content -->
-            <div class="row">
+            <div class="row ms-0  col-12 mt-5">
+
+                <!-- for add more margin on top -->
+                <div class="mt-2"></div>
+
+                <!-- Buttons for add new expenses-->
+                <div class="border border-secondary rounded p-3 mt-3 ">
+                    <h4 th:text="#{divLegendAddExpense}">Add Expenses</h4>
+                    <div class="row">
+                        <div class="col-12 col-md-auto d-inline-block mt-2 px-md-1">
+                            <!-- <button class="btn btn-primary w-100 " th:text="#{btnAddGenericExpense}"></button> -->
+                            <div th:replace="~{fragments/expenses/add-expense-modal-generic 
+                                                :: add-expense-modal-generic}">
+                            </div>
+                        </div>
+
+                        <!-- This is not necessary, there is already the dental materials page -->
+                        <!-- <div class="col-12 col-md-auto d-inline-block mt-2 px-md-1">
+                            <button class="btn btn-primary w-100" th:text="#{btnAddDentalMaterialPurchase}"></button>
+                        </div> -->
+                        
+                        <div class="col-12 col-md-auto d-inline-block  mt-2 px-md-1">
+                            <button class="btn btn-primary w-100" th:text="#{btnAddSalaryPayment}"></button>
+                        </div>
+
+                        <div class="col-12 col-md-auto d-inline-block mt-2  px-md-1" >
+                            <button class="btn btn-primary w-100" th:text="#{btnAddCustomerRefund}"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary table -->
+                <div class="border border-secondary rounded p-3 mt-3 ">
+                    <h4 th:text="#{divLegendExpensesSummary}">Summary</h4>
+
+                    <div class="col-12 col-md-auto d-inline-block mt-2 me-md-3">
+                        <span class="fw-bold" th:text="#{labelTotalIncomings}"></span>
+                        <span th:text="${totalRevenue}"></span>
+                    </div>
+
+                    <div class="col-12 col-md-auto d-inline-block mt-2 me-md-3">
+                        <span class="fw-bold" th:text="#{labelTotalOutgoings}"></span>
+                        <span th:text="${totalExpenses}"></span>
+                    </div>
+
+                    <div class="col-12 col-md-auto d-inline-block mt-2 me-md-3">
+                        <span class="fw-bold" th:text="#{labelGainLoss}"></span>
+                        <span th:if="${gainLoss > 0}" class="text-success" th:text="${gainLoss}"></span>
+                        <span th:if="${gainLoss == 0}" th:text="${gainLoss}"></span>
+                        <span th:if="${gainLoss < 0}" class="text-danger" th:text="${gainLoss}"></span>
+                    </div>
+
+                </div>
+
+                <!-- Expenses list table -->
+
+                <div class="table-responsive sdm-table-scrollable mt-3">
+                    <table class="table table-striped table-bordered text-center">
+                        <thead>
+                            <tr >
+                                <th class="sdm-table-header-bg" 
+                                    colspan="5"
+                                    th:text="#{tableHeaderExpenses}">
+                                    Expenses
+                                </th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th th:text="#{tableHeaderDate}">Date</th>
+                                <th th:text="#{tableHeaderExpenseAmount}">Amount</th>
+                                <th th:text="#{tableHeaderTag}">Tag</th>
+                                <th th:text="#{tableHeaderDescription}">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="expense : ${ expenses }">
+                                <td>
+                                    <button class="btn btn-danger"
+                                        th:id="'btnDeleteExpense' + ${expense.id}"
+                                        th:text="#{btnDelete}">
+                                    Delete
+                                    </button>
+                                    
+                                    <div class="d-inline-block"
+                                        th:insert="~{fragments/expenses/put-expense-modal
+                                                    :: put-expense-modal( ${expense} )}">
+                                    </div> 
+                                </td>
+                                <td>
+                                    <span th:text="${expense.date}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${expense.amount}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${expense.tag}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${expense.description}"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> <!-- end expenses list table -->
+                </div> <!-- end div expenses list table -->
+
+
+                <!-- Incoming list table -->
+
+                <div class="table-responsive sdm-table-scrollable mt-4">
+                    <table class="table table-striped table-bordered  text-center">
+                        <thead>
+                            <tr >
+                                <th class="sdm-table-header-bg" 
+                                    colspan="5"
+                                    th:text="#{tableHeaderIncoming}">
+                                    Incoming (from appoitments)
+                                </th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th th:text="#{tableHeaderDate}">Date</th>
+                                <th th:text="#{tableHeaderIncomeAmount}">Income</th>
+                                <th th:text="#{tableHeaderCustomer}">Customer</th>
+                                <th th:text="#{tableHeaderInvoiceNumber}">Invoice num.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="appointment : ${ joinAppointments }">
+                                <td class="align-middle">
+                                    <button class="btn btn-danger"
+                                            th:id="'btnDeleteAppointment' + ${appointment.appointmentDTO.id}"
+                                            th:text="#{btnDelete}">
+                                        Delete
+                                    </button>
+                                    <div class="d-inline-block"
+                                         th:insert="~{fragments/expenses/put-expenses-appointment-modal
+                                                     :: put-expenses-appointment-modal( ${appointment} )}">
+                                    </div>
+                                </td>
+                                <td>
+                                    <span th:text="${appointment.appointmentDTO.date}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${appointment.appointmentDTO.payment}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${appointment.customerDTO.surname} + ' ' 
+                                                + ${appointment.customerDTO.name}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${appointment.appointmentDTO.invoiceNumber}"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> <!-- end incoming list table -->
+                </div> <!-- end div incoming list table -->
+
 
             </div>
         </main>
     </div> <!-- end d-flex -->
 
 
+    <!-- requires -->
+    <div th:replace="~{fragments/expenses/requires-expenses :: requires-expenses}"></div>
 
     <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           
 

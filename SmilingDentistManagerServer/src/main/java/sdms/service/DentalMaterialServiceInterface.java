@@ -15,8 +15,8 @@ public interface DentalMaterialServiceInterface {
 	
 	// UPDATE ----------------------------------------------------
 	public void putDentalMaterial( DentalMaterial dentalMaterial );
-	public void increaseDentalMaterialQuantity( long idDentalMaterial, double quantity );
-	public void decreaseDentalMaterialQuantity( long idDentalMaterial, double quantity );
+	public void increaseDentalMaterialQuantity( long idDentalMaterial, int quantity );
+	public void decreaseDentalMaterialQuantity( long idDentalMaterial, int quantity );
 	
 	// DELETE ----------------------------------------------------
 	public void deleteDentalMaterial( long id );

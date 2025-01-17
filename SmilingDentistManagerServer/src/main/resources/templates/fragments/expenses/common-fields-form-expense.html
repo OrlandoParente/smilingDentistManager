@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    
+    <div th:fragment="common-fields-form-expense( formExpense )"
+          th:with="postExpenseType=${postExpenseType != null} ? ${postExpenseType} : '' ">
+
+      <!-- for put form, for have id field -->
+      <div th:if="${formExpense != null}"> 
+      <!-- <div th:if="${formExpense != ''}"> -->
+        <input type="hidden" name="id" th:value="${formExpense.id}">
+      </div>
+
+      <div class="row g-3">
+
+
+        <div class="col-12 col-md-8 d-flex align-items-center">  
+    
+          <label th:for="'date' + ( ${formExpense?.id == null} ? '' : ${formExpense?.id} ) + ${postExpenseType}" class="form-label me-2" th:text="#{formLabelDateMandatory}">
+          Date*:
+          </label> 
+
+          <input type="text" class="form-control w-100" 
+                  th:id="'date' + ( ${formExpense?.id == null} ? '' : ${formExpense?.id} ) + ${postExpenseType}" name="date" 
+                  th:placeholder="#{formPlaceholderDate}"
+                  th:value="${formExpense?.date}"> 
+        </div>
+        
+        <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 
+          
+          <label th:for="'amount' + ( ${formExpense?.id == null} ? '' : ${formExpense?.id} ) + ${postExpenseType}" class="form-label me-2" 
+                  th:text="#{formLabelExpenseAmountMandatory}">
+          Expense amount:
+          </label> 
+
+          <input type="number" class="form-control w-100" name="amount"
+                  th:id="'amount' + ( ${formExpense?.id == null} ? '' : ${formExpense?.id} ) + ${postExpenseType}"  
+                  th:value="${formExpense?.amount}">
+        </div> 
+        
+      </div>
+
+      <div class="row g-3 mt-3">
+
+
+        <div class="col-12 col-md-12 d-flex align-items-center mt-3"> 
+          
+          <label th:for="'selectExpenseTag' + ( ${formExpense?.id == null} ? '' : ${formExpense?.id} ) + ${postExpenseType}" 
+                  class="form-label col-md-auto me-2" 
+                  th:text="#{formLabelTag}">
+          Tag :
+          </label> 
+
+          <select class="form-control form-select me-2"
+                  th:id="'selectExpenseTag' + ( ${formExpense?.id == null} ? '' : ${formExpense?.id} ) + ${postExpenseType}">
+            <option value="" text=""></option>  
+            <option th:each="tagOption : ${expenseTags}"
+                    th:text="${tagOption}"
+                    th:selected="${tagOption} == ${formExpense?.tag}">
+            </option>
+          </select>
+
+          <!-- </div> 
+
+          <div class="col-12 col-md-6 d-flex align-items-center">  
+          -->
+          <input type="text" class="form-control w-100" name="tag"
+                  th:id="'inputTextExpenseTag' + ( ${formExpense?.id == null} ? '' : ${formExpense?.id} ) + ${postExpenseType}"  
+                  th:value="${formExpense?.tag}">
+
+          
+        </div>
+        
+
+        
+      </div>
+
+      <div class="row g-3 mt-3">
+
+        <!-- <div class="col-12 col-md-6 d-flex align-items-center">   -->
+    
+          <label class="form-label me-2 col-md-4" 
+                 th:for="'description' + ( ${formExpense?.id == null} ? '' : ${formExpense?.id} ) + ${postExpenseType}" 
+                 th:text="#{formLabelDescription}">
+          Description:
+          </label> 
+          <input type="textarea" class="form-control w-100" name="description" 
+                  th:id="'description' + ( ${formExpense?.id == null} ? '' : ${formExpense?.id} ) + ${postExpenseType}"  
+                  th:value="${formExpense?.description}"> 
+        <!-- </div> -->
+        
+      </div>
+
+              
+
+    </div>
+
+
+
+</body>
+</html>

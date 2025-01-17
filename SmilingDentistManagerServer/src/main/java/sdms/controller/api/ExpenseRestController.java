@@ -1,6 +1,9 @@
 package sdms.controller.api;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +77,43 @@ public class ExpenseRestController {
 		Expense expense = modelMapper.map(expenseDTO, Expense.class);
 		service.postExpense(expense);
 	}
+	
+	@PostMapping(value= {"/postExpense"}, params= {"date", "amount"})
+	public ResponseEntity<?> putExpense( @RequestParam String date, @RequestParam double amount,
+										 @RequestParam( defaultValue = "sdms_none-nessun-nothing" ) String description,
+										 @RequestParam( defaultValue = "sdms_none-nessun-nothing" ) String tag ){
+		
+		Expense expense = new Expense();
+			
+		try {
+			
+			// mandatory fields
+			expense.setDate( dateAndTimeManager.parseDate(date) );
+			expense.setAmount(amount);
+			
+			// optional fields
+			if( ! description.equals("sdms_none-nessun-nothing") ) expense.setDescription(description);
+			if( ! tag.equals("sdms_none-nessun-nothing")) expense.setTag(tag);
+			
+			
+			// update expense
+			service.putExpense(expense);
+		
+		} catch ( DateTimeParseException dte ) {
+		
+			System.err.println( dte.getMessage() );
+			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Error: date format not valid");
+
+		} catch ( Exception e ) {
+
+			System.err.println( e.getMessage() );
+			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).build();
+	
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(expense);
+	}
+	
 
 	// Insert the refund to a customer
 	@PostMapping("/postCustomerRefund")
@@ -147,6 +187,50 @@ public class ExpenseRestController {
 	}
 	
 	// UPDATE ----------------------------------------------------
+	
+	@PutMapping(value= {"/putExpense"}, params= {"id"})
+	public ResponseEntity<?> putExpense( @RequestParam long id,
+										 @RequestParam( defaultValue = "" ) String date,
+										 @RequestParam( defaultValue = "sdms_none-nessun-nothing" ) String description,
+										 @RequestParam( defaultValue = "sdms_none-nessun-nothing" ) String tag,
+										 @RequestParam( defaultValue = "-1000000" ) double amount){
+		
+		Expense expense = service.getExpenseById(id);
+		if( expense == null )
+			return ResponseEntity.status( HttpStatus.NOT_FOUND )
+					.body("404 NOT FOUND: Expense  with id " + id + ", to update not found in the database");
+		
+		LocalDate ldDate = null;
+		
+		try {
+			
+			// Check that date has a valid format
+			if( ! date.equals("") )
+				ldDate = dateAndTimeManager.parseDate(date);
+		
+			// update fields value
+			if( ldDate != null ) expense.setDate( ldDate );
+			if( ! description.equals("sdms_none-nessun-nothing") ) expense.setDescription(description);
+			if( ! tag.equals("sdms_none-nessun-nothing")) expense.setTag(tag);
+			if( amount != -1000000 ) expense.setAmount(amount);
+			
+			// update expense
+			service.putExpense(expense);
+		
+		} catch ( DateTimeParseException dte ) {
+		
+			System.err.println( dte.getMessage() );
+			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Error: date format not valid");
+
+		} catch ( Exception e ) {
+
+			System.err.println( e.getMessage() );
+			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).build();
+	
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(expense);
+	}
 	
 	// Update the refund to a customer
 	@PutMapping("/putCustomerRefund")
@@ -245,7 +329,7 @@ public class ExpenseRestController {
 	}
 	
 	// DELETE ----------------------------------------------------
-	@DeleteMapping("/deleteExpenseById")
+	@DeleteMapping("/deleteExpense")
 	public void deleteExpenseById( @RequestParam("id") long id ) {
 		
 		service.deleteExpense(id);

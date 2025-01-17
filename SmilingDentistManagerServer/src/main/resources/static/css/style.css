@@ -11,12 +11,20 @@
     min-width: 10rem;
 }
 
+
 .sdm-table-header-bg {
     background-color: #c4e3ed !important; 
 }
 
 .sdm-work-area-scollable {
     max-height: 88vh;
+    overflow: auto; 
+    /* overflow-y: auto;
+    overflow-x: auto; */
+}
+
+.sdm-work-area-included-nav-scollable {
+    max-height: 100vh;
     overflow: auto; 
     /* overflow-y: auto;
     overflow-x: auto; */

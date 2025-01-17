@@ -7,9 +7,9 @@ public class ExpenseDTO {
 	private long id;
 	
 	// FOREIGN KEYS ######################################################
-	private long idCustomer;
-	private long idEmployee;
-	private long idDentalMaterial;
+	private Long idCustomer;
+	private Long idEmployee;
+	private Long idDentalMaterial;
 	
 	// ###################################################################
 	
@@ -20,27 +20,14 @@ public class ExpenseDTO {
 	
 	public ExpenseDTO() {}
 
-	// We need this? There is already ModelMapper for convert Obj to DTO and vice versa 
-	public ExpenseDTO(long id, long idCustomer, long idEmployee, long idDentalMaterial, LocalDate date, String description,
-			double amount, String tag) {
-		super();
-		this.id = id;
-		this.idCustomer = idCustomer;
-		this.idEmployee = idEmployee;
-		this.idDentalMaterial = idDentalMaterial;
-		this.date = date;
-		this.description = description;
-		this.amount = amount;
-		this.tag = tag;
-	}
-
 
 	public Long getIdCustomer() {
 		return idCustomer;
 	}
 
 
-	public void setIdCustomer(long idCustomer) {
+	public void setIdCustomer(Long idCustomer) {
+		
 		this.idCustomer = idCustomer;
 	}
 

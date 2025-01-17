@@ -67,7 +67,7 @@ public class DentalMaterialRestController {
 	// CREATE ----------------------------------------------------
 	@PostMapping( value= {"/postDentalMaterial"} , params= {"name"} )
 	public ResponseEntity<?> postDentalMaterial(  @RequestParam String name,		// Mandatory parameter 
-									 		      @RequestParam( defaultValue = "0") double quantity, 
+									 		      @RequestParam( defaultValue = "0") int quantity, 
 									 		      @RequestParam( defaultValue = "" ) String description, 
 									 		      @RequestParam( defaultValue = "0.0" )  double cost ) {
 		
@@ -110,7 +110,7 @@ public class DentalMaterialRestController {
 	@PutMapping( value= {"/putDentalMaterial"}, params= {"id"})
 	public ResponseEntity<?> putDentalMaterial(   @RequestParam long id,
 												  @RequestParam( defaultValue = "" ) String name,		
-											      @RequestParam( defaultValue = "-1000000") double quantity, 
+											      @RequestParam( defaultValue = "-1000000") int quantity, 
 											      @RequestParam( defaultValue = "sdms-none_nessuna_descrizione_nothing" ) String description, 
 											      @RequestParam( defaultValue = "-1000000" )  double cost ) {
 		
@@ -160,7 +160,7 @@ public class DentalMaterialRestController {
 	
 	// PATCH
 	@PatchMapping( value= {"/decreaseDentalMaterialQuantity"}, params= {"id", "quantity"})
-	public ResponseEntity<?> decreaseDentalMaterialQuantity( @RequestParam long id, @RequestParam double quantity ){
+	public ResponseEntity<?> decreaseDentalMaterialQuantity( @RequestParam long id, @RequestParam int quantity ){
 		
 		DentalMaterial dentalMaterial = service.getDentalMaterialById(id);
 		
@@ -181,7 +181,7 @@ public class DentalMaterialRestController {
 	}
 	
 	@PatchMapping( value= {"/increaseDentalMaterialQuantity"}, params= {"id", "quantity"})
-	public ResponseEntity<?> increaseDentalMaterialQuantity( @RequestParam long id, @RequestParam double quantity ){
+	public ResponseEntity<?> increaseDentalMaterialQuantity( @RequestParam long id, @RequestParam int quantity ){
 		
 		DentalMaterial dentalMaterial = service.getDentalMaterialById(id);
 		
@@ -203,7 +203,7 @@ public class DentalMaterialRestController {
 	
 	// Increase dental Material and save that in expenses 
 	@PatchMapping( value= {"/increaseDentalMaterialQuantity"}, params= {"id", "quantity","amount","date"})
-	public ResponseEntity<?> increaseDentalMaterialQuantity( @RequestParam long id, @RequestParam double quantity,
+	public ResponseEntity<?> increaseDentalMaterialQuantity( @RequestParam long id, @RequestParam int quantity,
 															  @RequestParam double amount, @RequestParam String date,
 															  @RequestParam( defaultValue = "" ) String tag ){
 		

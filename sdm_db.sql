@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Gen 15, 2025 alle 13:37
+-- Creato il: Gen 17, 2025 alle 18:35
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -47,11 +47,7 @@ CREATE TABLE `appointment` (
 INSERT INTO `appointment` (`id`, `date`, `time`, `id_customer`, `id_doctor`, `id_treatment`, `is_done`, `invoice_number`, `payment`, `notes`) VALUES
 (1, '2024-11-22', '18:00:00', 1, 1, 1, 0, '', 0, 'Il dottore potrbbe fare ritardo'),
 (2, '2024-11-22', '12:00:00', 2, 1, 1, 1, '', 0, NULL),
-(3, '2023-10-26', '12:00:00', 3, 1, 1, 0, '', 0, NULL),
-(4, '2023-10-20', '18:00:00', 4, 1, 1, 0, '', 0, NULL),
-(5, '2023-10-25', '12:00:00', 1, 1, 1, 1, '', 0, NULL),
-(6, '2023-10-22', '18:00:00', 2, 1, 1, 0, '', 0, 'Una mela al giorno toglie il medito di torno'),
-(7, '2023-10-30', '12:00:00', 2, 1, 1, 1, '', 0, NULL),
+(3, '2023-10-30', '12:00:00', 6, 1, 1, 0, 'AAAAA', 100, NULL),
 (8, '2023-11-22', '12:00:00', 5, 1, 1, 0, '', 0, 'Nuovo cliente'),
 (10, '2023-12-25', '12:00:00', 7, 1, 1, 1, '', 0, 'Something new'),
 (11, '2024-11-21', '11:00:00', 5, NULL, NULL, 0, NULL, 0, NULL),
@@ -99,18 +95,19 @@ INSERT INTO `appointment` (`id`, `date`, `time`, `id_customer`, `id_doctor`, `id
 (102, '2025-01-14', '12:00:00', 6, NULL, NULL, 0, '43534534fdg', 234, ''),
 (103, '2025-01-14', '06:00:00', 7, NULL, NULL, 0, '43534534fdg', 3245, ''),
 (104, '2025-12-28', '12:00:00', 4, NULL, NULL, 0, '43534534fdg', 23423, ''),
-(105, '2025-12-28', '06:00:00', 43, NULL, NULL, 0, 'tttttttttt', 435634, ''),
-(106, '2025-12-28', '21:10:00', 39, NULL, NULL, 0, 'tttttttttttttt', 555555, ''),
+(105, '2025-12-28', '06:00:00', 43, NULL, NULL, 0, 'tttttttttt', 0, ''),
 (107, '2025-12-28', '21:10:00', 4, NULL, NULL, 0, 'bbbbb', 570, 'dddddd'),
 (108, '2025-12-28', '11:00:00', 45, NULL, NULL, 0, 'rrrrrr', 400, ''),
-(109, '2025-12-28', '20:00:00', 45, NULL, NULL, 0, 'rrrrrr', 34343, ''),
+(109, '2025-12-28', '20:00:00', 45, NULL, NULL, 0, 'rrrrrr', 0, ''),
 (110, '2025-01-13', '15:00:00', 3, NULL, NULL, 0, 'rgfdgfdsgfg', NULL, ''),
 (111, '2025-12-28', '15:00:00', 5, NULL, NULL, 0, 'fsdfgdgdfgf', NULL, ''),
 (112, '2025-12-30', '20:00:00', 6, 18, 1, 0, 'qqqqqqq', 20, 'aaaaaaaaaaaaaaaaaaaaaaaaaa'),
 (113, '2025-12-29', '12:00:00', 6, 2, 1, 0, 'aaaaaaaa', 100, 'dddddddddddddddddddddddd'),
 (114, '2025-01-14', '12:00:00', 4, 3, 1, 0, '7777777777777', 200, 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhh'),
 (115, '2025-01-14', '06:00:00', 6, NULL, NULL, 0, NULL, NULL, ''),
-(121, '2025-12-30', '21:10:00', 6, 5, 1, 0, 'fdhgfhfg', 500, 'una mela al giorno toglie il medico di torno');
+(121, '2025-12-30', '21:10:00', 6, 5, 1, 0, 'fdhgfhfg', 500, 'una mela al giorno toglie il medico di torno'),
+(122, '2025-01-14', '20:00:00', 5, 18, 1, 0, 'rrrrrr', 52, '1232e321e231'),
+(123, '2025-01-16', '20:00:00', 4, 18, 1, 0, 'AAAAAAA', 0, '');
 
 -- --------------------------------------------------------
 
@@ -168,12 +165,24 @@ INSERT INTO `customer` (`id`, `tax_id_code`, `name`, `surname`, `birth_city`, `b
 
 CREATE TABLE `dental_material` (
   `id` bigint(20) NOT NULL,
-  `quantity` double DEFAULT 0,
+  `quantity` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `one_piece_cost` double DEFAULT NULL,
   `cost` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `dental_material`
+--
+
+INSERT INTO `dental_material` (`id`, `quantity`, `name`, `description`, `cost`) VALUES
+(1, 6, 'Anestesia', 'Provatta da 100 ml', 20),
+(2, 50, 'Trapano', 'Attrezzo infernale', 50),
+(3, 77, 'Cemento', 'Cemento armato per ristrutturazione denti ', 20),
+(4, 119, 'Computer ', 'Computer aziendale per postazione assistenza clienti ', 1000.5),
+(5, 12, 'Cacciavite', 'Attrezzo minaccioso ', 12),
+(6, 35678, 'Pinze', 'Strumenti di terrore ', 29.8),
+(11, 0, 'bbbb', ' ', 12.56);
 
 -- --------------------------------------------------------
 
@@ -225,8 +234,22 @@ CREATE TABLE `expense` (
   `amount` double NOT NULL,
   `date` date DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `tag` varchar(255) DEFAULT NULL
+  `tag` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `expense`
+--
+
+INSERT INTO `expense` (`id`, `id_customer`, `id_employee`, `id_dental_material`, `amount`, `date`, `description`, `tag`) VALUES
+(1, NULL, NULL, 3, 788, '2025-01-14', '500 x Cemento', 'acquisto merce'),
+(2, NULL, NULL, 3, 680, '2025-01-14', '800 x Cemento', 'acquisto merce'),
+(3, NULL, NULL, 5, 144, '2025-12-30', '12 x Cacciavite', 'dental material purchase'),
+(5, NULL, NULL, 1, 500, '2025-01-14', '25 x Anestesia', 'acquisto merce'),
+(8, NULL, NULL, 4, 90, '2023-10-23', '180 x Computer ', 'acquisto merce'),
+(9, NULL, NULL, 1, 360, '2025-01-14', '18 x Anestesia', 'acquisto merce'),
+(10, NULL, NULL, NULL, 6, '2025-01-14', 'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', 'acquisto merce'),
+(11, NULL, NULL, NULL, 2345, '2025-12-28', NULL, ' ');
 
 -- --------------------------------------------------------
 
@@ -517,7 +540,7 @@ ALTER TABLE `work_period`
 -- AUTO_INCREMENT per la tabella `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
 -- AUTO_INCREMENT per la tabella `customer`
@@ -529,7 +552,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT per la tabella `dental_material`
 --
 ALTER TABLE `dental_material`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT per la tabella `employee`
@@ -541,7 +564,7 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT per la tabella `expense`
 --
 ALTER TABLE `expense`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT per la tabella `has_medical_history`

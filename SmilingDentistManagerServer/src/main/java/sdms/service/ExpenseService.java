@@ -1,6 +1,8 @@
 package sdms.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,9 @@ import sdms.model.Customer;
 import sdms.model.DentalMaterial;
 import sdms.model.Employee;
 import sdms.model.Expense;
+import sdms.repository.CustomerRepository;
 import sdms.repository.DentalMaterialRepository;
+import sdms.repository.EmployeeRepository;
 import sdms.repository.ExpenseRepository;
 
 @Service
@@ -21,6 +25,12 @@ public class ExpenseService implements ExpenseServiceInterface {
 	
 	@Autowired
 	DentalMaterialRepository dentalMaterialRepository;
+	
+	@Autowired
+	EmployeeRepository employeeRepository;
+	
+	@Autowired
+	CustomerRepository customerRepository;
 	
 	@Override
 	public Expense getExpenseById(long id) {
@@ -33,9 +43,33 @@ public class ExpenseService implements ExpenseServiceInterface {
 		
 		return repository.findAll();
 	}
+	
+	@Override
+	public List<String> getExpenseTags() {
+		
+		List<Expense> expenses = repository.findAll();
+		List<String> tags = new ArrayList<String>();
+		
+		// sort expenses so we have the same tags next to the previous 
+		expenses.sort( Comparator.comparing( Expense :: getTag ) );
+		
+		String tmpTag = "";
+		
+		for( Expense e : expenses ) {
+			if(  ! e.getTag().equals(tmpTag) ) {
+				tmpTag = e.getTag();
+				tags.add( e.getTag() );
+			}
+		}
+		
+		return tags;
+	}
 
 	@Override
 	public void postExpense(Expense expense) {
+		
+		// for avoid nullPointerExceptions
+		if( expense.getTag() == null )	expense.setTag("");
 		
 		repository.save(expense);
 	}
@@ -43,17 +77,22 @@ public class ExpenseService implements ExpenseServiceInterface {
 	@Override
 	public void putExpense(Expense expense) {
 		
+		// for avoid nullPointerExceptions
+		if( expense.getTag() == null )	expense.setTag("");
+		
 		repository.save(expense);
 	}
 
 	@Override
 	public void deleteExpense(long id) {
 		
-		repository.delete( repository.findById(id).get() );
+		Expense expense = repository.findById(id).get();
+		
+		repository.delete( expense );
 	}
 
 	@Override
-	public void postDentalMaterialPurchase( long idDentalMaterial, double amountExpense, double quantity, LocalDate date, String tag) {
+	public void postDentalMaterialPurchase( long idDentalMaterial, double amountExpense, int quantity, LocalDate date, String tag) {
 		
 		DentalMaterial dentalMaterial = dentalMaterialRepository.findById( idDentalMaterial ).get();
 		String description = quantity + " x " + dentalMaterial.getName();
