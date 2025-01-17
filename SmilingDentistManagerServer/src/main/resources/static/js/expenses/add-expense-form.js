@@ -39,13 +39,51 @@
       
       // Set tag ----------------------------------------------------------------------------------------------
       var tagText = document.getElementById( "tagText" + postExpenseType );
+
       if( tagText !== null ){
-        inputTextExpenseTag.value = tag.innerText;
+        inputTextExpenseTag.value = tagText.innerText;
       }
       // ------------------------------------------------------------------------------------------------------
   
 
+      // Automatic build description ---------------------------------------------------------------------------
+      var textDesc = '';
+      const textareaExpenseDescription = document.getElementById( "textareaExpenseDescription" + postExpenseType );
 
+
+      const elPrefixDescription = document.getElementById( "prefixDescription" + postExpenseType );
+
+      const selectEl = document.getElementById( "selectEl" + postExpenseType );
+      const inputTextdentalMaterialQuantity = document.getElementById( "inputTextdentalMaterialQuantity" + postExpenseType );
+      
+      // if there is elPrefix we want automatic build the description
+      if( elPrefixDescription != null && selectEl != null ){
+
+        automaticBuildExpenseDescription();
+
+        // Add event listeners ----
+        selectEl.addEventListener( 'change', function( e ){ automaticBuildExpenseDescription(); } );
+
+        if( inputTextdentalMaterialQuantity != null )
+          inputTextdentalMaterialQuantity.addEventListener( 'change', function( e ){ automaticBuildExpenseDescription(); } );
+        // ------------------------
+
+      }
+      
+      
+      function automaticBuildExpenseDescription(){
+
+        selectedOptionText = selectEl.options[selectEl.selectedIndex].text;
+
+        textDesc = elPrefixDescription.innerHTML + ' ' + selectedOptionText;
+
+        if( inputTextdentalMaterialQuantity != null )
+          textDesc += ' x ' + inputTextdentalMaterialQuantity.value;
+
+        textareaExpenseDescription.value = textDesc;
+      }
+
+      // ------------------------------------------------------------------------------------------------------
 
       // Recovery form items
       // const htmlModalPostExpense = document.getElementById( "putExpenseModalToggle" + postExpenseType );

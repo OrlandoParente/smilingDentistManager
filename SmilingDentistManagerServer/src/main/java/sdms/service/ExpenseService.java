@@ -91,6 +91,7 @@ public class ExpenseService implements ExpenseServiceInterface {
 		repository.delete( expense );
 	}
 
+	// actually we don't need this, but I use this in the code. First edit the code and then I can delete this
 	@Override
 	public void postDentalMaterialPurchase( long idDentalMaterial, double amountExpense, int quantity, LocalDate date, String tag) {
 		
@@ -108,20 +109,6 @@ public class ExpenseService implements ExpenseServiceInterface {
 		expense.setEmployee(null);
 		
 		repository.save(expense);
-		
-	}
-
-	// <<<<<<<<<<<<<<<<<<<<<<<<<----------------------------- TO IMPLEMENT 
-	@Override
-	public void postEmployeeSalaryPayment(Employee employee) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	// <<<<<<<<<<<<<<<<<<<<<<<<<----------------------------- TO IMPLEMENT 
-	@Override
-	public void postCustomerRefund(Customer customer) {
-		// TODO Auto-generated method stub
 		
 	}
 	

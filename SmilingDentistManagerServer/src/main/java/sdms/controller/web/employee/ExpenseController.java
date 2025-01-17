@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpServletRequest;
 import sdms.dto.AppointmentDTO;
 import sdms.dto.CustomerDTO;
+import sdms.dto.DentalMaterialDTO;
 import sdms.dto.EmployeeDTO;
 import sdms.dto.ExpenseDTO;
 import sdms.dto.join.AppointmentCustomerDoctorTreatmentDTO;
 import sdms.service.AppointmentServiceInterface;
 import sdms.service.CustomerServiceInterface;
+import sdms.service.DentalMaterialServiceInterface;
 import sdms.service.EmployeeServiceInterface;
 import sdms.service.ExpenseServiceInterface;
 import sdms.util.WebClientCookieManager;
@@ -42,6 +44,9 @@ public class ExpenseController {
 	
 	@Autowired
 	EmployeeServiceInterface employeeService;
+	
+	@Autowired
+	DentalMaterialServiceInterface dentalMaterialService;
 	
 	@Autowired
 	ModelMapper modelMapper;
@@ -84,6 +89,12 @@ public class ExpenseController {
 				.map( employee -> modelMapper.map(employee, EmployeeDTO.class) )
 				.toList();
 		
+		// Fetch dental materials
+		List<DentalMaterialDTO> dentalMaterials= dentalMaterialService.getDentalMaterials().stream()
+				.sorted( Comparator.comparing( dm-> dm.getName()) )
+				.map( dm -> modelMapper.map(dm, DentalMaterialDTO.class) )
+				.toList();
+		
 		// Calculation summary info -------------------------------------------------------------------
 		
 		double totalRevenue = 0;
@@ -108,6 +119,7 @@ public class ExpenseController {
 		model.addAttribute("joinAppointments", joinAppointments);
 		model.addAttribute("customers", customers);
 		model.addAttribute("employees", employees);
+		model.addAttribute("dentalMaterials", dentalMaterials);
 		
 		model.addAttribute("totalRevenue", totalRevenue);
 		model.addAttribute("totalExpenses", totalExpenses);

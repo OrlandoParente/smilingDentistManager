@@ -17,10 +17,9 @@ public interface ExpenseServiceInterface {
 
 	// CREATE ----------------------------------------------------
 	public void postExpense( Expense expense );
+	// actually we don't need this, but I use this in the code. First edit the code and then I can delete this
 	public void postDentalMaterialPurchase( long idDentalMaterial , double amountExpense, int quantity, LocalDate date, String tag );
-	public void postEmployeeSalaryPayment( Employee employee );
-	public void postCustomerRefund( Customer customer );
-	
+
 	// UPDATE ----------------------------------------------------
 	public void putExpense( Expense expense );
 	

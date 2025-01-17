@@ -81,10 +81,51 @@ public class ExpenseRestController {
 	@PostMapping(value= {"/postExpense"}, params= {"date", "amount"})
 	public ResponseEntity<?> putExpense( @RequestParam String date, @RequestParam double amount,
 										 @RequestParam( defaultValue = "sdms_none-nessun-nothing" ) String description,
-										 @RequestParam( defaultValue = "sdms_none-nessun-nothing" ) String tag ){
+										 @RequestParam( defaultValue = "sdms_none-nessun-nothing" ) String tag,
+										 @RequestParam( defaultValue = "-1" ) long idCustomer,
+										 @RequestParam( defaultValue = "-1" ) long idEmployee,
+										 @RequestParam( defaultValue = "-1" ) long idDentalMaterial,
+										 @RequestParam( defaultValue = "-1000000" ) int dentalMaterialQuantityToAdd ){
 		
 		Expense expense = new Expense();
+		
+		Customer customer = null;
+		Employee employee = null;
+		DentalMaterial dentalMaterial = null;
+		
+		// can associate to expense only once between customer employee and dentalMaterial
+		// if it find Customer doesn't search for employee and dentalMaterial, if it find employee doesn't search for dentalMaterial
+		if( idCustomer != -1 ) {
+			customer = customerService.getCustomerById(idCustomer);
 			
+			if( customer == null )
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer with id " + idCustomer + "not found in the database");
+		
+			// link customer to expense
+			expense.setCustomer(customer);
+						
+		} else if ( idEmployee != -1 ) {
+			employee = employeeService.getEmployeeById(idEmployee);
+			
+			if( employee == null )
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer with id " + idCustomer + "not found in the database");
+		
+			// link employee to expense
+			expense.setCustomer(customer);
+			
+		} else if ( idDentalMaterial != -1 ) {
+			dentalMaterial = dentalMaterialService.getDentalMaterialById(idDentalMaterial);
+			
+			if( dentalMaterial == null )
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer with id " + idCustomer + "not found in the database");
+			else 
+				dentalMaterialService.increaseDentalMaterialQuantity(idDentalMaterial, dentalMaterialQuantityToAdd);
+			
+			// link dentalMaterial to expense
+			expense.setDentalMaterial(dentalMaterial);
+		}
+		
+		
 		try {
 			
 			// mandatory fields
@@ -97,7 +138,7 @@ public class ExpenseRestController {
 			
 			
 			// update expense
-			service.putExpense(expense);
+			service.postExpense(expense);
 		
 		} catch ( DateTimeParseException dte ) {
 		

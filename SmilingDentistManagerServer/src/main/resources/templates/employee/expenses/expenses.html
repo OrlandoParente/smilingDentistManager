@@ -39,17 +39,26 @@
                             </div>
                         </div>
 
-                        <!-- This is not necessary, there is already the dental materials page -->
-                        <!-- <div class="col-12 col-md-auto d-inline-block mt-2 px-md-1">
-                            <button class="btn btn-primary w-100" th:text="#{btnAddDentalMaterialPurchase}"></button>
-                        </div> -->
+                        <div class="col-12 col-md-auto d-inline-block mt-2 px-md-1">
+                            <!-- <button class="btn btn-primary w-100" th:text="#{btnAddDentalMaterialPurchase}"></button> -->
+                            <div th:replace="~{fragments/expenses/add-expense-modal-dental-material-purchase 
+                                :: add-expense-modal-dental-material-purchase}">
+                            </div>
+                            
+                        </div>
                         
                         <div class="col-12 col-md-auto d-inline-block  mt-2 px-md-1">
-                            <button class="btn btn-primary w-100" th:text="#{btnAddSalaryPayment}"></button>
+                            <!-- <button class="btn btn-primary w-100" th:text="#{btnAddSalaryPayment}"></button> -->
+                            <div th:replace="~{fragments/expenses/add-expense-modal-salary-payment 
+                                :: add-expense-modal-salary-payment}">
+                            </div>
                         </div>
 
                         <div class="col-12 col-md-auto d-inline-block mt-2  px-md-1" >
-                            <button class="btn btn-primary w-100" th:text="#{btnAddCustomerRefund}"></button>
+                            <!-- <button class="btn btn-primary w-100" th:text="#{btnAddCustomerRefund}"></button> -->
+                            <div th:replace="~{fragments/expenses/add-expense-modal-customer-refund 
+                                :: add-expense-modal-customer-refund}">
+                            </div>
                         </div>
                     </div>
                 </div>

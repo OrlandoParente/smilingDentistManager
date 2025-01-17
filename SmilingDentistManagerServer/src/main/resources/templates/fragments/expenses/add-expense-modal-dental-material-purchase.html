@@ -3,55 +3,68 @@
 <head>
 </head>
 <body>
-    <div th:fragment="add-expense-modal-customer-refund">
+    <div th:fragment="add-expense-modal-dental-material-purchase">
 
       <!-- expense id, this is need for the js script -->
-      <div class="postExpenseTypes d-none" >CustomerRefund</div>
-      <div class="d-none" id="tagTextCustomerRefund" th:text="#{tagExpenseCustomerRefund}"></div>
-      <div class="d-none" id="prefixDescriptionCustomerRefund" th:text="#{textRefund} "></div>
+      <div class="postExpenseTypes d-none" >DentalMaterialPurchase</div>
+      <div class="d-none" id="tagTextDentalMaterialPurchase" th:text="#{tagExpenseDentalMaterialPurchase}"></div>
+      <div class="d-none" id="prefixDescriptionDentalMaterialPurchase" th:text="#{textPurchase} "></div>
 
-        <div class="modal fade" id="addExpenseModalToggleCustomerRefund" aria-hidden="true"
+        <div class="modal fade" id="addExpenseModalToggleDentalMaterialPurchase" aria-hidden="true"
                 aria-labelledby="addAddExpenseModalToggleLabel" tabindex="-1">
             <div class="modal-dialog modal-lg modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="addExpenseModalToggleLabelCustomerRefund" 
+                  <h1 class="modal-title fs-5" id="addExpenseModalToggleLabelDentalMaterialPurchase" 
                       th:text="#{titleAddExpense}">
                     Add Expense 
                   </h1>
-                  <button id="btnXCloseModalCustomerRefund" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <button id="btnXCloseModalDentalMaterialPurchase" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
                     <!-- fragment err-msg($id, $msg) , 
                         in this case $id='' cause in err-msg id = 'errMsg' + ${id} 
                         but we have only one modal so we don't need different ids -->
-                    <div th:replace="~{fragments/messages/error-msg :: error-msg('CustomerRefund','')}"></div>
+                    <div th:replace="~{fragments/messages/error-msg :: error-msg('DentalMaterialPurchase','')}"></div>
 
                     <!-- get data for create the professional role -->
-                    <form id="addExpenseFormCustomerRefund" method="POST" th:action="@{/postExpense}" > 
+                    <form id="addExpenseFormDentalMaterialPurchase" method="POST" th:action="@{/postExpense}" > 
                         
                       <!-- Common fields of the form expenses -->
                       <div th:replace="~{fragments/expenses/common-fields-form-expense
-                                        :: common-fields-form-expense( formExpense = null, postExpenseType = 'CustomerRefund' )}">
+                                        :: common-fields-form-expense( formExpense = null, postExpenseType = 'DentalMaterialPurchase' )}">
                       </div>
                     
                       <div class="row">
                         <div class="col-12 d-flex align-items-center mt-3">
 
                           <label  class=" form-label col-md-auto me-2"
-                                  for="selectElCustomerRefund"
+                                  for="selectElDentalMaterialPurchase"
                                   th:text="#{formLabelCustomer}">
                           </label>
                           <select class="form-control form-select " name="idCustomer"
-                                  id="selectElCustomerRefund">
-                            <option th:each="customer : ${customers}"
-                                    th:text="${customer.surname} 
-                                              + ' ' + ${customer.name} 
-                                              + ' ' + ${customer.taxIdCode}"
-                                    th:value="${customer.id}">
+                                  id="selectElDentalMaterialPurchase">
+                            <option th:each="dentalMaterial : ${dentalMaterials}"
+                                    th:text="${dentalMaterial.name} "
+                                    th:value="${dentalMaterial.id}">
                             </option>
                           </select>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-12 d-flex align-items-center mt-3">
+
+                          <label  class=" form-label col-md-auto me-2"
+                                  for="inputTextdentalMaterialQuantityDentalMaterialPurchase"
+                                  th:text="#{formLabelQuantityToIncreaseMandatory}">
+                          </label>
+                          <input type="number" 
+                                 class="form-control "
+                                 name="dentalMaterialQuantityToAdd"
+                                 id="inputTextdentalMaterialQuantityDentalMaterialPurchase">
+
                         </div>
                       </div>
 
@@ -68,8 +81,8 @@
                   </button> 
                   -->
                   
-                  <button id="btnAddExpenseCustomerRefund" type="submit" 
-                          form="addExpenseFormCustomerRefund" class="btn btn-primary" 
+                  <button id="btnAddExpenseDentalMaterialPurchase" type="submit" 
+                          form="addExpenseFormDentalMaterialPurchase" class="btn btn-primary" 
                           th:text="#{btnAdd}">
                     Add Expense
                   </button>
@@ -82,8 +95,8 @@
         <!-- If there are many buttons on the nav use this: 
             th:text="#{btnAddAbbreviation}"
             for a better web responsive web application  -->
-          <a href="#" class="btn btn-primary " data-bs-target="#addExpenseModalToggleCustomerRefund" 
-                data-bs-toggle="modal" th:text="#{btnAddCustomerRefund}">
+          <a href="#" class="btn btn-primary " data-bs-target="#addExpenseModalToggleDentalMaterialPurchase" 
+                data-bs-toggle="modal" th:text="#{btnAddDentalMaterialPurchase}">
             Add 
           </a>
 
