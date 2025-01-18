@@ -86,6 +86,77 @@
 
                 </div>
 
+                <!-- Filter -->
+                <div class="border border-secondary rounded p-3 mt-3 ">
+                    <h4 th:text="#{divLegendFilter}">Filter</h4>
+
+                <!-- FORM SEARCH with the select -->
+                <form class="d-flex" role="search">
+
+                    <div class="row">
+
+                        <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 
+                            
+                            <label  class="form-label col-md-auto me-2"
+                                    for="expenseTag" 
+                                    th:text="#{formLabelTag}">
+                            </label>    
+                            <select class="me-2 w-100 form-select" 
+                                    name="expenseTag" id="expenseTag">
+                                <option selected value="">All</option>
+                                <option th:if="${ expenseSelectedTag == ''}"
+                                        th:each="expenseTag : ${expenseTags}" 
+                                        th:value="${expenseTag}"
+                                        th:text="${expenseTag}">
+                                </option>
+                                <option th:if="${ expenseSelectedTag != ''}"
+                                        th:each="expenseTag : ${expenseTags}"
+                                        th:selected="${ expenseTag == expenseSelectedTag  }" 
+                                        th:value="${expenseTag}"
+                                        th:text="${expenseTag}">
+                                </option>
+                            </select>
+
+                        </div>
+                        
+                        <div class="col-6 col-md-3  d-flex align-items-center mt-3">
+                            <label  class="form-label col-md-auto me-2"
+                                    for="startDate" 
+                                    th:text="#{formLabelStartDate}">
+                            </label>
+                            <input  type="text"
+                                    class="form-control me-2 "
+                                    name="startDate"
+                                    id="startDate"
+                                    th:placeholder="#{formPlaceholderDate}"
+                                    th:value="${selectedStartDate}">
+                        </div>
+
+                        <div class="col-6 col-md-3  d-flex align-items-center mt-3">
+                            <label  class="form-label col-md-auto  me-2"
+                                    for="endDate" 
+                                    th:text="#{formLabelEndDate}">
+                            </label>
+                            <input  type="text"
+                                    class="form-control me-2"
+                                    name="endDate"
+                                    id="endDate"
+                                    th:placeholder="#{formPlaceholderDate}"
+                                    th:value="${selectedEndDate}">
+                        </div>
+
+                        <div class="col-12 col-md-2  d-flex align-items-center mt-3">
+                            <!-- <input class="form-control me-2" name="keyword" type="search" placeholder="Search" aria-label="Search"> -->
+                            
+                            <button class="btn btn-outline-success me-2" type="submit" th:text="#{btnSearch}">Search</button>
+                            <a th:href="@{/employee/expense/expense}" class="btn btn-outline-danger me-2" >X</a>
+                        </div>
+                    </div>
+                </form>  
+
+
+                </div>
+
                 <!-- Expenses list table -->
 
                 <div class="table-responsive sdm-table-scrollable mt-3">
