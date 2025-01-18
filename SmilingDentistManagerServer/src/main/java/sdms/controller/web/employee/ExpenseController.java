@@ -102,7 +102,7 @@ public class ExpenseController {
 
 		if( ldStartDate != null) {
 			LocalDate finalLdStartDate = ldStartDate;
-			expenses = expenses.stream().peek( ex -> { LOGGER.info( "Filter startDate -> " + ex.getDate() ); } )
+			expenses = expenses.stream() // .peek( ex -> { LOGGER.info( "Filter startDate -> " + ex.getDate() ); } )	// log dates 
 										.filter( ex ->  ! ex.getDate().isBefore(finalLdStartDate) ).toList();
 		}
 		
