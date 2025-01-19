@@ -20,7 +20,7 @@
                 </div>
                 <div class="modal-body">
 
-                  <div th:replace="~{fragments/messages/error-msg :: error-msg(${joinEmployee.employeeDTO.id},'')}"></div>
+                  <div th:replace="~{fragments/messages/error-msg :: error-msg2(${joinEmployee.employeeDTO.id},'putEmployee','')}"></div>
 
                   <!-- get data for create the Employee -->
                   <form th:id="'putEmployeeForm' + ${joinEmployee.employeeDTO.id}" method="PUT" th:action="@{/putEmployee}" > 
