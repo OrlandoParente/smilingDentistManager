@@ -17,8 +17,8 @@
         console.log( "formPutEmployee: " + formPutEmployee + " ID: " + "putEmployeeForm" + employeeId );
         const btnPutEmployee = document.getElementById( "btnPutEmployee" + employeeId );
         console.log( "btnPutEmployee: " + btnPutEmployee );
-        const errMsg = document.getElementById("errMsg" + employeeId );
-        const errMsgText = document.getElementById("errMsgText" + employeeId );
+        const errMsg = document.getElementById("errMsg" + "putEmployee" + employeeId );
+        const errMsgText = document.getElementById("errMsgText" + "putEmployee" + employeeId );
 
         
 
@@ -112,6 +112,34 @@
           //   return;
           // }
 
+          // check if there are duplicated professional roles selected -----------------------------------
+
+          // from common-top-page
+          const errMsgDuplicateProfessionalRoleSelected = document.getElementById("errMsgDuplicateProfessionalRoleSelected").innerText; 
+          var arrProfRolesSelected = Array.from( document.getElementsByClassName("professionalRoleSelects" + employeeId ) );
+
+          for( let i = 0; i < arrProfRolesSelected.length; i++) {
+
+            console.log( "check duplicated -> " 
+                          + arrProfRolesSelected[i].options[ arrProfRolesSelected[i].selectedIndex ] )
+
+            for( let j = i + 1; j < arrProfRolesSelected.length; j ++ ) {
+              if( arrProfRolesSelected[i].options[ arrProfRolesSelected[i].selectedIndex ].innerText.trim() 
+                  === arrProfRolesSelected[j].options[arrProfRolesSelected[j].selectedIndex].innerText.trim() ) {
+
+                console.log(  arrProfRolesSelected[i].options[ arrProfRolesSelected[i].selectedIndex ].innerText 
+                              + " === " 
+                              + arrProfRolesSelected[j].options[arrProfRolesSelected[j].selectedIndex].innerText  )
+
+                errMsg.style.display = "block";
+                errMsgText.innerText = errMsgDuplicateProfessionalRoleSelected;
+
+                return;
+              }
+            }
+          }
+
+          // ---------------------------------------------------------------------------------------------
           // control print
           console.log("PUT url: " + formPutEmployee.action);
 
