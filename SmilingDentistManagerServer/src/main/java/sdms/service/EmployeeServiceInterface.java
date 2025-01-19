@@ -3,6 +3,7 @@ package sdms.service;
 import java.util.List;
 
 import sdms.model.Employee;
+import sdms.model.ProfessionalRole;
 
 public interface EmployeeServiceInterface {
 
@@ -14,6 +15,8 @@ public interface EmployeeServiceInterface {
 	public List<Employee> getEmployeesByProfessionalRoleName( String professionalRoleName );
 	public List<Employee> getEmployeesByProfessionalRoleId( long professionalRoleId );
 	public List<Employee> getEmployeesByPartialKeyWordOverAllFields( String keyWord );
+	
+	public List<ProfessionalRole> getEmployeeProfessionalRole( long idEmployee );
 	
 	public Employee getEmployeeById( Long id );
 	public Employee getEmployeeByEMail( String eMail );

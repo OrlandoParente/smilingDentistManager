@@ -67,6 +67,13 @@ public class EmployeeService implements EmployeeServiceInterface {
 		
 		return repository.findBySurname(surname);
 	}
+	
+	@Override
+	public Employee getEmployeeByEMail(String eMail) {
+		
+		return repository.findByEMail( eMail ).get();
+	}
+
 
 	@Override
 	public List<Employee> getEmployeesByProfessionalRoleName(String professionalRoleName) {
@@ -104,6 +111,19 @@ public class EmployeeService implements EmployeeServiceInterface {
 		return repository.findById(id).get();
 	}
 
+	@Override
+	public List<ProfessionalRole> getEmployeeProfessionalRole(long idEmployee) {
+		
+		Employee employee = repository.findById(idEmployee).get();
+		
+		List<ProfessionalRole> professionalRoles = hasProfessionalRoleRepository.findByEmployee(employee).stream()
+													.map( hpr -> hpr.getProfessionalRole() )
+													.toList();
+		
+		return professionalRoles;
+	}
+
+	
 	@Override
 	public void postEmployee(Employee employee) {
 		
@@ -144,11 +164,6 @@ public class EmployeeService implements EmployeeServiceInterface {
 		repository.delete( employee );
 	}
 
-	@Override
-	public Employee getEmployeeByEMail(String eMail) {
-		
-		return repository.findByEMail( eMail ).get();
-	}
 
 	
 }
