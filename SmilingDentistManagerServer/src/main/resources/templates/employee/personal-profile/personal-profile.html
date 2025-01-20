@@ -19,10 +19,13 @@
         <!-- Main Content -->
         <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
             
-            <h1 th:text="#{titlePersonalProfile}">Personal profile</h1>
+            <!-- <h1 th:text="#{titlePersonalProfile}">Personal profile</h1> -->
+            <nav th:replace="~{fragments/personal-profile/personal-profile-nav
+                                :: personal-profile-nav}">
+            </nav>
 
             <!-- here the page content -->
-            <div class="row">
+            <div class="row sdm-work-area-scollable">
 
                 <div class="border border-secondary rounded p-3 mt-3 ">
                     <h4 th:text="#{divLegendPersonalInformations}">Informazioni personali</h4>
@@ -222,15 +225,23 @@
                 </div>
 
 
-                 <!-- Buttons for add new expenses-->
+                 <!-- Change password form -->
                  <div class="border border-secondary rounded p-3 mt-3 ">
                     <h4 th:text="#{divLegendChangePassword}">Cambio password</h4>
-                    <form id="changePasswordForm" method="PUT">
+
+                    <div th:replace="~{fragments/messages/error-msg 
+                        :: error-msg('ChangePassword','')}">
+                    </div>
+
+                    <form id="changePasswordForm" method="PATCH" action="/employeeChangePassword">
                         <div class="row">
+
+                            <input type="hidden" name="id" th:value="${employee.id}">
+
                             <div class="col-12 col-md-auto d-flex mt-2 ">
                                 <label  class="form-label col-md-auto me-2 mt-md-2" 
                                         for="currentPassword"
-                                        th:text="#{formLabelCurrentPassword}">
+                                        th:text="#{formLabelCurrentPasswordMandatory}">
                                     Current password: 
                                 </label>
                                 <input  type="password" class="form-control w-100" 
@@ -240,7 +251,7 @@
                             <div class="col-12 col-md-auto d-flex mt-2 ">
                                 <label  class="form-label col-md-auto me-2 mt-md-2" 
                                         for="newPassword"
-                                        th:text="#{formLabelNewPassword}">
+                                        th:text="#{formLabelNewPasswordMandatory}">
                                     New password: 
                                 </label>
                                 <input  type="password" class="form-control w-100" 
@@ -250,12 +261,12 @@
 
                             <div class="col-12 col-md-auto d-flex mt-2">
                                 <label  class="form-label col-md-auto me-2 mt-md-2" 
-                                        for="confirmaNewPassword"
-                                        th:text="#{formLabelConfirmNewPassword}">
+                                        for="confirmNewPassword"
+                                        th:text="#{formLabelConfirmNewPasswordMandatory}">
                                     Confirm new password: 
                                 </label>
                                 <input  type="password" class="form-control w-100" 
-                                        id="confirmaNewPassword" >
+                                        id="confirmNewPassword" >
 
                             </div>
 

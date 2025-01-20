@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,6 +30,8 @@ import sdms.util.DateAndTimeManager;
 @RestController
 public class EmployeeRestController {
 	
+	private final Logger LOGGER = LoggerFactory.getLogger( EmployeeRestController.class );
+	
 	@Autowired
 	private EmployeeServiceInterface service;
 	
@@ -37,6 +43,9 @@ public class EmployeeRestController {
 	
 	@Autowired
 	private DateAndTimeManager dateAndTimeManager;
+	
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 	
 	@GetMapping("/getMaxIdEmployee")
 	public long getMaxIdEmployee() {
@@ -304,7 +313,33 @@ public class EmployeeRestController {
 //		
 //	}
 	
-
+	@PatchMapping(value= {"/employeeChangePassword"}, params= {"id","currentPassword", "newPassword"})
+	public ResponseEntity<?> patchPassword( @RequestParam long id, @RequestParam String currentPassword, @RequestParam String newPassword ) {
+		
+		Employee employee = service.getEmployeeById(id);
+		
+		// Check employee exists
+		if( employee == null )
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Error, employee not found in the database");
+		
+		// Check current passsword
+		if( ! passwordEncoder.matches(currentPassword, employee.getPassword()) )
+			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Error, wrong password");	// 400 
+		
+		String encodedNewPassword = passwordEncoder.encode(newPassword);		
+		LOGGER.info( "encodedNewPassword: " + encodedNewPassword );
+		
+		try {
+			// Update password
+			employee.setPassword(encodedNewPassword);
+			service.postEmployee(employee);
+		} catch ( Exception e ) {
+			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body("Error, password update failed");
+		}
+		
+		return ResponseEntity.status( HttpStatus.OK ).body(employee);
+	}
+	
 	@DeleteMapping( value="/deleteEmployeeById", params = {"id"} )
 	public void deleteEmployeeById( @RequestParam ("id") long id ) {
 		
