@@ -94,7 +94,7 @@ public class LoginController {
         		idUser = customer.getId();
     		} else {
     			
-    			return "User not found on the db";
+    			return "User not found in the db";
     		}
     	}
 
