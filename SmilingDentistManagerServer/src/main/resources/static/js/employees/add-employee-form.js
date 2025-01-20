@@ -89,30 +89,30 @@
           // const formDataObj = Object.fromEntries(formDataAddEmployee.entries());
           // const jsonFormData = JSON.stringify(formDataObj);
 
-        // check if there are duplicated professional roles selected -----------------------------------
+          // check if there are duplicated professional roles selected -----------------------------------
 
-        // from common-top-page
-        const errMsgDuplicateProfessionalRoleSelected = document.getElementById("errMsgDuplicateProfessionalRoleSelected").innerText; 
-        var arrProfRolesSelected = Array.from( document.getElementsByClassName("professionalRoleSelects"  ) );
+          // from common-top-page
+          const errMsgDuplicateProfessionalRoleSelected = document.getElementById("errMsgDuplicateProfessionalRoleSelected").innerText; 
+          var arrProfRolesSelected = Array.from( document.getElementsByClassName("professionalRoleSelects"  ) );
 
-        for( let i = 0; i < arrProfRolesSelected.length; i++) {
-          for( let j = i + 1; j < arrProfRolesSelected.length; j ++ ) {
-            if( arrProfRolesSelected[i].options[ arrProfRolesSelected[i].selectedIndex ].innerText.trim() 
-                === arrProfRolesSelected[j].options[arrProfRolesSelected[j].selectedIndex].innerText.trim() ) {
+          for( let i = 0; i < arrProfRolesSelected.length; i++) {
+            for( let j = i + 1; j < arrProfRolesSelected.length; j ++ ) {
+              if( arrProfRolesSelected[i].options[ arrProfRolesSelected[i].selectedIndex ].innerText.trim() 
+                  === arrProfRolesSelected[j].options[arrProfRolesSelected[j].selectedIndex].innerText.trim() ) {
 
-              console.log(  arrProfRolesSelected[i].options[ arrProfRolesSelected[i].selectedIndex ].innerText 
-                            + " === " 
-                            + arrProfRolesSelected[j].options[arrProfRolesSelected[j].selectedIndex].innerText  )
+                console.log(  arrProfRolesSelected[i].options[ arrProfRolesSelected[i].selectedIndex ].innerText 
+                              + " === " 
+                              + arrProfRolesSelected[j].options[arrProfRolesSelected[j].selectedIndex].innerText  )
 
-              errMsg.style.display = "block";
-              errMsgText.innerText = errMsgDuplicateProfessionalRoleSelected;
+                errMsg.style.display = "block";
+                errMsgText.innerText = errMsgDuplicateProfessionalRoleSelected;
 
-              return;
+                return;
+              }
             }
           }
-        }
 
-        // ---------------------------------------------------------------------------------------------
+         // ---------------------------------------------------------------------------------------------
 
 
           // control print
