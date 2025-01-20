@@ -49,10 +49,16 @@ public class SecurityConfig  {
 //                    .defaultSuccessUrl("/dashboard/employee", true)
 //                    .permitAll()
 //             )
-             .logout(logout -> logout
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/login?logout")
-                    .permitAll()
+//             .logout(logout -> logout
+//                    .logoutUrl("/logout")
+//                    .logoutSuccessUrl("/login?logout")
+//                    .permitAll()
+//              )
+             .logout( logout -> logout.disable()	// I use my logout
+//            		 					.logoutUrl("/logout") 
+//            		 					.logoutSuccessUrl("/login?logout") 
+//            		 					.invalidateHttpSession(true) 
+//            		 					.deleteCookies("JSESSIONID") // Remove any session cookies if used
               )
              .addFilterBefore(jwtAuthenticationFilter, (Class<? extends Filter>) UsernamePasswordAuthenticationFilter.class);  // Add JWT Filter
 

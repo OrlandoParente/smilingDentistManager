@@ -1,12 +1,17 @@
 package sdms.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class WebClientCookieManager {
 
+	private final static Logger LOGGER = LoggerFactory.getLogger(WebClientCookieManager.class);
+	
 	// Cookie names
 	// <---- TOKEN JWT
 	public final static String NAME = "name";
@@ -31,6 +36,23 @@ public class WebClientCookieManager {
 		// Add the useful cookies value to the model
 		model.addAttribute(WebClientCookieManager.NAME, name);
 		
+	}
+	
+	// Useful for logout
+	public static void destroyAllCookies(HttpServletRequest request, HttpServletResponse response) { 
+		
+		WebClientCookieManager.LOGGER.info( "in WebClientCookieManager.destroyAllCookies " );
+		
+		if (request.getCookies() != null) { 
+			for (Cookie cookie : request.getCookies()) { 
+				
+				WebClientCookieManager.LOGGER.info( "deleting cookie -> " + cookie.getName() );
+				cookie.setValue(null); 
+				cookie.setMaxAge(0); 
+				cookie.setPath("/"); 
+				response.addCookie(cookie); 
+			} 
+		}
 	}
 	
 }
