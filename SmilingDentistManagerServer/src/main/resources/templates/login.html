@@ -26,23 +26,41 @@
                         <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
                     </div>
                     <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="rememberMe">
+                        <input  type="checkbox" checked
+                                class="form-check-input" 
+                                id="rememberMe" 
+                                name="rememberMe">
                         <label class="form-check-label" for="rememberMe">Remember me</label>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Login</button>
                 </form>
-                <p class="text-center mt-3">
+
+
+                <!-- <p class="text-center mt-3">
                     <a href="#">Forgot password?</a>
                 </p>
                 <p class="text-center">
                     Don't have an account? <a href="#">Sign up</a>
-                </p>
+                </p> -->
+
+                <p  class="text-danger mt-4"
+                    th:if="${param.error}" 
+                    th:text="#{msgErrorInvalidLoginCredentials}"  >
+                    Invalid username or password.
+                </p> 
+        
+                <p  class="text-primary mt-4"
+                    th:if="${param.logout}"
+                    th:text="#{msgLogout}">
+                    You have been logged out.
+                </p> 
+
+
             </div>
         </div>
     </div>
     
-<!--     <p th:if="${param.error}">Invalid username or password.</p> -->
-<!--     <p th:if="${param.logout}">You have been logged out.</p> -->
+
 
 
     <!-- Collegamento al JS di Bootstrap e alle sue dipendenze -->

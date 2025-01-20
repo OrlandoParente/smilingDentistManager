@@ -78,12 +78,12 @@ public class LoginRestController {
     	if( ! passwordEncoder.matches(password, dbPsw) ) return "Wrong Password";
     	
     	try {
-    	Authentication authentication = authenticationManager.authenticate( 
-					new UsernamePasswordAuthenticationToken(username, password)
-				);
-    	
-    	// save authentication in the security context 
-    	SecurityContextHolder.getContext().setAuthentication(authentication);
+	    	Authentication authentication = authenticationManager.authenticate( 
+						new UsernamePasswordAuthenticationToken(username, password)
+					);
+	    	
+	    	// save authentication in the security context 
+	    	SecurityContextHolder.getContext().setAuthentication(authentication);
     	
     	} catch( Exception e ) {
     		System.err.println( e.getMessage() );

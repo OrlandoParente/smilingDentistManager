@@ -3,6 +3,7 @@ package sdms.controller.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,7 +31,7 @@ import sdms.util.WebClientCookieManager;
 @RequestMapping("/login")
 public class LoginController {
 
-	private static final Logger Logger = LoggerFactory.getLogger( LoginController.class );
+	private final Logger LOGGER = LoggerFactory.getLogger( LoginController.class );
 	
 	@Autowired
 	EmployeeService employeeService;
@@ -47,6 +48,11 @@ public class LoginController {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
+	@Value("${jwt.expiration.minutes:120}") 
+	private String strCookiesExpirationInMinutes; 
+	
+	private int cookieExpirationInMinutes; 
+    
     @GetMapping
     public String login() {
     	
@@ -58,10 +64,21 @@ public class LoginController {
     }
     
     @PostMapping
-    public String login(@RequestParam String username, @RequestParam String password, HttpServletResponse response) {
+    public String login( HttpServletResponse response, 
+    					 @RequestParam String username, @RequestParam String password, @RequestParam( defaultValue = "false") boolean rememberMe) {
         
-    	Logger.info("username : " + username + " -- password : " + password);
+    	
+    	// better avoid write the clear password in the logs 
+    	LOGGER.info("username : " + username + /* "; password : " + password + */"; rememberMe : " + rememberMe);
 
+    	// get cookie expiration 
+    	if( rememberMe )
+    		cookieExpirationInMinutes = 525600; // 100 years
+    	else
+    		cookieExpirationInMinutes = Integer.parseInt( strCookiesExpirationInMinutes );
+    	
+    	LOGGER.info("cookieExpirationInMinutes: " + cookieExpirationInMinutes );
+    	
     	// username = email
     	String dbPsw; // password saved in to the db
     	String role;
@@ -100,7 +117,7 @@ public class LoginController {
 
     	// check password and role
     	if( role.equals( UserRoleManager.ROLE_ACCESS_NOT_ALLOWED ) ) return "User not allowed to access";
-    	if( ! passwordEncoder.matches(password, dbPsw) ) return "Wrong Password";
+    	if( ! passwordEncoder.matches(password, dbPsw) ) return "redirect:/login?error";
     	
     	try {
     		Authentication authentication = authenticationManager.authenticate( 
@@ -116,7 +133,7 @@ public class LoginController {
         	jwtCookie.setHttpOnly(true); // Impedisce l'accesso al token tramite JavaScript
         	// jwtCookie.setSecure(true); // Imposta solo per HTTPS in ambienti di produzione
         	jwtCookie.setPath("/"); // Disponibile per tutto il dominio
-        	jwtCookie.setMaxAge(24 * 60 * 60); // Imposta una scadenza (ad esempio 1 giorno)
+        	jwtCookie.setMaxAge(cookieExpirationInMinutes * 60); // Imposta una scadenza (ad esempio 1 giorno)
         	response.addCookie(jwtCookie);
     		// ---------------------------------------------------------------------------------
         	
@@ -126,7 +143,7 @@ public class LoginController {
         	// nameCookie.setHttpOnly(true); // Impedisce l'accesso al token tramite JavaScript
         	// jwtCookie.setSecure(true); // Imposta solo per HTTPS in ambienti di produzione
         	// nameCookie.setPath("/"); // Disponibile per tutto il dominio
-        	nameCookie.setMaxAge(24 * 60 * 60); // Imposta una scadenza (ad esempio 1 giorno)
+        	nameCookie.setMaxAge(cookieExpirationInMinutes * 60); // Imposta una scadenza (ad esempio 1 giorno)
         	response.addCookie(nameCookie);
     		// ---------------------------------------------------------------------------------
         	
@@ -135,7 +152,7 @@ public class LoginController {
         	// userIdCookie.setHttpOnly(true); // Impedisce l'accesso al token tramite JavaScript
         	// jwtCookie.setSecure(true); // Imposta solo per HTTPS in ambienti di produzione
         	userIdCookie.setPath("/"); // Disponibile per tutto il dominio
-        	userIdCookie.setMaxAge(24 * 60 * 60); // Imposta una scadenza (ad esempio 1 giorno)
+        	userIdCookie.setMaxAge(cookieExpirationInMinutes * 60); // Imposta una scadenza (ad esempio 1 giorno)
         	response.addCookie(userIdCookie);
     		// ---------------------------------------------------------------------------------
     	
