@@ -225,33 +225,53 @@
                  <!-- Buttons for add new expenses-->
                  <div class="border border-secondary rounded p-3 mt-3 ">
                     <h4 th:text="#{divLegendChangePassword}">Cambio password</h4>
-                    <!-- <h4 th:text="#{divLegendAddExpense}">Add Expenses</h4> -->
-                    <!-- <div class="row">
-                        <div class="col-12 col-md-auto d-inline-block mt-2 px-md-1">
-                            <div th:replace="~{fragments/expenses/add-expense-modal-generic 
-                                                :: add-expense-modal-generic}">
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-auto d-inline-block mt-2 px-md-1">
-                            <div th:replace="~{fragments/expenses/add-expense-modal-dental-material-purchase 
-                                :: add-expense-modal-dental-material-purchase}">
+                    <form id="changePasswordForm" method="PUT">
+                        <div class="row">
+                            <div class="col-12 col-md-auto d-flex mt-2 ">
+                                <label  class="form-label col-md-auto me-2 mt-md-2" 
+                                        for="currentPassword"
+                                        th:text="#{formLabelCurrentPassword}">
+                                    Current password: 
+                                </label>
+                                <input  type="password" class="form-control w-100" 
+                                        id="currentPassword" name="currentPassword">
                             </div>
                             
-                        </div>
-                        
-                        <div class="col-12 col-md-auto d-inline-block  mt-2 px-md-1">
-                            <div th:replace="~{fragments/expenses/add-expense-modal-salary-payment 
-                                :: add-expense-modal-salary-payment}">
+                            <div class="col-12 col-md-auto d-flex mt-2 ">
+                                <label  class="form-label col-md-auto me-2 mt-md-2" 
+                                        for="newPassword"
+                                        th:text="#{formLabelNewPassword}">
+                                    New password: 
+                                </label>
+                                <input  type="password" class="form-control w-100" 
+                                        id="newPassword" name="newPassword">
+
+                            </div>
+
+                            <div class="col-12 col-md-auto d-flex mt-2">
+                                <label  class="form-label col-md-auto me-2 mt-md-2" 
+                                        for="confirmaNewPassword"
+                                        th:text="#{formLabelConfirmNewPassword}">
+                                    Confirm new password: 
+                                </label>
+                                <input  type="password" class="form-control w-100" 
+                                        id="confirmaNewPassword" >
+
+                            </div>
+
+
+                        </div> 
+
+                        <div class="row">
+                            <div class="col-12 col-md-auto d-inline-block mt-2 px-md-1">
+                                <input  type="submit" class="btn btn-primary" 
+                                        id="btnChangePassword"
+                                        th:value="#{btnChangePassword}">
+                                <!-- </button> -->
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-auto d-inline-block mt-2  px-md-1" >
-                            <div th:replace="~{fragments/expenses/add-expense-modal-customer-refund 
-                                :: add-expense-modal-customer-refund}">
-                            </div>
-                        </div>
-                    </div> -->
+                    </form>
                 </div>
 
                 <div class="border border-secondary rounded p-3 mt-3 ">
