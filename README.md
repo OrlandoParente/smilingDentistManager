@@ -376,7 +376,11 @@ This project uses several dependencies, each with its own license. Below is a su
 - **JWT Library** (io.jsonwebtoken):
   - **License**: Apache License 2.0
   - **URL**: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
-  
+
+- **Thymeleaf**: 
+  - **License**: Apache License 2.0 
+  - **URL**: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+
 - **H2 Database**:
   - **License**: Eclipse Public License 1.0
   - **URL**: [Eclipse Public License 1.0](https://www.eclipse.org/legal/epl-v10.html)
