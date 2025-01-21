@@ -361,3 +361,49 @@ Namely the controller that link a Employee which his (one or more) Professional 
 ```java 
 /deleteWorkPeriod?id=ID
 ```
+## License Information
+
+This project uses several dependencies, each with its own license. Below is a summary of the licenses for each dependency:
+
+- **Spring Boot**:
+  - **License**: Apache License 2.0
+  - **URL**: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+  
+- **ModelMapper**:
+  - **License**: Apache License 2.0
+  - **URL**: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+  
+- **JWT Library** (io.jsonwebtoken):
+  - **License**: Apache License 2.0
+  - **URL**: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+  
+- **H2 Database**:
+  - **License**: Eclipse Public License 1.0
+  - **URL**: [Eclipse Public License 1.0](https://www.eclipse.org/legal/epl-v10.html)
+  
+- **MySQL Connector**:
+  - **License**: GPL-2.0 with FOSS Exception
+  - **URL**: [GPL-2.0 with FOSS Exception](https://www.mysql.com/about/legal/licensing/foss-exception/)
+  
+- **SQLite**:
+  - **License**: Public Domain
+  - **URL**: [SQLite Public Domain](https://www.sqlite.org/copyright.html)
+  
+- **Bootstrap**:
+  - **License**: MIT License
+  - **URL**: [MIT License](https://opensource.org/licenses/MIT)
+  
+- **JSON (org.json:json:20230618)**:
+  - **License**: MIT License
+  - **URL**: [MIT License](https://opensource.org/licenses/MIT)
+  
+- **SQLite JDBC Driver (org.xerial:sqlite-jdbc:3.7.2)**:
+  - **License**: BSD-3-Clause License
+  - **URL**: [BSD-3-Clause License](https://opensource.org/licenses/BSD-3-Clause)
+
+Please ensure that you comply with the licenses of these dependencies when using this project. For more details on each license, follow the provided links.
+
+
+### Project License
+
+The overall project is licensed under the GPL3.0 See the [LICENSE](./LICENSE) file for more details.
