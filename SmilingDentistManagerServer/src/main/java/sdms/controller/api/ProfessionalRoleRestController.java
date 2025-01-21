@@ -117,7 +117,7 @@ public class ProfessionalRoleRestController {
 //		
 //	}
 	
-	@DeleteMapping( value="/deleteProfessionalRoleById", params = {"id"} )
+	@DeleteMapping( value="/deleteProfessionalRole", params = {"id"} )
 	public void deleteProfessionalRoleById( @RequestParam("id") long id  ) {
 		
 		// Stampa di controllo

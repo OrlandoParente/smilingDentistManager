@@ -355,7 +355,7 @@ public class WorkPeriodRestController {
 
 	// DELETE REQUEST ----------------------------------------------------------------------------------------------
 	
-	@DeleteMapping( value = "/deleteWorkPeriodById", params = {"id"} )
+	@DeleteMapping( value = "/deleteWorkPeriod", params = {"id"} )
 	public ResponseEntity<?> deleteWorkPeriodById( @RequestParam long id ){
 		
 		try {

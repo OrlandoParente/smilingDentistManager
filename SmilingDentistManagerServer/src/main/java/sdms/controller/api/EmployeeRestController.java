@@ -340,7 +340,7 @@ public class EmployeeRestController {
 		return ResponseEntity.status( HttpStatus.OK ).body(employee);
 	}
 	
-	@DeleteMapping( value="/deleteEmployeeById", params = {"id"} )
+	@DeleteMapping( value="/deleteEmployee", params = {"id"} )
 	public void deleteEmployeeById( @RequestParam ("id") long id ) {
 		
 		

@@ -76,6 +76,8 @@ public class TreatmentRestController {
 		return treatments.stream().map( t -> modelMapper.map( t, TreatmentDTO.class ) ).toList();
 	}
 	
+	// TO RE-WRITE IN ONCE ###########################################################################################################
+	
 	@PostMapping( value="/postTreatment", params = {"name","cost"} )
 	public void postTreatment( @RequestParam("name") String name, @RequestParam("cost") float cost ) {
 		
@@ -105,6 +107,9 @@ public class TreatmentRestController {
 		service.postTreatment(treatment);
 	}
 	
+	// ###############################################################################################################################
+	
+	// TO RE-WRITE WITH FACOLTATIVE PARAMS ###############################################################################################################################
 	@PutMapping( value="/putTreatment", params = {"id", "name", "description", "cost"} )
 	public ResponseEntity<?> putTreatment( @RequestParam("id") long id, @RequestParam("name") String name, 
 								@RequestParam("description") String description,  @RequestParam("cost") float cost ) {
@@ -126,9 +131,11 @@ public class TreatmentRestController {
 		
 		return ResponseEntity.status( HttpStatus.OK ).body(treatment);
 	}
+	// ###############################################################################################################################
+	
 	
 	// boolean deleteTreatmentById( String id ) throws SQLException;
-	@DeleteMapping( value="/deleteTreatmentById", params = {"id"})
+	@DeleteMapping( value="/deleteTreatment", params = {"id"})
 	public void deleteTreatmentById( @RequestParam("id") long id ) {
 
 		// check message

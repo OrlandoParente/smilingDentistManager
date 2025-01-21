@@ -41,7 +41,7 @@ public class HttpConnectionManager {
 	public static final String GET_EMPLOYEE_BY_ID = "getEmployeeById/";
 	public static final String POST_EMPLOYEE = "postEmployee";
 	public static final String PUT_EMPLOYEE = "putEmployee";
-	public static final String DELETE_EMPLOYEE_BY_ID = "deleteEmployeeById";
+	public static final String DELETE_EMPLOYEE_BY_ID = "deleteEmployee";
 	public static final String GET_MAX_ID_EMPLOYEE = "getMaxIdEmployee";
 	
 	// Request for medicalHistory
@@ -55,7 +55,7 @@ public class HttpConnectionManager {
 	public static final String GET_TREATMENTS_BY_ID = "getTreatmentsById/";
 	public static final String GET_TREATMENTS_BY_BILL_NUMBER = "getTreatmentsByBillNumber/";
 	public static final String POST_TREATMENT = "postTreatment";
-	public static final String DELETE_TREATMENT_BY_IS = "deleteTreatmentById";
+	public static final String DELETE_TREATMENT_BY_IS = "deleteTreatment";
 	
 	// Request for hasProfessionalRole
 	public static final String POST_LINK_EMPLOYEE_TO_PROFESSIONAL_ROLE = "postLinkEmployeeToProfessionalRole";
@@ -65,7 +65,7 @@ public class HttpConnectionManager {
 	public static final String GET_PROFESSIONAL_ROLES = "getProfessionalRoles";
 	public static final String POST_PROFESSIONAL_ROLE = "postProfessionalRole";
 	public static final String PUT_PROFESSIONAL_ROLE_BY_ID = "putProfessionalRole";
-	public static final String DELETE_PROFESSIONAL_ROLE_BY_ID = "deleteProfessionalRoleById";
+	public static final String DELETE_PROFESSIONAL_ROLE_BY_ID = "deleteProfessionalRole";
 	
 	// Request for Appointment
 	public static final String GET_APPOINTMENTS = "getAppointments";
