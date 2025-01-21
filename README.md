@@ -263,7 +263,8 @@ Namely the controller that link a Employee which his (one or more) Professional 
 ```  
 ### Login API
 ```java 
-/api/login
+// Note: this is a POST request 
+/api/login?username=USERNAME&password=PASSWORD
 ```  
 ### Medical history APIs
 
