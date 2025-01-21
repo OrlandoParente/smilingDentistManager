@@ -112,15 +112,15 @@ with this structure: **[ServerURL]/[API]/[anyParameterOrPathVariable]** (*where*
 ```
 
 ```java 
-// Note.: this is a PATCH call
+// Note.: this is a PATCH request
 /decreaseDentalMaterialQuantity?id=ID&quantity=QUANTITY    
 ```
 ```java 
-// Note.: this is a PATCH call
+// Note.: this is a PATCH request
 /increaseDentalMaterialQuantity?id=ID&quantity=QUANTITY   
 ```
 ```java 
-// Note.: this is a PATCH call
+// Note.: this is a PATCH request
 /increaseDentalMaterialQuantity?id=ID&quantity=QUANTITY&amount=AMOUNT&date=DATE // facoltative param= { tag }   
 ```
 ```java 
@@ -156,7 +156,7 @@ with this structure: **[ServerURL]/[API]/[anyParameterOrPathVariable]** (*where*
 /putEmployee?id=ID  // facoltative params={ title, name, surname, birthDate, phoneNumber, phoneNumber2, salary, permission, startWorkDate }
 ```
 ```java 
-// Note: this is a PATCH call
+// Note: this is a PATCH request
 /employeeChangePassword?id=ID&currentPassword=CURRENT_PSW&newPassword=NEW_PSW
 ```
 ```java 
