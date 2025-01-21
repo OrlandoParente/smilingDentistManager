@@ -60,6 +60,7 @@ public class ExpenseRestController {
 		return expenseDTO;
 	}
 	
+	@GetMapping("/getExpenses")
 	public List<ExpenseDTO> getExpenses() {
 		
 		List<Expense> expenses = service.getExpenses();
@@ -156,6 +157,7 @@ public class ExpenseRestController {
 	}
 	
 
+	// <------------- I need this ? 
 	// Insert the refund to a customer
 	@PostMapping("/postCustomerRefund")
 	public ResponseEntity<?> postCustomerRefund( @RequestParam("idCustomer") long idCustomer,
@@ -273,6 +275,7 @@ public class ExpenseRestController {
 		return ResponseEntity.status(HttpStatus.OK).body(expense);
 	}
 	
+	// <<<<<<<<<<<<<<<<<<------------ I NEED THIS ?
 	// Update the refund to a customer
 	@PutMapping("/putCustomerRefund")
 	public ResponseEntity<?> putCustomerRefund( @RequestParam("id") long id,
@@ -302,6 +305,7 @@ public class ExpenseRestController {
 		
 	}
 	
+	// <------------------------------ I NEED THIS?
 	// Update the expense regards purchase of dental materials
 	@PutMapping("/putDentalMaterialPurchase")
 	public ResponseEntity<?> putDentalMaterialPurchase( @RequestParam("id") long id,
@@ -332,6 +336,7 @@ public class ExpenseRestController {
 		
 	}
 	
+	// <----------------- I NEED THIS ?
 	// Insert the salary payment of an employee
 	@PutMapping("/putSalaryPayment")
 	public ResponseEntity<?> putSalaryPayment( @RequestParam("id") long id,

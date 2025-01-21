@@ -43,15 +43,6 @@ public class DentalMaterialRestController {
 	DateAndTimeManager dateAndTimeManager;
 	
 	// READ ------------------------------------------------------
-	@GetMapping("/getDentalMaterialById/{id}")
-	public DentalMaterialDTO getDentalMaterialById( @PathVariable Long id ) {
-		
-		DentalMaterial dentalMaterial = service.getDentalMaterialById(id);
-		DentalMaterialDTO dentalMaterialDTO = modelMapper.map( dentalMaterial, DentalMaterialDTO.class);	
-		
-		return dentalMaterialDTO;
-	}
-	
 	@GetMapping("/getDentalMaterials")
 	public List<DentalMaterialDTO> getDentalMaterials() {
 		
@@ -61,6 +52,16 @@ public class DentalMaterialRestController {
 														.toList();
 		
 		return dentalMaterialDTOs;
+	}
+	
+	
+	@GetMapping("/getDentalMaterialById/{id}")
+	public DentalMaterialDTO getDentalMaterialById( @PathVariable Long id ) {
+		
+		DentalMaterial dentalMaterial = service.getDentalMaterialById(id);
+		DentalMaterialDTO dentalMaterialDTO = modelMapper.map( dentalMaterial, DentalMaterialDTO.class);	
+		
+		return dentalMaterialDTO;
 	}
 	
 	

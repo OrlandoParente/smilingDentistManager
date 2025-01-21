@@ -327,6 +327,7 @@ public class AppointmentRestController {
 		return ResponseEntity.status( HttpStatus.OK ).body(modelMapper.map(appointment, AppointmentDTO.class));
 	}
 	
+	// <--------------------  Can I delete this?
 	@PutMapping( value = "/putAppointmentBillNumberById", params = { "id" , "billNumber" } )
 	public void putAppointmentBillNumberById( @RequestParam("id") long id, @RequestParam("billNumber") String billNumber ) {
 		
@@ -336,7 +337,7 @@ public class AppointmentRestController {
 		service.putAppointmentBillNumberById(id, billNumber);	
 	}
 	
-	
+	// <-------------------- Can I delete this?
 	@PutMapping( value = "/putAppointmentNoteById", params = { "id", "note"} )
 	public void putAppointmentNoteById( @RequestParam("id") long id, @RequestParam("note") String note ) {
 		
@@ -346,6 +347,7 @@ public class AppointmentRestController {
 		service.putAppointmentNoteById(id, note);
 	}
 	
+	// <-------------------- Can I delete this?
 	@PutMapping( value = "/putAppointmentTreatmentById", params = { "id", "idTreatment"} )
 	public void putAppointmentTreatmentById( @RequestParam("id") long id, @RequestParam("idTreatment") long idTreatment  ) {
 	
