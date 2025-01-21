@@ -10,7 +10,7 @@ This software is composed by two clients and one server:
 - The [first client](https://github.com/OrlandoParente/smilingDentistManager/tree/main/smilingDentinstManagerClient) is a desktop application written with Swing. In future probably I will re-writing it with Java FX.  
   To date I *do not* raccomend to use this client, cause it miss some functionalities.
 - The [second client](https://github.com/OrlandoParente/smilingDentistManager/tree/main/SmilingDentistManagerServer/src/main/resources) is directly integrated in the server and it's a web application gui written with bootstrap.
-- The [server](https://github.com/OrlandoParente/smilingDentistManager/tree/main/SmilingDentistManagerServer) is an MVC application written with SpringBoot. It has API Controllers  
+- The [server](https://github.com/OrlandoParente/smilingDentistManager/tree/main/SmilingDentistManagerServer) is an MVC application written with SpringBoot. It has:   
   - [API Controllers](https://github.com/OrlandoParente/smilingDentistManager/tree/main/SmilingDentistManagerServer/src/main/java/sdms/controller/api), for a generic use of the server. You can build your own client and use this as a server throught this API.
   - [Web Controllers](https://github.com/OrlandoParente/smilingDentistManager/tree/main/SmilingDentistManagerServer/src/main/java/sdms/controller/web), that are controller dedicated to the client directly integrated with it
  
