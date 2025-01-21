@@ -8,14 +8,18 @@
 		<version>3.4.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+	
 	<groupId>sdms</groupId>
 	<artifactId>SmilingDentistManagerServer</artifactId>
 	<version>1.0.0-BETA</version>
 	<name>SmilingDentistManagerServer</name>
 	<description>Server for Smile Dentist Manager</description>
+	
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+	
+
 	<dependencies>
 	
 		<!-- MODEL MAPPER -->
@@ -155,6 +159,25 @@
 	            </configuration>
 	        </plugin>
 			<!-- ################################ -->
+			
+			<!-- ################################ -->
+			<!-- Use command mvn clean verify -->
+			<!-- It should generate licenses/THIRD_PARTY_LICENSES.txt in the targer folder ? -->
+<!--			<plugin>-->
+<!--			    <groupId>org.codehaus.mojo</groupId>-->
+<!--			    <artifactId>license-maven-plugin</artifactId>-->
+<!--			    <version>2.0.0</version>-->
+<!--			    <executions>-->
+<!--			        <execution>-->
+<!--			            <phase>verify</phase>-->
+<!--			            <goals>-->
+<!--			                <goal>aggregate-add-third-party</goal>-->
+<!--			            </goals>-->
+<!--			        </execution>-->
+<!--			    </executions>-->
+<!--			</plugin>-->
+			<!-- ################################ -->
+
 		</plugins>
 
 		</build>
@@ -166,7 +189,14 @@
 		<license/>
 	</licenses>
 	<developers>
-		<developer/>
+	
+	    <developer>
+<!--	        <id>your-id</id>-->
+	        <name>Orlando Parente</name>
+	        <email>parenteorlando@yahoo.it</email>
+<!--	        <url>https://yourwebsite.com</url>-->
+	    </developer>
+	
 	</developers>
 	<scm>
 		<connection/>
@@ -174,4 +204,6 @@
 		<tag/>
 		<url/>
 	</scm>
+	
+	
 </project>
