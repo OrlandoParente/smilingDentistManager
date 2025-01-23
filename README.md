@@ -450,4 +450,4 @@ Please ensure that you comply with the licenses of these dependencies when using
 
 ### Project License
 
-The overall project is licensed under the GPL3.0 See the [LICENSE](./LICENSE) file for more details.
+The overall project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more details.
