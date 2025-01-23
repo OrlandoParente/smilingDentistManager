@@ -72,6 +72,15 @@ public class EmployeeController {
 			}
 		} 
 		
+		// Remove user who is using the application ----------------------
+		long idUser = Long.parseLong( WebClientCookieManager.getCookieValue(request, WebClientCookieManager.ID_USER) );
+		int empIndex = -1;
+		for( Employee emp : employees ) {
+			if( emp.getId() == idUser )
+				empIndex = employees.indexOf(emp);
+		}
+		if( empIndex != -1 ) employees.remove(empIndex);
+		// ---------------------------------------------------------------
 		
 		List<EmployeeExpenseProfessionalRoleWorkPeriodDTO> joinEmployees = new ArrayList<EmployeeExpenseProfessionalRoleWorkPeriodDTO>();
 		
