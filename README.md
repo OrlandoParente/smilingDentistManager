@@ -20,12 +20,52 @@ If you want to use this application you should keep in mind, as written in the l
 On other hand, in my option, there are a couple of reason for use this software:
 - *It's Open Source*, that's mean:
    - You, or anyelse for you, can check the code for be sure there is nothing weird;
-   - You, or anyelse for you can edit it for adapt to your own needs (add functionalities, change colors, add languages, etc ...)
+   - You, or anyelse for you, can edit it for adapt to your own needs (add functionalities, change colors, add languages, etc ...)
 - *Choose your cost*, namely:
    - Even though you can keep smilingDentistManager for free, you need to upload it somewhere for make it works properly (I mean, it's a server after all). But for sure, you can choose the best solution for you both in terms of *costs* and *resources allocated*
 
  ## Quick start
-( I will cover this section soon )
+If you just want to try this application I deploied it here:  
+https://sdm-server.onrender.com/login  
+use this credentials for login:  
+**username:** admin@email.it  
+**password:** 123  
+
+*Warning:* It's upload on a free tier host, It can happen that's slow or that it reached the free limits for this month!
+
+Otherwise you can use it localy:
+### SmilingDentistManagerServer
+1. make sure you the credentials of a mysql database
+2. Download the zip and extract SmilingDentistManagerServer in your eclipse folder
+3. change the mysql credentials in the application.properties
+```java
+spring.datasource.url=jdbc:mysql://localhost:3306/sdm_db?allowPublicKeyRetrieval=true&useSSL=false
+spring.datasource.username=root
+spring.datasource.password=
+```
+4. From eclipse: File -> Import -> General -> Existing Project into Workspace -> *select smilingDentistManagerServer* -> Finish
+5. make sure your mysql database is on, and run mvn clean install
+6. Run SmilingDentistManagerServer
+7. Got to http://localhost:8080/ from the broser for start
+8. Add an employee in your database with
+    - permission = 10
+    - name = Admin
+    - surname = Admin
+    - email = admin@email.com
+    - password = $2a$10$UsbIHaJu.0nBIoa4129s.eDJIm4EhnqvQjqDZOKMkRR23FEAJdUQ2 *(namely 123)*
+9. Now you can access in http://localhost:8080/login with user=admin@email.com and password=123
+### SmilingDentistManagerClient
+1. Download the zip and extract it in your eclipse folder
+2. From eclipse: File -> Import -> General -> Existing Project into Workspace -> *select smilingDentistManagerClient* -> Finish
+3. Make sure there is a running smilingDentistServer and you have the right login credentials saved in settings.json
+```java
+{
+	"server" : "http://localhost:8080/" ,
+ 	"languageCode" : "en", 
+ 	"username" : "admin@email.com", 
+ 	"password" : "123"
+ }
+```
 
 ## Usage
 After the installation of the server (and the database) you can use the follow APIs  
