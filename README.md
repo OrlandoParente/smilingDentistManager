@@ -31,7 +31,8 @@ use this credentials for login:
 **username:** admin@email.it  
 **password:** 123  
 
-*Warning:* It's upload on a free tier host, It can happen that's slow or that it reached the free limits for this month!
+*Warning:* It's upload on a free tier host, It can happen that's slow or that it reached the free limits for this month!  
+*Note:* I disabled some fields in personal profile for avoid that, accidentally, someone compromises login credentials.  
 
 Otherwise you can use it localy:
 ### SmilingDentistManagerServer
