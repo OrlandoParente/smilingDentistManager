@@ -35,18 +35,18 @@ use this credentials for login:
 
 Otherwise you can use it localy:
 ### SmilingDentistManagerServer
-1. make sure you the credentials of a mysql database
-2. Download the zip and extract SmilingDentistManagerServer in your eclipse folder
+1. make sure to have a mysql database named sdm_db (I use phpmyadmin for the local database)
+2. Download the zip and extract SmilingDentistManagerServer in your Eclipse workspace folder
 3. change the mysql credentials in the application.properties
 ```java
 spring.datasource.url=jdbc:mysql://localhost:3306/sdm_db?allowPublicKeyRetrieval=true&useSSL=false
 spring.datasource.username=root
-spring.datasource.password=
+spring.datasource.password=password
 ```
 4. From eclipse: File -> Import -> General -> Existing Project into Workspace -> *select smilingDentistManagerServer* -> Finish
 5. make sure your mysql database is on, and run mvn clean install
 6. Run SmilingDentistManagerServer
-7. Got to http://localhost:8080/ from the broser for start
+7. Go to http://localhost:8080/ from the broser for start
 8. Add an employee in your database with
     - permission = 10
     - name = Admin
