@@ -63,7 +63,8 @@
                             </label> 
                             <!-- <input type="text" class="form-control" id="name" name="name" > -->
                             <input type="text" class="form-control w-100" id="name" name="name" 
-                                    th:value="${employee.name}"> 
+                                    th:value="${employee.name}">
+                                    <!-- disabled >  -->
                         </div>
                         
                         <div class="col-12 col-md-3 d-flex align-items-center mt-3"> 
@@ -136,10 +137,11 @@
                         </div>
 
                         <div class="col-12 col-md-7 d-flex align-items-center mt-3"> 
-                            <label class="form-label mb-1 col-md-auto me-2" for="permission" th:text="#{formLabelPermissions}">
+                            <label class="form-label mb-1 col-md-auto me-2" for="permission" th:text="#{formLabelPermissions}" >
                                 Permissions: 
                             </label>
-                            <select class="form-select" name="permission" id="permission" >
+                            <select class="form-select" name="permission" id="permission" > 
+                            <!-- disabled > -->
                             <!-- <option value=""></option> -->
                             <option th:each="permission : ${permissions}" 
                                     th:select="( ${employee.permission} == ${permission} )" selected
@@ -245,7 +247,8 @@
                                     Current password: 
                                 </label>
                                 <input  type="password" class="form-control w-100" 
-                                        id="currentPassword" name="currentPassword">
+                                        id="currentPassword" name="currentPassword" >
+                                        <!-- disabled> -->
                             </div>
                             
                             <div class="col-12 col-md-auto d-flex mt-2 ">
@@ -255,7 +258,8 @@
                                     New password: 
                                 </label>
                                 <input  type="password" class="form-control w-100" 
-                                        id="newPassword" name="newPassword">
+                                        id="newPassword" name="newPassword" >
+                                        <!-- disabled> -->
 
                             </div>
 
@@ -267,6 +271,7 @@
                                 </label>
                                 <input  type="password" class="form-control w-100" 
                                         id="confirmNewPassword" >
+                                        <!-- disabled> -->
 
                             </div>
 
