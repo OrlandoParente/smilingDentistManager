@@ -18,7 +18,7 @@ import sdms.service.ProfessionalRoleServiceInterface;
 import sdms.util.WebClientCookieManager;
 
 @Controller
-@RequestMapping("/employee/professionalRoles")
+@RequestMapping("/employee/professional-roles")
 public class ProfessionalRolesController {
 	
 	private final Logger LOGGER = LoggerFactory.getLogger( ProfessionalRolesController.class );
@@ -29,7 +29,7 @@ public class ProfessionalRolesController {
 	@Autowired
 	ModelMapper modelMapper;
 	
-	@GetMapping({"", "/" ,"/professionalRoles"})
+	@GetMapping({"", "/" ,"/professional-roles"})
 	public String getProfessionalRolesPage( HttpServletRequest request, Model model ) {
 		
 		// Set useful cookies --------------------------------------------------------------------------
@@ -48,7 +48,7 @@ public class ProfessionalRolesController {
 		
 		model.addAttribute("professionalRoles", listProfessionalRoleDTO);
 		
-		return "/employee/professional-roles/professional-roles";
+		return "employee/professional-roles/professional-roles";
 	}
 
 }

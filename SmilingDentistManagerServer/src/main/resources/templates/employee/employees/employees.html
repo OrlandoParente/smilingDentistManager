@@ -72,7 +72,7 @@
                                                             : null"
                                             >
 
-                                            <div th:insert="~{/fragments/employees/assume-employee-modal 
+                                            <div th:insert="~{fragments/employees/assume-employee-modal 
                                                             :: assume-employee-modal( ${joinEmployee}, ${lastWorkPeriod} )}"
                                                 >
                                             </div>
@@ -86,7 +86,7 @@
                                         th:with="lastWorkPeriod=${ joinEmployee.workPeriodsDTO[ #lists.size( joinEmployee.workPeriodsDTO ) -1 ] }"
                                         
                                     >
-                                        <div th:insert="~{/fragments/employees/dismiss-employee-modal 
+                                        <div th:insert="~{fragments/employees/dismiss-employee-modal 
                                             :: dismiss-employee-modal( ${joinEmployee}, ${lastWorkPeriod} )}"
                                             >
                                         </div>
@@ -94,7 +94,7 @@
                                     
 
                                     <div 
-                                        th:replace="~{/fragments/employees/put-employee-modal :: put-employee-modal(${joinEmployee})}">
+                                        th:replace="~{fragments/employees/put-employee-modal :: put-employee-modal(${joinEmployee})}">
                                     </div> 
                                 </td>
                                 <td>
