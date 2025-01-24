@@ -107,7 +107,9 @@
                                     <span th:text="${joinEmployee.employeeDTO.surname}"></span>
                                 </td>
                                 <td >
-                                    <span th:text="${joinEmployee.employeeDTO.birthDate}"></span>
+                                    <span   th:with="formatDate=#{formPlaceholderDate}"
+                                            th:text="${ #temporals.format( joinEmployee.employeeDTO.birthDate, formatDate )}">
+                                    </span>
                                 </td>
                                 <td>
                                     <span th:text="${joinEmployee.employeeDTO.eMail}"></span>
@@ -133,9 +135,13 @@
                                 <td>
                                     <div 
                                             th:each="workPeriod : ${joinEmployee.workPeriodsDTO}"
-                                            th:with="workPeriodText = (${workPeriod.endDate} != null)
-                                                    ? ${workPeriod.startDate} + ' - ' + ${workPeriod.endDate}
-                                                    : ${workPeriod.startDate} + ' - ' + #{textPresent}"
+                                            th:with="formatDate=#{formPlaceholderDate},
+                                                        workPeriodText = (${workPeriod.endDate} != null)
+                                                            ? ${ #temporals.format( workPeriod?.startDate, formatDate )} 
+                                                              + ' - ' 
+                                                              + ${ #temporals.format( workPeriod?.endDate, formatDate )}
+                                                            : ${ #temporals.format( workPeriod?.startDate, formatDate )} 
+                                                              + ' - ' + #{textPresent}"
                                     >
                                         <span th:text="${workPeriodText}"></span>
                                     </div>

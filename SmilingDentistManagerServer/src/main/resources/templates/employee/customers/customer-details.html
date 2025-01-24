@@ -53,7 +53,8 @@
                         <span th:text=" ' ' + ${joinCustomer.customerDTO.birthCity} + ' (' + ${joinCustomer.customerDTO.birthCityProvince} + ') '"></span>
                         &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
                         <span class="fw-bold" th:text="#{labelBirthDate}"></span>
-                        <span th:text=" ' ' + ${joinCustomer.customerDTO.birthDate}"></span>
+                        <span   th:with="dateFormat=#{formPlaceholderDate}"
+                                th:text=" ' ' + ${ #temporals.format ( joinCustomer.customerDTO.birthDate, dateFormat) }"></span>
                         &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
                         
                         <span class="fw-bold" th:text="#{labelPlaceOfResidence}"> </span>
@@ -184,7 +185,10 @@
                                         </div>
 
                                     </td>
-                                    <td th:text="${appointment.appointmentDTO.date}" ></td>
+                                    <td 
+                                        th:with="dateFormat=#{formPlaceholderDate}"
+                                        th:text="${ #temporals.format( appointment.appointmentDTO.date, dateFormat )}" >
+                                    </td>
                                     <td>
                                         <span th:text="${appointment.doctorDTO.name}"></span> <span th:text="${appointment.doctorDTO.surname}"></span>
                                     </td>

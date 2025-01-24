@@ -73,7 +73,8 @@
                         </label> 
                         <input type="text" class="form-control w-100" id="birthDate" name="birthDate" 
                                 th:placeholder="#{formPlaceholderDate}"
-                                th:value="${joinEmployee.employeeDTO.birthDate}"> 
+                                th:with="formatDate=#{formPlaceholderDate}"
+                                th:value="${ #temporals.format( joinEmployee.employeeDTO.birthDate, formatDate) }"> 
                       </div>
                       
                       <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
@@ -161,7 +162,8 @@
                       <input class="form-control" name="startWorkDate" type="text"
                               th:id="'startWorkDate' + ${wp.id}"
                               th:placeholder="#{formPlaceholderDate}"
-                              th:value="${wp.startDate}"
+                              th:with="formatDate=#{formPlaceholderDate}"
+                              th:value="${ #temporals.format( wp?.startDate, formatDate ) }"
                               >
                     </div>
 
@@ -173,7 +175,8 @@
                       <input class="form-control" name="endWorkDate" type="text"
                               th:id="'endWorkDate' + ${wp.id}"
                               th:placeholder="#{formPlaceholderDate}"
-                              th:value="${wp.endDate}"
+                              th:with="formatDate=#{formPlaceholderDate}"
+                              th:value="${ #temporals.format( wp?.endDate, formatDate )}"
                               >
                     </div>
 

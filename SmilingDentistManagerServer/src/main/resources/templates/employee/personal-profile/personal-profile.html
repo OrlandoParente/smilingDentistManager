@@ -85,7 +85,8 @@
                             </label> 
                             <input type="text" class="form-control w-100" id="birthDate" name="birthDate" 
                                     th:placeholder="#{formPlaceholderDate}"
-                                    th:value="${employee.birthDate}"> 
+                                    th:with="formatDate=#{formPlaceholderDate}"
+                                    th:value="${ #temporals.format( employee.birthDate, formatDate )}"> 
                         </div>
                             
                         

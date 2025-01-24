@@ -35,7 +35,8 @@
                         </label> 
                         <input type="text" class="form-control w-100" id="date" name="date" 
                                 th:placeholder="#{formPlaceholderDate}"
-                                th:value="${ #temporals.format(joinAppointment.appointmentDTO.date, 'dd/MM/yyyy') }"> 
+                                th:with="dateFormat=#{formPlaceholderDate}"
+                                th:value="${ #temporals.format(joinAppointment.appointmentDTO.date, dateFormat ) }"> 
                       </div> 
                       
                       <div class="col-12 col-md-4 d-flex align-items-center"> 

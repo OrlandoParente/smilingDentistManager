@@ -3,6 +3,7 @@
 <head>
 </head>
 <body>
+
     <div th:fragment="put-expenses-appointment-modal(joinAppointment)">
         <div class="modal fade" th:id="'putAppointmentModalToggle' + ${joinAppointment.appointmentDTO.id}" 
                 th:aria-labelledby="'putAppointmentModalToggleLabel' + ${joinAppointment.appointmentDTO.id}" tabindex="-1">
@@ -35,7 +36,8 @@
                         </label> 
                         <input type="text" class="form-control w-100" id="date" name="date" 
                                 th:placeholder="#{formPlaceholderDate}"
-                                th:value="${ #temporals.format(joinAppointment.appointmentDTO.date, 'dd/MM/yyyy') }"> 
+                                th:with="formatDate=#{formPlaceholderDate}"
+                                th:value="${ #temporals.format(joinAppointment.appointmentDTO.date, formatDate ) }"> 
                       </div> 
                       
                       <!-- <div class="col-12 col-md-4 d-flex align-items-center"> 

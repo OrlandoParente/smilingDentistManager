@@ -88,7 +88,8 @@
               </label> 
               <input type="text" class="form-control w-100" th:id="'birthDate' + ${formCustomer?.id}" name="birthDate" 
                         th:placeholder="#{formPlaceholderDate}"
-                        th:value="${formCustomer?.birthDate}"> 
+                        th:with="formatDate=#{formPlaceholderDate}"
+                        th:value="${ #temporals.format( formCustomer?.birthDate, formatDate )}"> 
             </div>
 
             <div class="col-12 col-md-6 d-flex align-items-center">  

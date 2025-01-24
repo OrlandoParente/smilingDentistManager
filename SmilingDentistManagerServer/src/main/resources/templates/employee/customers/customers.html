@@ -78,7 +78,8 @@
                                 </td>
 
                                 <td>
-                                    <span th:text="${customer.birthDate }" ></span>
+                                    <span   th:with="formatDate=#{formPlaceholderDate}"
+                                            th:text="${ #temporals.format( customer.birthDate, formatDate ) }" ></span>
                                 </td>
 
                                 <td>

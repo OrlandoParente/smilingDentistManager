@@ -25,7 +25,8 @@
           <input type="text" class="form-control w-100" 
                   th:id="'date' + ( ${formExpense?.id == null} ? '' : ${formExpense?.id} ) + ${postExpenseType}" name="date" 
                   th:placeholder="#{formPlaceholderDate}"
-                  th:value="${formExpense?.date}"> 
+                  th:with="formatDate=#{formPlaceholderDate}"
+                  th:value="${ #temporals.format( formExpense?.date, formatDate )}"> 
         </div>
         
         <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 

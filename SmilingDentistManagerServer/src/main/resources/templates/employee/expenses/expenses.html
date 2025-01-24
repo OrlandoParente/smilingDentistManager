@@ -129,7 +129,8 @@
                                     name="startDate"
                                     id="startDate"
                                     th:placeholder="#{formPlaceholderDate}"
-                                    th:value="${selectedStartDate}">
+                                    th:with="formatDate=#{formPlaceholderDate}"
+                                    th:value="${ #temporals.format( selectedStartDate, formatDate )}">
                         </div>
 
                         <div class="col-6 col-md-3  d-flex align-items-center mt-3">
@@ -142,7 +143,8 @@
                                     name="endDate"
                                     id="endDate"
                                     th:placeholder="#{formPlaceholderDate}"
-                                    th:value="${selectedEndDate}">
+                                    th:with="formatDate=#{formPlaceholderDate}"
+                                    th:value="${ #temporals.format( selectedEndDate, formatDate) }">
                         </div>
 
                         <div class="col-12 col-md-2  d-flex align-items-center mt-3">
@@ -192,7 +194,8 @@
                                     </div> 
                                 </td>
                                 <td>
-                                    <span th:text="${expense.date}"></span>
+                                    <span   th:with="formatDate=#{formPlaceholderDate}"
+                                            th:text="${ #temporals.format( expense?.date, formatDate) }"></span>
                                 </td>
                                 <td>
                                     <span th:text="${expense.amount}"></span>
@@ -243,7 +246,9 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <span th:text="${appointment.appointmentDTO.date}"></span>
+                                    <span   th:with="formatDate=#{formPlaceholderDate}"
+                                            th:text="${ #temporals.format( appointment?.appointmentDTO?.date, formatDate) }">
+                                    </span>
                                 </td>
                                 <td>
                                     <span th:text="${appointment.appointmentDTO.payment}"></span>
