@@ -39,7 +39,7 @@ Otherwise you can use it localy:
 1. make sure to have a mysql database named sdm_db (I use phpmyadmin for the local database)
 2. Download the zip and extract SmilingDentistManagerServer in your Eclipse workspace folder
 3. change the mysql credentials in the application.properties
-```java
+```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/sdm_db?allowPublicKeyRetrieval=true&useSSL=false
 spring.datasource.username=root
 spring.datasource.password=password
@@ -59,7 +59,7 @@ spring.datasource.password=password
 1. Download the zip and extract it in your eclipse folder
 2. From eclipse: File -> Import -> General -> Existing Project into Workspace -> *select smilingDentistManagerClient* -> Finish
 3. Make sure there is a running smilingDentistServer and you have the right login credentials saved in settings.json
-```java
+```json
 {
 	"server" : "http://localhost:8080/" ,
  	"languageCode" : "en", 
