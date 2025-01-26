@@ -1,8 +1,8 @@
 # Smiling dentist manager
-*Smiling dentist manager* it's an open source management for dentist studios. 
-It's born by listening the needs of [Dental Smile](https://linkedin.com/company/dental-smile-srls) studio, and how they needs a mangement software.
-I thinked to myself, I have the opportunity to do a great Java Open Source software that solve a real-life problem, 
-because I will have a continuos feedback (whatelse the software needs to have, bugs, etc ...) and at least one company will use my software (and that's great).  
+*Smiling dentist manager* it's an open source management software for dentist studios. 
+It's born by listening the needs of [Dental Smile](https://linkedin.com/company/dental-smile-srls) studio, and how they need a management software.
+I thought to myself, I have the opportunity to do a great Java Open Source software that solve a real-life problem, 
+because I will have a continuous feedback (whatelse the software needs to have, bugs, etc ...) and at least one company will use my software (and that's great).  
 So I tell them, I can do it! But it will be Open Source, and here we are!
 
 ## Description
