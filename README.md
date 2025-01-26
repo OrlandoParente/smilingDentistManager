@@ -31,7 +31,7 @@ use this credentials for login:
 **username:** admin@email.it  
 **password:** 123  
 
-*Warning:* It's upload on a free tier host, It can happen that it's loadsing is slow or that it has reached the free limits for this month!  
+*Warning:* This deployment uses free solutions, so it may be slow due to limited resources. It might reach the usage limit for this month. For the first access, you may need to wait up to 90 seconds as the machine starts up if the software has not been in use.  
 *Note:* I disabled some fields in personal profile for avoid that, accidentally, someone compromises login credentials.  
 
 Otherwise you can use it localy:
