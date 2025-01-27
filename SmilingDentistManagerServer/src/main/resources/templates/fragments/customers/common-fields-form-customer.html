@@ -102,6 +102,10 @@
 
                 <!-- <option selected value=""></option> -->
                 <option th:each="permission : ${customerPermissions}"
+                        th:selected="${permission == formCustomer?.permission}" 
+                        th:value="${permission}"
+                        th:text="#{ ${permission} }">
+                <!-- <option th:each="permission : ${customerPermissions}"
                         th:if="${permission == formCustomer?.permission}"
                           selected 
                           th:value="${permission}"
@@ -110,7 +114,7 @@
                         th:if="${permission != formCustomer?.permission}"
                           selected 
                           th:value="${permission}"
-                          th:text="#{ ${permission} }">
+                          th:text="#{ ${permission} }"> -->
                 </option>
               
               </select>
