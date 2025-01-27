@@ -113,7 +113,7 @@
                                 Permissions: 
                             </label>
                             <select class="form-select" name="permission" id="permission" >
-                              <option selected value=""></option>
+                              <!-- <option selected value=""></option> -->
                               <option th:each="permission : ${permissions}" 
                                       th:value="${permission}"
                                       th:text="#{ ${permission} }"
@@ -149,7 +149,7 @@
                               Professional role: 
                           </label>
                           <select class="form-select professionalRoleSelects" name="description" id="description" >
-                            <option selected value=""></option>
+                            <option selected value=""></option> 
                             <option th:each="professionalRole : ${professionalRoles}" 
                                     th:value="${professionalRole.id}"
                                     th:text="${professionalRole.name}"
