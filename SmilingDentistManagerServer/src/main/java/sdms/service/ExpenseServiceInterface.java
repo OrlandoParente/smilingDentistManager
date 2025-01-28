@@ -13,6 +13,9 @@ public interface ExpenseServiceInterface {
 	// READ ------------------------------------------------------
 	public Expense getExpenseById( long id );
 	public List<Expense> getExpenses();
+	public List<Expense> getExpensesByCustomerId( long idCustomer );
+	public List<Expense> getExoensesByEmployeeId( long idEmployee );
+	public List<Expense> getExpensesByDentalMaterialId( long idDentalMaterial );
 	public List<String> getExpenseTags();
 
 	// CREATE ----------------------------------------------------

@@ -39,6 +39,25 @@ public class ExpenseService implements ExpenseServiceInterface {
 	}
 
 	@Override
+	public List<Expense> getExpensesByCustomerId(long idCustomer) {
+		
+		return repository.findByCustomer( customerRepository.findById(idCustomer).get() );
+	}
+
+	@Override
+	public List<Expense> getExoensesByEmployeeId(long idEmployee) {
+		
+		return repository.findByEmployee( employeeRepository.findById(idEmployee).get() );
+	}
+
+	@Override
+	public List<Expense> getExpensesByDentalMaterialId(long idDentalMaterial) {
+		
+		return repository.findByDentalMaterial( dentalMaterialRepository.findById(idDentalMaterial).get() );
+	}
+	
+	
+	@Override
 	public List<Expense> getExpenses() {
 		
 		return repository.findAll();
@@ -111,5 +130,6 @@ public class ExpenseService implements ExpenseServiceInterface {
 		repository.save(expense);
 		
 	}
-	
+
+
 }

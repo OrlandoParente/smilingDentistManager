@@ -5,17 +5,15 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.stream.Collector;
-
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import sdms.dto.AppointmentDTO;
 import sdms.dto.CustomerDTO;
 import sdms.dto.ExpenseDTO;
 import sdms.dto.MedicalHistoryDTO;
 import sdms.model.Customer;
+import sdms.model.Expense;
 import sdms.model.HasMedicalHistory;
 import sdms.model.MedicalHistory;
 import sdms.service.AppointmentServiceInterface;
@@ -105,8 +103,13 @@ public class CustomerMedicalHistoryExpenseAppointmentDTO {
 		// -------------------------------------------------------------------------------------------------------------------------
 		
 		
-		// <<<<<<<<<<<<<---------------------------- MANCA EXPENSES 
+		// Set Expenses
+		this.expensesDTO = expenseService.getExpensesByCustomerId(idCustomer).stream()
+											.sorted( Comparator.comparing(Expense :: getDate ).reversed() )
+											.map( ex -> modelMapper.map(ex, ExpenseDTO.class))
+											.toList();
 		
+		// Set Appoitnments
 		appointmentService.getAppointmentsByCustomerId( idCustomer ).forEach( app -> {
 			this.joinAppointmentsDTO.add( new AppointmentCustomerDoctorTreatmentDTO()
 											.buildFromAppointmentId(app.getId(), appointmentService, modelMapper));
