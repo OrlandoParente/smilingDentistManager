@@ -83,6 +83,7 @@
                         E-mail*:
                         </label> 
                         <input type="text" class="form-control w-100" id="eMail" name="eMail" 
+                                autocomplete="off"
                                 th:value="${joinEmployee.employeeDTO.eMail}">
                       </div> 
                         
@@ -109,6 +110,19 @@
                                 th:value="${joinEmployee.employeeDTO.phoneNumber2}">
                       </div> 
                       
+                    </div>
+
+                    <div class="row g-3 mt-3">
+
+                      <div class="col-12 col-md-12 d-flex align-items-center mt-3"> 
+                        
+                        <label for="phoneNumber2" class="form-label me-2 col-md-auto" th:text="#{formLabelNewPassword}">
+                        New Password :
+                        </label> 
+                        <input type="password" class="form-control w-100" id="password" name="password" 
+                                autocomplete="new-password"> 
+                                <!-- th:value="${joinEmployee.employeeDTO.phoneNumber2}"> -->
+                      </div> 
                     </div>
                       
                     <div class="row g-3 mt-3">
