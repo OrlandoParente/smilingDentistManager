@@ -72,7 +72,8 @@
                             <label for="eMail" class="form-label me-2 col-md-2" th:text="#{formLabelEMailMandatory}">
                             E-mail*:
                             </label> 
-                            <input type="text" class="form-control w-100" id="eMail" name="eMail" >
+                            <input type="text" class="form-control w-100" id="eMail" name="eMail" 
+                                    autocomplete="off"> <!-- otherwise Chrome fill this with saved credentials -->
                           </div> 
                             
                           
@@ -100,7 +101,7 @@
                           
                         <div class="row g-3 mt-3">
 
-                          <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 
+                          <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
                             <label class="form-label mb-1 col-md-auto me-2" for="salary" 
                                     th:text="#{formLabelSalary}">
                                 Salary: 
@@ -108,7 +109,20 @@
                             <input class="form-control" name="salary" id="salary" type="number" >
                           </div>
 
-                          <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 
+                          <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
+                            <label class="form-label mb-1 col-md-auto me-2" for="startWorkDate" 
+                                    th:text="#{formLabelStartWorkDate}">
+                                Start work date: 
+                            </label>
+                            <input class="form-control" name="startWorkDate" id="startWorkDate" type="text"
+                                    th:placeholder="#{formPlaceholderDate}">
+                          </div>
+
+                        </div>
+
+                        <div class="row g-3 mt-3">
+
+                          <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
                             <label class="form-label mb-1 col-md-auto me-2" for="permission" th:text="#{formLabelPermissions}">
                                 Permissions: 
                             </label>
@@ -122,15 +136,14 @@
                             </select>
                           </div>
 
-                          <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 
-                            <label class="form-label mb-1 col-md-auto me-2" for="startWorkDate" 
-                                    th:text="#{formLabelStartWorkDate}">
-                                Start work date: 
+                          <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
+                            <label class="form-label mb-1 col-md-auto me-2" for="password" 
+                                    th:text="#{formLabelPassword}">
+                                Password: 
                             </label>
-                            <input class="form-control" name="startWorkDate" id="startWorkDate" type="text"
-                                    th:placeholder="#{formPlaceholderDate}">
+                            <input class="form-control" name="password" id="password" type="password" 
+                                    autocomplete="new-password"> <!-- otherwise Chrome fill this with saved credentials -->
                           </div>
-
 
                         </div>
 
