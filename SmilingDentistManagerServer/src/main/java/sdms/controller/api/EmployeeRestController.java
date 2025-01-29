@@ -146,7 +146,8 @@ public class EmployeeRestController {
 								@RequestParam(defaultValue = "") String phoneNumber, 
 								@RequestParam(defaultValue = "") String phoneNumber2,
 								@RequestParam(defaultValue = "-1") Double salary,
-								@RequestParam(defaultValue = "-1" ) Integer permission,
+								@RequestParam(defaultValue = "-1") Integer permission,
+								@RequestParam(defaultValue = "") String password,
 								@RequestParam(defaultValue = "") String startWorkDate
 	 ) {
 		// Messaggio di controllo
@@ -168,6 +169,7 @@ public class EmployeeRestController {
 			
 			if( salary != -1 ) employee.setSalary(salary);
 			if( permission != -1 ) employee.setPermission(permission);
+			if( ! password.equals("") ) employee.setPassword( passwordEncoder.encode(password) );
 			
 			
 			service.postEmployee(employee);
@@ -247,6 +249,7 @@ public class EmployeeRestController {
 			@RequestParam(defaultValue = "") String phoneNumber2,
 			@RequestParam(defaultValue = "-1") Double salary,
 			@RequestParam(defaultValue = "-1" ) Integer permission,
+			@RequestParam(defaultValue = "") String password,
 			@RequestParam(defaultValue = "") String startWorkDate
 	) {
 		// Messaggio di controllo
@@ -271,7 +274,7 @@ public class EmployeeRestController {
 			
 			if( salary != -1 ) employee.setSalary(salary);
 			if( permission != -1 ) employee.setPermission(permission);
-			
+			if( ! password.equals("") ) employee.setPassword( passwordEncoder.encode(password) );
 			
 			service.postEmployee(employee);
 			
