@@ -148,6 +148,7 @@ public class EmployeeRestController {
 								@RequestParam(defaultValue = "-1") Double salary,
 								@RequestParam(defaultValue = "-1") Integer permission,
 								@RequestParam(defaultValue = "") String password,
+								@RequestParam(defaultValue = "en") String language,
 								@RequestParam(defaultValue = "") String startWorkDate
 	 ) {
 		// Messaggio di controllo
@@ -161,6 +162,8 @@ public class EmployeeRestController {
 			employee.setName(name);
 			employee.setSurname(surname);
 			employee.seteMail(eMail);
+			// Should I do a control on correct syntax locale language here ?
+			employee.setLanguage(language);
 			
 			if( ! title.equals(""))	employee.setTitle(title);
 			if( ! phoneNumber.equals(""))	employee.setPhoneNumber(phoneNumber);
