@@ -1,0 +1,8 @@
+.dental-anatomy-image {
+    position: relative;
+}
+
+.dental-anatomy-image-tooth-highlight {
+    position: absolute;
+    display: none;
+}

@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="~{fragments/common-head :: common-head('Customer')}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/customer-details.css}">
 </head>
 <body>
     
@@ -17,10 +18,10 @@
 
     
         <!-- Main Content -->
-        <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
+        <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4 sdm-work-area-included-nav-scollable">
             
             <!-- here the page content -->
-            <div class="row sdm-work-area-scollable">
+            <div class="row ">
 
                 <!-- Customer nav -->
                 <!-- <nav th:replace="~{fragments/customers/customers-nav :: customers-nav}"></nav> -->
@@ -151,11 +152,12 @@
                                     :: customer-appointments( ${ joinCustomer.customerDTO.id } ) }">
                 </nav> 
 
+                <!-- Appointments Invoice Filter -->
                 <div class="border border-secondary rounded p-3 mt-3 ">
                     <div style="position: relative; min-height: 900px;">
                         <!-- image (edited) from book: Sobotta's Anatomy Plates - Sobo 1906 330 (public domain image) -->
-                        <img style="position: absolute;" th:src="@{/img/customers/customer-details/dental-anatomy.png}">
-                        <img style="position: absolute; display: block;" th:src="@{/img/customers/customer-details/18.png}">
+                        <img class="dental-anatomy-image" th:src="@{/img/customers/customer-details/dental-anatomy.png}">
+                        <img class="dental-anatomy-image-tooth-highlight" th:src="@{/img/customers/customer-details/18.png}">
                     </div>
                     
 
