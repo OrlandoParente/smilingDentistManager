@@ -150,6 +150,16 @@
                 <nav th:replace="~{fragments/customers/customer-details/customer-details-navs
                                     :: customer-appointments( ${ joinCustomer.customerDTO.id } ) }">
                 </nav> 
+
+                <div class="border border-secondary rounded p-3 mt-3 ">
+                    <div style="position: relative; min-height: 900px;">
+                        <!-- image (edited) from book: Sobotta's Anatomy Plates - Sobo 1906 330 (public domain image) -->
+                        <img style="position: absolute;" th:src="@{/img/customers/customer-details/dental-anatomy.png}">
+                        <img style="position: absolute; display: block;" th:src="@{/img/customers/customer-details/18.png}">
+                    </div>
+                    
+
+                </div>
                 
                 <div class="row">
 
