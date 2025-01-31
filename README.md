@@ -25,7 +25,7 @@ On other hand, in my option, there are a couple of reason for use this software:
    - Even though you can keep smilingDentistManager for free, you need to upload it somewhere for make it works properly (I mean, it's a server after all). But for sure, you can choose the best solution for you both in terms of *costs* and *resources allocated*
 
  ## Quick start
-If you just want to try this application I deploied it here:  
+If you just want to try this application I deployed it here:  
 https://sdm-server.onrender.com/login  
 use this credentials for login:  
 **username:** admin@email.it  
