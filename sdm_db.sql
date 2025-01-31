@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Gen 17, 2025 alle 18:35
+-- Creato il: Gen 31, 2025 alle 15:25
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -36,7 +36,9 @@ CREATE TABLE `appointment` (
   `id_treatment` bigint(20) DEFAULT NULL,
   `is_done` int(11) NOT NULL DEFAULT 0,
   `invoice_number` varchar(255) DEFAULT NULL,
+  `teeth` varchar(100) DEFAULT NULL,
   `payment` double DEFAULT 0,
+  `payment_method` varchar(50) DEFAULT NULL,
   `notes` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -44,70 +46,73 @@ CREATE TABLE `appointment` (
 -- Dump dei dati per la tabella `appointment`
 --
 
-INSERT INTO `appointment` (`id`, `date`, `time`, `id_customer`, `id_doctor`, `id_treatment`, `is_done`, `invoice_number`, `payment`, `notes`) VALUES
-(1, '2024-11-22', '18:00:00', 1, 1, 1, 0, '', 0, 'Il dottore potrbbe fare ritardo'),
-(2, '2024-11-22', '12:00:00', 2, 1, 1, 1, '', 0, NULL),
-(3, '2023-10-30', '12:00:00', 6, 1, 1, 0, 'AAAAA', 100, NULL),
-(8, '2023-11-22', '12:00:00', 5, 1, 1, 0, '', 0, 'Nuovo cliente'),
-(10, '2023-12-25', '12:00:00', 7, 1, 1, 1, '', 0, 'Something new'),
-(11, '2024-11-21', '11:00:00', 5, NULL, NULL, 0, NULL, 0, NULL),
-(13, '2024-12-14', '15:00:00', 3, NULL, NULL, 0, NULL, 0, NULL),
-(15, '2024-12-18', '12:00:00', 3, 5, 1, 0, NULL, 0, 'Rosso di sera, bel tempo si spera'),
-(16, '2024-12-18', '15:00:00', 6, 18, 1, 0, NULL, 0, 'zsxdfcgjkbjvkgtyvujbukn'),
-(18, '2024-12-19', '12:00:00', 6, NULL, NULL, 0, NULL, 0, NULL),
-(31, '2024-12-19', '11:00:00', 4, 3, NULL, 0, NULL, 0, 'effafvbgsfdvdfewv  f dfc xfd cxa'),
-(32, '2024-12-19', '21:10:00', 6, 18, NULL, 0, NULL, 0, '1232e321e231'),
-(42, '2024-12-20', '11:00:00', 1, 2, NULL, 0, NULL, 0, ''),
-(43, '2024-12-20', '12:00:00', 4, 3, NULL, 0, NULL, 0, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-(44, '2024-12-21', '11:00:00', 4, 4, NULL, 0, NULL, 0, ''),
-(46, '2024-12-23', '11:00:00', 2, 2, NULL, 0, NULL, 0, ''),
-(48, '2024-12-23', '20:00:00', 3, 3, NULL, 0, NULL, 0, ''),
-(51, '2024-12-24', '12:00:00', 6, 2, NULL, 0, NULL, 0, ''),
-(56, '2024-12-26', '09:00:00', 7, NULL, NULL, 0, NULL, 0, ''),
-(57, '2024-12-27', '09:00:00', 33, NULL, NULL, 0, NULL, NULL, ''),
-(60, '2024-12-23', '12:00:00', 33, NULL, NULL, 0, NULL, NULL, ''),
-(61, '2024-12-14', '11:00:00', 1, NULL, NULL, 0, NULL, NULL, ''),
-(70, '2024-12-29', '06:00:00', 1, 3, NULL, 0, NULL, NULL, ''),
-(71, '2024-12-30', '11:00:00', 3, NULL, NULL, 0, NULL, NULL, ''),
-(72, '2024-12-21', '06:00:00', 7, NULL, NULL, 0, NULL, NULL, ''),
-(73, '2024-12-30', '06:00:00', 8, NULL, NULL, 0, NULL, NULL, ''),
-(74, '2024-12-24', '20:00:00', 3, NULL, NULL, 0, NULL, NULL, ''),
-(75, '2024-01-02', '20:00:00', 4, NULL, NULL, 0, NULL, NULL, ''),
-(77, '2025-01-02', '12:00:00', 6, NULL, NULL, 0, NULL, NULL, ''),
-(79, '2025-01-04', '06:00:00', 4, 5, NULL, 0, NULL, NULL, ''),
-(80, '2025-01-08', '12:00:00', 4, 4, NULL, 0, NULL, NULL, ''),
-(82, '2025-01-11', '09:00:00', 6, 2, 4, 0, NULL, NULL, ''),
-(83, '2025-01-11', '08:30:00', 2, 2, 1, 0, NULL, NULL, 'provadsvgzdxvxzcvxzcvxz'),
-(85, '2025-01-12', '20:00:00', 6, NULL, NULL, 0, NULL, NULL, ''),
-(86, '2025-01-13', '06:00:00', 5, 3, NULL, 0, NULL, NULL, ''),
-(87, '2025-01-13', '20:00:00', 45, NULL, NULL, 0, NULL, NULL, ''),
-(88, '2025-01-13', '15:00:00', 43, NULL, NULL, 0, NULL, NULL, ''),
-(89, '2025-01-14', '21:10:00', 7, NULL, NULL, 0, NULL, NULL, ''),
-(90, '2025-01-15', '12:00:00', 6, 18, 1, 0, NULL, NULL, ''),
-(91, '2025-01-15', '12:00:00', 6, 18, 1, 0, NULL, NULL, ''),
-(92, '2025-12-21', '15:00:00', 6, 18, 7, 0, '43534534fdg', 120, '1232e321e231'),
-(95, '2025-01-13', '06:00:00', 6, 3, 7, 0, NULL, NULL, 'jkhulkjljklkj'),
-(96, '2025-01-11', '06:00:00', 6, NULL, NULL, 0, NULL, NULL, ''),
-(97, '2025-01-14', '06:00:00', 1, 1, NULL, 0, NULL, NULL, ''),
-(98, '2025-01-30', '11:00:00', 6, NULL, NULL, 0, NULL, NULL, ''),
-(99, '2025-01-14', '20:00:00', 6, NULL, NULL, 0, NULL, NULL, 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'),
-(100, '2025-01-13', '11:00:00', 6, NULL, NULL, 0, NULL, NULL, 'una mela al giorno toglie il medico di torno'),
-(102, '2025-01-14', '12:00:00', 6, NULL, NULL, 0, '43534534fdg', 234, ''),
-(103, '2025-01-14', '06:00:00', 7, NULL, NULL, 0, '43534534fdg', 3245, ''),
-(104, '2025-12-28', '12:00:00', 4, NULL, NULL, 0, '43534534fdg', 23423, ''),
-(105, '2025-12-28', '06:00:00', 43, NULL, NULL, 0, 'tttttttttt', 0, ''),
-(107, '2025-12-28', '21:10:00', 4, NULL, NULL, 0, 'bbbbb', 570, 'dddddd'),
-(108, '2025-12-28', '11:00:00', 45, NULL, NULL, 0, 'rrrrrr', 400, ''),
-(109, '2025-12-28', '20:00:00', 45, NULL, NULL, 0, 'rrrrrr', 0, ''),
-(110, '2025-01-13', '15:00:00', 3, NULL, NULL, 0, 'rgfdgfdsgfg', NULL, ''),
-(111, '2025-12-28', '15:00:00', 5, NULL, NULL, 0, 'fsdfgdgdfgf', NULL, ''),
-(112, '2025-12-30', '20:00:00', 6, 18, 1, 0, 'qqqqqqq', 20, 'aaaaaaaaaaaaaaaaaaaaaaaaaa'),
-(113, '2025-12-29', '12:00:00', 6, 2, 1, 0, 'aaaaaaaa', 100, 'dddddddddddddddddddddddd'),
-(114, '2025-01-14', '12:00:00', 4, 3, 1, 0, '7777777777777', 200, 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhh'),
-(115, '2025-01-14', '06:00:00', 6, NULL, NULL, 0, NULL, NULL, ''),
-(121, '2025-12-30', '21:10:00', 6, 5, 1, 0, 'fdhgfhfg', 500, 'una mela al giorno toglie il medico di torno'),
-(122, '2025-01-14', '20:00:00', 5, 18, 1, 0, 'rrrrrr', 52, '1232e321e231'),
-(123, '2025-01-16', '20:00:00', 4, 18, 1, 0, 'AAAAAAA', 0, '');
+INSERT INTO `appointment` (`id`, `date`, `time`, `id_customer`, `id_doctor`, `id_treatment`, `is_done`, `invoice_number`, `teeth`, `payment`, `payment_method`, `notes`) VALUES
+(1, '2024-11-22', '18:00:00', 1, 1, 1, 0, '', NULL, 0, NULL, 'Il dottore potrbbe fare ritardo'),
+(2, '2024-11-22', '12:00:00', 2, 1, 1, 1, '', NULL, 0, NULL, NULL),
+(3, '2023-10-30', '12:00:00', 6, 1, 1, 0, 'AAAAA', NULL, 100, NULL, NULL),
+(8, '2023-11-22', '12:00:00', 5, 1, 1, 0, '', NULL, 0, NULL, 'Nuovo cliente'),
+(10, '2023-12-25', '12:00:00', 7, 1, 1, 1, '', NULL, 0, NULL, 'Something new'),
+(11, '2024-11-21', '11:00:00', 5, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL),
+(13, '2024-12-14', '15:00:00', 3, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL),
+(15, '2024-12-18', '12:00:00', 3, 5, 1, 0, NULL, NULL, 0, NULL, 'Rosso di sera, bel tempo si spera'),
+(16, '2024-12-18', '15:00:00', 6, 18, 1, 0, NULL, NULL, 0, NULL, 'zsxdfcgjkbjvkgtyvujbukn'),
+(18, '2024-12-19', '12:00:00', 6, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL),
+(31, '2024-12-19', '11:00:00', 4, 3, NULL, 0, NULL, NULL, 0, NULL, 'effafvbgsfdvdfewv  f dfc xfd cxa'),
+(32, '2024-12-19', '21:10:00', 6, 18, NULL, 0, NULL, NULL, 0, NULL, '1232e321e231'),
+(42, '2024-12-20', '11:00:00', 1, 2, NULL, 0, NULL, NULL, 0, NULL, ''),
+(43, '2024-12-20', '12:00:00', 4, 3, NULL, 0, NULL, NULL, 0, NULL, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+(44, '2024-12-21', '11:00:00', 4, 4, NULL, 0, NULL, NULL, 0, NULL, ''),
+(46, '2024-12-23', '11:00:00', 2, 2, NULL, 0, NULL, NULL, 0, NULL, ''),
+(48, '2024-12-23', '20:00:00', 3, 3, NULL, 0, NULL, NULL, 0, NULL, ''),
+(51, '2024-12-24', '12:00:00', 6, 2, NULL, 0, NULL, NULL, 0, NULL, ''),
+(56, '2024-12-26', '09:00:00', 7, NULL, NULL, 0, NULL, NULL, 0, NULL, ''),
+(57, '2024-12-27', '09:00:00', 33, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(60, '2024-12-23', '12:00:00', 33, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(61, '2024-12-14', '11:00:00', 1, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(70, '2024-12-29', '06:00:00', 1, 3, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(71, '2024-12-30', '11:00:00', 3, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(72, '2024-12-21', '06:00:00', 7, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(73, '2024-12-30', '06:00:00', 8, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(74, '2024-12-24', '20:00:00', 3, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(75, '2024-01-02', '20:00:00', 4, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(77, '2025-01-02', '12:00:00', 6, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(79, '2025-01-04', '06:00:00', 4, 5, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(80, '2025-01-08', '12:00:00', 4, 4, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(82, '2025-01-11', '09:00:00', 6, 2, 4, 0, NULL, NULL, NULL, NULL, ''),
+(83, '2025-01-11', '08:30:00', 2, 2, 1, 0, NULL, NULL, NULL, NULL, 'provadsvgzdxvxzcvxzcvxz'),
+(85, '2025-01-12', '20:00:00', 6, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(86, '2025-01-13', '06:00:00', 5, 3, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(87, '2025-01-13', '20:00:00', 45, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(88, '2025-01-13', '15:00:00', 43, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(89, '2025-01-14', '21:10:00', 7, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(90, '2025-01-15', '12:00:00', 6, 18, 1, 0, NULL, NULL, NULL, NULL, ''),
+(91, '2025-01-15', '12:00:00', 6, 18, 1, 0, NULL, NULL, NULL, NULL, ''),
+(92, '2025-12-21', '15:00:00', 6, 18, 7, 0, '43534534fdg', NULL, 120, NULL, '1232e321e231'),
+(95, '2025-01-13', '06:00:00', 6, 3, 7, 0, NULL, NULL, NULL, NULL, 'jkhulkjljklkj'),
+(96, '2025-01-11', '06:00:00', 6, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(97, '2025-01-14', '06:00:00', 1, 1, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(98, '2025-01-30', '11:00:00', 6, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(99, '2025-01-14', '20:00:00', 6, NULL, NULL, 0, NULL, NULL, NULL, NULL, 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'),
+(100, '2025-01-13', '11:00:00', 6, NULL, NULL, 0, NULL, NULL, NULL, NULL, 'una mela al giorno toglie il medico di torno'),
+(102, '2025-01-14', '12:00:00', 6, NULL, NULL, 0, '43534534fdg', NULL, 234, NULL, ''),
+(103, '2025-01-14', '06:00:00', 7, NULL, NULL, 0, '43534534fdg', NULL, 3245, NULL, ''),
+(104, '2025-12-28', '12:00:00', 4, NULL, NULL, 0, '43534534fdg', NULL, 23423, NULL, ''),
+(105, '2025-12-28', '06:00:00', 43, NULL, NULL, 0, 'tttttttttt', NULL, 0, NULL, ''),
+(107, '2025-12-28', '21:10:00', 4, NULL, NULL, 0, 'bbbbb', NULL, 570, NULL, 'dddddd'),
+(108, '2025-12-28', '11:00:00', 45, NULL, NULL, 0, 'rrrrrr', NULL, 400, NULL, ''),
+(109, '2025-12-28', '20:00:00', 45, NULL, NULL, 0, 'rrrrrr', NULL, 0, NULL, ''),
+(110, '2025-01-13', '15:00:00', 3, NULL, NULL, 0, 'rgfdgfdsgfg', NULL, NULL, NULL, ''),
+(111, '2025-12-28', '15:00:00', 5, NULL, NULL, 0, 'fsdfgdgdfgf', NULL, NULL, NULL, ''),
+(112, '2025-12-30', '20:00:00', 6, 18, 1, 0, 'qqqqqqq', NULL, 20, NULL, 'aaaaaaaaaaaaaaaaaaaaaaaaaa'),
+(113, '2025-12-29', '12:00:00', 6, 2, 1, 0, 'aaaaaaaa', NULL, 100, NULL, 'dddddddddddddddddddddddd'),
+(114, '2025-01-14', '12:00:00', 4, 3, 1, 0, '7777777777777', NULL, 200, NULL, 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhh'),
+(115, '2025-01-14', '06:00:00', 6, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(121, '2025-12-30', '21:10:00', 6, 5, 1, 0, 'fdhgfhfg', NULL, 500, NULL, 'una mela al giorno toglie il medico di torno'),
+(122, '2025-01-14', '20:00:00', 5, 18, 1, 0, 'rrrrrr', NULL, 52, NULL, '1232e321e231'),
+(123, '2025-01-16', '20:00:00', 4, 18, 1, 0, 'AAAAAAA', NULL, 0, NULL, ''),
+(124, '2025-01-18', '12:00:00', 5, 1, 1, 0, 'AAAAAAA', NULL, 12, NULL, ''),
+(125, '2035-01-14', '20:00:00', 7, NULL, NULL, 0, NULL, NULL, NULL, NULL, ''),
+(126, '2025-12-30', '12:00:00', 6, NULL, NULL, 0, '43534534fdg', NULL, 234, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -179,7 +184,7 @@ INSERT INTO `dental_material` (`id`, `quantity`, `name`, `description`, `cost`) 
 (1, 6, 'Anestesia', 'Provatta da 100 ml', 20),
 (2, 50, 'Trapano', 'Attrezzo infernale', 50),
 (3, 77, 'Cemento', 'Cemento armato per ristrutturazione denti ', 20),
-(4, 119, 'Computer ', 'Computer aziendale per postazione assistenza clienti ', 1000.5),
+(4, 145, 'Computer ', 'Computer aziendale per postazione assistenza clienti ', 1000.5),
 (5, 12, 'Cacciavite', 'Attrezzo minaccioso ', 12),
 (6, 35678, 'Pinze', 'Strumenti di terrore ', 29.8),
 (11, 0, 'bbbb', ' ', 12.56);
@@ -213,12 +218,12 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `name`, `surname`, `title`, `birth_date`, `salary`, `phone_number`, `phone_number_2`, `language`, `e_mail`, `password`, `permission`, `phone_number2`, `birth_date_string`, `salary_string`) VALUES
-(1, 'Gianni', 'Esposito', 'Dott.', '1979-01-01', 0, '1212122334', '', 'en', 'giannimarca@email.com', '1234', 0, '', '1979-01-01', NULL),
-(2, 'Ernesto', 'Bianchi', 'Sig.', '1979-02-10', 0, '1254122334', '', 'en', 'ernesto@email.com', '', 0, '', '1979-02-10', NULL),
+(1, 'Gianni', 'Esposito', 'Dott.', '1979-01-01', 0, '1212122334', '', 'en', 'giannimarca@email.com', '1234', 0, '', '1979-01-01', '0.0'),
+(2, 'Ernesto', 'Bianchi', 'Sig.', '1979-02-10', 0, '1254122334', '', 'en', 'ernesto@email.com', '', 0, '', '1979-02-10', '0.0'),
 (3, 'Carla', 'Catogno', 'Sig.ra', '1989-02-10', 1000, '1254124314', '', 'en', 'mila@email.com', '', 0, '', '1989-02-10', '1000.0'),
 (4, 'Giusy', 'Frocca', 'Dott.ssa', '1982-02-10', 234324, '1254120301', '', 'en', 'giusyfrocca@email.com', '', 0, NULL, '1982-02-10', '234324.0'),
 (5, 'Matteo', 'Gianni', 'Dott.', '1979-03-12', 0, '1222220301', '4445556634', 'en', 'mattih@email.com', '', 0, NULL, NULL, NULL),
-(18, 'Carlo', 'Conti', 'Dott.', '1980-08-11', 0, '1223341223', NULL, 'it', 'c.conti@email.it', '$2a$10$N.HjH/etkqHxsOY6UnNbhOpeGeFpWpVSwicvGtUN3DS42.yZtXWmu', 10, '3445234512', '1980-08-11', NULL);
+(18, 'Carlo', 'Conti', 'Sig.', '1980-08-11', 2000, '1223341223', NULL, 'it', 'c.conti@email.it', '$2a$10$UsbIHaJu.0nBIoa4129s.eDJIm4EhnqvQjqDZOKMkRR23FEAJdUQ2', 10, '3445234512', '1980-08-11', '2000.0');
 
 -- --------------------------------------------------------
 
@@ -249,7 +254,17 @@ INSERT INTO `expense` (`id`, `id_customer`, `id_employee`, `id_dental_material`,
 (8, NULL, NULL, 4, 90, '2023-10-23', '180 x Computer ', 'acquisto merce'),
 (9, NULL, NULL, 1, 360, '2025-01-14', '18 x Anestesia', 'acquisto merce'),
 (10, NULL, NULL, NULL, 6, '2025-01-14', 'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', 'acquisto merce'),
-(11, NULL, NULL, NULL, 2345, '2025-12-28', NULL, ' ');
+(12, NULL, NULL, NULL, 15, '2025-01-14', NULL, 'acquisto merce'),
+(14, NULL, NULL, NULL, 1, '2025-12-30', NULL, ''),
+(15, NULL, NULL, NULL, 2, '2025-12-28', 'jkbkjjknkjnjk', 'acquisto merce'),
+(16, 45, NULL, NULL, 123, '2025-12-30', 'Rimborso Zalone Checco CCCDDDEWWREW3', 'rimborso cliente'),
+(17, NULL, NULL, NULL, 2, '2025-12-30', 'oooooooooooooooooooooooo', ''),
+(18, NULL, NULL, NULL, 1500, '2025-12-28', 'Pagamento stipendio  Gianni Matteo', 'pagamento salario'),
+(19, 1, NULL, NULL, 2323, '2025-12-30', 'Rimborso Anestesia x 23', 'acquisto merce'),
+(20, 4, NULL, NULL, 1, '2025-12-28', 'Acquisto  Computer x 111111111', 'acquisto merce'),
+(22, NULL, NULL, NULL, 1200, '2025-01-14', NULL, 'bolletta'),
+(24, NULL, NULL, 4, 5002.5, '2026-12-30', '5 x Computer ', 'acquisto merce'),
+(25, NULL, NULL, NULL, 1234, '2027-01-14', NULL, 'affitto');
 
 -- --------------------------------------------------------
 
@@ -289,7 +304,8 @@ INSERT INTO `has_medical_history` (`id`, `id_customer`, `id_medical_history`, `n
 (22, 3, 11, 'czxczxcxzcxz'),
 (23, 3, 20, 'bbbbbbbbbbbbbbb'),
 (24, 3, 36, 'una mela al giorno toglie il medico di torno'),
-(30, 6, 20, '');
+(30, 6, 20, ''),
+(31, 6, 18, 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
 
 -- --------------------------------------------------------
 
@@ -311,14 +327,14 @@ INSERT INTO `has_professional_role` (`id`, `id_employee`, `id_professional_role`
 (7, 4, 5),
 (8, 5, 6),
 (9, 5, 7),
-(95, 1, 1),
-(96, 1, 6),
-(104, 2, 3),
-(105, 18, 1),
-(106, 18, 3),
 (110, 3, 3),
 (111, 3, 1),
-(112, 3, 4);
+(112, 3, 4),
+(170, 2, 3),
+(171, 1, 4),
+(172, 1, 1),
+(180, 18, 3),
+(181, 18, 6);
 
 -- --------------------------------------------------------
 
@@ -448,7 +464,9 @@ INSERT INTO `work_period` (`id`, `id_employee`, `start_date`, `end_date`, `worki
 (34, 1, '2030-03-04', '2049-02-01', '', ''),
 (35, 1, '2030-03-04', '2035-02-01', '', ''),
 (37, 2, '2002-12-12', NULL, '', ''),
-(38, 5, '2030-03-04', NULL, '', '');
+(38, 5, '2030-03-04', NULL, '', ''),
+(39, 1, '2040-02-01', '2045-02-01', '', ''),
+(40, 1, '2046-01-01', '2050-01-01', '', '');
 
 --
 -- Indici per le tabelle scaricate
@@ -540,7 +558,7 @@ ALTER TABLE `work_period`
 -- AUTO_INCREMENT per la tabella `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT per la tabella `customer`
@@ -564,19 +582,19 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT per la tabella `expense`
 --
 ALTER TABLE `expense`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT per la tabella `has_medical_history`
 --
 ALTER TABLE `has_medical_history`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT per la tabella `has_professional_role`
 --
 ALTER TABLE `has_professional_role`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182;
 
 --
 -- AUTO_INCREMENT per la tabella `medical_history`
@@ -600,7 +618,7 @@ ALTER TABLE `treatment`
 -- AUTO_INCREMENT per la tabella `work_period`
 --
 ALTER TABLE `work_period`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- Limiti per le tabelle scaricate
