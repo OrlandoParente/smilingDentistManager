@@ -2,6 +2,8 @@ package sdms.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,11 +47,35 @@ public class Appointment {
 								 // I db non vuole salvarsi le fatture perché sarebbero dati ritondanti 
 								 // ( cioè le fatture si possono costruire dai dati già presenti nel db )
 								 // si limita a segnare quali appuntamenti sono stati già fatturati
+	private String teeth;		// list of teeth (identificated by a number) separated a comma
 	private Double payment;
+	private String paymentMethod;
 	private String notes;		 // eventualmente se serve specificare qualcosa
 
 	// Empty Constructor 
 	public Appointment() {}
+	
+	// Useful method for convert the list of teeth involved in the appointment
+	// in an list of integers
+	public static List<Integer> teethToIntegerList( String strTeeth ){
+		
+		List<Integer> listOfTeeth = new ArrayList<Integer>();
+		
+		// Avoid error by empty strTeeth
+		if( strTeeth == null || strTeeth.trim().equals("") )
+			return listOfTeeth;
+		
+		// remove blank spaces in there are
+		strTeeth.replaceAll("\\s", "");
+		
+		// convert the number and put in the listOfTeeth
+		for( String strNum : strTeeth.split(",") ) {
+			listOfTeeth.add( Integer.parseInt(strNum) );
+		}
+		
+		// return the list of Teeth
+		return listOfTeeth;
+	}
 	
 	
 	public long getId() {
@@ -155,12 +181,26 @@ public class Appointment {
 	public int getisDone() {
 		return isDone;
 	}
+	
 	public void setisDone(int isDone) {
 		this.isDone = isDone;
 	}
 	
-	
+	public String getTeeth() {
+		return teeth;
+	}
 
+	public void setTeeth(String teeth) {
+		this.teeth = teeth;
+	}
+
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
 
 	public String getInvoiceNumber() {
 		return invoiceNumber;
@@ -179,7 +219,6 @@ public class Appointment {
 	public void setPayment(Double payment) {
 		this.payment = payment;
 	}
-
 
 	public String getNotes() {
 		return notes;

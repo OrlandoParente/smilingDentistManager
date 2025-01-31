@@ -2,6 +2,9 @@ package sdms.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
+
+import sdms.model.Appointment;
 
 public class AppointmentDTO {
 	
@@ -22,7 +25,10 @@ public class AppointmentDTO {
 								 // I db non vuole salvarsi le fatture perché sarebbero dati ritondanti 
 								 // ( cioè le fatture si possono costruire dai dati già presenti nel db )
 								 // si limita a segnare quali appuntamenti sono stati già fatturati
+	private String teeth;
+	private List<Integer> listOfTeeth;
 	private Double payment;
+	private String paymentMethod;
 	private String notes;		 // eventualmente se serve specificare qualcosa
 
 	public AppointmentDTO() {}
@@ -90,19 +96,43 @@ public class AppointmentDTO {
 		this.isDone = isDone;
 	}
 
+	
+	public String getTeeth() {
+		return teeth;
+	}
 
+	public void setTeeth(String teeth) {
+		this.teeth = teeth;
+		this.setListOfTeeth( Appointment.teethToIntegerList(teeth) );
+	}
+
+	public List<Integer> getListOfTeeth() {
+		
+		if( listOfTeeth == null && teeth != null )
+			this.setListOfTeeth( Appointment.teethToIntegerList(teeth) );
+			
+		return listOfTeeth;
+	}
+
+	public void setListOfTeeth(List<Integer> listOfTeeth) {
+		this.listOfTeeth = listOfTeeth;
+	}
+
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
 
 	public String getInvoiceNumber() {
 		return invoiceNumber;
 	}
 
-
-
 	public void setInvoiceNumber(String invoiceNumber) {
 		this.invoiceNumber = invoiceNumber;
 	}
-
-
 
 	public Double getPayment() {
 		return payment;
