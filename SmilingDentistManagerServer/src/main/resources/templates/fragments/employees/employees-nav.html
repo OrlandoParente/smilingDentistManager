@@ -30,8 +30,10 @@
                       </select>
 
                     <input class="form-control me-2" name="keyword" type="search" placeholder="Search" aria-label="Search">
-                    <a th:href="@{/employee/employee/employee}" class="btn btn-outline-danger me-2" >X</a>
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <a th:href="@{/employee/employee/employee}" class="btn btn-outline-danger me-2" th:text="#{btnResetSearch}" >
+                        X
+                    </a>
+                    <button class="btn btn-outline-success" type="submit" th:text="#{btnSearch}">Search</button>
                 </form> 
                 <!-- <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{#}"> Link </a>
