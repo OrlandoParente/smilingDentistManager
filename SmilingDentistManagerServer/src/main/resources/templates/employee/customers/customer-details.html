@@ -156,9 +156,31 @@
                 <div class="border border-secondary rounded p-3 mt-3 col-12 d-flex ">
 
                     <div class="container col-12">
-                        <div class="row"></div>
+                        <div class="row justify-content-center">
 
-                        <div class="row">
+                            <form class="d-flex align-items-center justify-content-center" role="search">
+
+                                <!-- <select class="me-2 col-2 col-md-auto" name="idProfessionalRole" id="professionalRole"> -->
+
+                                <div class="row col-auto me-2 ">
+                                    <select class="form-select w-100 me-2">
+                                        <option value="">Tutte le fatture</option>
+                                    </select>    
+                                </div>
+                                
+
+                                <button class="btn btn-success col-auto me-2" th:text="#{btnSearch}" >Search</button>
+                                <button class="btn btn-danger col-auto me-2" th:text="#{btnResetSearch}"> X </button>
+                                <button class="btn btn-primary col-auto" th:text="#{btnEdit}" >Edit</button>
+                                
+                            </form> 
+
+                            <!-- <div class="d-flex align-items-center">
+                            </div> -->
+
+                        </div>
+
+                        <div class="row mt-4">
 
                             <div style="position: relative; " class="col-12 col-md-4 ">
                                 <!-- image (edited) from book: Sobotta's Anatomy Plates - Sobo 1906 330 (public domain image) -->
@@ -207,7 +229,8 @@
                                         <select class="form-select">
                                             <option value=""></option>
                                             <option th:each=" joinApp : ${joinCustomer.joinAppointmentsDTO} "
-                                                    th:text="${joinApp.appointmentDTO.date}">
+                                                    th:text="${joinApp.appointmentDTO.date}"
+                                                    th:select="${ joinApp.appointmentDTO.listOfTeeth.contains(11) }">
                                             </option>
                                         </select>
                                     </div>
