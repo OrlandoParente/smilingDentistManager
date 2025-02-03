@@ -137,6 +137,43 @@ public class AppointmentService implements AppointmentServiceInterface{
 	}
 
 	@Override
+	public void deleteToothFromTeethAppointment( long id, Integer tooth ) {
+		
+		Appointment appointment = repository.findById(id).get();
+		
+		List<Integer> teeth = Appointment.teethToIntegerList( appointment.getTeeth() );
+		
+		for( Integer t : teeth ) {
+			if( t.equals(tooth) )
+				teeth.remove( teeth.indexOf(t) );
+		}
+		
+		appointment.setTeeth(teeth);
+		
+		repository.save(appointment);
+	}
+	
+	@Override
+	public void addToothToTeethAppointment( long id, Integer tooth ) {
+		
+		Appointment appointment = repository.findById(id).get();
+		
+		List<Integer> teeth = Appointment.teethToIntegerList( appointment.getTeeth() );
+		
+		for( Integer t : teeth ) {
+			if( t.equals(tooth) )
+				return;	// The tooth id already present in the teeth list
+		}
+		
+		teeth.add(tooth);
+		
+		appointment.setTeeth(teeth);
+		
+		repository.save(appointment);
+		
+	}
+	
+	@Override
 	public void deleteAppointmentById(long id) {
 		
 		repository.delete( repository.findById( id ).get() );

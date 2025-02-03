@@ -48,6 +48,11 @@ public interface AppointmentServiceInterface {
 	// però dato che questa funzionalità è prevista, così si alleggerisce il controller
 	public void putAppointmentTreatmentById( long id, long idTreatment );
 	
+	// PATCH REQUESTS -----------------------------
+	public void deleteToothFromTeethAppointment( long id, Integer tooth );
+	public void addToothToTeethAppointment( long id, Integer tooth );
+	// --------------------------------------------
+	
 	public void deleteAppointmentById( long id );
 	// ------------------------------------------------------
 	

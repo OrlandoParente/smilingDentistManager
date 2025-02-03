@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -325,6 +326,28 @@ public class AppointmentRestController {
 		}
 		
 		return ResponseEntity.status( HttpStatus.OK ).body(modelMapper.map(appointment, AppointmentDTO.class));
+	}
+	
+	
+	// Add or remove tooth to/from teeth list of an appointment
+	@PatchMapping( value="/patchTooth", params="{idAppointment, tooth}")
+	public ResponseEntity<?> patchTooth( @RequestParam long idAppointment, @RequestParam Integer tooth,	// Mandatory fields 
+										 @RequestParam( defaultValue = "false" ) boolean delete ){
+		
+		try {
+			if( delete ) {
+				service.deleteToothFromTeethAppointment(idAppointment, tooth);
+			} else {
+				service.addToothToTeethAppointment(idAppointment, tooth);
+			}
+		
+		} catch ( Exception e ) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		Appointment appointment = service.getAppointmentById(idAppointment);
+		
+		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(appointment, AppointmentDTO.class) );
 	}
 	
 	// <--------------------  Can I delete this?
