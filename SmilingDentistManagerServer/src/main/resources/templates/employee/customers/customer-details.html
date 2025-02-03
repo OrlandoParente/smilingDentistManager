@@ -3,6 +3,7 @@
 <head>
     <th:block th:replace="~{fragments/common-head :: common-head('Customer')}"></th:block>
     <link rel="stylesheet" th:href="@{/css/customer-details.css}">
+
 </head>
 <body>
     
@@ -20,6 +21,7 @@
         <!-- Main Content -->
         <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4 sdm-work-area-included-nav-scollable">
             
+
             <!-- here the page content -->
             <div class="row ">
 
@@ -147,7 +149,7 @@
                 </div>
                 
                 <!-- Appointments -->
-                
+
                 <nav th:replace="~{fragments/customers/customer-details/customer-details-navs
                                     :: customer-appointments( ${ joinCustomer.customerDTO.id } ) }">
                 </nav> 
@@ -165,13 +167,19 @@
                                 <div class="row col-auto me-2 ">
                                     <select class="form-select w-100 me-2">
                                         <option value="">Tutte le fatture</option>
+                                        <option th:each="customerInvoiceNumber : ${customerInvoiceNumbers}"
+                                                th:text="${customerInvoiceNumber}"
+                                                th:value="${customerInvoiceNumber}">
+                                        </option>
                                     </select>    
                                 </div>
                                 
 
                                 <button class="btn btn-success col-auto me-2" th:text="#{btnSearch}" >Search</button>
                                 <a th:href="@{/employee/customer/customer/details/${joinCustomer.customerDTO.id}}" class="btn btn-danger col-auto me-2" th:text="#{btnResetSearch}"> X </a>
-                                <button class="btn btn-primary col-auto" th:text="#{btnEdit}" >Edit</button>
+                                <button id="btnSaveDentalAnatomyChanges" class="btn btn-primary col-auto" th:text="#{btnEdit}" >
+                                    Edit
+                                </button>
                                 
                             </form> 
 
@@ -223,18 +231,36 @@
                                 <div class="row ">
                                     <div class="col-6 col-md-4 d-flex align-items-center">
                                         <input type="checkbox" class="form-check-input me-2" value="11" disabled> 
-                                        <label class="form-check-label me-2">
+                                        <label class="form-check-label me-2 fw-bold">
                                             11
                                         </label>
                                         <select class="form-select">
                                             <option value=""></option>
                                             <option th:each=" joinApp : ${joinCustomer.joinAppointmentsDTO} "
-                                                    th:text="${joinApp.appointmentDTO.date}"
+                                                    th:with="dateFormat=#{formPlaceholderDate}"
+                                                    th:text="${#temporals.format(joinApp.appointmentDTO.date, dateFormat ) } 
+                                                            + ' ' + ${joinApp.appointmentDTO.invoiceNumber}"
                                                     th:select="${ joinApp.appointmentDTO.listOfTeeth.contains(11) }">
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="col-6 col-md-4">21</div>
+
+
+                                    <div class="col-6 col-md-4 d-flex align-items-center">
+                                        <input type="checkbox" class="form-check-input me-2" value="21" disabled> 
+                                        <label class="form-check-label me-2 fw-bold">
+                                            21
+                                        </label>
+                                        <select class="form-select">
+                                            <option value=""></option>
+                                            <option th:each=" joinApp : ${joinCustomer.joinAppointmentsDTO} "
+                                                    th:with="dateFormat=#{formPlaceholderDate}"
+                                                    th:text="${#temporals.format(joinApp.appointmentDTO.date, dateFormat ) } 
+                                                            + ' ' + ${joinApp.appointmentDTO.invoiceNumber}"
+                                                    th:select="${ joinApp.appointmentDTO.listOfTeeth.contains(21) }">
+                                            </option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 

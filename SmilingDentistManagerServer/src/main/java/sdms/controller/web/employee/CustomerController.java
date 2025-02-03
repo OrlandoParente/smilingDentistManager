@@ -153,7 +153,7 @@ public class CustomerController {
 		
 		// ---------------------------------------------------------------------------------------------
 		
-		// fetch doctors and treatments -----------------------------------------------------------------
+		// Fetch doctors and treatments -----------------------------------------------------------------
 		// NEED EDIT: We need a filter to filter doctors from employees
 		List<EmployeeDTO> doctors = employeeService.getEmployees().stream()
 				.sorted( Comparator.comparing( emp -> emp.getSurname() ) )
@@ -165,6 +165,10 @@ public class CustomerController {
 				.map( treatment -> modelMapper.map(treatment, TreatmentDTO.class) )
 				.toList();
 		// ---------------------------------------------------------------------------------------------
+		
+		// Fetch invoice numbers -----------------------------------------------------------------------
+		List<String> customerInvoiceNumbers = appointmentService.getInvoiceNumbersByCustomerId( customerId );
+		// ---------------------------------------------------------------------------------------------
 				
 
 		// Add stuff to the model
@@ -174,6 +178,7 @@ public class CustomerController {
 		model.addAttribute("addableMedicalHistories", addableMedicalHistories);
 		model.addAttribute("doctors", doctors);
 		model.addAttribute("treatments",treatments);
+		model.addAttribute("customerInvoiceNumbers", customerInvoiceNumbers);
 		
 		// serve?
 		model.addAttribute("customerPermissions", UserRoleManager.getCustomerPermissions());
