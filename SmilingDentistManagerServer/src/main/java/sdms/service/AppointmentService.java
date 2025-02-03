@@ -1,6 +1,9 @@
 package sdms.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +53,22 @@ public class AppointmentService implements AppointmentServiceInterface{
 		
 		return repository.findByDoctor(  employeeRepository.findById( doctorId ).get() );
 	}
+	
+	@Override
+	public List<String> getInvoiceNumbersByCustomerId(long customerId) {
+		
+		List<Appointment> appointments = repository.findByCustomer( customerRepository.findById(customerId).get() );
+		
+		// Use a set for add one copy of each invoice number
+		Set<String> setInvoiceNumber = new HashSet<String>();
+		
+		for( Appointment app : appointments ) {
+			setInvoiceNumber.add( app.getInvoiceNumber() );
+		}
+		
+		return new ArrayList<String>( setInvoiceNumber );
+	}
+
 
 	@Override
 	public void postAppointment(Appointment appointment) {
@@ -120,6 +139,5 @@ public class AppointmentService implements AppointmentServiceInterface{
 		
 		repository.delete( repository.findById( id ).get() );
 	}
-
 	
 }

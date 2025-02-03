@@ -14,6 +14,8 @@ public interface AppointmentServiceInterface {
 	public List<Appointment> getAppointmentsByCustomerId( long customerId );
 	
 	public List<Appointment> getAppointmentsByDoctorId( long doctorId );
+	
+	public List<String> getInvoiceNumbersByCustomerId( long customerId );
 
 	public void postAppointment( Appointment appointment );
 	// per registrare un appuntamento ancora non svolto
