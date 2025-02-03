@@ -63,7 +63,9 @@ public class AppointmentService implements AppointmentServiceInterface{
 		Set<String> setInvoiceNumber = new HashSet<String>();
 		
 		for( Appointment app : appointments ) {
-			setInvoiceNumber.add( app.getInvoiceNumber() );
+			
+			if( app.getInvoiceNumber() != null && ! app.getInvoiceNumber().trim().equals("") )	// avoid to insert empty invoice numbers 
+				setInvoiceNumber.add( app.getInvoiceNumber() );
 		}
 		
 		return new ArrayList<String>( setInvoiceNumber );
