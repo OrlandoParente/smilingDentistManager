@@ -105,6 +105,11 @@ public class AppointmentDTO {
 		this.teeth = teeth;
 		this.setListOfTeeth( Appointment.teethToIntegerList(teeth) );
 	}
+	
+	public void setTeeth(List<Integer> teeth) {
+		this.teeth = Appointment.IntegerListTeethToStr(teeth);
+		this.setListOfTeeth(teeth);
+	}
 
 	public List<Integer> getListOfTeeth() {
 		
@@ -116,6 +121,7 @@ public class AppointmentDTO {
 
 	public void setListOfTeeth(List<Integer> listOfTeeth) {
 		this.listOfTeeth = listOfTeeth;
+		this.teeth = Appointment.IntegerListTeethToStr(listOfTeeth);
 	}
 
 	public String getPaymentMethod() {

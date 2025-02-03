@@ -55,6 +55,8 @@ public class Appointment {
 	// Empty Constructor 
 	public Appointment() {}
 	
+	// CONVERT STR TEETH TO INTEGER LIST AND VICE-VERSA ------------------------------------
+	
 	// Useful method for convert the list of teeth involved in the appointment
 	// in an list of integers
 	public static List<Integer> teethToIntegerList( String strTeeth ){
@@ -77,6 +79,26 @@ public class Appointment {
 		return listOfTeeth;
 	}
 	
+	public static String IntegerListTeethToStr ( List<Integer> teeth ) {
+		
+		String strTeeth = "";
+		
+		boolean first = true;
+		
+		for( Integer tooth : teeth ) {
+			
+			if( ! first ) {
+				strTeeth += "," + tooth;
+ 			} else {	// comma not needed on first tooth 
+ 				strTeeth = "" + tooth;
+ 			}
+			
+		}
+		
+		return strTeeth;
+	}
+	
+	// -------------------------------------------------------------------------------------
 	
 	public long getId() {
 		return this.id;
@@ -192,6 +214,10 @@ public class Appointment {
 
 	public void setTeeth(String teeth) {
 		this.teeth = teeth;
+	}
+	
+	public void setTeeth(List<Integer> teeth) {
+		this.teeth = Appointment.IntegerListTeethToStr(teeth);
 	}
 
 	public String getPaymentMethod() {
