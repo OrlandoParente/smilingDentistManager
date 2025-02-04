@@ -2,6 +2,7 @@ package sdms.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import sdms.model.Appointment;
@@ -103,7 +104,10 @@ public class AppointmentDTO {
 
 	public void setTeeth(String teeth) {
 		this.teeth = teeth;
-		this.setListOfTeeth( Appointment.teethToIntegerList(teeth) );
+		if( teeth == null || teeth.trim().equals(""))
+			this.setListOfTeeth( new ArrayList<Integer>() );
+		else
+			this.setListOfTeeth( Appointment.teethToIntegerList(teeth) );
 	}
 	
 	public void setTeeth(List<Integer> teeth) {
@@ -113,15 +117,22 @@ public class AppointmentDTO {
 
 	public List<Integer> getListOfTeeth() {
 		
-		if( listOfTeeth == null && teeth != null )
-			this.setListOfTeeth( Appointment.teethToIntegerList(teeth) );
+		if( listOfTeeth == null )
+			this.setListOfTeeth( Appointment.teethToIntegerList(this.teeth) );
 			
 		return listOfTeeth;
 	}
 
 	public void setListOfTeeth(List<Integer> listOfTeeth) {
-		this.listOfTeeth = listOfTeeth;
-		this.teeth = Appointment.IntegerListTeethToStr(listOfTeeth);
+		
+		if( listOfTeeth == null ) {
+			this.listOfTeeth = new ArrayList<Integer>();
+			this.teeth = "";
+		} else {
+			this.listOfTeeth = listOfTeeth;
+			this.teeth = Appointment.IntegerListTeethToStr(listOfTeeth);	
+		}
+		
 	}
 
 	public String getPaymentMethod() {

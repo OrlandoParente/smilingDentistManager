@@ -47,6 +47,7 @@ public class AppointmentCustomerDoctorTreatmentDTO {
 		
 		this.setAppointmentDTO( modelMapper.map( appointment, AppointmentDTO.class ) );
 		
+		
 		if( appointment.getCustomer() != null )
 			this.setCustomerDTO( modelMapper.map( appointment.getCustomer(), CustomerDTO.class ) );
 		
