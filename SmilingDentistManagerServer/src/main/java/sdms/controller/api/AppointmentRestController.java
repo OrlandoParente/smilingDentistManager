@@ -45,6 +45,8 @@ public class AppointmentRestController {
 	@Autowired
 	private DateAndTimeManager dateAndTimeManager;
 	
+	
+	
 	@GetMapping("/getAppointments")
 	List<AppointmentDTO> getAppointments() {
 	
@@ -330,7 +332,7 @@ public class AppointmentRestController {
 	
 	
 	// Add or remove tooth to/from teeth list of an appointment
-	@PatchMapping( value="/patchTooth", params="{idAppointment, tooth}")
+	@PatchMapping( value="/patchTooth", params={"idAppointment", "tooth"} )
 	public ResponseEntity<?> patchTooth( @RequestParam long idAppointment, @RequestParam Integer tooth,	// Mandatory fields 
 										 @RequestParam( defaultValue = "false" ) boolean delete ){
 		
@@ -342,6 +344,7 @@ public class AppointmentRestController {
 			}
 		
 		} catch ( Exception e ) {
+			System.err.println( e.getMessage() );
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
