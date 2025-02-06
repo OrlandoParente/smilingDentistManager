@@ -1,8 +1,11 @@
 package sdms.dto.join;
 
+
 import java.time.LocalDate;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import sdms.dto.AppointmentDTO;
@@ -20,6 +23,7 @@ public class AppointmentCustomerDoctorTreatmentDTO {
 	private EmployeeDTO doctorDTO;
 	private TreatmentDTO treatmentDTO;
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger( AppointmentCustomerDoctorTreatmentDTO.class );
 //	@Autowired
 //	ModelMapper modelMapper;
 //	
@@ -47,6 +51,9 @@ public class AppointmentCustomerDoctorTreatmentDTO {
 		
 		this.setAppointmentDTO( modelMapper.map( appointment, AppointmentDTO.class ) );
 		
+		// force the call of setTeeth for let it set also the integer list of teeth
+		this.appointmentDTO.setTeeth( appointment.getTeeth() );
+		LOGGER.info( "Set Appointment -> " + appointment );
 		
 		if( appointment.getCustomer() != null )
 			this.setCustomerDTO( modelMapper.map( appointment.getCustomer(), CustomerDTO.class ) );
