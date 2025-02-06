@@ -155,20 +155,23 @@ public class AppointmentService implements AppointmentServiceInterface{
 	
 	@Override
 	public void addToothToTeethAppointment( long id, Integer tooth ) {
-		
+		//
 		Appointment appointment = repository.findById(id).get();
 		
 		List<Integer> teeth = Appointment.teethToIntegerList( appointment.getTeeth() );
 		
 		for( Integer t : teeth ) {
 			if( t.equals(tooth) )
-				return;	// The tooth id already present in the teeth list
+				return;	// The tooth is already present in the teeth list
 		}
 		
+		// add the tooth to the teeth list
 		teeth.add(tooth);
 		
+		// save the new teeth list in the appointment object
 		appointment.setTeeth(teeth);
 		
+		// update the appointment on the database 
 		repository.save(appointment);
 		
 	}
