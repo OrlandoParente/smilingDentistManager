@@ -134,7 +134,7 @@ public class AppointmentRestController {
 			System.err.println( "AppointmentRestconstroller -> PostAppointment, error: " + e.getMessage() );
 			// TO EDIT: Return better error response // <<=====================================================================================================
 			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Format date not valid");
-		}catch( Exception e ) {
+		} catch( Exception e ) {
 			System.err.println( "AppointmentRestconstroller -> PostAppointment, error: " + e.getMessage() );
 			// TO EDIT: Return better error response // <<=====================================================================================================
 			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Post Appointment Failed");
