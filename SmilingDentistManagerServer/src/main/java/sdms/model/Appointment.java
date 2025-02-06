@@ -5,6 +5,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +22,8 @@ public class Appointment {
 	
 	public final static int IS_DONE = 1;
 	public final static int IS_NOT_DONE = 0;
+	
+	private final static Logger LOGGER = LoggerFactory.getLogger( Appointment.class );
 	
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -67,13 +72,15 @@ public class Appointment {
 		if( strTeeth == null || strTeeth.trim().equals("") )
 			return listOfTeeth;
 		
-		// remove blank spaces in there are
+		// remove blank spaces if there are any 
 		strTeeth.replaceAll("\\s", "");
 		
 		// convert the number and put in the listOfTeeth
 		for( String strNum : strTeeth.split(",") ) {
 			listOfTeeth.add( Integer.parseInt(strNum) );
 		}
+		
+		LOGGER.info("List of integer teeth " + listOfTeeth);
 		
 		// return the list of Teeth
 		return listOfTeeth;
@@ -91,9 +98,12 @@ public class Appointment {
 				strTeeth += "," + tooth;
  			} else {	// comma not needed on first tooth 
  				strTeeth = "" + tooth;
+ 				first = false;
  			}
 			
 		}
+		
+		LOGGER.info("String teeth " + strTeeth);
 		
 		return strTeeth;
 	}
