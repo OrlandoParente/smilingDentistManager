@@ -104,10 +104,11 @@ public class AppointmentDTO {
 
 	public void setTeeth(String teeth) {
 		this.teeth = teeth;
-		if( teeth == null || teeth.trim().equals(""))
+		if( teeth == null || teeth.trim().equals("")) {
 			this.setListOfTeeth( new ArrayList<Integer>() );
-		else
+		} else {
 			this.setListOfTeeth( Appointment.teethToIntegerList(teeth) );
+		}
 	}
 	
 	public void setTeeth(List<Integer> teeth) {
