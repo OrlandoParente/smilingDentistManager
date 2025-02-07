@@ -270,9 +270,9 @@ public class ExpenseRestController {
 			System.err.println( e.getMessage() );
 			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).build();
 	
-		}
+		} 
 		
-		return ResponseEntity.status(HttpStatus.OK).body(expense);
+		return ResponseEntity.status(HttpStatus.OK).body( modelMapper.map(expense, ExpenseDTO.class) );
 	}
 	
 	// <<<<<<<<<<<<<<<<<<------------ I NEED THIS ?
