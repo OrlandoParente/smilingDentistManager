@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.persistence.EntityNotFoundException;
 import sdms.dto.AppointmentDTO;
 import sdms.model.Appointment;
 import sdms.service.AppointmentServiceInterface;
@@ -343,8 +344,11 @@ public class AppointmentRestController {
 				service.addToothToTeethAppointment(idAppointment, tooth);
 			}
 		
+		} catch (EntityNotFoundException e) {
+	        System.err.println("AppointmentRestController -> PatchTooth -> Error: " + e.getMessage());
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 		} catch ( Exception e ) {
-			System.err.println( e.getMessage() );
+			System.err.println( "AppointmentRestController -> PatchTooth -> Error: " + e.getMessage() );
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		

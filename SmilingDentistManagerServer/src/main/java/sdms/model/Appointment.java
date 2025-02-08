@@ -88,7 +88,13 @@ public class Appointment {
 	
 	public static String IntegerListTeethToStr ( List<Integer> teeth ) {
 		
+		LOGGER.info("Inside IntegerListTeethToStr ");
+		
 		String strTeeth = "";
+		
+		// return "" if the list is null or empty
+		if( teeth == null || teeth.size() == 0 )
+			return strTeeth;
 		
 		boolean first = true;
 		
