@@ -347,6 +347,7 @@ public class AppointmentRestController {
 		} catch (EntityNotFoundException e) {
 	        System.err.println("AppointmentRestController -> PatchTooth -> Error: " + e.getMessage());
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+	        
 		} catch ( Exception e ) {
 			System.err.println( "AppointmentRestController -> PatchTooth -> Error: " + e.getMessage() );
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
