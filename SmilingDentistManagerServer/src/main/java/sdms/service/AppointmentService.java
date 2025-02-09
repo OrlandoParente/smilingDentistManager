@@ -200,6 +200,8 @@ public class AppointmentService implements AppointmentServiceInterface{
 			// update the appointment on the database 
 			repository.save(appointment);
 			
+			LOGGER.info("Added tooth " + tooth );
+			
 		} catch ( Exception e ) {
 			System.err.println("AppointmentService -> addToothToTeethAppointment -> ERROR : " + e.getMessage() );
 			e.printStackTrace();
