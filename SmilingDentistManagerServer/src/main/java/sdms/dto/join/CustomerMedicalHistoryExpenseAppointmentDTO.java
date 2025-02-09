@@ -122,6 +122,19 @@ public class CustomerMedicalHistoryExpenseAppointmentDTO {
 		return this;
 	}
 	
+	// Filter the list of appointments by the invoice number -------------------------------------------------------------------
+	public void filterAppointmentsByInvoiceNumber( String invoiceNumber ) {
+		
+		if( this.joinAppointmentsDTO == null )
+			return;
+		
+		this.joinAppointmentsDTO = this.joinAppointmentsDTO.stream()
+														   .filter( ja -> ja.getAppointmentDTO().getInvoiceNumber().equals(invoiceNumber) )
+														   .toList();
+	}
+			
+	// -------------------------------------------------------------------------------------------------------------------------
+	
 	
 	// Returns true if the customer has the medical history ------------------------------------------------------------------
 
