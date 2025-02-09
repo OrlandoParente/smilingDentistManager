@@ -92,9 +92,11 @@ public class CustomerController {
 		return("employee/customers/customers");
 	}
 	
-	@GetMapping({"/customer/details/{customerId}","/details/{customerId}"})
+	@GetMapping({ "/customer/details/{customerId}","/details/{customerId}",
+				  "/customer/details/{customerId}/{selectedInvoiceNumber}","/details/{customerId}/{selectedInvoiceNumber}" })
 	public String customerDetailsPage( HttpServletRequest request, Model model,
-									@PathVariable("customerId") Long customerId ) {
+									@PathVariable("customerId") Long customerId,
+									@PathVariable( required = false ) String selectedInvoiceNumber ) {
 		
 		// Set useful cookies --------------------------------------------------------------------------
 		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model);
@@ -118,6 +120,8 @@ public class CustomerController {
 		
 		joinCustomer.buildFromCustomerId(customerId, service, hasMedicalHistoryService, medicalHistoryService, expenseService, appointmentService, modelMapper);
 		
+		if( selectedInvoiceNumber != null )
+			joinCustomer.filterAppointmentsByInvoiceNumber(selectedInvoiceNumber);
 		
 //		List<MedicalHistoryHasMedicalHistoryDTO> listGenerale = joinCustomer.getMapByTypeJoinMedicalHistoriesDTO().get("Generale");
 //		
@@ -184,6 +188,7 @@ public class CustomerController {
 		model.addAttribute("doctors", doctors);
 		model.addAttribute("treatments",treatments);
 		model.addAttribute("customerInvoiceNumbers", customerInvoiceNumbers);
+		model.addAttribute("selectedInvoiceNumber", selectedInvoiceNumber);
 		
 		// serve?
 		model.addAttribute("customerPermissions", UserRoleManager.getCustomerPermissions());
