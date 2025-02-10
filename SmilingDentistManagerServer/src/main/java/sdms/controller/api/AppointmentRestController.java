@@ -331,19 +331,15 @@ public class AppointmentRestController {
 		return ResponseEntity.status( HttpStatus.OK ).body(modelMapper.map(appointment, AppointmentDTO.class));
 	}
 	
-	
 	// Add or remove tooth to/from teeth list of an appointment
-	@PatchMapping( value="/patchTooth", params={"idAppointment", "tooth"} )
-	public ResponseEntity<?> patchTooth( @RequestParam long idAppointment, @RequestParam Integer tooth,	// Mandatory fields 
+	@PatchMapping( value="/patchTeeth", params={"idAppointment", "teeth"} )
+	public ResponseEntity<?> patchTeeth( @RequestParam long idAppointment, @RequestParam String teeth,	// Mandatory fields 
 										 @RequestParam( defaultValue = "false" ) boolean delete ){
 		
 		try {
-			if( delete ) {
-				service.deleteToothFromTeethAppointment(idAppointment, tooth);
-			} else {
-				service.addToothToTeethAppointment(idAppointment, tooth);
-			}
-		
+			
+			service.updateTeethList(idAppointment, teeth);
+			
 		} catch (EntityNotFoundException e) {
 	        System.err.println("AppointmentRestController -> PatchTooth -> Error: " + e.getMessage());
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -357,6 +353,7 @@ public class AppointmentRestController {
 		
 		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(appointment, AppointmentDTO.class) );
 	}
+	
 	
 	// <--------------------  Can I delete this?
 	@PutMapping( value = "/putAppointmentBillNumberById", params = { "id" , "billNumber" } )

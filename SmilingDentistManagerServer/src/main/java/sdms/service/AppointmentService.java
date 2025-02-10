@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
 import sdms.model.Appointment;
@@ -140,75 +141,20 @@ public class AppointmentService implements AppointmentServiceInterface{
 		appointment.setTreatment( treatmentRepository.findById( idTreatment ).get() );
 		repository.save(appointment);
 	}
-
-	@Override
-	public void deleteToothFromTeethAppointment( long id, Integer tooth ) {
-		
-		try {
-		
-			Appointment appointment = repository.findById(id)
-					.orElseThrow( () -> new EntityNotFoundException( "Appointment not found for id: " + id ) );
-						
-			List<Integer> teeth = Appointment.teethToIntegerList( appointment.getTeeth() );
-			
-			// I can't edit a collection while i iterate on it ( I use stream instead )
-//			for( Integer t : teeth ) {
-//				if( t.equals(tooth) ) {
-//					teeth.remove( teeth.indexOf(t) );
-//					LOGGER.info( tooth + " removed from appointment with id: " + id );
-//				}
-//			}
-			
-			// Filter out the tooth to remove from the list of teeth
-			teeth = teeth.stream().filter( t -> ! t.equals(tooth)).toList();
-			
-			LOGGER.info( tooth + " removed from appointment with id: " + id );
-			
-			appointment.setTeeth(teeth);
-			
-			repository.save(appointment);
-			
-		} catch ( Exception e ) {
-			System.err.println("AppointmentService -> deleteToothFromTeethAppointment -> ERROR : " + e.getMessage() );
-			e.printStackTrace();
-			throw e;
-		}
-		
-	}
 	
 	@Override
-	public void addToothToTeethAppointment( long id, Integer tooth ) {
+	@Transactional
+	public void updateTeethList(long id, String teeth) {
 		
-		try {
-			//
-			Appointment appointment = repository.findById(id)
-					.orElseThrow( () -> new EntityNotFoundException( "Appointment not found for id: " + id ) );
-			
-			List<Integer> teeth = Appointment.teethToIntegerList( appointment.getTeeth() );
-			
-			for( Integer t : teeth ) {
-				if( t.equals(tooth) )
-					return;	// The tooth is already present in the teeth list
-			}
-			
-			// add the tooth to the teeth list
-			teeth.add(tooth);
-			
-			// save the new teeth list in the appointment object
-			appointment.setTeeth(teeth);
-			
-			// update the appointment on the database 
-			repository.save(appointment);
-			
-			LOGGER.info("Added tooth " + tooth );
-			
-		} catch ( Exception e ) {
-			System.err.println("AppointmentService -> addToothToTeethAppointment -> ERROR : " + e.getMessage() );
-			e.printStackTrace();
-			throw e;
-		}
-		
+		Appointment appointment = repository.findById(id)
+				.orElseThrow( () -> new EntityNotFoundException( "Appointment not found for id: " + id ) );
+
+		appointment.setTeeth(teeth);
+
+		repository.save(appointment);
 	}
+	
+	
 	
 	@Override
 	public void deleteAppointmentById(long id) {

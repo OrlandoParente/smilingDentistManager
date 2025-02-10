@@ -49,8 +49,7 @@ public interface AppointmentServiceInterface {
 	public void putAppointmentTreatmentById( long id, long idTreatment );
 	
 	// PATCH REQUESTS -----------------------------
-	public void deleteToothFromTeethAppointment( long id, Integer tooth );
-	public void addToothToTeethAppointment( long id, Integer tooth );
+	public void updateTeethList( long id, String teeth );
 	// --------------------------------------------
 	
 	public void deleteAppointmentById( long id );
