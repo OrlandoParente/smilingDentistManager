@@ -165,18 +165,26 @@
                                 <!-- <select class="me-2 col-2 col-md-auto" name="idProfessionalRole" id="professionalRole"> -->
 
                                 <div class="row col-auto me-2 ">
-                                    <select class="form-select w-100 me-2">
+                                    <select id="selectInvoiceNumber" class="form-select w-100 me-2">
                                         <option value="">Tutte le fatture</option>
                                         <option th:each="customerInvoiceNumber : ${customerInvoiceNumbers}"
                                                 th:text="${customerInvoiceNumber}"
-                                                th:value="${customerInvoiceNumber}">
+                                                th:value="${customerInvoiceNumber}"
+                                                th:selected="${ customerInvoiceNumber == selectedInvoiceNumber }">
                                         </option>
                                     </select>    
                                 </div>
                                 
 
-                                <button class="btn btn-success col-auto me-2" th:text="#{btnSearch}" >Search</button>
-                                <a  th:href="@{/employee/customer/customer/details/' + ${joinCustomer.customerDTO.id}}" 
+                                <!-- <button class="btn btn-success col-auto me-2" th:text="#{btnSearch}" >Search</button> -->
+                                <!-- <a  class="btn btn-success col-auto me-2" th:text="#{btnSearch}" 
+                                    th:href="@{/employee/customer/customer/details/' 
+                                                + ${joinCustomer.customerDTO.id} 
+                                                + '/' ${VALORE SELEZIONATO DALLA SELECT} }">
+                                    Search
+                                </a> -->
+                                <a  id="urlResetSearchByInvoiceNumber"
+                                    th:href="@{'/employee/customer/customer/details/' + ${joinCustomer.customerDTO.id}}" 
                                     class="btn btn-danger col-auto me-2" th:text="#{btnResetSearch}"> 
                                     X 
                                 </a>

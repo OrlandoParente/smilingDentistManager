@@ -5,11 +5,11 @@
         const btnSaveChanges = document.getElementById('btnSaveDentalAnatomyChanges');
         // from common-top-page
         const urlPatchTooth = document.getElementById('urlPatchTooth');
+        const urlUpdateTeethList = document.getElementById('urlUpdateTeethList');
 
-        // memorize the teeth to delete in case of edit
-        var oldSelectedTeeth = [];
-
-        console.log( "btnSaveChanges -> " + btnSaveChanges );
+        // -----------------------------------------------------------------------------------------
+        // memorize appointment ids for add it to update if the new selection has no teeth selected for this 
+        var oldSelectedAppointmentId = [];
 
         // Initialize dental anatomy check boxes
         // And selects
@@ -18,7 +18,7 @@
             const selectTooth = document.getElementById( 'select' + cb.value );
             const imageTooth = document.getElementById( 'imgTooth' + cb.value );
 
-            oldSelectedTeeth.push( {idAppointment : selectTooth.value, tooth: cb.value } );
+            oldSelectedAppointmentId.push( selectTooth.value );
 
             console.log( 'imgTooth -> ' + imageTooth );
 
@@ -33,79 +33,97 @@
  
         });
 
+        // -----------------------------------------------------------------------------------------
+
+
+        // -----------------------------------------------------------------------------------------
+
+        const selectInvoiceNumber = document.getElementById("selectInvoiceNumber");
+        const urlResetSearchByInvoiceNumber = document.getElementById("urlResetSearchByInvoiceNumber");
+
+        // Script for manage the research on invoice number
+        selectInvoiceNumber.addEventListener( 'click', function ( event ) {
+
+            // Add invoiceNumber to urlResetSearchByInvoiceNumber for get the url that we want
+            var urlSearch = urlResetSearchByInvoiceNumber;
+            
+            if( selectInvoiceNumber.value.trim() !== "" && selectInvoiceNumber.value.trim() !== "-1"  )
+                urlSearch += '/' + selectInvoiceNumber.value;
+
+            window.location.href = urlSearch;
+        } );
+
+        // -----------------------------------------------------------------------------------------
+
+        // -----------------------------------------------------------------------------------------
+
+        // Script for save changes about teeth selected 
         btnSaveChanges.addEventListener('click', function( event ){
 
             event.preventDefault();
 
-            // First we delete all the old selection
-            Promise.all(oldSelectedTeeth.map(el => {
-                console.log(el.idAppointment + ' ' + el.tooth);
+            // Fetch the number of calls to do (equals to the number of appointment ids selected) --------
+            var mapAppointmentIdTeeth = new Map();
+            
+            Array.from(document.getElementsByClassName('cbDentalAnatomy')).forEach( cb => {
+                
+                let appId = document.getElementById('select' + cb.value).value;
+                
+                // simulates continue
+                if( appId == -1 )   return;
 
-                // "Continue" if idAppointment == -1
-                if (el.idAppointment == -1) {
-                    console.log('Skipping fetch for tooth=' + el.tooth + ' because idAppointment is -1');
-                    return Promise.resolve();
+                if( mapAppointmentIdTeeth.has( appId ) ){
+                    let strTeeth = mapAppointmentIdTeeth.get( appId );
+                    strTeeth += ',' + cb.value
+                    mapAppointmentIdTeeth.set( appId, strTeeth )
+                } else {
+                    mapAppointmentIdTeeth.set( appId, '' + cb.value );
                 }
 
-                var urlDelOldTeethSelection = urlPatchTooth + '?idAppointment=' + el.idAppointment + '&tooth=' + el.tooth + '&delete=true';
+            } );
 
-                return fetch(urlDelOldTeethSelection, { method: 'PATCH' }).then(response => {
-                    if (response.status !== 200) {
-                        // <<<<<<<<<<<<<<<<<<================================  TO BE FIXED
-                        alert("ERROR!");
+            // Add idAppointment which new selection is empty (for update them as well)
+            oldSelectedAppointmentId.forEach( idAppSelectedBefore => {
+                if( ! mapAppointmentIdTeeth.has( idAppSelectedBefore ) ) {
+                    mapAppointmentIdTeeth.set( idAppSelectedBefore, '' );
+                }
+            } );
 
-                        // errMsg.style.display = "block";
-                        // errMsgText.innerText = "Failed to put appointment";  
+            var keysAppointmentIdTeeth = Array.from( mapAppointmentIdTeeth.keys() );
 
-                        return Promise.reject();
+            // -------------------------------------------------------------------------------------------
+
+
+            Promise.all( keysAppointmentIdTeeth.map( appId => {
+
+                let urlPatchTeeth = urlUpdateTeethList + '?idAppointment=' + appId + '&teeth=' + mapAppointmentIdTeeth.get(appId);
+
+                fetch(
+                    urlPatchTeeth, 
+                    { method: 'PATCH' }
+                ).then( response => {
+                    if( response === 200 ){
+                        console.log('teeth successfully updated');
+                    } else {
+                        // <=================== TO EDIT: show error message
                     }
-                });
+                })
+
+
             })).then(() => {
-                // Then, save the new sected values 
-                return Promise.all(Array.from(document.getElementsByClassName('cbDentalAnatomy')).map(cb => {
-
-                    var idAppointment = document.getElementById('select' + cb.value).value;
-                    var tooth = cb.value;
-                    // var del = false;
-                    // if (idAppointment == -1) del = true;
-
-                    // "Continue" if idAppointment == -1
-                    if (idAppointment == -1) {
-                        console.log('Skipping fetch for tooth=' + tooth + ' because idAppointment is -1');
-                        return Promise.resolve();
-                    }
-
-                    console.log('click btnSaveDentalAnatomyChanges : idAppointment=' + idAppointment + '; tooth=' + tooth + '; del=false'  + ';');
-
-                    var url = urlPatchTooth + '?idAppointment=' + idAppointment + '&tooth=' + tooth + '&delete=false';
-
-                    return fetch(url, { method: 'PATCH' }).then(response => {
-                        if (response.status !== 200) {
-                            
-                            // <<<<<<<<<<<<<<<<<<================================  TO BE FIXED
-                            alert("ERROR!");
-
-                            // errMsg.style.display = "block";
-                            // errMsgText.innerText = "Failed to put appointment";  
-
-                            return Promise.reject();
-                        }
-                    });
-                }));
-            }).then(() => {
                 // Changes saved successfully
                 console.log('Changes saved successfully.');
                 window.location.reload();
 
                 // <=================== TO EDIT: show sucessful message 
 
-            }).catch( () => {
-                console.log('An error occurred while saving changes.');
+             }).catch( () => {
+                 console.log('An error occurred while saving changes.');
             });
 
-
         } );
-            
+
+        // -----------------------------------------------------------------------------------------
 
         // check the checkbox and highlight the tooth on the image
         function funcSelectTooth( selTooth, cbTooth, imgTooth ) {
