@@ -177,7 +177,7 @@ public class CustomerController {
 
 		// check print
 		joinCustomer.getJoinAppointmentsDTO().forEach( jc -> {
-			LOGGER.info( "joinCustomer.joinAppointmentDTO.listOfTeeth = " + jc.getAppointmentDTO().getListOfTeeth()  );
+			LOGGER.info( "joinCustomer.joinAppointmentDTO.teeth = " + jc.getAppointmentDTO().getTeeth() );
 		});
 		
 		// Add stuff to the model
