@@ -157,7 +157,7 @@
                 <!-- Appointments Invoice Filter -->
                 <div class="border border-secondary rounded p-3 mt-3 col-12 d-flex ">
 
-                    <div class="container col-12">
+                    <div class="container-fluid ">
                         <div class="row justify-content-center">
 
                             <form class="d-flex align-items-center justify-content-center" role="search">
@@ -203,7 +203,7 @@
 
                         <div class="row mt-4">
 
-                            <div style="position: relative; " class="col-12 col-md-4 ">
+                            <div style="position: relative; " class="col-12 col-xxl-4 ">
                                 <!-- image (edited) from book: Sobotta's Anatomy Plates - Sobo 1906 330 (public domain image) -->
                                 <img class="dental-anatomy-image col-12" th:src="@{/img/customers/customer-details/dental-anatomy.png}">
                                 <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth11" th:src="@{/img/customers/customer-details/11.png}">
@@ -240,41 +240,83 @@
                                 <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth48" th:src="@{/img/customers/customer-details/48.png}">
                             </div>
                             
-                            <div class="container col-12 col-md-8 bg-color-success">
-                                <div class="row ">
-                                    <div class="col-6 col-md-4 d-flex align-items-center">
-                                        <input type="checkbox" class="form-check-input me-2 cbDentalAnatomy" value="11" disabled> 
-                                        <label class="form-check-label me-2 fw-bold">
+                            <div class="container col-12 col-xxl-8 bg-color-success">
+                                <div class="row "
+                                     th:each="i : ${ #numbers.sequence(1,8) }">
+
+                                    <!-- 1i teeth-->
+                                    <div class="col-12 col-md-3 d-flex align-items-center mt-2"
+                                         th:with = "toothNum='1'+ ${i}" >
+                                        <input type="checkbox" class="form-check-input me-2 cbDentalAnatomy" th:value="${toothNum}" disabled> 
+                                        <label class="form-check-label me-2 fw-bold" th:text="${toothNum}">
                                             11
                                         </label>
-                                        <select id="select11" class="form-select selectDentalAnatomy">
+                                        <select th:id="'select' + ${toothNum}" class="form-select selectDentalAnatomy">
                                             <option value="-1"></option>
                                             <option th:each=" joinApp : ${joinCustomer.joinAppointmentsDTO} "
                                                     th:value="${joinApp.appointmentDTO.id}"
                                                     th:with="dateFormat=#{formPlaceholderDate}"
                                                     th:text="${#temporals.format(joinApp.appointmentDTO.date, dateFormat ) } 
-                                                            + ' ' + ${joinApp.appointmentDTO.invoiceNumber}"
-                                                    th:selected="${ joinApp.appointmentDTO.listOfTeeth.contains(11) }"
-                                                    >
-                                                    <!-- th:select="${ joinApp.appointmentDTO.listOfTeeth.contains(11) }" -->
+                                                            + ' ' + ${joinApp.appointmentDTO.invoiceNumber} "
+                                                    th:selected="${joinApp.appointmentDTO.teeth.contains( toothNum ) }">
                                             </option>
                                         </select>
                                     </div>
 
 
-                                    <div class="col-6 col-md-4 d-flex align-items-center">
-                                        <input type="checkbox" class="form-check-input me-2 cbDentalAnatomy" value="21" disabled> 
-                                        <label class="form-check-label me-2 fw-bold">
+                                    <!-- 2i teeth -->
+                                    <div class="col-12 col-md-3 d-flex align-items-center mt-2"
+                                        th:with = "toothNum='2'+ ${i}">
+                                        <input type="checkbox" class="form-check-input me-2 cbDentalAnatomy" th:value="${toothNum}" disabled> 
+                                        <label class="form-check-label me-2 fw-bold" th:text="${toothNum}">
                                             21
                                         </label>
-                                        <select id="select21" class="form-select selectDentalAnatomy">
+                                        <select th:id="'select' + ${toothNum}" class="form-select selectDentalAnatomy">
                                             <option value="-1"></option>
                                             <option th:each=" joinApp : ${joinCustomer.joinAppointmentsDTO} "
                                                     th:value="${joinApp.appointmentDTO.id}"
                                                     th:with="dateFormat=#{formPlaceholderDate}"
                                                     th:text="${#temporals.format(joinApp.appointmentDTO.date, dateFormat ) } 
                                                             + ' ' + ${joinApp.appointmentDTO.invoiceNumber}"
-                                                    th:selected="${ joinApp.appointmentDTO.listOfTeeth.contains(21) }">
+                                                    th:selected="${ joinApp.appointmentDTO.teeth.contains( toothNum ) }">
+                                            </option>
+                                        </select>
+                                    </div> 
+
+                                    <!-- 3i teeth-->
+                                    <div class="col-12 col-md-3 d-flex align-items-center mt-2"
+                                         th:with = "toothNum='3'+ ${i}">
+                                        <input type="checkbox" class="form-check-input me-2 cbDentalAnatomy" th:value="${toothNum}" disabled> 
+                                        <label class="form-check-label me-2 fw-bold" th:text="${toothNum}">
+                                            31
+                                        </label>
+                                        <select th:id="'select' + ${toothNum}" class="form-select selectDentalAnatomy">
+                                            <option value="-1"></option>
+                                            <option th:each=" joinApp : ${joinCustomer.joinAppointmentsDTO} "
+                                                    th:value="${joinApp.appointmentDTO.id}"
+                                                    th:with="dateFormat=#{formPlaceholderDate}"
+                                                    th:text="${#temporals.format(joinApp.appointmentDTO.date, dateFormat ) } 
+                                                            + ' ' + ${joinApp.appointmentDTO.invoiceNumber}"
+                                                    th:selected="${ joinApp.appointmentDTO.teeth.contains( toothNum ) }">
+                                            </option>
+                                        </select>
+                                    </div> 
+
+                                    <!-- 4i teeth -->
+                                    <div class="col-12 col-md-3 d-flex align-items-center mt-2"
+                                         th:with = "toothNum='4'+ ${i}">
+                                        <input type="checkbox" class="form-check-input me-2 cbDentalAnatomy" th:value="${toothNum}" disabled> 
+                                        <label class="form-check-label me-2 fw-bold" th:text="${toothNum}">
+                                            41
+                                        </label>
+                                        <select th:id="'select' + ${toothNum}" class="form-select selectDentalAnatomy">
+                                            <option value="-1"></option>
+                                            <option th:each=" joinApp : ${joinCustomer.joinAppointmentsDTO} "
+                                                    th:value="${joinApp.appointmentDTO.id}"
+                                                    th:with="dateFormat=#{formPlaceholderDate}"
+                                                    th:text="${#temporals.format(joinApp.appointmentDTO.date, dateFormat ) } 
+                                                            + ' ' + ${joinApp.appointmentDTO.invoiceNumber}"
+                                                    th:selected="${ joinApp.appointmentDTO.listOfTeeth.contains( toothNum ) }">
                                             </option>
                                         </select>
                                     </div> 
