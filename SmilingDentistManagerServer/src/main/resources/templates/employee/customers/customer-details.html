@@ -188,8 +188,8 @@
                                     class="btn btn-danger col-auto me-2" th:text="#{btnResetSearch}"> 
                                     X 
                                 </a>
-                                <button id="btnSaveDentalAnatomyChanges" class="btn btn-primary col-auto" th:text="#{btnEdit}" >
-                                    Edit
+                                <button id="btnSaveDentalAnatomyChanges" class="btn btn-success col-auto" th:text="#{btnSave}" >
+                                    Save
                                 </button>
                                 
                             </form> 
@@ -258,7 +258,8 @@
                                                     th:with="dateFormat=#{formPlaceholderDate}"
                                                     th:text="${#temporals.format(joinApp.appointmentDTO.date, dateFormat ) } 
                                                             + ' ' + ${joinApp.appointmentDTO.invoiceNumber} "
-                                                    th:selected="${joinApp.appointmentDTO.teeth.contains( toothNum ) }">
+                                                    th:selected="${joinApp.appointmentDTO.teeth != null 
+                                                                        ? joinApp.appointmentDTO.teeth.contains( toothNum ) : false }">
                                             </option>
                                         </select>
                                     </div>
@@ -278,7 +279,8 @@
                                                     th:with="dateFormat=#{formPlaceholderDate}"
                                                     th:text="${#temporals.format(joinApp.appointmentDTO.date, dateFormat ) } 
                                                             + ' ' + ${joinApp.appointmentDTO.invoiceNumber}"
-                                                    th:selected="${ joinApp.appointmentDTO.teeth.contains( toothNum ) }">
+                                                    th:selected="${joinApp.appointmentDTO.teeth != null 
+                                                                        ? joinApp.appointmentDTO.teeth.contains( toothNum ) : false }">
                                             </option>
                                         </select>
                                     </div> 
@@ -297,7 +299,8 @@
                                                     th:with="dateFormat=#{formPlaceholderDate}"
                                                     th:text="${#temporals.format(joinApp.appointmentDTO.date, dateFormat ) } 
                                                             + ' ' + ${joinApp.appointmentDTO.invoiceNumber}"
-                                                    th:selected="${ joinApp.appointmentDTO.teeth.contains( toothNum ) }">
+                                                    th:selected="${joinApp.appointmentDTO.teeth != null 
+                                                                        ? joinApp.appointmentDTO.teeth.contains( toothNum ) : false }">
                                             </option>
                                         </select>
                                     </div> 
@@ -316,7 +319,8 @@
                                                     th:with="dateFormat=#{formPlaceholderDate}"
                                                     th:text="${#temporals.format(joinApp.appointmentDTO.date, dateFormat ) } 
                                                             + ' ' + ${joinApp.appointmentDTO.invoiceNumber}"
-                                                    th:selected="${ joinApp.appointmentDTO.listOfTeeth.contains( toothNum ) }">
+                                                    th:selected="${joinApp.appointmentDTO.teeth != null 
+                                                                        ? joinApp.appointmentDTO.teeth.contains( toothNum ) : false }">
                                             </option>
                                         </select>
                                     </div> 
