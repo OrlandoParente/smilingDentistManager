@@ -2,10 +2,6 @@ package sdms.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import sdms.model.Appointment;
 
 public class AppointmentDTO {
 	
@@ -27,7 +23,6 @@ public class AppointmentDTO {
 								 // ( cioè le fatture si possono costruire dai dati già presenti nel db )
 								 // si limita a segnare quali appuntamenti sono stati già fatturati
 	private String teeth;
-	private List<Integer> listOfTeeth;
 	private Double payment;
 	private String paymentMethod;
 	private String notes;		 // eventualmente se serve specificare qualcosa
@@ -104,36 +99,6 @@ public class AppointmentDTO {
 
 	public void setTeeth(String teeth) {
 		this.teeth = teeth;
-		if( teeth == null || teeth.trim().equals("")) {
-			this.setListOfTeeth( new ArrayList<Integer>() );
-		} else {
-			this.setListOfTeeth( Appointment.teethToIntegerList(teeth) );
-		}
-	}
-	
-	public void setTeeth(List<Integer> teeth) {
-		this.teeth = Appointment.IntegerListTeethToStr(teeth);
-		this.setListOfTeeth(teeth);
-	}
-
-	public List<Integer> getListOfTeeth() {
-		
-		if( listOfTeeth == null )
-			this.setListOfTeeth( Appointment.teethToIntegerList(this.teeth) );
-			
-		return listOfTeeth;
-	}
-
-	public void setListOfTeeth(List<Integer> listOfTeeth) {
-		
-		if( listOfTeeth == null ) {
-			this.listOfTeeth = new ArrayList<Integer>();
-			this.teeth = "";
-		} else {
-			this.listOfTeeth = listOfTeeth;
-			this.teeth = Appointment.IntegerListTeethToStr(listOfTeeth);	
-		}
-		
 	}
 
 	public String getPaymentMethod() {
@@ -156,12 +121,8 @@ public class AppointmentDTO {
 		return payment;
 	}
 
-
-
 	public void setPayment(Double payment) {
 		this.payment = payment;
 	}
-	
-	
 	
 }

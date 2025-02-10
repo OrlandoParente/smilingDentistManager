@@ -2,12 +2,6 @@ package sdms.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,8 +16,6 @@ public class Appointment {
 	
 	public final static int IS_DONE = 1;
 	public final static int IS_NOT_DONE = 0;
-	
-	private final static Logger LOGGER = LoggerFactory.getLogger( Appointment.class );
 	
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -59,62 +51,6 @@ public class Appointment {
 
 	// Empty Constructor 
 	public Appointment() {}
-	
-	// CONVERT STR TEETH TO INTEGER LIST AND VICE-VERSA ------------------------------------
-	
-	// Useful method for convert the list of teeth involved in the appointment
-	// in an list of integers
-	public static List<Integer> teethToIntegerList( String strTeeth ){
-		
-		List<Integer> listOfTeeth = new ArrayList<Integer>();
-		
-		// Avoid error by empty strTeeth
-		if( strTeeth == null || strTeeth.trim().equals("") )
-			return listOfTeeth;
-		
-		// remove blank spaces if there are any 
-		strTeeth.replaceAll("\\s", "");
-		
-		// convert the number and put in the listOfTeeth
-		for( String strNum : strTeeth.split(",") ) {
-			listOfTeeth.add( Integer.parseInt(strNum) );
-		}
-		
-		LOGGER.info("List of integer teeth " + listOfTeeth);
-		
-		// return the list of Teeth
-		return listOfTeeth;
-	}
-	
-	public static String IntegerListTeethToStr ( List<Integer> teeth ) {
-		
-		LOGGER.info("Inside IntegerListTeethToStr ");
-		
-		String strTeeth = "";
-		
-		// return "" if the list is null or empty
-		if( teeth == null || teeth.size() == 0 )
-			return strTeeth;
-		
-		boolean first = true;
-		
-		for( Integer tooth : teeth ) {
-			
-			if( ! first ) {
-				strTeeth += "," + tooth;
- 			} else {	// comma not needed on first tooth 
- 				strTeeth = "" + tooth;
- 				first = false;
- 			}
-			
-		}
-		
-		LOGGER.info("String teeth " + strTeeth);
-		
-		return strTeeth;
-	}
-	
-	// -------------------------------------------------------------------------------------
 	
 	public long getId() {
 		return this.id;
@@ -230,11 +166,7 @@ public class Appointment {
 
 	public void setTeeth(String teeth) {
 		this.teeth = teeth;
-	}
-	
-	public void setTeeth(List<Integer> teeth) {
-		this.teeth = Appointment.IntegerListTeethToStr(teeth);
-	}
+	} 
 
 	public String getPaymentMethod() {
 		return paymentMethod;
