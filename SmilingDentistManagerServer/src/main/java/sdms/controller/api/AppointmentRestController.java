@@ -107,6 +107,7 @@ public class AppointmentRestController {
 									@RequestParam( defaultValue = "0" ) int isDone,
 									@RequestParam( defaultValue = "none" ) String invoiceNumber,
 									@RequestParam( defaultValue = "-1" ) double payment,
+									@RequestParam( defaultValue = "" ) String paymentMethod,
 									@RequestParam( defaultValue = "" ) String notes) {
 									
 		// Check Message (Use the Logger)
@@ -121,6 +122,7 @@ public class AppointmentRestController {
 			appointment.setCustomer( customerService.getCustomerById(idCustomer) );
 			appointment.setisDone(isDone);
 			appointment.setNotes(notes);
+			appointment.setPaymentMethod(paymentMethod);
 			
 			// TO EDIT: Return 404 Not found if they don't have default value and the service can't find them on the db // <<===================================
 			// Not insert if they have the default value 
@@ -284,6 +286,7 @@ public class AppointmentRestController {
 									@RequestParam( defaultValue = "-1" ) int isDone,
 									@RequestParam( defaultValue = "none" ) String invoiceNumber, 
 									@RequestParam( defaultValue = "-1" ) double payment,
+									@RequestParam( defaultValue = "sdms.nessuna-nota-inviata.ma-proprio-nessuna -1" ) String paymentMethod,
 									// we need a default value which is surely different from a real note
 									@RequestParam( defaultValue = "sdms.nessuna-nota-inviata.ma-proprio-nessuna -1" ) String notes) {
 		
@@ -318,6 +321,7 @@ public class AppointmentRestController {
 			if( ! notes.equals("sdms.nessuna-nota-inviata.ma-proprio-nessuna -1") ) appointment.setNotes(notes);
 			if( ! invoiceNumber.equals("none") )	appointment.setInvoiceNumber(invoiceNumber);
 			if( payment != -1 )	appointment.setPayment(payment);
+			if( ! paymentMethod.equals("sdms.nessuna-nota-inviata.ma-proprio-nessuna -1") ) appointment.setPaymentMethod(paymentMethod);
 			if( isDone != -1 )	appointment.setisDone(isDone);
 			
 			service.putAppointment(appointment);
