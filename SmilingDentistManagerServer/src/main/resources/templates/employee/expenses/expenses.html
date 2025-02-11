@@ -219,7 +219,7 @@
                         <thead>
                             <tr >
                                 <th class="sdm-table-header-bg" 
-                                    colspan="5"
+                                    colspan="6"
                                     th:text="#{tableHeaderIncoming}">
                                     Incoming (from appoitments)
                                 </th>
@@ -228,6 +228,7 @@
                                 <th></th>
                                 <th th:text="#{tableHeaderDate}">Date</th>
                                 <th th:text="#{tableHeaderIncomeAmount}">Income</th>
+                                <th th:text="#{tableHeaderPaymentMethod}">payment method</th>
                                 <th th:text="#{tableHeaderCustomer}">Customer</th>
                                 <th th:text="#{tableHeaderInvoiceNumber}">Invoice num.</th>
                             </tr>
@@ -252,6 +253,9 @@
                                 </td>
                                 <td>
                                     <span th:text="${appointment.appointmentDTO.payment}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${appointment.appointmentDTO.paymentMethod}"></span>
                                 </td>
                                 <td>
                                     <span th:text="${appointment.customerDTO.surname} + ' ' 
