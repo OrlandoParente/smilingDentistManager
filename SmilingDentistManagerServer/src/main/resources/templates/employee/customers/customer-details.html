@@ -346,6 +346,7 @@
                                     <th th:text="#{tableHeaderDoctor}">Doctor</th>
                                     <th th:text="#{tableHeaderTreatment}">Treatment</th>
                                     <th th:text="#{tableHeaderPayment}">Payment</th>
+                                    <th th:text="#{tableHeaderPaymentMethod}">Payment Method</th>
                                     <th th:text="#{tableHeaderInvoiceNumber}">Invoice Number</th>
                                     <th th:text="#{tableHeaderNotes}">Notes</th>
                                 </tr>
@@ -380,6 +381,9 @@
                                     </td>
                                     <td>
                                         <span th:text="${appointment.appointmentDTO.payment}"></span> 
+                                    </td>
+                                    <td>
+                                        <span th:text="${appointment.appointmentDTO.paymentMethod}"></span> 
                                     </td>
                                     <td>
                                         <span th:text="${appointment.appointmentDTO.invoiceNumber}"></span> 
