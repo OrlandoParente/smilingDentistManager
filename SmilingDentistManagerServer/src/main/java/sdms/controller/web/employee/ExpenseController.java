@@ -1,5 +1,8 @@
 package sdms.controller.web.employee;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Comparator;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import sdms.dto.AppointmentDTO;
 import sdms.dto.CustomerDTO;
 import sdms.dto.DentalMaterialDTO;
@@ -59,10 +63,11 @@ public class ExpenseController {
 	DateAndTimeManager dateAndTimeManager;
 	
 	@GetMapping({"","/","/expense"})
-	public String getTreatmentPage( HttpServletRequest request, Model model,
+	public String getTreatmentPage( HttpServletRequest request, HttpServletResponse response, Model model,
 									@RequestParam( defaultValue = "" ) String expenseTag,
 									@RequestParam( defaultValue = "" ) String startDate,
-									@RequestParam( defaultValue = "" ) String endDate ) {
+									@RequestParam( defaultValue = "" ) String endDate,
+									@RequestParam( defaultValue = "false" ) boolean csv ) {
 		
 		// Set useful cookies --------------------------------------------------------------------------
 		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model);
@@ -172,7 +177,8 @@ public class ExpenseController {
 		gainLoss = totalRevenue - totalExpenses;
 		// ---------------------------------------------------------------------------------------------
 		
-		// add stuff at the model
+		// add stuff to the model ----------------------------------------------------------------------
+		
 		model.addAttribute("expenses", expenses);
 		model.addAttribute("joinAppointments", joinAppointments);
 		model.addAttribute("customers", customers);
@@ -190,7 +196,58 @@ public class ExpenseController {
 		model.addAttribute("selectedStartDate", ldStartDate);
 		model.addAttribute("selectedEndDate", ldEndDate);
 		
+		// ---------------------------------------------------------------------------------------------
+		
+		// Download Expense CSV ------------------------------------------------------------------------
+		if( csv ) {
+			
+			String csvFileName = "Income-Outcome.csv";
+			
+			response.setContentType("text/csv");
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + csvFileName + "\"");
+			
+			try {
+				PrintWriter writer = response.getWriter();
+				
+				writer.println("Total incoming, Total outcoming, Gain/Loss");
+				writer.println(totalRevenue + "," + totalExpenses + "," + gainLoss  );
+				
+				writer.println();
+				writer.println("OUTCOME");
+				writer.println("Date, Amount, Tag, Description");
+				for( ExpenseDTO ex : expenses ) {
+					writer.println( ex.getDate() + "," + ex.getAmount() + "," + ex.getDate() + "," + ex.getDescription() );
+				}
+				
+				writer.println();
+				writer.println("INCOME");
+				writer.println("Date, Amount, Payment method, Customer, Invoice number");
+				for( AppointmentCustomerDoctorTreatmentDTO ja : joinAppointments ) {
+					writer.println( ja.getAppointmentDTO().getDate() + "," 
+									 + ja.getAppointmentDTO().getPayment() + "," 
+									 + ja.getAppointmentDTO().getPaymentMethod() + "," 
+									 + ja.getCustomerDTO().getName() + " " + ja.getCustomerDTO().getSurname() + "," 
+									 + ja.getAppointmentDTO().getInvoiceNumber() );
+				}
+				
+			} catch ( IOException e ) {
+				System.err.println( e.getMessage() );
+				// TO EDIT: Redirect to a page error
+				
+			}
+		
+			// In this case it doesn't have to  return the view
+			return null;
+		}
+		
+		// ---------------------------------------------------------------------------------------------
+		
 		
 		return ("employee/expenses/expenses");
+	}
+	
+	@GetMapping({"csv","/csv","/expense/csv"})
+	public void downloadCSVExpenses( HttpServletResponse response ){
+		
 	}
 }

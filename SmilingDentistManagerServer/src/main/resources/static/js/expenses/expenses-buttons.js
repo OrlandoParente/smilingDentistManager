@@ -3,7 +3,18 @@
 
     document.addEventListener( 'DOMContentLoaded' , function (){
 
-        // Delete appoitnemtn 
+        // Download Expenses Csv ------------------------------------------------------------------------
+        const btnDownloadIncomeOutcomeCsv = document.getElementById('btnDownloadIncomeOutcomeCsv');
+
+        // got current url and add to it '?csv=true' 
+        var reqUrl = window.location.href + '?csv=true';
+
+        btnDownloadIncomeOutcomeCsv.addEventListener('click', function(){
+            window.location.href = reqUrl;
+        });
+        // ----------------------------------------------------------------------------------------------
+
+        // Delete appoitnemts 
         Array.from( 
             document.getElementsByClassName("appointmentIds") 
         ).forEach( element => {

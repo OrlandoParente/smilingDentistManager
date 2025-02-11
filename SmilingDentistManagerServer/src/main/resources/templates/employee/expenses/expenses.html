@@ -84,6 +84,13 @@
                         <span th:if="${gainLoss < 0}" class="text-danger" th:text="${gainLoss}"></span>
                     </div>
 
+                    <div class="col-12 col-md-auto d-inline-block mt-2 me-md-3">
+                        <button id="btnDownloadIncomeOutcomeCsv"
+                                class="btn btn-success"
+                                th:text="#{btnDownloadCsv}">
+                        </button>
+                    </div>
+
                 </div>
 
                 <!-- Filter -->
