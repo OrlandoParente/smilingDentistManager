@@ -6,7 +6,7 @@
     <div th:fragment="add-appointment-modal">
         <div class="modal fade" id="addAppointmentModalToggle" aria-hidden="true"
                 aria-labelledby="addAppointmentModalToggleLabel" tabindex="-1">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
                   <h1 class="modal-title fs-5" id="addAppointmentModalToggleLabel" th:text="#{titleAddAppointment}">
@@ -24,90 +24,8 @@
                   <!-- get data for create the appointment -->
                   <form id="addAppointmentForm" method="POST" th:action="@{/postAppointment}" > 
                     
-                    <div class="row g-3"> 
-
-                      <div class="col-12 col-md-4 d-flex align-items-center"> 
-                        <label for="date" class="form-label me-2" th:text="#{formLabelDateMandatory}">
-                          Date*:
-                        </label> 
-                        <input type="text" class="form-control w-100" id="date" name="date" th:placeholder="#{formPlaceholderDate}"> 
-                      </div> 
-                      
-                      <div class="col-12 col-md-4 d-flex align-items-center"> 
-                        <label for="time" class="form-label me-2" th:text="#{formLabelTimeMandatory}">
-                          Time*:
-                        </label> 
-                        <input type="text" class="form-control w-100" id="time" name="time" th:placeholder="#{formPlaceholderTime}"> 
-                      </div> 
-
-                      <div class="col-12 col-md-4 d-flex align-items-center"> 
-                        <select class="form-select " name="idCustomer" id="idCustomer" >
-                          <option selected value="-1" th:text="#{formOptionSelectCustomerMandatory}">
-                            Select the customer*
-                          </option>
-                          <option th:each="customer : ${customers}" 
-                                  th:value="${customer.id}"
-                                  th:text="${customer.name} + ' ' + ${customer.surname}">
-                          </option>
-                        </select>
-                      </div>
-
-                    </div> 
-
-                    <div class="row g-3 mt-3">
-                      
-                      <div class="col-12 col-md-6 d-flex align-items-center"> 
-                        <select class="form-select mt-1" name="idDoctor" id="idEmployee" >
-                          <option selected value="-1" th:text="#{formOptionSelectDoctor}">
-                            Select the doctor
-                          </option>
-                          <option th:each="doctor : ${doctors}" 
-                          th:value="${doctor.id}"
-                          th:text="${doctor.name} + ' ' + ${doctor.surname}">
-                        </select>
-                      </div>
-
-                      <div class="col-12 col-md-6 d-flex align-items-center"> 
-                        <select class="form-select mt-1" name="idTreatment" id="idTreatment" >
-                          <option selected value="-1" th:text="#{formOptionSelectTreatment}">
-                            Select the treatment
-                          </option>
-                          <option th:each="treatment : ${treatments}" 
-                          th:value="${treatment.id}"
-                          th:text="${treatment.name}">
-                        </select>
-                      </div>
-
-                    </div>
-
-                    <div class="row g-3 mt-3">
-            
-                      <div class="col-12 col-md-6 d-flex align-items-center"> 
-                          <label class="form-label me-2 col-md-auto" 
-                                  th:text="#{formLabelPaymentAmount}"
-                                  for="payment">
-                              Payment:
-                          </label> 
-                          <input type="number" class="form-control w-100" name="payment" id="payment"  >
-                      </div> 
-          
-                      <div class="col-12 col-md-6 d-flex align-items-center"> 
-                          <label class="form-label me-2 col-md-auto" 
-                                  th:text="#{formLabelInvoiceNumber}" 
-                                  for="invoiceNumber">
-                              Invoice Num.:
-                          </label> 
-                          <input type="text" class="form-control w-100" name="invoiceNumber" id="invoiceNumber" > 
-                      </div> 
-          
-                    </div> 
-
-                    <div class="row g-3 mt-3">
-                      <label class="form-label mb-1" for="notes" th:text="#{formLabelNotes}">
-                        Notes: 
-                      </label>
-                      <input class="form-control" name="notes" id="notes" type="textarea">
-                    </div>
+   
+                    <div th:replace="~{fragments/calendar/common-fields-form-appointment :: common-fields-form-appointment( null )}"></div>
 
                   </form>
 
