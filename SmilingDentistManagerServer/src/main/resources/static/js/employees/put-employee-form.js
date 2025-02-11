@@ -125,7 +125,8 @@
 
             for( let j = i + 1; j < arrProfRolesSelected.length; j ++ ) {
               if( arrProfRolesSelected[i].options[ arrProfRolesSelected[i].selectedIndex ].innerText.trim() 
-                  === arrProfRolesSelected[j].options[arrProfRolesSelected[j].selectedIndex].innerText.trim() ) {
+                  === arrProfRolesSelected[j].options[arrProfRolesSelected[j].selectedIndex].innerText.trim()
+                  && arrProfRolesSelected[i].options[ arrProfRolesSelected[i].selectedIndex ].innerText.trim() !== "" ) {
 
                 console.log(  arrProfRolesSelected[i].options[ arrProfRolesSelected[i].selectedIndex ].innerText 
                               + " === " 
@@ -253,12 +254,19 @@
 
           }).then(() => {
 
+              let ms=550;
+              console.log('Waiting ' + ms + ' ms before reload the page, for let complete all the operations');
+              
+              return new Promise(resolve => setTimeout(resolve, ms)); 
+
+          }).then(() => {
+
               console.log( 'LOCATION: ' + window.location.href );
               window.location.reload();
 
-            }).catch( error => {
-             console.log('Error: ' + error ); 
-            });
+          }).catch( error => {
+            console.log('Error: ' + error ); 
+          });
 
         });
 
