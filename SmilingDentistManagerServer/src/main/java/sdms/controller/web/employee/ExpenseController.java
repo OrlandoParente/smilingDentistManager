@@ -216,7 +216,7 @@ public class ExpenseController {
 				writer.println("OUTCOME");
 				writer.println("Date, Amount, Tag, Description");
 				for( ExpenseDTO ex : expenses ) {
-					writer.println( ex.getDate() + "," + ex.getAmount() + "," + ex.getDate() + "," + ex.getDescription() );
+					writer.println( ex.getDate() + "," + ex.getAmount() + "," + ex.getTag() + "," + ex.getDescription() );
 				}
 				
 				writer.println();
