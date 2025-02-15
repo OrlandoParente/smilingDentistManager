@@ -1,14 +1,11 @@
 package sdms.controller.web.employee;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collector;
-
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import sdms.dto.AppointmentDTO;
 import sdms.dto.CustomerDTO;
 import sdms.dto.DentalMaterialDTO;
 import sdms.dto.EmployeeDTO;
