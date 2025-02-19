@@ -77,7 +77,7 @@ public class CalendarController {
 //		String name = WebClientCookieManager.getCookieValue(request, WebClientCookieManager.NAME);
 //		model.addAttribute(WebClientCookieManager.NAME, name);
 		
-		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model);
+		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
 		// ---------------------------------------------------------------------------------------------
 			
 		// Set data for filter the appointment list ----------------------------------------------------
@@ -176,7 +176,7 @@ public class CalendarController {
 //		String name = WebClientCookieManager.getCookieValue(request, WebClientCookieManager.NAME);
 //		model.addAttribute(WebClientCookieManager.NAME, name);
 		
-		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model);
+		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
 		// ---------------------------------------------------------------------------------------------
 		
 		// Set data for filter the appointment list ----------------------------------------------------
@@ -326,7 +326,7 @@ public class CalendarController {
 //		String name = WebClientCookieManager.getCookieValue(request, WebClientCookieManager.NAME);
 //		model.addAttribute(WebClientCookieManager.NAME, name);
 		
-		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model);
+		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
 		// ---------------------------------------------------------------------------------------------
 		
 		// Set data for filter the appointment list ----------------------------------------------------

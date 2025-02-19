@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpServletRequest;
 import sdms.dto.MedicalHistoryDTO;
 import sdms.model.MedicalHistory;
+import sdms.service.EmployeeServiceInterface;
 import sdms.service.MedicalHistoryServiceInterface;
 import sdms.util.WebClientCookieManager;
 
@@ -26,6 +27,9 @@ import sdms.util.WebClientCookieManager;
 public class MedicalHistoryController {
 	
 	private final Logger LOGGER = LoggerFactory.getLogger( MedicalHistoryController.class );
+	
+	@Autowired
+	EmployeeServiceInterface employeeService;
 	
 	@Autowired
 	MedicalHistoryServiceInterface service;
@@ -37,7 +41,7 @@ public class MedicalHistoryController {
 	public String mainCalendarPage( HttpServletRequest request, Model model ) {
 		
 		// Set useful cookies --------------------------------------------------------------------------
-		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model);
+		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
 		// ---------------------------------------------------------------------------------------------
 		
 

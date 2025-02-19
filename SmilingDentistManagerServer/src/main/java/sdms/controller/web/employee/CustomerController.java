@@ -67,7 +67,7 @@ public class CustomerController {
 									@RequestParam( defaultValue = "" ) String keyword ) {
 		
 		// Set useful cookies --------------------------------------------------------------------------
-		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model);
+		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
 		// ---------------------------------------------------------------------------------------------
 		
 		// Get DTO customers list ----------------------------------------------------------------------
@@ -99,7 +99,7 @@ public class CustomerController {
 									@PathVariable( required = false ) String selectedInvoiceNumber ) {
 		
 		// Set useful cookies --------------------------------------------------------------------------
-		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model);
+		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
 		// ---------------------------------------------------------------------------------------------
 
 		

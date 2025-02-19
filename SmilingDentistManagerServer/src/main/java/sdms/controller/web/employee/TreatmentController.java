@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import sdms.dto.TreatmentDTO;
+import sdms.service.EmployeeServiceInterface;
 import sdms.service.TreatmentServiceInterface;
 import sdms.util.WebClientCookieManager;
 
@@ -22,6 +23,9 @@ import sdms.util.WebClientCookieManager;
 public class TreatmentController {
 
 	private final Logger LOGGER = LoggerFactory.getLogger( TreatmentController.class );
+	
+	@Autowired
+	EmployeeServiceInterface employeeService;
 	
 	@Autowired
 	TreatmentServiceInterface service;
@@ -33,7 +37,7 @@ public class TreatmentController {
 	public String getTreatmentPage( HttpServletRequest request, Model model ) {
 		
 		// Set useful cookies --------------------------------------------------------------------------
-		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model);
+		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
 		// ---------------------------------------------------------------------------------------------
 		
 		List<TreatmentDTO> treatments = service.getTreatments().stream()

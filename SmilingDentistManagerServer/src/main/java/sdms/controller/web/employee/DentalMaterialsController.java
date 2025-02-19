@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpServletRequest;
 import sdms.dto.DentalMaterialDTO;
 import sdms.service.DentalMaterialServiceInterface;
+import sdms.service.EmployeeServiceInterface;
 import sdms.util.WebClientCookieManager;
 
 @Controller
@@ -23,6 +24,9 @@ public class DentalMaterialsController {
 	
 	private final Logger LOGGER = LoggerFactory.getLogger( DentalMaterialsController.class );
 
+	@Autowired
+	EmployeeServiceInterface employeeService;
+	
 	@Autowired
 	DentalMaterialServiceInterface service;
 	
@@ -33,7 +37,7 @@ public class DentalMaterialsController {
 	public String mainCalendarPage( HttpServletRequest request, Model model ) {
 		
 		// Set useful cookies --------------------------------------------------------------------------
-		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model);
+		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
 		
 		// ---------------------------------------------------------------------------------------------
 		

@@ -37,7 +37,7 @@ public class PersonalProfileController {
 	public String personalProfilePage( HttpServletRequest request, Model model ) {
 		
 		// Set useful cookies --------------------------------------------------------------------------
-		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model);
+		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
 		// ---------------------------------------------------------------------------------------------
 		
 		// Fetch idUser from cookies -------------------------------------------------------------------

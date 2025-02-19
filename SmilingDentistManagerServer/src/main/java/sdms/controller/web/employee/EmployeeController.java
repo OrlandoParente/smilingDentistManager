@@ -40,7 +40,7 @@ public class EmployeeController {
 									@RequestParam( defaultValue = "" ) String keyword ) {
 		
 		// Set useful cookies --------------------------------------------------------------------------
-		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model);
+		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
 		// ---------------------------------------------------------------------------------------------
 		
 		// Fetch professionalRoles ---------------------------------------------------------------------

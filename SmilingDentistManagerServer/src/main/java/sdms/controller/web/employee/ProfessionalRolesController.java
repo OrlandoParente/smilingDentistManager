@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import sdms.dto.ProfessionalRoleDTO;
+import sdms.service.EmployeeServiceInterface;
 import sdms.service.ProfessionalRoleServiceInterface;
 import sdms.util.WebClientCookieManager;
 
@@ -22,6 +23,9 @@ import sdms.util.WebClientCookieManager;
 public class ProfessionalRolesController {
 	
 	private final Logger LOGGER = LoggerFactory.getLogger( ProfessionalRolesController.class );
+	
+	@Autowired
+	EmployeeServiceInterface employeeService;
 	
 	@Autowired
 	ProfessionalRoleServiceInterface service;
@@ -33,7 +37,7 @@ public class ProfessionalRolesController {
 	public String getProfessionalRolesPage( HttpServletRequest request, Model model ) {
 		
 		// Set useful cookies --------------------------------------------------------------------------
-		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model);
+		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
 		// ---------------------------------------------------------------------------------------------
 		
 		List<ProfessionalRoleDTO> listProfessionalRoleDTO = service.getProfessionalRoles().stream()

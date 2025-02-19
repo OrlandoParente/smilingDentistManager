@@ -138,14 +138,15 @@ public class LoginController {
     		// ---------------------------------------------------------------------------------
         	
 
-    		// save name of the user in the cookies -------------------------------------------
-        	Cookie nameCookie = new Cookie(WebClientCookieManager.NAME, name);
-        	// nameCookie.setHttpOnly(true); // Impedisce l'accesso al token tramite JavaScript
-        	// jwtCookie.setSecure(true); // Imposta solo per HTTPS in ambienti di produzione
-        	// nameCookie.setPath("/"); // Disponibile per tutto il dominio
-        	nameCookie.setMaxAge(cookieExpirationInMinutes * 60); // Imposta una scadenza (ad esempio 1 giorno)
-        	response.addCookie(nameCookie);
-    		// ---------------------------------------------------------------------------------
+        	// Cookies value can't have space, so it's not a good idea save the name in the cookies (it can have a space)
+//    		// save name of the user in the cookies -------------------------------------------
+//        	Cookie nameCookie = new Cookie(WebClientCookieManager.NAME, name);
+//        	// nameCookie.setHttpOnly(true); // Impedisce l'accesso al token tramite JavaScript
+//        	// jwtCookie.setSecure(true); // Imposta solo per HTTPS in ambienti di produzione
+//        	// nameCookie.setPath("/"); // Disponibile per tutto il dominio
+//        	nameCookie.setMaxAge(cookieExpirationInMinutes * 60); // Imposta una scadenza (ad esempio 1 giorno)
+//        	response.addCookie(nameCookie);
+//    		// ---------------------------------------------------------------------------------
         	
     		// save id of the user in the cookies ----------------------------------------------
         	Cookie userIdCookie = new Cookie(WebClientCookieManager.ID_USER, idUser.toString());
