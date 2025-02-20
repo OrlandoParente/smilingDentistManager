@@ -29,7 +29,7 @@
                     <form th:id="'putExpenseForm' + ${ expense.id }" method="PUT" th:action="@{/putExpense}" > 
                         
                     <!-- Common fields of the form dental-material -->
-                    <div th:replace="~{fragments/expenses/common-fields-form-expense
+                    <div th:replace="~{employee/expenses/fragments/common-fields-form-expense
                                       :: common-fields-form-expense( ${ expense } )}">
                     </div>
                     

@@ -30,7 +30,7 @@
                     <form id="addExpenseFormGeneric" method="POST" th:action="@{/postExpense}" > 
                         
                     <!-- Common fields of the form expenses -->
-                    <div th:replace="~{fragments/expenses/common-fields-form-expense
+                    <div th:replace="~{employee/expenses/fragments/common-fields-form-expense
                                       :: common-fields-form-expense( formExpense = null, postExpenseType = 'Generic' )}">
                     </div>
                     

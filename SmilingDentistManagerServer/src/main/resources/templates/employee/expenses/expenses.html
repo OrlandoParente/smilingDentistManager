@@ -20,7 +20,7 @@
         <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4 sdm-work-area-included-nav-scollable pb-2">
             
             <nav class="fixed-top col-md-9 ms-sm-auto col-lg-10 col-12 p-3 bg-white mt-5 mt-md-0" 
-                 th:insert="~{fragments/expenses/expenses-nav :: expenses-nav}" ></nav>
+                 th:insert="~{employee/expenses/fragments/expenses-nav :: expenses-nav}" ></nav>
 
             <!-- here the page content -->
             <div class="row ms-0  col-12 mt-5">
@@ -34,14 +34,14 @@
                     <div class="row">
                         <div class="col-12 col-md-auto d-inline-block mt-2 px-md-1">
                             <!-- <button class="btn btn-primary w-100 " th:text="#{btnAddGenericExpense}"></button> -->
-                            <div th:replace="~{fragments/expenses/add-expense-modal-generic 
+                            <div th:replace="~{employee/expenses/fragments/add-expense-modal-generic 
                                                 :: add-expense-modal-generic}">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-auto d-inline-block mt-2 px-md-1">
                             <!-- <button class="btn btn-primary w-100" th:text="#{btnAddDentalMaterialPurchase}"></button> -->
-                            <div th:replace="~{fragments/expenses/add-expense-modal-dental-material-purchase 
+                            <div th:replace="~{employee/expenses/fragments/add-expense-modal-dental-material-purchase 
                                 :: add-expense-modal-dental-material-purchase}">
                             </div>
                             
@@ -49,14 +49,14 @@
                         
                         <div class="col-12 col-md-auto d-inline-block  mt-2 px-md-1">
                             <!-- <button class="btn btn-primary w-100" th:text="#{btnAddSalaryPayment}"></button> -->
-                            <div th:replace="~{fragments/expenses/add-expense-modal-salary-payment 
+                            <div th:replace="~{employee/expenses/fragments/add-expense-modal-salary-payment 
                                 :: add-expense-modal-salary-payment}">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-auto d-inline-block mt-2  px-md-1" >
                             <!-- <button class="btn btn-primary w-100" th:text="#{btnAddCustomerRefund}"></button> -->
-                            <div th:replace="~{fragments/expenses/add-expense-modal-customer-refund 
+                            <div th:replace="~{employee/expenses/fragments/add-expense-modal-customer-refund 
                                 :: add-expense-modal-customer-refund}">
                             </div>
                         </div>
@@ -196,7 +196,7 @@
                                     </button>
                                     
                                     <div class="d-inline-block"
-                                        th:insert="~{fragments/expenses/put-expense-modal
+                                        th:insert="~{employee/expenses/fragments/put-expense-modal
                                                     :: put-expense-modal( ${expense} )}">
                                     </div> 
                                 </td>
@@ -249,7 +249,7 @@
                                         Delete
                                     </button>
                                     <div class="d-inline-block"
-                                         th:insert="~{fragments/expenses/put-expenses-appointment-modal
+                                         th:insert="~{employee/expenses/fragments/put-expenses-appointment-modal
                                                      :: put-expenses-appointment-modal( ${appointment} )}">
                                     </div>
                                 </td>
@@ -283,7 +283,7 @@
 
 
     <!-- requires -->
-    <div th:replace="~{fragments/expenses/requires-expenses :: requires-expenses}"></div>
+    <div th:replace="~{employee/expenses/fragments/requires-expenses :: requires-expenses}"></div>
 
     <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           
 
