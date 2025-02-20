@@ -23,7 +23,7 @@
             <div class="row">
 
                 <!-- Professional Role NAV -->
-                <nav th:replace="~{fragments/professional-roles/professional-roles-nav :: professional-roles-nav}"></nav>
+                <nav th:replace="~{employee/professional-roles/fragments/professional-roles-nav :: professional-roles-nav}"></nav>
 
                 <!-- List of professional roles -->
                 <div class="sdm-table-scrollable table-responsive mt-3">
@@ -46,7 +46,7 @@
                                         Delete
                                     </button>
                                     <div 
-                                        th:replace="~{fragments/professional-roles/put-professional-role-modal :: put-professional-role-modal(${professionalRole})}">
+                                        th:replace="~{employee/professional-roles/fragments/put-professional-role-modal :: put-professional-role-modal(${professionalRole})}">
                                     </div>  
                                 </td>
                                 <td>
@@ -67,7 +67,7 @@
     </div> <!-- end d-flex -->
 
     <!-- Required for put-professional-roles-modal fragment and delete professional role buttons  -->
-    <div th:replace="~{fragments/professional-roles/requires-professional-roles :: requires-professional-roles}"></div>
+    <div th:replace="~{employee/professional-roles/fragments/requires-professional-roles :: requires-professional-roles}"></div>
 
     <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           
 
