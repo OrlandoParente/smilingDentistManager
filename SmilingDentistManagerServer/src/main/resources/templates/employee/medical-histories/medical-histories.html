@@ -22,7 +22,7 @@
             <!-- here the page content -->
             <div class="row">
 
-                <nav th:insert="~{fragments/medical-histories/medical-histories-nav :: medical-histories-nav}"></nav>
+                <nav th:insert="~{employee/medical-histories/fragments/medical-histories-nav :: medical-histories-nav}"></nav>
 
 
 
@@ -55,7 +55,7 @@
                                                 th:text="#{btnDelete}">
                                             Delete
                                         </button>
-                                        <div class="d-inline-block" th:insert="~{fragments/medical-histories/put-medical-history-modal
+                                        <div class="d-inline-block" th:insert="~{employee/medical-histories/fragments/put-medical-history-modal
                                             :: put-medical-history-modal( ${medicalHistory} )}">
                                         </div>
                                     </td>
@@ -84,7 +84,7 @@
 
 
     <!-- medical histories requires ( for delete, put and add buttons ) -->
-    <div th:replace="~{fragments/medical-histories/requires-medical-histories :: requires-medical-histories}"></div>
+    <div th:replace="~{employee/medical-histories/fragments/requires-medical-histories :: requires-medical-histories}"></div>
 
     <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           
 
