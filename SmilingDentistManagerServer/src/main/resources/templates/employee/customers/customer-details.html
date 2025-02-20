@@ -30,7 +30,7 @@
 
                 <!-- Customer Personal Datas -->
 
-                <nav th:replace="~{fragments/customers/customer-details/customer-details-navs
+                <nav th:replace="~{employee/customers/fragments/customer-details/customer-details-navs
                     :: customer-info( ${joinCustomer.customerDTO} )}">
                 </nav>
 
@@ -79,7 +79,7 @@
 
                 <!-- Medical History -->
 
-                <nav th:replace="~{fragments/customers/customer-details/customer-details-navs
+                <nav th:replace="~{employee/customers/fragments/customer-details/customer-details-navs
                                     :: customer-medical-histories }">
                 </nav> 
 
@@ -116,7 +116,7 @@
                                                 Delete
                                             </button>
                                             <div class="d-inline-block" 
-                                                    th:insert="~{fragments/customers/customer-details/medical-histories/put-has-medical-history-modal
+                                                    th:insert="~{employee/customers/fragments/customer-details/medical-histories/put-has-medical-history-modal
                                                         :: put-has-medical-history-modal( 
                                                             ${ joinMedicalHistory.hasMedicalHistoryDTO.idCustomer },
                                                             ${ joinMedicalHistory}  ) }">
@@ -150,7 +150,7 @@
                 
                 <!-- Appointments -->
 
-                <nav th:replace="~{fragments/customers/customer-details/customer-details-navs
+                <nav th:replace="~{employee/customers/fragments/customer-details/customer-details-navs
                                     :: customer-appointments( ${ joinCustomer.customerDTO.id } ) }">
                 </nav> 
 
@@ -364,7 +364,7 @@
                                         </button>
 
                                         <div class="d-inline-block"
-                                             th:insert="~{fragments/customers/customer-details/appointments/put-appointment-modal
+                                             th:insert="~{employee/customers/fragments/customer-details/appointments/put-appointment-modal
                                                             :: put-appointment-modal( ${ joinCustomer.customerDTO.id }, ${appointment} )}">
                                         </div>
 
@@ -406,7 +406,7 @@
 
 
     <!-- for put, add, delete  buttons -->
-    <div th:replace="~{fragments/customers/customer-details/requires-customer-details 
+    <div th:replace="~{employee/customers/fragments/customer-details/requires-customer-details 
                         :: requires-customer-details}"></div>
 
 

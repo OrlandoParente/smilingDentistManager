@@ -20,7 +20,7 @@
         <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
             
             <!-- Customer nav -->
-            <nav th:replace="~{fragments/customers/customers-nav :: customers-nav}"></nav>
+            <nav th:replace="~{employee/customers/fragments/customers-nav :: customers-nav}"></nav>
 
             <!-- here the page content -->
             <div class="row">
@@ -53,7 +53,7 @@
                                     </button>
 
                                     <div class="d-inline-block"
-                                         th:insert="~{fragments/customers/put-customer-modal :: put-customer-modal( ${ customer } )}">
+                                         th:insert="~{employee/customers/fragments/put-customer-modal :: put-customer-modal( ${ customer } )}">
                                     </div>
 
                                     <a class="btn btn-primary mt-2"
@@ -127,7 +127,7 @@
 
 
     <!-- for put, add, delete, details buttons -->
-    <div th:replace="~{fragments/customers/requires-customers :: requires-customers}"></div>
+    <div th:replace="~{employee/customers/fragments/requires-customers :: requires-customers}"></div>
 
     <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           
 
