@@ -19,7 +19,7 @@
         <!-- Main Content -->
         <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
 
-            <nav th:replace="~{fragments/dental-materials/dental-materials-nav :: dental-materials-nav}" ></nav>
+            <nav th:replace="~{employee/dental-materials/fragments/dental-materials-nav :: dental-materials-nav}" ></nav>
 
             <!-- here the page content -->
             <div class="row">
@@ -48,7 +48,7 @@
                                     </button>
 
                                     <div class="d-inline-block"
-                                         th:insert="~{fragments/dental-materials/put-dental-material-modal
+                                         th:insert="~{employee/dental-materials/fragments/put-dental-material-modal
                                                     :: put-dental-material-modal( ${ dentalMaterial } ) }">
                                         Edit
                                     </div>
@@ -64,13 +64,13 @@
                                     </span>
 
                                     <div class="d-inline-block"
-                                    th:insert="~{fragments/dental-materials/increase-dental-material-quantity-modal
+                                    th:insert="~{employee/dental-materials/fragments/increase-dental-material-quantity-modal
                                                :: increase-dental-material-quantity-modal( ${ dentalMaterial } )}">
                                        -
                                     </div>
                                     
                                     <div class="d-inline-block"
-                                         th:insert="~{fragments/dental-materials/decrease-dental-material-quantity-modal
+                                         th:insert="~{employee/dental-materials/fragments/decrease-dental-material-quantity-modal
                                                     :: decrease-dental-material-quantity-modal( ${ dentalMaterial } )}">
                                             -
                                     </div>
@@ -98,7 +98,7 @@
 
 
     <!-- Requires for add, edit, delete, etc ... buttons  -->
-    <div th:replace="~{fragments/dental-materials/requires-dental-materials :: requires-dental-materials}"></div>
+    <div th:replace="~{employee/dental-materials/fragments/requires-dental-materials :: requires-dental-materials}"></div>
 
     <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           
 
