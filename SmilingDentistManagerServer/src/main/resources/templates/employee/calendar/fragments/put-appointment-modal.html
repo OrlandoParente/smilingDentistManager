@@ -25,7 +25,7 @@
                   <!-- get data for create the appointment -->
                   <form th:id="'putAppointmentForm' + ${joinAppointment.appointmentDTO.id}" method="PUT" th:action="@{/putAppointment}" > 
    
-                    <div th:replace="~{fragments/calendar/common-fields-form-appointment :: common-fields-form-appointment( ${joinAppointment} )}"></div>
+                    <div th:replace="~{employee/calendar/fragments/common-fields-form-appointment :: common-fields-form-appointment( ${joinAppointment} )}"></div>
 
                   </form>
 
