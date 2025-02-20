@@ -22,7 +22,7 @@
             <!-- here the page content -->
             <div class="row">
 
-                <nav th:replace="~{fragments/treatments/treatments-nav :: treatments-nav}"></nav>
+                <nav th:replace="~{employee/treatments/fragments/treatments-nav :: treatments-nav}"></nav>
                 
                  <!-- List of professional roles -->
                  <div class="sdm-table-scrollable table-responsive mt-3">
@@ -46,7 +46,7 @@
                                         Delete
                                     </button>
                                     <div 
-                                        th:replace="~{fragments/treatments/put-treatment-modal :: put-treatment-modal(${treatment})}">
+                                        th:replace="~{employee/treatments/fragments/put-treatment-modal :: put-treatment-modal(${treatment})}">
                                     </div>  
                                 </td>
                                 <td>
@@ -72,7 +72,7 @@
 
 
     <!-- Required for put-treatment-modal fragment and delete treatment buttons  -->
-    <div th:replace="~{fragments/treatments/requires-treatments}"></div>
+    <div th:replace="~{employee/treatments/fragments/requires-treatments}"></div>
 
     <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           
 
