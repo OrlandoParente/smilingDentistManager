@@ -22,7 +22,7 @@
             <!-- here the page content -->
             <div class="row">
 
-                <nav th:replace="~{fragments/calendar/calendar-nav :: calendar-nav( date=${date}, view='day' )}">
+                <nav th:replace="~{employee/calendar/fragments/calendar-nav :: calendar-nav( date=${date}, view='day' )}">
                 </nav>
 
                 <div class="sdm-calendar-table-reponsive table-responsive mt-3">
@@ -52,7 +52,7 @@
                                         
                                     </button>
                                     <div 
-                                        th:replace="~{fragments/calendar/put-appointment-modal :: put-appointment-modal(${appointment})}">
+                                        th:replace="~{employee/calendar/fragments/put-appointment-modal :: put-appointment-modal(${appointment})}">
                                     </div>
                                 </td>
                                 <td>
@@ -88,7 +88,7 @@
 
 
     <!-- Required for put-appointment-modal fragment and delete appointment buttons  -->
-    <div th:replace="~{fragments/calendar/requires-appointment :: requires-appointment}"></div>
+    <div th:replace="~{employee/calendar/fragments/requires-appointment :: requires-appointment}"></div>
 
     <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>
 
