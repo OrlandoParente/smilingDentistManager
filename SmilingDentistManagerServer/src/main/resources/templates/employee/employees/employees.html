@@ -20,7 +20,7 @@
         <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
 
             <!-- Employees nav -->
-            <nav th:replace="~{fragments/employees/employees-nav :: employees-nav}"></nav>
+            <nav th:replace="~{employee/employees/fragments/employees-nav :: employees-nav}"></nav>
           
             <!-- here the page content -->
             <div class="row">
@@ -72,7 +72,7 @@
                                                             : null"
                                             >
 
-                                            <div th:insert="~{fragments/employees/assume-employee-modal 
+                                            <div th:insert="~{employee/employees/fragments/assume-employee-modal 
                                                             :: assume-employee-modal( ${joinEmployee}, ${lastWorkPeriod} )}"
                                                 >
                                             </div>
@@ -86,7 +86,7 @@
                                         th:with="lastWorkPeriod=${ joinEmployee.workPeriodsDTO[ #lists.size( joinEmployee.workPeriodsDTO ) -1 ] }"
                                         
                                     >
-                                        <div th:insert="~{fragments/employees/dismiss-employee-modal 
+                                        <div th:insert="~{employee/employees/fragments/dismiss-employee-modal 
                                             :: dismiss-employee-modal( ${joinEmployee}, ${lastWorkPeriod} )}"
                                             >
                                         </div>
@@ -94,7 +94,7 @@
                                     
 
                                     <div 
-                                        th:replace="~{fragments/employees/put-employee-modal :: put-employee-modal(${joinEmployee})}">
+                                        th:replace="~{employee/employees/fragments/put-employee-modal :: put-employee-modal(${joinEmployee})}">
                                     </div> 
                                 </td>
                                 <td>
@@ -161,10 +161,10 @@
 
 
     <!-- Required for put-employee-modal fragment and delete employee buttons  -->
-    <div th:replace="~{fragments/employees/requires-employees}"></div>
+    <div th:replace="~{employee/employees/fragments/requires-employees}"></div>
 
 
-    <div th:replace="fragments/common-bottom-page :: common-bottom-page"></div>           
+    <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           
 
 </body>
 </html>
