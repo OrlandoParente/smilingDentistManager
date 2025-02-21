@@ -1,5 +1,7 @@
 package sdms.controller.api;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import sdms.service.ProfessionalRoleServiceInterface;
 @RestController
 public class HasProfessionalRoleRestController {
 
+	private final static Logger LOGGER = LoggerFactory.getLogger( HasProfessionalRoleRestController.class );
+	
 	@Autowired
 	private HasProfessionalRoleServiceInterface service;
 	
@@ -31,7 +35,8 @@ public class HasProfessionalRoleRestController {
 	public ResponseEntity<?> postLinkEmployeeToProfessionalRole( @RequestParam long idEmployee, 
 													    		 @RequestParam( defaultValue = "-1")	long idProfessionalRole ) {
 		// check message
-		System.out.println( "HasProfessionalRoleRestController ->  postLinkEmployeeToProfessionalRole " );
+		LOGGER.info( "HasProfessionalRoleRestController ->  postLinkEmployeeToProfessionalRole "
+					+ ", params={idEmployee=" + idEmployee + ", idProfessionalRole=" + idProfessionalRole + " }" );
 		
 		// if idProfessionalRole == -1 Do Nothing 
 		if( idProfessionalRole == -1 )
@@ -68,7 +73,8 @@ public class HasProfessionalRoleRestController {
 	public void deleteLinkEmployeeWithProfessionalRole( @RequestParam("idEmployee") long idEmployee, 
 													    @RequestParam("idProfessionalRole")	long idProfessionalRole ) {
 		// check message
-		System.out.println( "HasProfessionalRoleRestController ->  deleteLinkEmployeeWithProfessionalRole " );
+		LOGGER.info( "HasProfessionalRoleRestController ->  deleteLinkEmployeeWithProfessionalRole " 
+				+ ", params={idEmployee=" + idEmployee + ", idProfessionalRole=" + idProfessionalRole + " }" );
 		
 		service.deleteLinkEmployeeWithProfessionalRole( idEmployee, idProfessionalRole );
 	

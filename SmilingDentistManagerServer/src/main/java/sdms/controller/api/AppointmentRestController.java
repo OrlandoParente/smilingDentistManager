@@ -3,6 +3,8 @@ package sdms.controller.api;
 import java.time.DateTimeException;
 import java.util.List;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,8 @@ import sdms.util.DateAndTimeManager;
 
 @RestController
 public class AppointmentRestController {
-	
+
+	private static final Logger LOGGER = LoggerFactory.getLogger( AppointmentRestController.class );
 
 	@Autowired
 	private AppointmentServiceInterface service;
@@ -52,7 +55,7 @@ public class AppointmentRestController {
 	List<AppointmentDTO> getAppointments() {
 	
 		// Check Message
-		System.out.println("AppointmentRestController -> getAppointment ");
+		LOGGER.info("AppointmentRestController -> getAppointment ");
 				
 		return service.getAppointments().stream().map( app -> modelMapper.map(app, AppointmentDTO.class ) ).toList();
 	}
@@ -61,7 +64,7 @@ public class AppointmentRestController {
 	List<AppointmentDTO> getAppointmentsByCustomerId( @PathVariable long idCustomer ) {
 	
 		// Check Message
-		System.out.println("AppointmentRestController -> getAppointmentsByCustomerId ");
+		LOGGER.info("AppointmentRestController -> getAppointmentsByCustomerId , pathVariables={idCustomer=" + idCustomer + "}");
 		
 				
 		return service.getAppointmentsByCustomerId(idCustomer).stream().map( app -> modelMapper.map(app, AppointmentDTO.class ) ).toList();
@@ -71,7 +74,7 @@ public class AppointmentRestController {
 	List<AppointmentDTO> getAppointmentsByDoctorId( @PathVariable long idDoctor ) {
 	
 		// Check Message
-		System.out.println("AppointmentRestController -> getAppointmentsByDoctorId ");
+		LOGGER.info("AppointmentRestController -> getAppointmentsByDoctorId , pathVariables={idDoctor=" + idDoctor + "}");
 				
 		return service.getAppointmentsByDoctorId(idDoctor).stream().map( app -> modelMapper.map(app, AppointmentDTO.class ) ).toList();
 	}
@@ -81,7 +84,7 @@ public class AppointmentRestController {
 //	public ResponseEntity<?> postAppointment( @RequestBody AppointmentDTO appointmentDTO) {
 //		
 //		// Check Message
-//		System.out.println("AppointmentRestController -> postAppointment (@RequestBody) ");
+//		LOGGER.info("AppointmentRestController -> postAppointment (@RequestBody) ");
 //			
 //		try {
 //			
@@ -110,8 +113,10 @@ public class AppointmentRestController {
 									@RequestParam( defaultValue = "" ) String paymentMethod,
 									@RequestParam( defaultValue = "" ) String notes) {
 									
-		// Check Message (Use the Logger)
-		System.out.println("AppointmentRestController -> postAppointment ((date, time, idCustomer, idDoctor, idTreatment, isDone, billNumber, notes) ) ");
+		// Check Message 
+		LOGGER.info("AppointmentRestController -> postAppointment "
+				+ ", params={date=" + date + ", time=" + time + ", idCustomer=" + idCustomer + ", idDoctor=" + idDoctor + ", idTreatment=" + idTreatment + ""
+				+ ", isDone=" + isDone + ", invoiceNumber=" + invoiceNumber + ", payment=" + payment + ", paymentMethod=" + paymentMethod + ", notes=" + notes + "}");
 		
 		Appointment appointment = new Appointment();
 		
@@ -149,115 +154,12 @@ public class AppointmentRestController {
 
 	}
 	
-	// WE CAN DELETE ALL THIS #############################################################################################################################
-	
-//	// per registrare un appuntamento ancora non svolto con i dati essenziali
-//	@PostMapping( value = "/postAppointment", params = { "date", "time", "idCustomer", "notes"} )
-//	public void postAppointment( @RequestParam("date") String date, @RequestParam("time") String time, 
-//									@RequestParam("idCustomer") long idCustomer, @RequestParam( defaultValue = "" ) String notes) {
-//		// Check Message
-//		System.out.println("AppointmentRestController -> postAppointment (date, time, idCustomer) ");
-//		
-//		Appointment appointment = new Appointment();
-//		appointment.setDate( dateAndTimeManager.parseDate(date) );
-//		appointment.setTime( dateAndTimeManager.parseTime(time) );
-//		appointment.setidCustomer(idCustomer);
-//		appointment.setNotes(notes);
-//		
-//		service.postAppointment(appointment);
-//		
-//	}
-//	
-//	
-//	// per registrare un appuntamento ancora non svolto
-//	@PostMapping( value = "/postAppointment", params = { "date", "time", "idCustomer", "idDoctor", "idTreatment", "notes"} )
-//	public ResponseEntity<?> postAppointment( @RequestParam("date") String date, @RequestParam("time") String time, 
-//									@RequestParam("idCustomer") long idCustomer,@RequestParam("idDoctor")  long idDoctor, 
-//									@RequestParam("idTreatment") long idTreatment, @RequestParam("notes") String notes) {
-//		
-//		// Check Message
-//		System.out.println("AppointmentRestController -> postAppointment (date, time, idCustomer, idDoctor, idTreatment, notes) ");
-//			
-//		Appointment appointment = new Appointment();
-//		
-//		try {
-//			
-//			appointment.setDate( dateAndTimeManager.parseDate(date) );
-//			appointment.setTime( dateAndTimeManager.parseTime(time) );
-//			appointment.setidCustomer(idCustomer);
-//			appointment.setidDoctor(idDoctor);
-//			appointment.setidTreatment(idTreatment);
-//			appointment.setNotes(notes);
-//			
-//			service.postAppointment(appointment);
-//			
-//		} catch( Exception e ) {
-//			// TO EDIT: Return better error response
-//			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Post Appointment Failed");
-//		}
-//		
-//		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(appointment, AppointmentDTO.class) );
-//	}
-//	
-//	
-//	// per registrare un appuntamento già svolto
-//	// cioè registra anche il bill number (numero di fattura)
-//	@PostMapping( value = "/postAppointment", params = { "date", "time", "idCustomer", "idDoctor", 
-//														"idTreatment", "billNumber", "notes"} )
-//	public void postAppointment( @RequestParam("date") String date, @RequestParam("time") String time, 
-//									@RequestParam("idCustomer") long idCustomer,@RequestParam("idDoctor") long idDoctor, 
-//									@RequestParam("idTreatment") long idTreatment, @RequestParam("billNumber") String billNumber,
-//									@RequestParam("notes") String notes) {
-//		
-//		// Check Message
-//		System.out.println("AppointmentRestController -> postAppointment (date, time, idCustomer, idDoctor, idTreatment, billNumber, notes)  ");
-//				
-//		Appointment appointment = new Appointment();
-//		appointment.setDate( dateAndTimeManager.parseDate(date) );
-//		appointment.setTime( dateAndTimeManager.parseTime(time) );
-//		appointment.setidCustomer(idCustomer);
-//		appointment.setidDoctor(idDoctor);
-//		appointment.setidTreatment(idTreatment);
-//		appointment.setNotes(notes);
-//		appointment.setbillNumber(billNumber);
-//		
-//		service.postAppointment(appointment);
-//		
-//	}
-//	
-//	// per registrare un appuntamento potendo scegliere i valori di tutti i campi
-//	@PostMapping( value = "/postAppointment", params = { "date", "time", "idCustomer", "idDoctor", "idTreatment",
-//														"isDone", "billNumber", "notes"} )
-//	public void postAppointment( @RequestParam("date") String date, @RequestParam("time") String time, 
-//									@RequestParam("idCustomer") long idCustomer,@RequestParam("idDoctor")  long idDoctor, 
-//									@RequestParam("idTreatment") long idTreatment, @RequestParam("isDone") int isDone,
-//									@RequestParam("billNumber") String billNumber, @RequestParam("notes") String notes) {
-//		
-//		// Check Message
-//		System.out.println("AppointmentRestController -> postAppointment ((date, time, idCustomer, idDoctor, idTreatment, isDone, billNumber, notes) ) ");
-//		
-//		Appointment appointment = new Appointment();
-//		appointment.setDate( dateAndTimeManager.parseDate(date) );
-//		appointment.setTime( dateAndTimeManager.parseTime(time) );
-//		appointment.setidCustomer(idCustomer);
-//		appointment.setidDoctor(idDoctor);
-//		appointment.setidTreatment(idTreatment);
-//		appointment.setNotes(notes);
-//		appointment.setbillNumber(billNumber);
-//		appointment.setisDone(isDone);
-//		
-//		service.postAppointment(appointment);
-//		
-//	}
-//	
-	// ####################################################################################################################################################
-	
 	// set is_done = 1
 	@PutMapping( value = "/putSetAppointmentDoneById", params = { "id"} )
 	public void putSetAppointmentDoneById( @RequestParam("id") long id ) {
 
 		// Check Message
-		System.out.println("AppointmentRestController -> putSetAppointmentDoneById ");
+		LOGGER.info("AppointmentRestController -> putSetAppointmentDoneById , params={id=" + id + "} ");
 		
 		service.putSetAppointmentDoneById(id);
 	}
@@ -267,7 +169,7 @@ public class AppointmentRestController {
 	public void putUnsetAppointmentDoneById( @RequestParam("id") long id ) {
 
 		// Check Message
-		System.out.println("AppointmentRestController -> putUnsetAppointmentDoneById ");
+		LOGGER.info("AppointmentRestController -> putUnsetAppointmentDoneById , params={id=" + id + "} ");
 				
 		service.putUnsetAppointmentDoneById(id);
 		
@@ -290,9 +192,10 @@ public class AppointmentRestController {
 									// we need a default value which is surely different from a real note
 									@RequestParam( defaultValue = "sdms.nessuna-nota-inviata.ma-proprio-nessuna -1" ) String notes) {
 		
-		// Check Message
-		System.out.println("AppointmentRestController -> postAppointment ");
-
+		// Check Message 
+		LOGGER.info("AppointmentRestController -> putAppointment "
+				+ ", params={id=" + id + ", date=" + date + ", time=" + time + ", idCustomer=" + idCustomer + ", idDoctor=" + idDoctor + ", idTreatment=" + idTreatment + ""
+				+ ", isDone=" + isDone + ", invoiceNumber=" + invoiceNumber + ", payment=" + payment + ", paymentMethod=" + paymentMethod + ", notes=" + notes + "}");
 		
 		Appointment appointment = service.getAppointmentById(id);
 		
@@ -340,6 +243,8 @@ public class AppointmentRestController {
 	public ResponseEntity<?> patchTeeth( @RequestParam long idAppointment, @RequestParam String teeth,	// Mandatory fields 
 										 @RequestParam( defaultValue = "false" ) boolean delete ){
 		
+		LOGGER.info("/patchTeeth , params={idAppointment=" + idAppointment + ", teeth=" + teeth + ", delete=" + delete + "}");
+		
 		try {
 			
 			service.updateTeethList(idAppointment, teeth);
@@ -364,7 +269,7 @@ public class AppointmentRestController {
 	public void putAppointmentBillNumberById( @RequestParam("id") long id, @RequestParam("billNumber") String billNumber ) {
 		
 		// Check Message
-		System.out.println("AppointmentRestController -> putAppointmentBillNumberById ");
+		LOGGER.info("AppointmentRestController -> putAppointmentBillNumberById ");
 		
 		service.putAppointmentBillNumberById(id, billNumber);	
 	}
@@ -374,7 +279,7 @@ public class AppointmentRestController {
 	public void putAppointmentNoteById( @RequestParam("id") long id, @RequestParam("note") String note ) {
 		
 		// Check Message
-		System.out.println("AppointmentRestController -> putAppointmentNoteById ");
+		LOGGER.info("AppointmentRestController -> putAppointmentNoteById ");
 				
 		service.putAppointmentNoteById(id, note);
 	}
@@ -384,7 +289,7 @@ public class AppointmentRestController {
 	public void putAppointmentTreatmentById( @RequestParam("id") long id, @RequestParam("idTreatment") long idTreatment  ) {
 	
 		// Check Message
-		System.out.println("AppointmentRestController -> putAppointmentTreatmentById ");
+		LOGGER.info("AppointmentRestController -> putAppointmentTreatmentById ");
 		
 		service.putAppointmentTreatmentById(id, idTreatment);
 	}
@@ -393,7 +298,7 @@ public class AppointmentRestController {
 	public void deleteAppointmentById( @RequestParam("id") long id ) {
 	
 		// Check Message
-		System.out.println("AppointmentRestController -> deleteAppointmentById ");
+		LOGGER.info("AppointmentRestController -> deleteAppointmentById , params={id=" + id + "}");
 
 		service.deleteAppointmentById(id);
 	}

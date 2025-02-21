@@ -20,12 +20,11 @@ import sdms.dto.MedicalHistoryDTO;
 import sdms.model.MedicalHistory;
 import sdms.service.MedicalHistoryServiceInterface;
 
-//Gestione Medical History (Anamnesi)
+//Management of Medical History ("Anamnesi" in Italian)
 @RestController
 public class MedicalHistoryRestController {
 
-	// <<<<<<<<<<<<<<<-------------------------------- TO EDIT: USE RESPONSE ENTITY
-	// <<<<<<<<<<<<<<<-------------------------------- TO EDIT: USE LOGGER INSTEAD OF SYSTEM.OUT
+	// <<<<<<<<<<<<<<<-------------------------------- TO EDIT: USE RESPONSE ENTITY 
 	private final Logger LOGGER = LoggerFactory.getLogger( MedicalHistoryRestController.class );
 	
 	@Autowired
@@ -41,7 +40,7 @@ public class MedicalHistoryRestController {
 	List<MedicalHistoryDTO> getMedicalsHistoryByCustomer( @PathVariable long idCustomer ) {
 		
 		// check message
-		System.out.println("MedicalHistoryRestController --> getMedicalsHistoryByCustomer ");
+		LOGGER.info("MedicalHistoryRestController --> getMedicalsHistoryByCustomer , pathVariable={ idCustomer=" + idCustomer + " } ");
 		
 		List<MedicalHistory> listMedicalHistory = service.getMedicalsHistoryByCustomerId(idCustomer);
 		
@@ -51,7 +50,7 @@ public class MedicalHistoryRestController {
 	@GetMapping("/getMedicalsHistoryByType/{type}")
 	List<MedicalHistoryDTO> getMedicalsHistoryByCustomer( @PathVariable String type ) {
 		
-		LOGGER.info("/getMedicalsHistoryByType/{type}  type = " + type );
+		LOGGER.info("/getMedicalsHistoryByType/{type} ,  pathVariable={ type = " + type + " }" );
 		
 		List<MedicalHistory> listMedicalHistory = service.getMedicalsHistoryByType(type);
 		
@@ -61,7 +60,7 @@ public class MedicalHistoryRestController {
 	@GetMapping("/getMedicalsHistoryByCategory/{category}")
 	List<MedicalHistoryDTO> getMedicalsHistoryByCategory( @PathVariable String category ) {
 		
-		LOGGER.info("/getMedicalsHistoryByCategory/{category}  category = " + category );
+		LOGGER.info("/getMedicalsHistoryByCategory/{category} , pathVariable={ category = " + category + " } " );
 		
 		List<MedicalHistory> listMedicalHistory = service.getMedicalsHistoryByType(category);
 		
@@ -71,7 +70,7 @@ public class MedicalHistoryRestController {
 	@GetMapping("/getMedicalsHistoryByTypeAndCategory/{type}/{category}")
 	List<MedicalHistoryDTO> getMedicalsHistoryByTypeAndCategory( @PathVariable String type, @PathVariable String category ) {
 		
-		LOGGER.info("/getMedicalsHistoryByType/{type}  type = " + type + "; category=" + category + ";");
+		LOGGER.info("/getMedicalsHistoryByType/{type} , pathVariable={ type = " + type + ", category=" + category + " }");
 		
 		List<MedicalHistory> listMedicalHistory = service.getMedicalsHistoryByType(category);
 		
@@ -82,7 +81,7 @@ public class MedicalHistoryRestController {
 	public MedicalHistoryDTO getMedicalHistoryById( @PathVariable long id ) {
 		
 		// check message
-		System.out.println("MedicalHistoryRestController --> getMedicalsHistoryById ");
+		LOGGER.info("MedicalHistoryRestController --> getMedicalsHistoryById , pathVariable={id=" + id + "}" );
 		
 		return modelMapper.map( service.getMedicalHistoryById(id), MedicalHistoryDTO.class );
 		
@@ -111,7 +110,8 @@ public class MedicalHistoryRestController {
 									 	@RequestParam( defaultValue = "" ) String description ) {
 	
 		// check message
-		System.out.println("MedicalHistoryRestController --> postMedicalHistory ");
+		LOGGER.info("MedicalHistoryRestController --> postMedicalHistory "
+					+ ", params={name=" + name + ",type=" + type + ", category=" + category + ", description=" + description + "} ");
 		
 		// NOTE: Can be a good idea check on UNIQUE Medical History Name? For avoid 2 or more medical histories with the same name?
 		// NOTE: Can be a good idea set type and/ or category as mandatory ?
@@ -134,49 +134,7 @@ public class MedicalHistoryRestController {
 		
 		return ResponseEntity.status( HttpStatus.OK ).body( medicalHistory );
 	}
-	
-	
-//	// type = "generale" o "odontoiatrica" 
-//	@PostMapping( value="/postMedicalHistory", params= {"idCustomer", "type", "name"} )
-//	public void postMedicalHistory(  @RequestParam("idCustomer") long idCustomer, 
-//									 	@RequestParam("type") String type , @RequestParam("name") String name ) {
-//	
-//		// check message
-//		System.out.println("MedicalHistoryRestController --> postMedicalHistory ");
-//		
-//		MedicalHistory medicalHistory = new MedicalHistory();
-//		Customer customer = customerService.getCustomerById(idCustomer);
-//		
-//		medicalHistory.setCustomer( customer );
-//		medicalHistory.setType(type);
-//		medicalHistory.setName(name);
-//		
-//		service.postMedicalHistory(medicalHistory);
-//		
-//	}
-//	
-//
-//	@PostMapping( value="/postMedicalHistory", params= {"idCustomer", "type", "name", "description"} )
-//	public void postMedicalHistory(  @RequestParam("idCustomer") long idCustomer, 
-//									 	@RequestParam("type") String type , @RequestParam("name") String name,
-//									 	@RequestParam("description") String description ) {
-//	
-//		// check message
-//		System.out.println("MedicalHistoryRestController --> postMedicalHistory ");
-//		
-//		MedicalHistory medicalHistory = new MedicalHistory();
-//		Customer customer = customerService.getCustomerById(idCustomer);
-//		
-//		medicalHistory.setCustomer( customer );
-//		medicalHistory.setType(type);
-//		medicalHistory.setName(name);
-//		medicalHistory.setDescription(description);
-//		
-//		service.postMedicalHistory(medicalHistory);
-//	}
-	
-	// --------------------------------------------------------------------------------------------------------------------
-	
+		
 	// PUT ----------------------------------------------------------------------------------------------------------------
 
 	@PutMapping( value="/putMedicalHistory", params= {"id"} )
@@ -187,7 +145,8 @@ public class MedicalHistoryRestController {
 									 	@RequestParam( defaultValue =  "sdms_nothing-nessun-valore-passato") String description ) {
 	
 		// check message
-		System.out.println("MedicalHistoryRestController --> postMedicalHistory ");
+		LOGGER.info("MedicalHistoryRestController --> putMedicalHistory "
+					+ ", params={id=" + id + ",name=" + name + ",type=" + type + ", category=" + category + ", description=" + description + "} ");
 		
 		MedicalHistory medicalHistory = service.getMedicalHistoryById(id);
 		// check medicalHistory 
@@ -210,47 +169,7 @@ public class MedicalHistoryRestController {
 		
 		return ResponseEntity.status( HttpStatus.OK ).body( medicalHistory );
 	}
-
 	
-//	@PutMapping( value="/putMedicalHistory", params= {"idCustomer", "type", "name"} )
-//	public void putMedicalHistory(  @RequestParam("idCustomer") long idCustomer, 
-//									 	@RequestParam("type") String type , @RequestParam("name") String name ) {
-//	
-//		// check message
-//		System.out.println("MedicalHistoryRestController --> postMedicalHistory ");
-//		
-//		
-//		MedicalHistory medicalHistory = new MedicalHistory();
-//		Customer customer = customerService.getCustomerById(idCustomer);
-//		
-//		medicalHistory.setCustomer( customer );
-//		medicalHistory.setType(type);
-//		medicalHistory.setName(name);
-//		
-//		service.postMedicalHistory(medicalHistory);
-//		
-//	}
-//	
-//	@PutMapping( value="/putMedicalHistory", params= {"idCustomer", "type", "name", "description"} )
-//	public void putMedicalHistory(  @RequestParam("idCustomer") long idCustomer, 
-//									 	@RequestParam("type") String type , @RequestParam("name") String name,
-//									 	@RequestParam("description") String description ) {
-//	
-//		// check message
-//		System.out.println("MedicalHistoryRestController --> postMedicalHistory ");
-//		
-//		
-//		MedicalHistory medicalHistory = new MedicalHistory();
-//		Customer customer = customerService.getCustomerById(idCustomer);
-//		
-//		medicalHistory.setCustomer( customer );
-//		medicalHistory.setType(type);
-//		medicalHistory.setName(name);
-//		medicalHistory.setDescription(description);
-//		
-//		service.putMedicalHistory(medicalHistory);
-//	}
-
 	// --------------------------------------------------------------------------------------------------------------------
 	
 	// DELETE --------------------------------------------------------------------------------------------------------------
@@ -259,7 +178,7 @@ public class MedicalHistoryRestController {
 	public void deleteMedicalHistoryById( @RequestParam("id") long id ) {
 
 		// check message
-		System.out.println("MedicalHistoryRestController --> deleteMedicalHistoryById ");
+		LOGGER.info("MedicalHistoryRestController --> deleteMedicalHistoryById , params={id=" + id + "} ");
 		
 		service.deleteMedicalHistoryById(id);
 		

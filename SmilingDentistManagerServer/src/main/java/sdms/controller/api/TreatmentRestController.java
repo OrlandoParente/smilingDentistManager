@@ -3,6 +3,8 @@ package sdms.controller.api;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ import sdms.service.TreatmentServiceInterface;
 @RestController
 public class TreatmentRestController {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger( TreatmentRestController.class );
+	
 	@Autowired
 	private TreatmentServiceInterface service;
 	
@@ -31,7 +35,7 @@ public class TreatmentRestController {
 	public TreatmentDTO getTreatmentById( @PathVariable long id ) {
 		
 		// check message
-		System.out.println("TreatmentRestController -> getTreatmentById ");
+		LOGGER.info("TreatmentRestController -> getTreatmentById , pathVariable={id=" + id + "}");
 		
 		Treatment treatment = service.getTreatmentById(id);
 		
@@ -41,8 +45,8 @@ public class TreatmentRestController {
 	@GetMapping("/getTreatments")
 	public List<TreatmentDTO> getTreatments( ) {
 		
-		// check message
-		System.out.println("TreatmentRestController -> getTreatments ");
+		// Check message
+		LOGGER.info("TreatmentRestController -> getTreatments ");
 		
 		List<Treatment> treatments = service.getTreatments();
 		
@@ -56,20 +60,20 @@ public class TreatmentRestController {
 	@GetMapping("/getTreatmentsById/{idCustomer}")
 	public TreatmentDTO getTreatmentsByCustomerId( @PathVariable long idCustomer ) {
 		
-		// check message
-		System.out.println("TreatmentRestController -> getTreatmentsByCustomerId ");
+		// Check message
+		LOGGER.info("TreatmentRestController -> getTreatmentsByCustomerId , pathVariable={idCustomer=" + idCustomer + "}");
 		
 		Treatment treatment = service.getTreatmentById(idCustomer);
 		
 		return modelMapper.map(treatment, TreatmentDTO.class);
 	}
 	
-	
+	// <----------- TO EDIT : Should be invoiceNumber instead of billNumber
 	@GetMapping("/getTreatmentsByBillNumber/{billNumber}")
 	public List<TreatmentDTO> getTreatmentsByBillNumber( @PathVariable String billNumber ) {
 		
 		// check message
-		System.out.println("TreatmentRestController -> getTreatmentsByBillNumber ");
+		LOGGER.info("TreatmentRestController -> getTreatmentsByBillNumber , pathVariable={billNumber=" + billNumber + "}");
 		
 		List<Treatment> treatments = service.getTreatmentsByBillNumber(billNumber);
 		
@@ -81,8 +85,8 @@ public class TreatmentRestController {
 	@PostMapping( value="/postTreatment", params = {"name","cost"} )
 	public void postTreatment( @RequestParam("name") String name, @RequestParam("cost") float cost ) {
 		
-		// check message
-		System.out.println("TreatmentRestController -> postTreatment");
+		// Check message
+		LOGGER.info("TreatmentRestController -> postTreatment, params={ name=" + name +", cost=" + cost + " }");
 		
 		Treatment treatment = new Treatment();
 		treatment.setName(name);
@@ -96,9 +100,9 @@ public class TreatmentRestController {
 	public void postTreatment( @RequestParam("name") String name, @RequestParam("description") String description,
 								  @RequestParam("cost") float cost ) {
 		
-		// check message
-		System.out.println("TreatmentRestController -> postTreatment");
-		
+		// Check message
+		LOGGER.info("TreatmentRestController -> postTreatment, params={ name=" + name +", description=" + description + ", cost=" + cost + " }");
+				
 		Treatment treatment = new Treatment();
 		treatment.setName(name);
 		treatment.setCost(cost);
@@ -114,8 +118,8 @@ public class TreatmentRestController {
 	public ResponseEntity<?> putTreatment( @RequestParam("id") long id, @RequestParam("name") String name, 
 								@RequestParam("description") String description,  @RequestParam("cost") float cost ) {
 		
-		// check message
-		System.out.println("TreatmentRestController -> postTreatment");
+		// Check message
+		LOGGER.info("TreatmentRestController -> putTreatment, params={id=" + id + ",name=" + name + ",description=" + description + ",cost=" + cost + "}");
 		
 		
 		Treatment treatment = service.getTreatmentById(id);
@@ -139,7 +143,7 @@ public class TreatmentRestController {
 	public void deleteTreatmentById( @RequestParam("id") long id ) {
 
 		// check message
-		System.out.println("TreatmentRestController -> deleteTreatmentById");
+		LOGGER.info("TreatmentRestController -> deleteTreatmentById, params={id=" + id + "}");
 		
 		service.deleteTreatmentById(id);
 		

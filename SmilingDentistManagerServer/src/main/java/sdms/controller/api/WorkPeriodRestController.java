@@ -27,6 +27,8 @@ import sdms.util.DateAndTimeManager;
 @RestController
 public class WorkPeriodRestController {
 
+	private final Logger LOGGER = LoggerFactory.getLogger(  WorkPeriodRestController.class );
+	
 	@Autowired
 	private WorkPeriodServiceInterface service;
 	
@@ -38,8 +40,6 @@ public class WorkPeriodRestController {
 	
 	@Autowired
 	private DateAndTimeManager dateAndTimeManager;
-	
-	private final Logger LOGGER = LoggerFactory.getLogger(  WorkPeriodRestController.class );
 	
 	// GET REQUEST -------------------------------------------------------------------------------------------------
 	
@@ -111,7 +111,7 @@ public class WorkPeriodRestController {
 		}
 		
 		
-		// Creato entity to save
+		// Create entity to save
 		WorkPeriod workPeriod = new WorkPeriod();
 		
 		workPeriod.setEmployee( employee );
@@ -126,80 +126,6 @@ public class WorkPeriodRestController {
 		return ResponseEntity.status( HttpStatus.OK ).body( workPeriod );
 	}
 	
-//	
-//	// Without end period date
-//	@PostMapping( value = "/postWorkPeriod", params = {"idEmployee","startDate", "workingAgreement", "notes"} )
-//	public ResponseEntity<?> postWorkPeriod( @RequestParam long idEmployee, @RequestParam String startDate, 
-//											@RequestParam String workingAgreement, @RequestParam String notes ) {
-//		
-//		// Searches for employee to associate the work period
-//		Employee employee = employeeService.getEmployeeById(idEmployee);
-//		
-//		if( employee == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Employee not found");
-//		
-//		
-//		LocalDate ldStartDate = null;
-//		
-//		try {
-//			// Convert date from string to LocalDate 
-//			ldStartDate = dateAndTimeManager.parseDate(startDate);
-//		} catch (/*DateTimeParseException */ Exception e ) {
-//			
-//			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );
-//		}
-//		
-//		
-//		// Creato entity to save
-//		WorkPeriod workPeriod = new WorkPeriod();
-//		
-//		workPeriod.setEmployee( employee );
-//		workPeriod.setStartDate( ldStartDate );
-//		workPeriod.setWorkingAgreement(workingAgreement);
-//		workPeriod.setNotes(notes);
-//		
-//		service.postWorkPeriod(workPeriod);
-//		
-//		return ResponseEntity.status( HttpStatus.OK ).body( workPeriod );
-//	}
-//	
-//	// with end period date
-//	@PostMapping( value = "/postWorkPeriod", params = {"idEmployee","startDate", "endDate", "workingAgreement", "notes"} )
-//	public ResponseEntity<?> postWorkPeriod( @RequestParam long idEmployee, @RequestParam String startDate, @RequestParam String endDate, 
-//											@RequestParam String workingAgreement, @RequestParam String notes ) {
-//		
-//		// Searches for employee to associate the work period
-//		Employee employee = employeeService.getEmployeeById(idEmployee);
-//		
-//		if( employee == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Employee not found");
-//		
-//		
-//		LocalDate ldStartDate = null;
-//		LocalDate ldEndDate = null;
-//		
-//		try {
-//			// Convert date from string to LocalDate 
-//			ldStartDate = dateAndTimeManager.parseDate(startDate);
-//			ldEndDate = dateAndTimeManager.parseDate(endDate);
-//		} catch (/*DateTimeParseException */ Exception e ) {
-//			
-//			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );
-//		}
-//		
-//		
-//		// Creato entity to save
-//		WorkPeriod workPeriod = new WorkPeriod();
-//		
-//		workPeriod.setEmployee( employee );
-//		workPeriod.setStartDate( ldStartDate );
-//		workPeriod.setEndDate(ldEndDate);
-//		workPeriod.setWorkingAgreement(workingAgreement);
-//		workPeriod.setNotes(notes);
-//		
-//		service.postWorkPeriod(workPeriod);
-//		
-//		return ResponseEntity.status( HttpStatus.OK ).body( workPeriod );
-//	}
-	
 	// -------------------------------------------------------------------------------------------------------------
 
 
@@ -213,7 +139,7 @@ public class WorkPeriodRestController {
 												@RequestParam( defaultValue = "sdm-none-nessuna" ) String workingAgreement, 
 												@RequestParam( defaultValue = "sdm-none-nessuna" ) String notes ) {
 		
-		// I use "sdm-none-nessuna" cause i need a string that the user don't use as imput 
+		// I use "sdm-none-nessuna" cause i need a string that the user don't use as input 
 		
 		LOGGER.info("/putWorkPeriod -> params= id:" + id + ", idEmployee:" + idEmployee + ", startDate:" + startDate + ", endDate:" + endDate
 						+ ", workingAgreement:" + workingAgreement + ", notes:" + notes);
@@ -276,87 +202,14 @@ public class WorkPeriodRestController {
 		return ResponseEntity.status( HttpStatus.OK ).body( workPeriod );
 	}	
 	
-	
-//	// Without end period date
-//	@PutMapping( value = "/putWorkPeriod", params = {"id", "idEmployee","startDate", "workingAgreement", "notes"} )
-//	public ResponseEntity<?> postWorkPeriod( @RequestParam long id, @RequestParam long idEmployee, @RequestParam String startDate, 
-//											@RequestParam String workingAgreement, @RequestParam String notes ) {
-//		
-//		// Searches for workPeriod to update
-//		WorkPeriod workPeriod = service.getWorkPeriodById(id);
-//		if( workPeriod == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Work period to update not found");
-//		
-//		// Searches for employee to associate the work period
-//		Employee employee = employeeService.getEmployeeById(idEmployee);
-//		if( employee == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Employee not found");
-//		
-//		
-//		LocalDate ldStartDate = null;
-//		
-//		try {
-//			// Convert date from string to LocalDate 
-//			ldStartDate = dateAndTimeManager.parseDate(startDate);
-//		} catch (/*DateTimeParseException */ Exception e ) {
-//			
-//			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );
-//		}
-//		
-//		
-//		// Update entity field
-//		workPeriod.setEmployee( employee );
-//		workPeriod.setStartDate( ldStartDate );
-//		workPeriod.setWorkingAgreement(workingAgreement);
-//		workPeriod.setNotes(notes);
-//		
-//		service.putWorkPeriod(workPeriod);
-//		
-//		return ResponseEntity.status( HttpStatus.OK ).body( workPeriod );
-//	}
-//	
-//	// with end period date
-//	@PutMapping( value = "/putWorkPeriod", params = {"id", "idEmployee","startDate", "endDate", "workingAgreement", "notes"} )
-//	public ResponseEntity<?> postWorkPeriod( @RequestParam long id, @RequestParam long idEmployee, @RequestParam String startDate, 
-//											 @RequestParam String endDate, @RequestParam String workingAgreement, @RequestParam String notes ) {
-//		
-//		// Searches for workPeriod to update
-//		WorkPeriod workPeriod = service.getWorkPeriodById(id);
-//		if( workPeriod == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Work period to update not found");
-//		
-//		// Searches for employee to associate the work period
-//		Employee employee = employeeService.getEmployeeById(idEmployee);
-//		if( employee == null )	return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Employee not found");
-//		
-//		
-//		LocalDate ldStartDate = null;
-//		LocalDate ldEndDate = null;
-//		
-//		try {
-//			// Convert date from string to LocalDate 
-//			ldStartDate = dateAndTimeManager.parseDate(startDate);
-//			ldEndDate = dateAndTimeManager.parseDate(endDate);
-//		} catch (/*DateTimeParseException */ Exception e ) {
-//			
-//			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );
-//		}
-//		
-//		
-//		// Update entity field
-//		workPeriod.setEmployee( employee );
-//		workPeriod.setStartDate( ldStartDate );
-//		workPeriod.setEndDate(ldEndDate);
-//		workPeriod.setWorkingAgreement(workingAgreement);
-//		workPeriod.setNotes(notes);
-//		
-//		service.putWorkPeriod(workPeriod);
-//		
-//		return ResponseEntity.status( HttpStatus.OK ).body( workPeriod );
-//	}	
 	// -------------------------------------------------------------------------------------------------------------
 
 	// DELETE REQUEST ----------------------------------------------------------------------------------------------
 	
 	@DeleteMapping( value = "/deleteWorkPeriod", params = {"id"} )
 	public ResponseEntity<?> deleteWorkPeriodById( @RequestParam long id ){
+		
+		LOGGER.info("/deleteWorkPeriod -> params={ id=" + id + " }");
 		
 		try {
 			service.deleteWorkPeriodById(id);
