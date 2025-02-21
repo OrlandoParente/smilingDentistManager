@@ -55,31 +55,57 @@ public class ExpenseRestController {
 	
 	// READ ------------------------------------------------------
 	@GetMapping("/getExpenseById/{id}")
-	public ExpenseDTO getExpenseById( @PathVariable long id ) {
+	public ResponseEntity<?> getExpenseById( @PathVariable long id ) {
 		
 		Expense expense = service.getExpenseById(id);
+		
+		if( expense == null )
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Expense with id =" + id + "not found in the database");
+			
 		ExpenseDTO expenseDTO = modelMapper.map(expense, ExpenseDTO.class);
 		
-		return expenseDTO;
+		
+		return ResponseEntity.status( HttpStatus.OK ).body( expenseDTO );
 	}
 	
 	@GetMapping("/getExpenses")
-	public List<ExpenseDTO> getExpenses() {
+	public ResponseEntity<?> getExpenses() {
 		
-		List<Expense> expenses = service.getExpenses();
-		List<ExpenseDTO> expenseDTOs = expenses.stream().map( e -> modelMapper.map(e, ExpenseDTO.class) ).toList();
-	
-		return expenseDTOs;
+		List<Expense> expenses = null;
+		List<ExpenseDTO> expenseDTOs = null;
+		
+		try {
+			expenses = service.getExpenses();
+			expenseDTOs = expenses.stream().map( e -> modelMapper.map(e, ExpenseDTO.class) ).toList();
+			
+		} catch ( Exception e ) {
+			
+			System.err.println( "/getExpenses -> ERROR: " + e.getMessage() );
+	        e.printStackTrace(); 
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		return ResponseEntity.status( HttpStatus.OK ).body( expenseDTOs );
 	}
+	// -----------------------------------------------------------
 	
 	// CREATE ----------------------------------------------------
 
 	// Insert a "general" expense object
 	@PostMapping("/postExpense")
-	public void postExpense( @RequestBody ExpenseDTO expenseDTO ) {
+	public ResponseEntity<?> postExpense( @RequestBody ExpenseDTO expenseDTO ) {
 		
-		Expense expense = modelMapper.map(expenseDTO, Expense.class);
-		service.postExpense(expense);
+		try {
+			Expense expense = modelMapper.map(expenseDTO, Expense.class);
+			service.postExpense(expense);
+		} catch( Exception e ) {
+	        
+			System.err.println( "/postExpense -> ERROR: " + e.getMessage() );
+	        e.printStackTrace(); 
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		return ResponseEntity.status( HttpStatus.OK ).body( expenseDTO );
 	}
 	
 	@PostMapping(value= {"/postExpense"}, params= {"date", "amount"})
@@ -285,110 +311,50 @@ public class ExpenseRestController {
 		return ResponseEntity.status(HttpStatus.OK).body( modelMapper.map(expense, ExpenseDTO.class) );
 	}
 	
-	// <<<<<<<<<<<<<<<<<<------------ I NEED THIS ?
-	// Update the refund to a customer
-//	@PutMapping("/putCustomerRefund")
-//	public ResponseEntity<?> putCustomerRefund( @RequestParam("id") long id,
-//			@RequestParam("idCustomer") long idCustomer, @RequestParam("date") String date, 
-//			@RequestParam("description") String description, @RequestParam("amount") double amount, 
-//			@RequestParam("tag") String tag) {
-//	
-//		Expense expense = service.getExpenseById(id);
-//		if( expense == null )
-//			return ResponseEntity.status( HttpStatus.NOT_FOUND )
-//					.body("404 NOT FOUND: Expense  with id " + id + ", to update not found in the database");
-//		
-//		Customer customer = customerService.getCustomerById(idCustomer);
-//		if( customer == null )
-//			return ResponseEntity.status( HttpStatus.NOT_FOUND )
-//					.body("404 NOT FOUND: Customer with id " + idCustomer + " not found in the database");
-//		
-//		expense.setCustomer(customer);
-//		expense.setDate( dateAndTimeManager.parseDate(date) );
-//		expense.setDescription(description);
-//		expense.setAmount(amount);
-//		expense.setTag(tag);
-//		
-//		service.putExpense(expense);
-//		
-//		return ResponseEntity.status(HttpStatus.OK).body(expense);
-//		
-//	}
-	
-	// <------------------------------ I NEED THIS?
-	// Update the expense regards purchase of dental materials
-//	@PutMapping("/putDentalMaterialPurchase")
-//	public ResponseEntity<?> putDentalMaterialPurchase( @RequestParam("id") long id,
-//			@RequestParam("idDentalMaterial") long idDentalMaterial, @RequestParam("date") String date, 
-//			@RequestParam("description") String description, @RequestParam("amount") double amount, 
-//			@RequestParam("tag") String tag) {
-//		
-//		Expense expense = service.getExpenseById(id);
-//		if( expense == null )
-//			return ResponseEntity.status( HttpStatus.NOT_FOUND )
-//					.body("404 NOT FOUND: Expense  with id " + id + ", to update not found in the database");
-//		
-//		DentalMaterial dentalMaterial = dentalMaterialService.getDentalMaterialById(idDentalMaterial);
-//		if( dentalMaterial == null )
-//			return ResponseEntity.status( HttpStatus.NOT_FOUND )
-//					.body("404 NOT FOUND: Dental Material with id " + idDentalMaterial + " not found in the database");
-//		
-//		expense.setDentalMaterial(dentalMaterial);
-//		expense.setDate( dateAndTimeManager.parseDate(date) );
-//		expense.setDescription(description);
-//		expense.setAmount(amount);
-//		expense.setTag(tag);
-//		
-//		service.postExpense(expense);
-//		
-//		return ResponseEntity.status(HttpStatus.OK).body(expense);
-//		
-//	}
-	
-	// <----------------- I NEED THIS ?
-	// Insert the salary payment of an employee
-//	@PutMapping("/putSalaryPayment")
-//	public ResponseEntity<?> putSalaryPayment( @RequestParam("id") long id,
-//			@RequestParam("idEmployee") long idEmployee, @RequestParam("date") String date, 
-//			@RequestParam("description") String description, @RequestParam("amount") double amount, 
-//			@RequestParam("tag") String tag) {
-//		
-//		Expense expense = service.getExpenseById(id);
-//		if( expense == null )
-//			return ResponseEntity.status( HttpStatus.NOT_FOUND )
-//					.body("404 NOT FOUND: Expense  with id " + id + ", to update not found in the database");
-//		
-//		Employee employee = employeeService.getEmployeeById(idEmployee);
-//		if( employee == null )
-//			return ResponseEntity.status( HttpStatus.NOT_FOUND )
-//					.body("404 NOT FOUND: Customer with id " + idEmployee + " not found in the database");
-//		
-//		expense.setEmployee(employee);
-//		expense.setDate( dateAndTimeManager.parseDate(date) );
-//		expense.setDescription(description);
-//		expense.setAmount(amount);
-//		expense.setTag(tag);
-//		
-//		service.postExpense(expense);
-//		
-//		return ResponseEntity.status(HttpStatus.OK).body(expense);
-//		
-//	}
-	
 	// Update a "general" expense object
 	@PutMapping("/putExpense")
-	public void putExpense( @RequestBody ExpenseDTO expenseDTO ) {
+	public ResponseEntity<?> putExpense( @RequestBody ExpenseDTO expenseDTO ) {
 		
-		Expense expense = modelMapper.map(expenseDTO, Expense.class);
-		service.putExpense(expense);
+		try {
+			Expense expense = modelMapper.map(expenseDTO, Expense.class);
+			service.putExpense(expense);
+			
+		} catch( Exception e ) {
+	        
+			System.err.println( "/putExpense -> ERROR: " + e.getMessage() );
+	        e.printStackTrace(); 
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		return ResponseEntity.status( HttpStatus.OK ).body( expenseDTO );
 	}
+	
+	// -----------------------------------------------------------
 	
 	// DELETE ----------------------------------------------------
 	@DeleteMapping("/deleteExpense")
-	public void deleteExpenseById( @RequestParam("id") long id ) {
+	public ResponseEntity<?> deleteExpenseById( @RequestParam("id") long id ) {
 		
-		service.deleteExpense(id);
+		// This is for return the deleted object 
+		Expense expense = service.getExpenseById(id);
+		ExpenseDTO expenseDTO = null;
+		
+		// If expense not found return 404 not found
+		if( expense == null )
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "Error: expense with id=" + id + " not found in the database" );
+		
+		try {
+			expenseDTO = modelMapper.map( expense , ExpenseDTO.class );
+			service.deleteExpense(id);
+		} catch( Exception e ) {
+	        
+			System.err.println( "/deleteExpense -> ERROR: " + e.getMessage() );
+	        e.printStackTrace(); 
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		return ResponseEntity.status( HttpStatus.OK ).body( expenseDTO );
 	}
+	// -----------------------------------------------------------
 	
-
 }
