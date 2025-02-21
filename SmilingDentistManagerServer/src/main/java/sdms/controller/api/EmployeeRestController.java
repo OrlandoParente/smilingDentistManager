@@ -46,13 +46,15 @@ public class EmployeeRestController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 	
+    // GET
+    
 	@GetMapping("/getMaxIdEmployee")
 	public long getMaxIdEmployee() {
 		
 		long maxId = service.getLastCustomerId();
 		
-		// Messaggio di controllo
-		System.out.println("EmployeeRestController --> getMaxIdEmployee -> " + maxId);
+		// Check message
+		LOGGER.info("EmployeeRestController --> getMaxIdEmployee -> maxId=" + maxId);
 
 		return maxId;
 	}
@@ -60,8 +62,8 @@ public class EmployeeRestController {
 	@GetMapping("/getEmployees")
 	public List<EmployeeDTO> getEmployees(){
 		
-		// Messaggio di controllo
-		System.out.println("EmployeeRestController --> getEmployees ");
+		// Check message
+		LOGGER.info("EmployeeRestController --> getEmployees ");
 		
 		List<Employee> employees = service.getEmployees();
 		
@@ -72,8 +74,8 @@ public class EmployeeRestController {
 	@GetMapping("/getEmployeesByName/{name}")
 	public List<EmployeeDTO> getEmployeesByName( @PathVariable String name ){
 		
-		// Messaggio di controllo
-		System.out.println("EmployeeRestController --> getEmployeesByName ");
+		// Check message
+		LOGGER.info("EmployeeRestController --> getEmployeesByName, pathVariable={name=" + name + "}");
 		
 		List<Employee> employees = service.getEmployeesByName(name);
 		
@@ -85,8 +87,8 @@ public class EmployeeRestController {
 	@GetMapping("/getEmployeesBySurname/{surname}")
 	public List<EmployeeDTO> getEmployeesBySurname( @PathVariable String surname ){
 		
-		// Messaggio di controllo
-		System.out.println("EmployeeRestController --> getEmployeesBySurname ");
+		// Check message
+		LOGGER.info("EmployeeRestController --> getEmployeesBySurname -> pathVariable={surname=" + surname + "}");
 		
 		List<Employee> employees = service.getEmployeesBySurname(surname);
 		
@@ -98,22 +100,20 @@ public class EmployeeRestController {
 	@GetMapping("/getEmployeesByProfessionalRoleName/{professionalRoleName}")
 	public List<EmployeeDTO> getEmployeesByProfessionalRoleName( @PathVariable("professionalRoleName") String professionalRoleName){
 		
-		// Messaggio di controllo
-		System.out.println("EmployeeRestController --> getEmployeesByProfessionalRoleName -> " + professionalRoleName );
+		// Check message
+		LOGGER.info("EmployeeRestController --> getEmployeesByProfessionalRoleName -> pathVariable={ professionalRoleName="+ professionalRoleName + " }" );
 		
 		List<Employee> employees = service.getEmployeesByProfessionalRoleName(professionalRoleName);
 		return employees.stream().map( e -> modelMapper.map( e, EmployeeDTO.class) ).toList();
 		
 	}
 
-
-	
 	
 	@GetMapping("/getEmployeesByPartialKeyWordOverAllFields/{keyWord}")
 	public List<EmployeeDTO> getEmployeesByPartialKeyWordOverAllFields( @PathVariable String keyWord ){
 		
-		// Messaggio di controllo
-		System.out.println("EmployeeRestController --> getEmployeesByPartialKeyWordOverAllFields -> key_word -> " + keyWord );
+		// Check message
+		LOGGER.info("EmployeeRestController --> getEmployeesByPartialKeyWordOverAllFields -> pathVariables={ keyWord=" + keyWord + " }");
 		
 		List<Employee> employees = service.getEmployeesByPartialKeyWordOverAllFields(keyWord);
 		return employees.stream().map( e -> modelMapper.map( e, EmployeeDTO.class ) ).toList();
@@ -123,9 +123,8 @@ public class EmployeeRestController {
 	@GetMapping("/getEmployeeById/{id}")
 	public ResponseEntity<?> getEmployeeById( @PathVariable long id ) {
 		
-		
-		// Messaggio di controllo
-		System.out.println("EmployeeRestController --> getEmployeeById ");
+		// Check message
+		LOGGER.info("EmployeeRestController --> getEmployeeById -> pathVariables={ id=" + id + "}");
 		
 		Employee employee = service.getEmployeeById(id);
 		
@@ -137,6 +136,7 @@ public class EmployeeRestController {
 		return ResponseEntity.status( HttpStatus.OK ).body( employeeDTO );
 	}
 	
+	// POST
 	
 	@PostMapping( value="/postEmployee", params = {"name","surname","eMail"} )
 	public ResponseEntity<?>  postEmployee( @RequestParam String name, @RequestParam String surname ,@RequestParam String eMail,
@@ -150,8 +150,12 @@ public class EmployeeRestController {
 								@RequestParam(defaultValue = "en") String language,
 								@RequestParam(defaultValue = "") String startWorkDate
 	 ) {
-		// Messaggio di controllo
-		System.out.println("EmployeeRestController --> postEmployee ");
+		
+		// Check message 
+		LOGGER.info("EmployeeRestController --> postEmployee -> params={ name=" + name + ", surname=" + surname + " ,eMail=" + eMail 
+					+ ", title=" + title + ", birthDate=" + birthDate + ",phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 
+					+ ", salary=" + salary + ", permission=" + permission + ",password=*Better not print this*,language=" + language 
+					+ ",startWorkDate=" + startWorkDate + " }");
 		
 		
 		Employee employee = new Employee();
@@ -198,47 +202,7 @@ public class EmployeeRestController {
 		return ResponseEntity.status( HttpStatus.OK ).body( employee );		
 	}
 	
-//	@PostMapping( value="/postEmployee", params = {"name","surname","title", "phoneNumber"} )
-//	public void postEmployee( @RequestParam("name") String name, @RequestParam("surname") String surname ,
-//								@RequestParam("title") String title, @RequestParam("phoneNumber") String phoneNumber) {
-//
-//		// Messaggio di controllo
-//		System.out.println("EmployeeRestController --> postEmployee ");
-//		
-//		Employee employee = new Employee();
-//		employee.setName(name);
-//		employee.setSurname(surname);
-//		employee.setTitle(title);
-//		employee.setPhoneNumber(phoneNumber);
-//		
-//		service.postEmployee(employee);
-//		
-//	}
-//	
-//
-//	@PostMapping( value="/postEmployee", params = {"name","surname","title", "birthDate","phoneNumber", "phoneNumber2","eMail"} )
-//	public void postEmployee( @RequestParam("name") String name, @RequestParam("surname") String surname ,
-//							@RequestParam("title") String title, @RequestParam("birthDate") String birthDate,
-//							@RequestParam("phoneNumber") String phoneNumber, @RequestParam("phoneNumber2") String phoneNumber2,
-//							@RequestParam("eMail") String eMail ) {
-//
-//		// Messaggio di controllo
-//		System.out.println("EmployeeRestController --> postEmployee ");
-//		
-//		Employee employee = new Employee();
-//		employee.setName(name);
-//		employee.setSurname(surname);
-//		employee.setTitle(title);
-//		employee.setPhoneNumber(phoneNumber);
-//		employee.setPhoneNumber2(phoneNumber2);
-//		employee.seteMail(eMail);
-//		employee.setBirthDate( dateAndTimeManager.parseDate(birthDate) );
-//		
-//		service.postEmployee(employee);
-//		
-//	}
-//	
-//	
+	// PUT
 	
 	@PutMapping( value="/putEmployee", params = {"id"} )
 	public ResponseEntity<?>  putEmployee( @RequestParam Long id,
@@ -254,8 +218,11 @@ public class EmployeeRestController {
 			@RequestParam(defaultValue = "") String password,
 			@RequestParam(defaultValue = "") String startWorkDate
 	) {
-		// Messaggio di controllo
-		System.out.println("EmployeeRestController --> putEmployee ");
+
+		// Check message
+		LOGGER.info("EmployeeRestController --> putEmployee -> params={ id=" + id + ",name=" + name + ", surname=" + surname + " ,eMail=" + eMail 
+					+ ", title=" + title + ", birthDate=" + birthDate + ",phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 
+					+ ", salary=" + salary + ", permission=" + permission + ",password=*Better not print this*, startWorkDate=" + startWorkDate + " }");
 		
 		
 		Employee employee = service.getEmployeeById(id);
@@ -289,37 +256,13 @@ public class EmployeeRestController {
 		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(employee, EmployeeDTO.class) );		
 	}
 	
-//	@PutMapping( value="/putEmployee", params = {"id", "name","surname","title", "birthDate","phoneNumber", "phoneNumber2","eMail"} )
-//	public ResponseEntity<?> postEmployee( @RequestParam("id") long id, @RequestParam("name") String name, 
-//							@RequestParam("surname") String surname , @RequestParam("title") String title, 
-//							@RequestParam("birthDate") String birthDate, @RequestParam("phoneNumber") String phoneNumber, 
-//							@RequestParam("phoneNumber2") String phoneNumber2, @RequestParam("eMail") String eMail ) {
-//
-//		// Messaggio di controllo
-//		System.out.println("EmployeeRestController --> putEmployee ");
-//		
-//		Employee employee = service.getEmployeeById(id);
-//		
-//		if( employee == null )
-//			return ResponseEntity.status( HttpStatus.NOT_FOUND ).build();
-//		
-//		employee.setName(name);
-//		employee.setSurname(surname);
-//		employee.setTitle(title);
-//		employee.setPhoneNumber(phoneNumber);
-//		employee.setPhoneNumber2(phoneNumber2);
-//		employee.seteMail(eMail);
-//		employee.setBirthDate( dateAndTimeManager.parseDate(birthDate) );
-//		
-//		service.putEmployee(employee);
-//		
-//		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(employee, EmployeeDTO.class) );
-//		
-//		
-//	}
+	// PATCH
 	
 	@PatchMapping(value= {"/employeeChangePassword"}, params= {"id","currentPassword", "newPassword"})
 	public ResponseEntity<?> patchPassword( @RequestParam long id, @RequestParam String currentPassword, @RequestParam String newPassword ) {
+		
+		// Check messages
+		LOGGER.info("/employeeChangePassword -> params={id=" + id + ", currentPassword=" + currentPassword + ", newPassword=" + newPassword + "}");
 		
 		Employee employee = service.getEmployeeById(id);
 		
@@ -327,7 +270,7 @@ public class EmployeeRestController {
 		if( employee == null )
 			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Error, employee not found in the database");
 		
-		// Check current passsword
+		// Check current password 
 		if( ! passwordEncoder.matches(currentPassword, employee.getPassword()) )
 			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Error, wrong password");	// 400 
 		
@@ -345,12 +288,12 @@ public class EmployeeRestController {
 		return ResponseEntity.status( HttpStatus.OK ).body(employee);
 	}
 	
+	// DELETE
+	
 	@DeleteMapping( value="/deleteEmployee", params = {"id"} )
 	public void deleteEmployeeById( @RequestParam ("id") long id ) {
 		
-		
-		// Messaggio di controllo
-		System.out.println("EmployeeRestController --> deleteEmployee ");
+		LOGGER.info("/deleteEmployee -> params={id=" + id + "}");
 		
 		service.deleteEmployeeById(id);
 	}
