@@ -5,6 +5,8 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,8 @@ import sdms.util.DateAndTimeManager;
 
 @RestController
 public class ExpenseRestController {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ExpenseRestController.class);
 	
 	@Autowired
 	private ExpenseServiceInterface service;
@@ -86,6 +90,10 @@ public class ExpenseRestController {
 										 @RequestParam( defaultValue = "-1" ) long idEmployee,
 										 @RequestParam( defaultValue = "-1" ) long idDentalMaterial,
 										 @RequestParam( defaultValue = "-1000000" ) int dentalMaterialQuantityToAdd ){
+		
+		LOGGER.info("/postExpense; params={date=" + date + ", amount=" + amount + ", description=" + description + ", tag=" + tag 
+											+ ", idCustomer=" + idCustomer + ", idEmployee=" + idEmployee 
+											+ ", idDentalMaterial=" + idDentalMaterial + ",dentalMaterialQuantityToAdd=" + dentalMaterialQuantityToAdd + "}");
 		
 		Expense expense = new Expense();
 		
@@ -237,6 +245,9 @@ public class ExpenseRestController {
 										 @RequestParam( defaultValue = "sdms_none-nessun-nothing" ) String tag,
 										 @RequestParam( defaultValue = "-1000000" ) double amount){
 		
+		LOGGER.info("/postExpense; params={id=" + id + ",date=" + date + ", amount=" + amount + ", description=" + description + ", tag=" + tag +  "}");
+
+		
 		Expense expense = service.getExpenseById(id);
 		if( expense == null )
 			return ResponseEntity.status( HttpStatus.NOT_FOUND )
@@ -276,94 +287,93 @@ public class ExpenseRestController {
 	
 	// <<<<<<<<<<<<<<<<<<------------ I NEED THIS ?
 	// Update the refund to a customer
-	@PutMapping("/putCustomerRefund")
-	public ResponseEntity<?> putCustomerRefund( @RequestParam("id") long id,
-			@RequestParam("idCustomer") long idCustomer, @RequestParam("date") String date, 
-			@RequestParam("description") String description, @RequestParam("amount") double amount, 
-			@RequestParam("tag") String tag) {
-	
-		Expense expense = service.getExpenseById(id);
-		if( expense == null )
-			return ResponseEntity.status( HttpStatus.NOT_FOUND )
-					.body("404 NOT FOUND: Expense  with id " + id + ", to update not found in the database");
-		
-		Customer customer = customerService.getCustomerById(idCustomer);
-		if( customer == null )
-			return ResponseEntity.status( HttpStatus.NOT_FOUND )
-					.body("404 NOT FOUND: Customer with id " + idCustomer + " not found in the database");
-		
-		expense.setCustomer(customer);
-		expense.setDate( dateAndTimeManager.parseDate(date) );
-		expense.setDescription(description);
-		expense.setAmount(amount);
-		expense.setTag(tag);
-		
-		service.putExpense(expense);
-		
-		return ResponseEntity.status(HttpStatus.OK).body(expense);
-		
-	}
+//	@PutMapping("/putCustomerRefund")
+//	public ResponseEntity<?> putCustomerRefund( @RequestParam("id") long id,
+//			@RequestParam("idCustomer") long idCustomer, @RequestParam("date") String date, 
+//			@RequestParam("description") String description, @RequestParam("amount") double amount, 
+//			@RequestParam("tag") String tag) {
+//	
+//		Expense expense = service.getExpenseById(id);
+//		if( expense == null )
+//			return ResponseEntity.status( HttpStatus.NOT_FOUND )
+//					.body("404 NOT FOUND: Expense  with id " + id + ", to update not found in the database");
+//		
+//		Customer customer = customerService.getCustomerById(idCustomer);
+//		if( customer == null )
+//			return ResponseEntity.status( HttpStatus.NOT_FOUND )
+//					.body("404 NOT FOUND: Customer with id " + idCustomer + " not found in the database");
+//		
+//		expense.setCustomer(customer);
+//		expense.setDate( dateAndTimeManager.parseDate(date) );
+//		expense.setDescription(description);
+//		expense.setAmount(amount);
+//		expense.setTag(tag);
+//		
+//		service.putExpense(expense);
+//		
+//		return ResponseEntity.status(HttpStatus.OK).body(expense);
+//		
+//	}
 	
 	// <------------------------------ I NEED THIS?
 	// Update the expense regards purchase of dental materials
-	@PutMapping("/putDentalMaterialPurchase")
-	public ResponseEntity<?> putDentalMaterialPurchase( @RequestParam("id") long id,
-			@RequestParam("idDentalMaterial") long idDentalMaterial, @RequestParam("date") String date, 
-			@RequestParam("description") String description, @RequestParam("amount") double amount, 
-			@RequestParam("tag") String tag) {
-		
-		Expense expense = service.getExpenseById(id);
-		if( expense == null )
-			return ResponseEntity.status( HttpStatus.NOT_FOUND )
-					.body("404 NOT FOUND: Expense  with id " + id + ", to update not found in the database");
-		
-		DentalMaterial dentalMaterial = dentalMaterialService.getDentalMaterialById(idDentalMaterial);
-		if( dentalMaterial == null )
-			return ResponseEntity.status( HttpStatus.NOT_FOUND )
-					.body("404 NOT FOUND: Dental Material with id " + idDentalMaterial + " not found in the database");
-		
-		expense.setDentalMaterial(dentalMaterial);
-		expense.setDate( dateAndTimeManager.parseDate(date) );
-		expense.setDescription(description);
-		expense.setAmount(amount);
-		expense.setTag(tag);
-		
-		service.postExpense(expense);
-		
-		return ResponseEntity.status(HttpStatus.OK).body(expense);
-		
-		
-	}
+//	@PutMapping("/putDentalMaterialPurchase")
+//	public ResponseEntity<?> putDentalMaterialPurchase( @RequestParam("id") long id,
+//			@RequestParam("idDentalMaterial") long idDentalMaterial, @RequestParam("date") String date, 
+//			@RequestParam("description") String description, @RequestParam("amount") double amount, 
+//			@RequestParam("tag") String tag) {
+//		
+//		Expense expense = service.getExpenseById(id);
+//		if( expense == null )
+//			return ResponseEntity.status( HttpStatus.NOT_FOUND )
+//					.body("404 NOT FOUND: Expense  with id " + id + ", to update not found in the database");
+//		
+//		DentalMaterial dentalMaterial = dentalMaterialService.getDentalMaterialById(idDentalMaterial);
+//		if( dentalMaterial == null )
+//			return ResponseEntity.status( HttpStatus.NOT_FOUND )
+//					.body("404 NOT FOUND: Dental Material with id " + idDentalMaterial + " not found in the database");
+//		
+//		expense.setDentalMaterial(dentalMaterial);
+//		expense.setDate( dateAndTimeManager.parseDate(date) );
+//		expense.setDescription(description);
+//		expense.setAmount(amount);
+//		expense.setTag(tag);
+//		
+//		service.postExpense(expense);
+//		
+//		return ResponseEntity.status(HttpStatus.OK).body(expense);
+//		
+//	}
 	
 	// <----------------- I NEED THIS ?
 	// Insert the salary payment of an employee
-	@PutMapping("/putSalaryPayment")
-	public ResponseEntity<?> putSalaryPayment( @RequestParam("id") long id,
-			@RequestParam("idEmployee") long idEmployee, @RequestParam("date") String date, 
-			@RequestParam("description") String description, @RequestParam("amount") double amount, 
-			@RequestParam("tag") String tag) {
-		
-		Expense expense = service.getExpenseById(id);
-		if( expense == null )
-			return ResponseEntity.status( HttpStatus.NOT_FOUND )
-					.body("404 NOT FOUND: Expense  with id " + id + ", to update not found in the database");
-		
-		Employee employee = employeeService.getEmployeeById(idEmployee);
-		if( employee == null )
-			return ResponseEntity.status( HttpStatus.NOT_FOUND )
-					.body("404 NOT FOUND: Customer with id " + idEmployee + " not found in the database");
-		
-		expense.setEmployee(employee);
-		expense.setDate( dateAndTimeManager.parseDate(date) );
-		expense.setDescription(description);
-		expense.setAmount(amount);
-		expense.setTag(tag);
-		
-		service.postExpense(expense);
-		
-		return ResponseEntity.status(HttpStatus.OK).body(expense);
-		
-	}
+//	@PutMapping("/putSalaryPayment")
+//	public ResponseEntity<?> putSalaryPayment( @RequestParam("id") long id,
+//			@RequestParam("idEmployee") long idEmployee, @RequestParam("date") String date, 
+//			@RequestParam("description") String description, @RequestParam("amount") double amount, 
+//			@RequestParam("tag") String tag) {
+//		
+//		Expense expense = service.getExpenseById(id);
+//		if( expense == null )
+//			return ResponseEntity.status( HttpStatus.NOT_FOUND )
+//					.body("404 NOT FOUND: Expense  with id " + id + ", to update not found in the database");
+//		
+//		Employee employee = employeeService.getEmployeeById(idEmployee);
+//		if( employee == null )
+//			return ResponseEntity.status( HttpStatus.NOT_FOUND )
+//					.body("404 NOT FOUND: Customer with id " + idEmployee + " not found in the database");
+//		
+//		expense.setEmployee(employee);
+//		expense.setDate( dateAndTimeManager.parseDate(date) );
+//		expense.setDescription(description);
+//		expense.setAmount(amount);
+//		expense.setTag(tag);
+//		
+//		service.postExpense(expense);
+//		
+//		return ResponseEntity.status(HttpStatus.OK).body(expense);
+//		
+//	}
 	
 	// Update a "general" expense object
 	@PutMapping("/putExpense")
