@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import sdms.dto.MedicalHistoryDTO;
-import sdms.model.MedicalHistory;
 import sdms.service.EmployeeServiceInterface;
 import sdms.service.MedicalHistoryServiceInterface;
 import sdms.util.WebClientCookieManager;

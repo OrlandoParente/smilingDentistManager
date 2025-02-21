@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import sdms.model.Customer;
@@ -84,7 +82,7 @@ public class LoginController {
     	String role;
     	
     	// Data to save in the cookies ----
-    	String name;	// I can fetch from the idUser, but I need often so better save it in the cookies
+    	// String name;	// I can fetch from the idUser, but I need often so better save it in the cookies
     	Long idUser;	// It's useful for recovery any information about the user
     	// --------------------------------
     	
@@ -96,7 +94,7 @@ public class LoginController {
     		dbPsw = employee.getPassword();
     		role = employee.getRole();
     		
-    		name = employee.getName();
+    		// name = employee.getName();	// I can fetch from the idUser, but I need often so better save it in the cookies
     		idUser = employee.getId();
     	
     	} else { 
@@ -107,7 +105,7 @@ public class LoginController {
     			dbPsw = customer.getPassword();
     			role = customer.getRole();
     			
-        		name = customer.getName();
+        		// name = customer.getName();	// I can fetch from the idUser, but I need often so better save it in the cookies 
         		idUser = customer.getId();
     		} else {
     			
