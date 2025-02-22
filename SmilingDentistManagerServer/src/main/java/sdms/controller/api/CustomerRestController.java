@@ -38,6 +38,7 @@ public class CustomerRestController {
 	@Autowired
 	private DateAndTimeManager dateAndTimeManager;
 	
+	// This is for keep the compatibility with the Swing Client 
 	@GetMapping("/getMaxIdCustomer")
 	public long getMaxIdCustomer() {
 		
@@ -244,12 +245,30 @@ public class CustomerRestController {
 	 
 	 // DELETE ----------------------------------------------------------------------------------------------------------
 	 @DeleteMapping( value="/deleteCustomer" , params = { "id" } )
-	 public void deleteCustomerById( @RequestParam("id") long id ) {
+	 public ResponseEntity<?> deleteCustomerById( @RequestParam("id") long id ) {
 		  
 		 // Check message
 		 LOGGER.info("/deleteCustomer -> params={ id=" + id + " }");
 		 
-		 service.deleteCustomer(id);
+		 Customer customer = service.getCustomerById(id);
+		 CustomerDTO customerDTO = null;
+		 
+		 // Check that customer is present in the database 
+		 if( customer == null )
+			 return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Customer with id=" + id + " not found in the database");
+		 
+		 try {
+			 
+			 customerDTO = modelMapper.map(customer, CustomerDTO.class);
+			 service.deleteCustomer(id);
+		 } catch ( Exception e ) {
+ 
+			System.err.println( "/deleteCustomer -> ERROR: " + e.getMessage() );
+			e.printStackTrace(); 
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		 }
+		 
+		 return ResponseEntity.status( HttpStatus.OK ).body( customerDTO );
 		 
 	 }
 }
