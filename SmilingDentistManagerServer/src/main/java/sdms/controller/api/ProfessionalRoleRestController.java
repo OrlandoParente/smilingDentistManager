@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import sdms.dto.ExpenseDTO;
 import sdms.dto.ProfessionalRoleDTO;
+import sdms.model.Expense;
 import sdms.model.ProfessionalRole;
 import sdms.service.ProfessionalRoleServiceInterface;
 
@@ -106,12 +108,30 @@ public class ProfessionalRoleRestController {
 	}
 	
 	@DeleteMapping( value="/deleteProfessionalRole", params = {"id"} )
-	public void deleteProfessionalRoleById( @RequestParam("id") long id  ) {
+	public ResponseEntity<?> deleteProfessionalRoleById( @RequestParam("id") long id  ) {
 		
 		// Check message 
 		LOGGER.info("ProfessionalRoleRestController --> deleteProfessionalRoleById , params={id =" + id + "}" );	
 		
-		service.deleteProfessionalRoleById( id );
+		// This is for return the deleted object 
+		ProfessionalRole professionalRole = service.getProfessionalRoleById(id);
+		ProfessionalRoleDTO professionalRoleDTO = null;
+		
+		// If professional role not found return 404 not found
+		if( professionalRole == null )
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "Error: expense with id=" + id + " not found in the database" );
+		
+		try {
+			professionalRoleDTO = modelMapper.map( professionalRole , ProfessionalRoleDTO.class );
+			service.deleteProfessionalRoleById( id );
+		} catch( Exception e ) {
+	        
+			System.err.println( "/deleteProfessionalRole -> ERROR: " + e.getMessage() );
+	        e.printStackTrace(); 
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		return ResponseEntity.status( HttpStatus.OK ).body( professionalRoleDTO );
 	}
 
 }
