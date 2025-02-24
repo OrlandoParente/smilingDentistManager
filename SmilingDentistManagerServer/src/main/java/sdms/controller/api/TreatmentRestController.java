@@ -32,14 +32,20 @@ public class TreatmentRestController {
 	private ModelMapper modelMapper;
 	
 	@GetMapping("/getTreatmentById/{id}")
-	public TreatmentDTO getTreatmentById( @PathVariable long id ) {
+	public ResponseEntity<?> getTreatmentById( @PathVariable long id ) {
 		
-		// check message
+		// Check message
 		LOGGER.info("TreatmentRestController -> getTreatmentById , pathVariable={id=" + id + "}");
 		
 		Treatment treatment = service.getTreatmentById(id);
 		
-		return modelMapper.map(treatment, TreatmentDTO.class);
+		// Check if treatment is present in the database
+		if( treatment == null ) 
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Treatment with id=" + id + "not found in the database");
+		
+		TreatmentDTO treatmentDTO = modelMapper.map(treatment, TreatmentDTO.class);
+		
+		return ResponseEntity.status(HttpStatus.OK).body( treatmentDTO );
 	}
 
 	@GetMapping("/getTreatments")
@@ -54,18 +60,22 @@ public class TreatmentRestController {
 							.map( treatment -> modelMapper.map(treatment, TreatmentDTO.class) )
 							.toList();
 		
-		return listTreatmentDTO;
+		return listTreatmentDTO ;
 	}
 	
 	@GetMapping("/getTreatmentsById/{idCustomer}")
-	public TreatmentDTO getTreatmentsByCustomerId( @PathVariable long idCustomer ) {
+	public List<TreatmentDTO> getTreatmentsByCustomerId( @PathVariable long idCustomer ) {
 		
 		// Check message
 		LOGGER.info("TreatmentRestController -> getTreatmentsByCustomerId , pathVariable={idCustomer=" + idCustomer + "}");
 		
-		Treatment treatment = service.getTreatmentById(idCustomer);
+		List<Treatment> treatments = service.getTreatmentsByCustomerId(idCustomer);
 		
-		return modelMapper.map(treatment, TreatmentDTO.class);
+		List<TreatmentDTO> listTreatmentDTO = treatments.stream()
+				.map( treatment -> modelMapper.map(treatment, TreatmentDTO.class) )
+				.toList();
+
+		return listTreatmentDTO;
 	}
 	
 	// <----------- TO EDIT : Should be invoiceNumber instead of billNumber
@@ -77,13 +87,17 @@ public class TreatmentRestController {
 		
 		List<Treatment> treatments = service.getTreatmentsByBillNumber(billNumber);
 		
-		return treatments.stream().map( t -> modelMapper.map( t, TreatmentDTO.class ) ).toList();
+		List<TreatmentDTO> listTreatmentDTO = treatments.stream()
+				.map( treatment -> modelMapper.map(treatment, TreatmentDTO.class) )
+				.toList();
+
+		return listTreatmentDTO ;
 	}
 	
 	// TO RE-WRITE IN ONCE ###########################################################################################################
 	
 	@PostMapping( value="/postTreatment", params = {"name","cost"} )
-	public void postTreatment( @RequestParam("name") String name, @RequestParam("cost") float cost ) {
+	public ResponseEntity<?> postTreatment( @RequestParam("name") String name, @RequestParam("cost") float cost ) {
 		
 		// Check message
 		LOGGER.info("TreatmentRestController -> postTreatment, params={ name=" + name +", cost=" + cost + " }");
@@ -94,6 +108,7 @@ public class TreatmentRestController {
 		
 		service.postTreatment(treatment);
 		
+		return ResponseEntity.status(HttpStatus.OK).body(treatment);
 	}
 	
 	@PostMapping( value="/postTreatment", params = {"name", "description", "cost"} )
@@ -138,15 +153,19 @@ public class TreatmentRestController {
 	// ###############################################################################################################################
 	
 	
-	// boolean deleteTreatmentById( String id ) throws SQLException;
 	@DeleteMapping( value="/deleteTreatment", params = {"id"})
-	public void deleteTreatmentById( @RequestParam("id") long id ) {
+	public ResponseEntity<?> deleteTreatmentById( @RequestParam("id") long id ) {
 
 		// check message
-		LOGGER.info("TreatmentRestController -> deleteTreatmentById, params={id=" + id + "}");
+		LOGGER.info("/deleteTreatment , params={id=" + id + "}");
+		
+		Treatment treatment = service.getTreatmentById(id);
+		if( treatment == null )
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Treatment with id=" + id + " not found in the database ");
 		
 		service.deleteTreatmentById(id);
 		
+		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(treatment, TreatmentDTO.class) );
 	}
 			
 

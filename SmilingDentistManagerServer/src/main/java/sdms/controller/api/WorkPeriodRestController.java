@@ -210,14 +210,14 @@ public class WorkPeriodRestController {
 	public ResponseEntity<?> deleteWorkPeriodById( @RequestParam long id ){
 		
 		LOGGER.info("/deleteWorkPeriod -> params={ id=" + id + " }");
-		
-		try {
-			service.deleteWorkPeriodById(id);
-		} catch( Exception e ) {
-			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body( e.getMessage() );
-		}
-		
-		return ResponseEntity.status( HttpStatus.OK ).build();
+			
+		WorkPeriod workPeriod = service.getWorkPeriodById(id);
+		if( workPeriod == null )
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Work Period with id=" + id + " not found in the database ");
+				
+		service.deleteWorkPeriodById(id);
+
+		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(workPeriod, WorkPeriodDTO.class) );
 	}
 	
 	// -------------------------------------------------------------------------------------------------------------
