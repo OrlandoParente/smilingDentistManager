@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,6 @@ import sdms.service.MedicalHistoryServiceInterface;
 @RestController
 public class MedicalHistoryRestController {
 
-	// <<<<<<<<<<<<<<<-------------------------------- TO EDIT: USE RESPONSE ENTITY 
 	private final Logger LOGGER = LoggerFactory.getLogger( MedicalHistoryRestController.class );
 	
 	@Autowired
@@ -78,12 +78,16 @@ public class MedicalHistoryRestController {
 	}
 
 	@GetMapping("/getMedicalHistoryById/{id}")
-	public MedicalHistoryDTO getMedicalHistoryById( @PathVariable long id ) {
+	public ResponseEntity<?> getMedicalHistoryById( @PathVariable long id ) {
 		
 		// check message
-		LOGGER.info("MedicalHistoryRestController --> getMedicalsHistoryById , pathVariable={id=" + id + "}" );
+		LOGGER.info("/getMedicalHistoryById , pathVariable={id=" + id + "}" );
 		
-		return modelMapper.map( service.getMedicalHistoryById(id), MedicalHistoryDTO.class );
+		MedicalHistory medicalHistory = service.getMedicalHistoryById( id );
+		if( medicalHistory == null )
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Medical History with id=" + id + " not found in the database ");
+		
+		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map( medicalHistory, MedicalHistoryDTO.class ) );
 		
 	}
 	
@@ -175,12 +179,20 @@ public class MedicalHistoryRestController {
 	// DELETE --------------------------------------------------------------------------------------------------------------
 	
 	@DeleteMapping( value="/deleteMedicalHistoryById", params = {"id"} )
-	public void deleteMedicalHistoryById( @RequestParam("id") long id ) {
+	public ResponseEntity<?> deleteMedicalHistoryById( @RequestParam("id") long id ) {
 
 		// check message
 		LOGGER.info("MedicalHistoryRestController --> deleteMedicalHistoryById , params={id=" + id + "} ");
 		
+		MedicalHistory medicalHistory = service.getMedicalHistoryById( id );
+		if( medicalHistory == null )
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Medical History with id=" + id + " not found in the database ");
+		
+		MedicalHistoryDTO medicalHistoryDTO = modelMapper.map(medicalHistory, MedicalHistoryDTO.class);
+		
 		service.deleteMedicalHistoryById(id);
+		
+		return ResponseEntity.status( HttpStatus.OK ).body( medicalHistoryDTO );
 		
 	}
 	

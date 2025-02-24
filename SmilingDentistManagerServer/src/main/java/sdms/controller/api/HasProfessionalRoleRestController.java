@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.persistence.EntityNotFoundException;
 import sdms.model.Employee;
 import sdms.model.HasProfessionalRole;
 import sdms.model.ProfessionalRole;
@@ -70,14 +71,26 @@ public class HasProfessionalRoleRestController {
 	
 	
 	@DeleteMapping( value = "/deleteLinkEmployeeWithProfessionalRole", params = {"idEmployee", "idProfessionalRole"} )
-	public void deleteLinkEmployeeWithProfessionalRole( @RequestParam("idEmployee") long idEmployee, 
+	public ResponseEntity<?> deleteLinkEmployeeWithProfessionalRole( @RequestParam("idEmployee") long idEmployee, 
 													    @RequestParam("idProfessionalRole")	long idProfessionalRole ) {
 		// check message
 		LOGGER.info( "HasProfessionalRoleRestController ->  deleteLinkEmployeeWithProfessionalRole " 
 				+ ", params={idEmployee=" + idEmployee + ", idProfessionalRole=" + idProfessionalRole + " }" );
 		
-		service.deleteLinkEmployeeWithProfessionalRole( idEmployee, idProfessionalRole );
-	
+		try {
+			service.deleteLinkEmployeeWithProfessionalRole( idEmployee, idProfessionalRole );
+		} catch ( EntityNotFoundException e ) {
+			
+			System.err.println( "/deleteLinkEmployeeWithProfessionalRole -> ERROR: " + e.getMessage() );
+			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( e.getMessage() );
+		} catch ( Exception e ) {
+			
+			System.err.println( "/deleteLinkEmployeeWithProfessionalRole -> ERROR: " + e.getMessage() );
+			e.printStackTrace();
+			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).build();
+		}
+			
+		return ResponseEntity.status( HttpStatus.OK ).build();
 	}
 	
 }
