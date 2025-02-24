@@ -1,6 +1,7 @@
 package sdms.controller.api;
 
 import java.time.DateTimeException;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -49,8 +50,6 @@ public class AppointmentRestController {
 	@Autowired
 	private DateAndTimeManager dateAndTimeManager;
 	
-	
-	
 	@GetMapping("/getAppointments")
 	List<AppointmentDTO> getAppointments() {
 	
@@ -65,7 +64,6 @@ public class AppointmentRestController {
 	
 		// Check Message
 		LOGGER.info("AppointmentRestController -> getAppointmentsByCustomerId , pathVariables={idCustomer=" + idCustomer + "}");
-		
 				
 		return service.getAppointmentsByCustomerId(idCustomer).stream().map( app -> modelMapper.map(app, AppointmentDTO.class ) ).toList();
 	}
@@ -140,12 +138,10 @@ public class AppointmentRestController {
 		
 		} catch( DateTimeException e ) {
 			System.err.println( "AppointmentRestconstroller -> PostAppointment, error: " + e.getMessage() );
-			// TO EDIT: Return better error response // <<=====================================================================================================
 			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Format date not valid");
 		} catch( Exception e ) {
 			System.err.println( "AppointmentRestconstroller -> PostAppointment, error: " + e.getMessage() );
-			// TO EDIT: Return better error response // <<=====================================================================================================
-			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Post Appointment Failed");
+			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body("Post Appointment Failed");
 		}
 	
 		
@@ -156,22 +152,46 @@ public class AppointmentRestController {
 	
 	// set is_done = 1
 	@PutMapping( value = "/putSetAppointmentDoneById", params = { "id"} )
-	public void putSetAppointmentDoneById( @RequestParam("id") long id ) {
+	public ResponseEntity<?> putSetAppointmentDoneById( @RequestParam("id") long id ) {
 
 		// Check Message
 		LOGGER.info("AppointmentRestController -> putSetAppointmentDoneById , params={id=" + id + "} ");
 		
-		service.putSetAppointmentDoneById(id);
+		try {
+			service.putSetAppointmentDoneById(id);
+		} catch ( EntityNotFoundException e ) {
+			
+			e.printStackTrace();
+			ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Appointment with id=" + id + " not found in the database ");
+		} catch ( Exception e ) {
+			
+			e.printStackTrace();
+			ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).build();
+		}
+		
+		return ResponseEntity.status( HttpStatus.OK ).build();
 	}
 	
 	// set is_done = 0
 	@PutMapping( value = "/putUnsetAppointmentDoneById", params = { "id"} )
-	public void putUnsetAppointmentDoneById( @RequestParam("id") long id ) {
+	public ResponseEntity<?> putUnsetAppointmentDoneById( @RequestParam("id") long id ) {
 
 		// Check Message
 		LOGGER.info("AppointmentRestController -> putUnsetAppointmentDoneById , params={id=" + id + "} ");
-				
-		service.putUnsetAppointmentDoneById(id);
+		
+		try {
+			service.putUnsetAppointmentDoneById(id);
+		} catch ( EntityNotFoundException e ) {
+			
+			e.printStackTrace();
+			ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Appointment with id=" + id + " not found in the database ");
+		} catch ( Exception e ) {
+			
+			e.printStackTrace();
+			ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).build();
+		}
+		
+		return ResponseEntity.status( HttpStatus.OK ).build();
 		
 	}
 	
@@ -229,10 +249,15 @@ public class AppointmentRestController {
 			
 			service.putAppointment(appointment);
 				
+		} catch ( DateTimeParseException e ) {
+			
+			System.err.println( "AppointmentRestconstroller -> PutAppointment, error: " + e.getMessage() );
+			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Invalid format data");
+			
 		} catch( Exception e ) {
 			System.err.println( "AppointmentRestconstroller -> PutAppointment, error: " + e.getMessage() );
-			// TO EDIT: Return better error response // <<=====================================================================================================
-			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Post Appointment Failed");
+			e.printStackTrace();
+			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body("Post Appointment Failed");
 		}
 		
 		return ResponseEntity.status( HttpStatus.OK ).body(modelMapper.map(appointment, AppointmentDTO.class));
@@ -295,12 +320,18 @@ public class AppointmentRestController {
 	}
 	
 	@DeleteMapping( value = "/deleteAppointment", params = { "id"} )
-	public void deleteAppointmentById( @RequestParam("id") long id ) {
+	public ResponseEntity<?> deleteAppointmentById( @RequestParam("id") long id ) {
 	
 		// Check Message
 		LOGGER.info("AppointmentRestController -> deleteAppointmentById , params={id=" + id + "}");
 
+		Appointment appointment = service.getAppointmentById(id);
+		if( appointment == null )
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Appointment with id=" + id + " not found in the database");
+		
 		service.deleteAppointmentById(id);
+		
+		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(appointment, AppointmentDTO.class) );
 	}
 	
 }

@@ -88,7 +88,9 @@ public class AppointmentService implements AppointmentServiceInterface{
 	// set is_done = 1
 	public void putSetAppointmentDoneById(long id) {
 		
-		Appointment appointment = repository.findById(id).get();
+		Appointment appointment = repository.findById(id)
+				.orElseThrow( () -> new EntityNotFoundException( "Appointment not found for id: " + id ) );
+		
 		appointment.setisDone( Appointment.IS_DONE );
 		repository.save(appointment);
 		
@@ -98,7 +100,9 @@ public class AppointmentService implements AppointmentServiceInterface{
 	// set is_done = 0
 	public void putUnsetAppointmentDoneById(long id) {
 		
-		Appointment appointment = repository.findById(id).get();
+		Appointment appointment = repository.findById(id)
+				.orElseThrow( () -> new EntityNotFoundException( "Appointment not found for id: " + id ) );
+		
 		appointment.setisDone( Appointment.IS_NOT_DONE );
 		repository.save(appointment);
 		
