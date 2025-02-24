@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import sdms.dto.ExpenseDTO;
 import sdms.dto.ProfessionalRoleDTO;
-import sdms.model.Expense;
 import sdms.model.ProfessionalRole;
 import sdms.service.ProfessionalRoleServiceInterface;
 
@@ -36,6 +34,7 @@ public class ProfessionalRoleRestController {
 	private ModelMapper modelMapper;
 	
 	
+	// In this case ResponseEntity is not useful cause SpringBoot automatic manage 200 and 500 status codes 
 	@GetMapping("/getProfessionalRoles")
 	public List<ProfessionalRoleDTO> getProfessionalRoles(){
 		
@@ -85,7 +84,7 @@ public class ProfessionalRoleRestController {
 										 // we need a string that the user don't want to use
 										 @RequestParam( defaultValue = "sdm-server_nessuna_description_inserita-123" ) String description ) {
 		
-		// Stampa di controllo
+		// Check message 
 		LOGGER.info("ProfessionalRoleRestController --> putProfessionalRolesById -> params={id=" + id + ",name=" + name + ",description=" + description + "}" );
 		
 		ProfessionalRole professionalRole = service.getProfessionalRoleById(id);
@@ -115,23 +114,15 @@ public class ProfessionalRoleRestController {
 		
 		// This is for return the deleted object 
 		ProfessionalRole professionalRole = service.getProfessionalRoleById(id);
-		ProfessionalRoleDTO professionalRoleDTO = null;
 		
 		// If professional role not found return 404 not found
 		if( professionalRole == null )
 			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "Error: expense with id=" + id + " not found in the database" );
 		
-		try {
-			professionalRoleDTO = modelMapper.map( professionalRole , ProfessionalRoleDTO.class );
-			service.deleteProfessionalRoleById( id );
-		} catch( Exception e ) {
-	        
-			System.err.println( "/deleteProfessionalRole -> ERROR: " + e.getMessage() );
-	        e.printStackTrace(); 
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		service.deleteProfessionalRoleById( id );
+
 		
-		return ResponseEntity.status( HttpStatus.OK ).body( professionalRoleDTO );
+		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map( professionalRole , ProfessionalRoleDTO.class ) );
 	}
 
 }

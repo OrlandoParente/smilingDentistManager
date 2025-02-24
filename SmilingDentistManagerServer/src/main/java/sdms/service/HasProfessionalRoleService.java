@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
 import sdms.model.Employee;
 import sdms.model.HasProfessionalRole;
 import sdms.model.ProfessionalRole;
@@ -33,13 +34,11 @@ public class HasProfessionalRoleService implements HasProfessionalRoleServiceInt
 	@Override
 	public void deleteLinkEmployeeWithProfessionalRole(long idEmployee, long idProfessionalRole) {
 		
-		// Oss.:
-		// Si potrebbero lanciare delle eccezioni in caso non trova oggetti
-		// E far gestire al controller il NullPointException
-		// Facendoli ritornare errore con il ResponseEntity
-		
-		Employee employee = employeeRepository.findById(idEmployee).get();
-		ProfessionalRole professionalRole = professionalRoleRepository.findById(idProfessionalRole).get();
+		Employee employee = employeeRepository.findById(idEmployee)
+				.orElseThrow( () -> new EntityNotFoundException("Employee not found for id=" + idEmployee ) );
+
+		ProfessionalRole professionalRole = professionalRoleRepository.findById(idProfessionalRole)
+				.orElseThrow( () -> new EntityNotFoundException("Professional role not found for id=" + idEmployee ) );
 		
 		List<HasProfessionalRole> listHasProfessionalRole = repository.findByProfessionalRole(professionalRole);
 		
