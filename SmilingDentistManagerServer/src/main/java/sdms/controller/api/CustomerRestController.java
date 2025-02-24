@@ -64,12 +64,16 @@ public class CustomerRestController {
 	 }
 	 
 	 @GetMapping( value = "/getCustomerById/{id}" )
-	 public CustomerDTO getCustomerById( @PathVariable long id){
+	 public ResponseEntity<?> getCustomerById( @PathVariable long id){
 		 
-		 // Check message
-		 LOGGER.info("CustomerRestController --> getCustomer -> pathVariable={ id = " + id + " }" );
+		// Check message
+		LOGGER.info("/getCustomerById ; pathVariable={ id = " + id + " }" );
+		
+		Customer customer = service.getCustomerById(id);
+		if( customer == null )
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Customer with id=" + id + " not found in the database " );
 		 
-		return modelMapper.map( service.getCustomerById(id) , CustomerDTO.class );
+		return ResponseEntity.status(HttpStatus.OK).body( modelMapper.map( customer , CustomerDTO.class ) );
 	 }
 	
 	 @GetMapping("/getCustomersByPartialKeyWordOverAllFields/{keyWord}")
@@ -256,17 +260,10 @@ public class CustomerRestController {
 		 // Check that customer is present in the database 
 		 if( customer == null )
 			 return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Customer with id=" + id + " not found in the database");
-		 
-		 try {
 			 
-			 customerDTO = modelMapper.map(customer, CustomerDTO.class);
-			 service.deleteCustomer(id);
-		 } catch ( Exception e ) {
- 
-			System.err.println( "/deleteCustomer -> ERROR: " + e.getMessage() );
-			e.printStackTrace(); 
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		 }
+		 customerDTO = modelMapper.map(customer, CustomerDTO.class);
+		 service.deleteCustomer(id);
+
 		 
 		 return ResponseEntity.status( HttpStatus.OK ).body( customerDTO );
 		 

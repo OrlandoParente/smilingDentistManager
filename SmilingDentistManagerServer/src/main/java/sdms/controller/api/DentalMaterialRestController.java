@@ -56,12 +56,15 @@ public class DentalMaterialRestController {
 	
 	
 	@GetMapping("/getDentalMaterialById/{id}")
-	public DentalMaterialDTO getDentalMaterialById( @PathVariable Long id ) {
+	public ResponseEntity<?> getDentalMaterialById( @PathVariable Long id ) {
 		
 		DentalMaterial dentalMaterial = service.getDentalMaterialById(id);
+		if( dentalMaterial == null )
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "Dental Material with id=" + id + " not found " );
+		
 		DentalMaterialDTO dentalMaterialDTO = modelMapper.map( dentalMaterial, DentalMaterialDTO.class);	
 		
-		return dentalMaterialDTO;
+		return ResponseEntity.status( HttpStatus.OK ).body( dentalMaterialDTO );
 	}
 	
 	
@@ -252,8 +255,14 @@ public class DentalMaterialRestController {
 	
 	// DELETE ----------------------------------------------------
 	@DeleteMapping("/deleteDentalMaterial")
-	public void deleteDentalMaterial( @RequestParam("id") long id ) {
+	public ResponseEntity<?> deleteDentalMaterial( @RequestParam("id") long id ) {
+		
+		DentalMaterial dentalMaterial = service.getDentalMaterialById(id);
+		if( dentalMaterial == null )
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Dental Material with id=" + id + " not found in the database ");
 		
 		service.deleteDentalMaterial(id);
+		
+		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(dentalMaterial, DentalMaterialDTO.class) );
 	}
 }

@@ -59,6 +59,8 @@ public class EmployeeRestController {
 		return maxId;
 	}
 	
+	// Response Entity is not needed cause for list "not found" it has to return an empty list ( with 200 ok code)
+	// so I need only 200 and 500 codes that are automatic managed by Spring Boot
 	@GetMapping("/getEmployees")
 	public List<EmployeeDTO> getEmployees(){
 		
@@ -70,7 +72,9 @@ public class EmployeeRestController {
 		return employees.stream().map( e -> modelMapper.map(e, EmployeeDTO.class) ).toList();
 		
 	}
-		
+	
+	// Response Entity is not needed cause for list "not found" it has to return an empty list ( with 200 ok code, so 404 code is not needed )
+	// so I need only 200 and 500 codes that are automatic managed by Spring Boot
 	@GetMapping("/getEmployeesByName/{name}")
 	public List<EmployeeDTO> getEmployeesByName( @PathVariable String name ){
 		
@@ -291,11 +295,17 @@ public class EmployeeRestController {
 	// DELETE
 	
 	@DeleteMapping( value="/deleteEmployee", params = {"id"} )
-	public void deleteEmployeeById( @RequestParam ("id") long id ) {
+	public ResponseEntity<?> deleteEmployeeById( @RequestParam ("id") long id ) {
 		
 		LOGGER.info("/deleteEmployee -> params={id=" + id + "}");
 		
+		Employee employee = service.getEmployeeById(id);
+		if( employee == null )
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body("Employee with id=" + id + " not found in the database");
+		
 		service.deleteEmployeeById(id);
+		
+		return ResponseEntity.status( HttpStatus.OK ).build();
 	}
 
 }
