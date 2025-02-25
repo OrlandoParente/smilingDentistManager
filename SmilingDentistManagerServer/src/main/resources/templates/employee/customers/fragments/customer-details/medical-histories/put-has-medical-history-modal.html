@@ -32,7 +32,7 @@
                       <div><input type="hidden" name="id" th:value="${formJoinMedicalHistory.hasMedicalHistoryDTO.id}"></div>
 
                       <!-- Common fields of the form  -->
-                      <div th:replace="~{fragments/customers/customer-details/medical-histories/common-fields-has-medical-history-form
+                      <div th:replace="~{employee/customers/fragments/customer-details/medical-histories/common-fields-has-medical-history-form
                                         :: common-fields-has-medical-history-form ( ${ joinCustomer.customerDTO.id }, ${formJoinMedicalHistory} ) }">
                       </div>
                       

@@ -25,7 +25,7 @@
                     <form id="addHasMedicalHistoryForm" method="POST" th:action="@{/postHasMedicalHistory}" > 
                         
                       <!-- Common fields of the form  -->
-                      <div th:replace="~{fragments/customers/customer-details/medical-histories/common-fields-has-medical-history-form
+                      <div th:replace="~{employee/customers/fragments/customer-details/medical-histories/common-fields-has-medical-history-form
                                         :: common-fields-has-medical-history-form ( ${ joinCustomer.customerDTO.id }, null ) }">
                       </div>
                       
