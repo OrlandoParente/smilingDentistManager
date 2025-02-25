@@ -24,7 +24,7 @@
                   <!-- get data for create the appointment -->
                   <form id="addAppointmentForm" method="POST" th:action="@{/postAppointment}" > 
                     
-                    <div th:replace="~{fragments/customers/customer-details/appointments/common-fields-appointment-form
+                    <div th:replace="~{employee/customers/fragments/customer-details/appointments/common-fields-appointment-form
                                       :: common-fields-appointment-form( ${ idCustomer }, null )}"></div>
 
 
