@@ -109,12 +109,12 @@ public class LoginController {
         		idUser = customer.getId();
     		} else {
     			
-    			return "User not found in the db";
+    			return "redirect:/login?error=User not found in the db";
     		}
     	}
 
     	// check password and role
-    	if( role.equals( UserRoleManager.ROLE_ACCESS_NOT_ALLOWED ) ) return "User not allowed to access";
+    	if( role.equals( UserRoleManager.ROLE_ACCESS_NOT_ALLOWED ) ) return "redirect:/login?error=User not allowed to access";
     	if( ! passwordEncoder.matches(password, dbPsw) ) return "redirect:/login?error";
     	
     	try {
