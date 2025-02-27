@@ -100,7 +100,7 @@ public class CustomerService implements CustomerServiceInterface {
 	@Override
 	public Customer getCustomerByEMail(String eMail) {
 		
-		return repository.findByEMail(eMail).get();
+		return repository.findByEMail(eMail).orElse(null);
 	}
 	
 }
