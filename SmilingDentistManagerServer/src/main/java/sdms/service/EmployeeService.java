@@ -71,7 +71,7 @@ public class EmployeeService implements EmployeeServiceInterface {
 	@Override
 	public Employee getEmployeeByEMail(String eMail) {
 		
-		return repository.findByEMail( eMail ).get();
+		return repository.findByEMail( eMail ).orElse(null);
 	}
 
 
