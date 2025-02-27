@@ -17,7 +17,7 @@ public class SecurityPaths {
 																"/js/**",
 																"/login", 
 																"/api/login",
-																"/reset-password");
+																"/reset-password/**");
 	
 	public SecurityPaths() { }
 	
