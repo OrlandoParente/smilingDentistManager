@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/common-head :: common-head('Calendar - day view')}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/calendar.css}">
+</head>
+<body>
+
+    <div th:replace="~{fragments/common-top-page :: common-top-page}"></div>
+
+    <!-- Sidebar and nav for mobile screens -->
+    <div th:replace="~{fragments/menu-dashboard-employee :: side-dashboard-mobile}"></div>
+
+	<div class="d-flex">
+
+        <!-- Sidebar for medium and larger screens -->
+        <div th:insert="~{fragments/menu-dashboard-employee :: side-dashboard}" class="col-md-3 col-lg-2" ></div>
+
+        <!-- Main Content -->
+        <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
+
+            <!-- here the page content -->
+            <div class="row">
+
+                <nav th:replace="~{employee/calendar/fragments/calendar-nav :: calendar-nav( date=${date}, view='day' )}">
+                </nav>
+
+                <div class="sdm-calendar-table-reponsive table-responsive mt-3">
+                    <table class="table table-striped table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th th:text="#{tableHeaderTime}">Time</th>
+                                <th></th>
+                                <th th:text="#{tableHeaderCustomer}">Customer</th>
+                                <th th:text="#{tableHeaderDoctor}">Doctor</th>
+                                <th th:text="#{tableHeaderTreatment}">Treatment</th>
+                                <th th:text="#{tableHeaderPayment}">Payment</th>
+                                <th th:text="#{tableHeaderPaymentMethod}">Payment Method</th>
+                                <th th:text="#{tableHeaderInvoiceNumber}">Invoice Number</th>
+                                <th th:text="#{tableHeaderNotes}">Notes</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="appointment : ${ joinAppointments }">
+                                <td th:text="${appointment.appointmentDTO.time}" ></td>
+                                <td class="d-flex justify-content-center">
+                                    
+                                    <button th:id="'btnDeleteAppointment' + ${appointment.appointmentDTO.id}"
+                                        class="btn btn-danger sdm-onclick-reload me-2"
+                                        th:text="#{btnDelete}">
+                                        
+                                    </button>
+                                    <div 
+                                        th:replace="~{employee/calendar/fragments/put-appointment-modal :: put-appointment-modal(${appointment})}">
+                                    </div>
+                                </td>
+                                <td>
+                                    <span th:text="${appointment.customerDTO.name}"></span> <span th:text="${appointment.customerDTO.surname}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${appointment.doctorDTO.name}"></span> <span th:text="${appointment.doctorDTO.surname}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${appointment.treatmentDTO.name}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${appointment.appointmentDTO.payment}"></span> 
+                                </td>
+                                <td>
+                                    <span th:text="${appointment.appointmentDTO.paymentMethod}"></span> 
+                                </td>
+                                <td>
+                                    <span th:text="${appointment.appointmentDTO.invoiceNumber}"></span> 
+                                </td>
+                                <td>
+                                    <span th:text="${appointment.appointmentDTO.notes}"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> <!-- End Table-responsive -->
+
+
+            </div>
+        </main>
+    </div> <!-- end d-flex -->
+
+
+    <!-- Required for put-appointment-modal fragment and delete appointment buttons  -->
+    <div th:replace="~{employee/calendar/fragments/requires-appointment :: requires-appointment}"></div>
+
+    <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>
+
+</body>
+</html>

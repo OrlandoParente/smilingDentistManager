@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/common-head :: common-head('Customer')}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/customer-details.css}">
+
+</head>
+<body>
+    
+    <div th:replace="~{fragments/common-top-page :: common-top-page}"></div>
+   
+    <!-- Sidebar and nav for mobile screens -->
+    <div th:replace="~{fragments/menu-dashboard-employee :: side-dashboard-mobile}"></div>
+
+	<div class="d-flex">
+
+        <!-- Sidebar for medium and larger screens -->
+        <div th:insert="~{fragments/menu-dashboard-employee :: side-dashboard}" class="col-md-3 col-lg-2" ></div>
+
+    
+        <!-- Main Content -->
+        <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4 sdm-work-area-included-nav-scollable">
+            
+
+            <!-- here the page content -->
+            <div class="row ">
+
+                <!-- Customer nav -->
+                <!-- <nav th:replace="~{fragments/customers/customers-nav :: customers-nav}"></nav> -->
+
+                <!-- Customer Personal Datas -->
+
+                <nav th:replace="~{employee/customers/fragments/customer-details/customer-details-navs
+                    :: customer-info( ${joinCustomer.customerDTO} )}">
+                </nav>
+
+                <div class="p-3">
+
+
+                    <div class=" ">
+                        <span class="fw-bold" th:text="#{labelEMail}"></span>
+                        <span th:text="' ' + ${joinCustomer.customerDTO.eMail} + ' '"></span>
+                        &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
+                        <span class="fw-bold" th:text="#{labelTaxIdCode}"></span>
+                        <span th:text=" ' ' + ${joinCustomer.customerDTO.taxIdCode} + ' '"></span>
+                        &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
+                        <span class="fw-bold" th:text="#{labelPhoneNumber}"></span>
+                        <span th:text=" ' ' + ${joinCustomer.customerDTO.phoneNumber} + ' '"></span>
+                        &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
+                        <span class="fw-bold" th:text="#{labelPhoneNumber2}"></span>
+                        <span th:text=" ' ' + ${joinCustomer.customerDTO.phoneNumber2} + ' '"></span>
+                    </div>
+    
+                    <div class="">
+                        <span class="fw-bold" th:text="#{labelBirthplace}"></span>
+                        <span th:text=" ' ' + ${joinCustomer.customerDTO.birthCity} + ' (' + ${joinCustomer.customerDTO.birthCityProvince} + ') '"></span>
+                        &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
+                        <span class="fw-bold" th:text="#{labelBirthDate}"></span>
+                        <span   th:with="dateFormat=#{formPlaceholderDate}"
+                                th:text=" ' ' + ${ #temporals.format ( joinCustomer.customerDTO.birthDate, dateFormat) }"></span>
+                        &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
+                        
+                        <span class="fw-bold" th:text="#{labelPlaceOfResidence}"> </span>
+
+                        <span th:text="' ' + #{labelStreet} + ' ' + ${joinCustomer.customerDTO.residenceStreet} + ' ' 
+                                        + ${joinCustomer.customerDTO.houseNumber} + ' ' + ${joinCustomer.customerDTO.residenceCity} + ' ' 
+                                        + ${joinCustomer.customerDTO.residenceCityCap} + ' ' + ${joinCustomer.customerDTO.residenceProvince}">
+                        </span>
+                        &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
+                    </div>
+
+                    <div class="">
+                        <span class="fw-bold" th:text="#{labelPermissions}"> </span>
+                        <span th:text="#{ ${joinCustomer.customerDTO.permission} }"></span>
+                    </div>
+    
+
+                </div>
+
+                <!-- Medical History -->
+
+                <nav th:replace="~{employee/customers/fragments/customer-details/customer-details-navs
+                                    :: customer-medical-histories }">
+                </nav> 
+
+                <div class="row">
+
+                    <div class="sdm-table-scrollable table-responsive mt-3">
+                        <table class="table table-striped table-bordered text-center mt-3"
+                                th:each="entry : ${ joinCustomer.mapByTypeJoinMedicalHistoriesDTO }">
+    
+                                <thead>
+                                    <!-- Medical History Type -->
+                                    <tr  >
+                                        <th colspan="5" class="sdm-table-header-bg" >
+                                            <span th:text="${entry.key}">Medical History Type</span>
+                                        </th>
+                                    </tr>
+                                    <!-- Medical History table header -->
+                                    <tr>
+                                        <th></th>
+                                        <th th:text="#{tableHeaderCategory}">Category</th>
+                                        <th th:text="#{tableHeaderName}">Name</th>
+                                        <th th:text="#{tableHeaderDescription}">Description</th>  
+                                        <th>Notes</th>                                  
+                                    </tr>
+                                </thead>
+    
+                                <tbody>
+                                    <tr th:each="joinMedicalHistory : ${ entry.value }">
+    
+                                        <td class="text-center align-middle ">
+                                            <button th:id="'btnDeleteHasMedicalHistory' + ${ joinMedicalHistory.hasMedicalHistoryDTO.id }"
+                                                    class="btn btn-danger" 
+                                                    th:text="#{btnDelete}">
+                                                Delete
+                                            </button>
+                                            <div class="d-inline-block" 
+                                                    th:insert="~{employee/customers/fragments/customer-details/medical-histories/put-has-medical-history-modal
+                                                        :: put-has-medical-history-modal( 
+                                                            ${ joinMedicalHistory.hasMedicalHistoryDTO.idCustomer },
+                                                            ${ joinMedicalHistory}  ) }">
+                                                Edit
+                                            </div>
+                                        </td>
+    
+                                        <td>
+                                            <span th:text="${joinMedicalHistory.medicalHistoryDTO.category}"></span>
+                                        </td>
+    
+                                        <td>
+                                            <span th:text="${joinMedicalHistory.medicalHistoryDTO.name}"></span>
+                                        </td>
+    
+                                        <td>
+                                            <span th:text="${joinMedicalHistory.medicalHistoryDTO.description}"></span>
+                                        </td>
+
+                                        <td>
+                                            <span th:text="${joinMedicalHistory.hasMedicalHistoryDTO.notes}"></span>
+                                        </td>
+    
+                                    </tr>
+                                </tbody>
+    
+                        </table>
+                    </div>
+
+                </div>
+                
+                <!-- Appointments -->
+
+                <nav th:replace="~{employee/customers/fragments/customer-details/customer-details-navs
+                                    :: customer-appointments( ${ joinCustomer.customerDTO.id } ) }">
+                </nav> 
+
+                <!-- Appointments Invoice Filter -->
+                <div class="border border-secondary rounded p-3 mt-3 col-12 d-flex ">
+
+                    <div class="container-fluid ">
+                        <div class="row justify-content-center">
+
+                            <form class="d-flex align-items-center justify-content-center" role="search">
+
+                                <!-- <select class="me-2 col-2 col-md-auto" name="idProfessionalRole" id="professionalRole"> -->
+
+                                <div class="row col-auto me-2 ">
+                                    <select id="selectInvoiceNumber" class="form-select w-100 me-2">
+                                        <option value="">Tutte le fatture</option>
+                                        <option th:each="customerInvoiceNumber : ${customerInvoiceNumbers}"
+                                                th:text="${customerInvoiceNumber}"
+                                                th:value="${customerInvoiceNumber}"
+                                                th:selected="${ customerInvoiceNumber == selectedInvoiceNumber }">
+                                        </option>
+                                    </select>    
+                                </div>
+                                
+
+                                <!-- <button class="btn btn-success col-auto me-2" th:text="#{btnSearch}" >Search</button> -->
+                                <!-- <a  class="btn btn-success col-auto me-2" th:text="#{btnSearch}" 
+                                    th:href="@{/employee/customer/customer/details/' 
+                                                + ${joinCustomer.customerDTO.id} 
+                                                + '/' ${VALORE SELEZIONATO DALLA SELECT} }">
+                                    Search
+                                </a> -->
+                                <a  id="urlResetSearchByInvoiceNumber"
+                                    th:href="@{'/employee/customer/customer/details/' + ${joinCustomer.customerDTO.id}}" 
+                                    class="btn btn-danger col-auto me-2" th:text="#{btnResetSearch}"> 
+                                    X 
+                                </a>
+                                <button id="btnSaveDentalAnatomyChanges" class="btn btn-success col-auto" th:text="#{btnSave}" >
+                                    Save
+                                </button>
+                                
+                            </form> 
+
+                            
+
+                            <!-- <div class="d-flex align-items-center">
+                            </div> -->
+
+                        </div>
+
+                        <div class="row mt-4">
+
+                            <div style="position: relative; " class="col-12 col-xxl-4 ">
+                                <!-- image (edited) from book: Sobotta's Anatomy Plates - Sobo 1906 330 (public domain image) -->
+                                <img class="dental-anatomy-image col-12" th:src="@{/img/customers/customer-details/dental-anatomy.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth11" th:src="@{/img/customers/customer-details/11.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth12" th:src="@{/img/customers/customer-details/12.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth13" th:src="@{/img/customers/customer-details/13.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth14" th:src="@{/img/customers/customer-details/14.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth15" th:src="@{/img/customers/customer-details/15.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth16" th:src="@{/img/customers/customer-details/16.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth17" th:src="@{/img/customers/customer-details/17.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth18" th:src="@{/img/customers/customer-details/18.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth21" th:src="@{/img/customers/customer-details/21.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth22" th:src="@{/img/customers/customer-details/22.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth23" th:src="@{/img/customers/customer-details/23.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth24" th:src="@{/img/customers/customer-details/24.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth25" th:src="@{/img/customers/customer-details/25.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth26" th:src="@{/img/customers/customer-details/26.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth27" th:src="@{/img/customers/customer-details/27.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth28" th:src="@{/img/customers/customer-details/28.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth31" th:src="@{/img/customers/customer-details/31.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth32" th:src="@{/img/customers/customer-details/32.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth33" th:src="@{/img/customers/customer-details/33.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth34" th:src="@{/img/customers/customer-details/34.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth35" th:src="@{/img/customers/customer-details/35.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth36" th:src="@{/img/customers/customer-details/36.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth37" th:src="@{/img/customers/customer-details/37.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth38" th:src="@{/img/customers/customer-details/38.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth41" th:src="@{/img/customers/customer-details/41.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth42" th:src="@{/img/customers/customer-details/42.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth43" th:src="@{/img/customers/customer-details/43.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth44" th:src="@{/img/customers/customer-details/44.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth45" th:src="@{/img/customers/customer-details/45.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth46" th:src="@{/img/customers/customer-details/46.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth47" th:src="@{/img/customers/customer-details/47.png}">
+                                <img class="dental-anatomy-image-tooth-highlight col-12" id="imgTooth48" th:src="@{/img/customers/customer-details/48.png}">
+                            </div>
+                            
+                            <div class="container col-12 col-xxl-8 bg-color-success">
+                                <div class="row "
+                                     th:each="i : ${ #numbers.sequence(1,8) }">
+
+                                    <!-- 1i teeth-->
+                                    <div class="col-12 col-md-3 d-flex align-items-center mt-2"
+                                         th:with = "toothNum='1'+ ${i}" >
+                                        <input type="checkbox" class="form-check-input me-2 cbDentalAnatomy" th:value="${toothNum}" disabled> 
+                                        <label class="form-check-label me-2 fw-bold" th:text="${toothNum}">
+                                            11
+                                        </label>
+                                        <select th:id="'select' + ${toothNum}" class="form-select selectDentalAnatomy">
+                                            <option value="-1"></option>
+                                            <option th:each=" joinApp : ${joinCustomer.joinAppointmentsDTO} "
+                                                    th:value="${joinApp.appointmentDTO.id}"
+                                                    th:with="dateFormat=#{formPlaceholderDate}"
+                                                    th:text="${#temporals.format(joinApp.appointmentDTO.date, dateFormat ) } 
+                                                            + ' ' + ${joinApp.appointmentDTO.invoiceNumber} "
+                                                    th:selected="${joinApp.appointmentDTO.teeth != null 
+                                                                        ? joinApp.appointmentDTO.teeth.contains( toothNum ) : false }">
+                                            </option>
+                                        </select>
+                                    </div>
+
+
+                                    <!-- 2i teeth -->
+                                    <div class="col-12 col-md-3 d-flex align-items-center mt-2"
+                                        th:with = "toothNum='2'+ ${i}">
+                                        <input type="checkbox" class="form-check-input me-2 cbDentalAnatomy" th:value="${toothNum}" disabled> 
+                                        <label class="form-check-label me-2 fw-bold" th:text="${toothNum}">
+                                            21
+                                        </label>
+                                        <select th:id="'select' + ${toothNum}" class="form-select selectDentalAnatomy">
+                                            <option value="-1"></option>
+                                            <option th:each=" joinApp : ${joinCustomer.joinAppointmentsDTO} "
+                                                    th:value="${joinApp.appointmentDTO.id}"
+                                                    th:with="dateFormat=#{formPlaceholderDate}"
+                                                    th:text="${#temporals.format(joinApp.appointmentDTO.date, dateFormat ) } 
+                                                            + ' ' + ${joinApp.appointmentDTO.invoiceNumber}"
+                                                    th:selected="${joinApp.appointmentDTO.teeth != null 
+                                                                        ? joinApp.appointmentDTO.teeth.contains( toothNum ) : false }">
+                                            </option>
+                                        </select>
+                                    </div> 
+
+                                    <!-- 3i teeth-->
+                                    <div class="col-12 col-md-3 d-flex align-items-center mt-2"
+                                         th:with = "toothNum='3'+ ${i}">
+                                        <input type="checkbox" class="form-check-input me-2 cbDentalAnatomy" th:value="${toothNum}" disabled> 
+                                        <label class="form-check-label me-2 fw-bold" th:text="${toothNum}">
+                                            31
+                                        </label>
+                                        <select th:id="'select' + ${toothNum}" class="form-select selectDentalAnatomy">
+                                            <option value="-1"></option>
+                                            <option th:each=" joinApp : ${joinCustomer.joinAppointmentsDTO} "
+                                                    th:value="${joinApp.appointmentDTO.id}"
+                                                    th:with="dateFormat=#{formPlaceholderDate}"
+                                                    th:text="${#temporals.format(joinApp.appointmentDTO.date, dateFormat ) } 
+                                                            + ' ' + ${joinApp.appointmentDTO.invoiceNumber}"
+                                                    th:selected="${joinApp.appointmentDTO.teeth != null 
+                                                                        ? joinApp.appointmentDTO.teeth.contains( toothNum ) : false }">
+                                            </option>
+                                        </select>
+                                    </div> 
+
+                                    <!-- 4i teeth -->
+                                    <div class="col-12 col-md-3 d-flex align-items-center mt-2"
+                                         th:with = "toothNum='4'+ ${i}">
+                                        <input type="checkbox" class="form-check-input me-2 cbDentalAnatomy" th:value="${toothNum}" disabled> 
+                                        <label class="form-check-label me-2 fw-bold" th:text="${toothNum}">
+                                            41
+                                        </label>
+                                        <select th:id="'select' + ${toothNum}" class="form-select selectDentalAnatomy">
+                                            <option value="-1"></option>
+                                            <option th:each=" joinApp : ${joinCustomer.joinAppointmentsDTO} "
+                                                    th:value="${joinApp.appointmentDTO.id}"
+                                                    th:with="dateFormat=#{formPlaceholderDate}"
+                                                    th:text="${#temporals.format(joinApp.appointmentDTO.date, dateFormat ) } 
+                                                            + ' ' + ${joinApp.appointmentDTO.invoiceNumber}"
+                                                    th:selected="${joinApp.appointmentDTO.teeth != null 
+                                                                        ? joinApp.appointmentDTO.teeth.contains( toothNum ) : false }">
+                                            </option>
+                                        </select>
+                                    </div> 
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="row">
+
+                    <div class="sdm-calendar-table-reponsive table-responsive mt-3">
+                        <table class="table table-striped table-bordered text-center">
+                            <thead>
+                                <tr>
+                                    
+                                    <th></th>
+                                    <th th:text="#{tableHeaderDate}">Date</th>
+                                    <th th:text="#{tableHeaderDoctor}">Doctor</th>
+                                    <th th:text="#{tableHeaderTreatment}">Treatment</th>
+                                    <th th:text="#{tableHeaderPayment}">Payment</th>
+                                    <th th:text="#{tableHeaderPaymentMethod}">Payment Method</th>
+                                    <th th:text="#{tableHeaderInvoiceNumber}">Invoice Number</th>
+                                    <th th:text="#{tableHeaderNotes}">Notes</th>
+                                </tr>
+                            </thead>
+    
+                            <tbody>
+                                <tr th:each="appointment : ${ joinCustomer.joinAppointmentsDTO }">
+                                    
+                                    <td class="d-flex justify-content-center">
+                                        
+                                        <button th:id="'btnDeleteAppointment' + ${appointment.appointmentDTO.id}"
+                                            class="btn btn-danger sdm-onclick-reload me-2"
+                                            th:text="#{btnDelete}">
+                                            
+                                        </button>
+
+                                        <div class="d-inline-block"
+                                             th:insert="~{employee/customers/fragments/customer-details/appointments/put-appointment-modal
+                                                            :: put-appointment-modal( ${ joinCustomer.customerDTO.id }, ${appointment} )}">
+                                        </div>
+
+                                    </td>
+                                    <td 
+                                        th:with="dateFormat=#{formPlaceholderDate}"
+                                        th:text="${ #temporals.format( appointment.appointmentDTO.date, dateFormat )}" >
+                                    </td>
+                                    <td>
+                                        <span th:text="${appointment.doctorDTO.name}"></span> <span th:text="${appointment.doctorDTO.surname}"></span>
+                                    </td>
+                                    <td>
+                                        <span th:text="${appointment.treatmentDTO.name}"></span>
+                                    </td>
+                                    <td>
+                                        <span th:text="${appointment.appointmentDTO.payment}"></span> 
+                                    </td>
+                                    <td>
+                                        <span th:text="${appointment.appointmentDTO.paymentMethod}"></span> 
+                                    </td>
+                                    <td>
+                                        <span th:text="${appointment.appointmentDTO.invoiceNumber}"></span> 
+                                    </td>
+                                    <td>
+                                        <span th:text="${appointment.appointmentDTO.notes}"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> <!-- End Table-responsive -->
+    
+    
+
+                </div>
+
+            </div>
+        </main>
+    </div> <!-- end d-flex -->
+
+
+    <!-- for put, add, delete  buttons -->
+    <div th:replace="~{employee/customers/fragments/customer-details/requires-customer-details 
+                        :: requires-customer-details}"></div>
+
+
+    <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           
+
+</body>
+</html>

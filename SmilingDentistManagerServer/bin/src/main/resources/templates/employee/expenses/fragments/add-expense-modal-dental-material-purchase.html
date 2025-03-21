@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="add-expense-modal-dental-material-purchase">
+
+      <!-- expense id, this is need for the js script -->
+      <div class="postExpenseTypes d-none" >DentalMaterialPurchase</div>
+      <div class="d-none" id="tagTextDentalMaterialPurchase" th:text="#{tagExpenseDentalMaterialPurchase}"></div>
+      <div class="d-none" id="prefixDescriptionDentalMaterialPurchase" th:text="#{textPurchase} "></div>
+
+        <div class="modal fade" id="addExpenseModalToggleDentalMaterialPurchase" aria-hidden="true"
+                aria-labelledby="addAddExpenseModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="addExpenseModalToggleLabelDentalMaterialPurchase" 
+                      th:text="#{titleAddExpense}">
+                    Add Expense 
+                  </h1>
+                  <button id="btnXCloseModalDentalMaterialPurchase" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- fragment err-msg($id, $msg) , 
+                        in this case $id='' cause in err-msg id = 'errMsg' + ${id} 
+                        but we have only one modal so we don't need different ids -->
+                    <div th:replace="~{fragments/messages/error-msg :: error-msg('DentalMaterialPurchase','')}"></div>
+
+                    <!-- get data for create the professional role -->
+                    <form id="addExpenseFormDentalMaterialPurchase" method="POST" th:action="@{/postExpense}" > 
+                        
+                      <!-- Common fields of the form expenses -->
+                      <div th:replace="~{employee/expenses/fragments/common-fields-form-expense
+                                        :: common-fields-form-expense( formExpense = null, postExpenseType = 'DentalMaterialPurchase' )}">
+                      </div>
+                    
+                      <div class="row">
+                        <div class="col-12 d-flex align-items-center mt-3">
+
+                          <label  class=" form-label col-md-auto me-2"
+                                  for="selectElDentalMaterialPurchase"
+                                  th:text="#{formLabelCustomer}">
+                          </label>
+                          <select class="form-control form-select " name="idCustomer"
+                                  id="selectElDentalMaterialPurchase">
+                            <option th:each="dentalMaterial : ${dentalMaterials}"
+                                    th:text="${dentalMaterial.name} "
+                                    th:value="${dentalMaterial.id}">
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-12 d-flex align-items-center mt-3">
+
+                          <label  class=" form-label col-md-auto me-2"
+                                  for="inputTextdentalMaterialQuantityDentalMaterialPurchase"
+                                  th:text="#{formLabelQuantityToIncreaseMandatory}">
+                          </label>
+                          <input type="number" 
+                                 class="form-control "
+                                 name="dentalMaterialQuantityToAdd"
+                                 id="inputTextdentalMaterialQuantityDentalMaterialPurchase">
+
+                        </div>
+                      </div>
+
+                    </form>
+
+
+                </div>
+
+                <div class="modal-footer">
+                  
+                  <!-- 
+                  <button id="btnAddProfessionalRoleSlot" class="btn btn-primary" th:text="#{btnAddProfessionalRoleSlot}">
+                    Add Professional Role
+                  </button> 
+                  -->
+                  
+                  <button id="btnAddExpenseDentalMaterialPurchase" type="submit" 
+                          form="addExpenseFormDentalMaterialPurchase" class="btn btn-primary" 
+                          th:text="#{btnAdd}">
+                    Add Expense
+                  </button>
+                
+                </div>
+
+              </div>
+            </div>
+        </div>
+        <!-- If there are many buttons on the nav use this: 
+            th:text="#{btnAddAbbreviation}"
+            for a better web responsive web application  -->
+          <a href="#" class="btn btn-primary w-100" data-bs-target="#addExpenseModalToggleDentalMaterialPurchase" 
+                data-bs-toggle="modal" th:text="#{btnAddDentalMaterialPurchase}">
+            Add 
+          </a>
+
+        <!-- Add script for manage add dental-material request with js -->
+         <!-- I put this in requires-dental-materials -->
+        <!-- <script th:src="@{/js/dental-materials/add-dental-material-form.js}"></script>  -->
+
+    </div>
+
+</body>
+</html>

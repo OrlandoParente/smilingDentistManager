@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/common-head :: common-head('Personal profile')}"></th:block>
+</head>
+<body>
+    
+    <div th:replace="~{fragments/common-top-page :: common-top-page}"></div>
+   
+    <!-- Sidebar and nav for mobile screens -->
+    <div th:replace="~{fragments/menu-dashboard-employee :: side-dashboard-mobile}"></div>
+
+	<div class="d-flex">
+
+        <!-- Sidebar for medium and larger screens -->
+        <div th:insert="~{fragments/menu-dashboard-employee :: side-dashboard}" class="col-md-3 col-lg-2" ></div>
+
+    
+        <!-- Main Content -->
+        <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
+            
+            <!-- <h1 th:text="#{titlePersonalProfile}">Personal profile</h1> -->
+            <nav th:replace="~{employee/personal-profile/fragments/personal-profile-nav :: personal-profile-nav}">
+            </nav>
+
+            <!-- here the page content -->
+            <div class="row sdm-work-area-scollable">
+
+                <div class="border border-secondary rounded p-3 mt-3 ">
+                    <h4 th:text="#{divLegendPersonalInformations}">Informazioni personali</h4>
+
+
+
+                    <div th:replace="~{fragments/messages/error-msg 
+                                        :: error-msg('personal-info','')}">
+                    </div>
+
+
+                     <!-- get data for create the Employee -->
+                    <form id="putEmployeeForm" method="PUT" th:action="@{/putEmployee}" > 
+
+
+                        <!-- For sent the idEmployee in the put request -->
+                        <div><input type="hidden" name="id" th:value="${employee.id}"></div>
+
+                        <div class="row g-3">
+
+                        <div class="col-12 col-md-3 d-flex align-items-center">  
+                    
+                            <label for="title" class="form-label me-2" th:text="#{formLabelTitle}">
+                            Title*:
+                            </label> 
+                            <!-- <input type="text" class="form-control" id="name" name="name" > -->
+                            <input type="text" class="form-control w-100" id="title" name="title" 
+                                th:value="${employee.title}"> 
+                        </div>
+
+                        <div class="col-12 col-md-3 d-flex align-items-center">  
+                    
+                            <label for="name" class="form-label me-2" th:text="#{formLabelNameMandatory}">
+                            Name*:
+                            </label> 
+                            <!-- <input type="text" class="form-control" id="name" name="name" > -->
+                            <input type="text" class="form-control w-100" id="name" name="name" 
+                                    th:value="${employee.name}">
+                                    <!-- disabled >  -->
+                        </div>
+                        
+                        <div class="col-12 col-md-3 d-flex align-items-center mt-3"> 
+                            
+                            <label for="surname" class="form-label me-2" th:text="#{formLabelSurnameMandatory}">
+                            Surname*:
+                            </label> 
+                            <!-- <input type="text" class="form-control" id="name" name="name" > -->
+                            <input type="text" class="form-control w-100" id="surname" name="surname" 
+                                    th:value="${employee.surname}">
+                        </div> 
+
+
+                        <div class="col-12 col-md-3 d-flex align-items-center">  
+                    
+                            <label for="birthDate" class="form-label me-2 col-md-auto" th:text="#{formLabelBirthDate}">
+                            Birth Date*:
+                            </label> 
+                            <input type="text" class="form-control w-100" id="birthDate" name="birthDate" 
+                                    th:placeholder="#{formPlaceholderDate}"
+                                    th:with="formatDate=#{formPlaceholderDate}"
+                                    th:value="${ #temporals.format( employee.birthDate, formatDate )}"> 
+                        </div>
+                            
+                        
+                        </div>
+
+
+                        <div class="row g-3 mt-3">
+
+                            <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 
+                            
+                                <label for="eMail" class="form-label me-2 col-md-auto" 
+                                        th:text="#{formLabelEMailMandatory}">
+                                E-mail*:
+                                </label> 
+                                <input type="text" class="form-control w-100" id="eMail" name="eMail" 
+                                        th:value="${employee.eMail}">
+                            </div> 
+
+                            <div class="col-12 col-md-4 d-flex align-items-center">  
+                        
+                                <label for="phoneNumber" class="form-label me-2 col-md-auto" th:text="#{formLabelPhoneNumber}">
+                                Phone Number:
+                                </label> 
+                                <input type="number" class="form-control w-100" id="phoneNumber" name="phoneNumber" 
+                                        th:value="${employee.phoneNumber}"> 
+                            </div>
+                            
+                            <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 
+                                
+                                <label for="phoneNumber2" class="form-label me-2 col-md-auto" th:text="#{formLabelPhoneNumber2}">
+                                Phone number 2:
+                                </label> 
+                                <input type="number" class="form-control w-100" id="phoneNumber2" name="phoneNumber2" 
+                                        th:value="${employee.phoneNumber2}">
+                            </div> 
+                        
+                        </div>
+                        
+                        <div class="row g-3 mt-3">
+
+                        <div class="col-12 col-md-5 d-flex align-items-center mt-3"> 
+                            <label class="form-label mb-1 col-md-auto me-2" for="salary" 
+                                    th:text="#{formLabelSalary}"
+                                    th:value="${employee.salary}">
+                                Salary: 
+                            </label>
+                            <input class="form-control" name="salary" id="salary" type="number" 
+                                    th:value="${employee.salary}">
+                        </div>
+
+                        <div class="col-12 col-md-7 d-flex align-items-center mt-3"> 
+                            <label class="form-label mb-1 col-md-auto me-2" for="permission" th:text="#{formLabelPermissions}" >
+                                Permissions: 
+                            </label>
+                            <select class="form-select" name="permission" id="permission" > 
+                            <!-- disabled > -->
+                            <!-- <option value=""></option> -->
+                            <option th:each="permission : ${permissions}" 
+                                    th:select="( ${employee.permission} == ${permission} )" selected
+                                    th:value="${permission}"
+                                    th:text="#{ ${permission} }"
+                            >
+                            
+                            </option>
+                            </select>
+                        </div>
+
+
+
+
+                        </div>
+
+                    </form>
+
+                    <!-- Professional Roles -->
+                    <!-- <form> -->
+
+                      <!-- I need this out of the loop for get #{formLabelProfessionalRole} text for js script -->
+                      <span class="d-none" th:id="professionalRoleLabel "
+                            th:text="#{formLabelProfessionalRole}">
+                      </span>
+                      
+                      <!-- Professional role has to be out of the form cause is another call -->
+                      <div  th:each="pr : ${employeeProfessionalRoles}"
+                            class="row g-3 mt-3">
+
+                        <div class="col-12 d-flex align-items-center mt-1"> 
+                          <label class="form-label mb-1 col-md-auto me-2" 
+                                  th:id="'professionalRoleLabel' + ${pr.id}" 
+                                  th:for="'professionalRoleSelect' + ${pr.id}" 
+                                  th:text="#{formLabelProfessionalRole}">
+                              Professional role: 
+                          </label>
+                          <select class="form-select professionalRoleSelects" 
+                                  name="idProfessionalRole" 
+                                  th:id="'professionalRoleSelect' + ${pr.id}" >
+                            <option selected value="-1"></option>
+                            <option th:each="professionalRole : ${professionalRoles}"
+                                      th:selected="${professionalRole.id} == ${pr.id}" 
+                                      th:value="${professionalRole.id}"
+                                      th:text="${professionalRole.name}">
+                            </option>
+                          </select>
+                        </div>
+
+                      </div>
+
+                      <div th:id="'hereAppendProfessionalRoleSlot'"></div>
+
+                    <!-- </form> -->
+
+
+
+                    <div class="row">
+                        <div class="col-12 col-md-auto d-flex align-items-center mt-3"> 
+
+                            <!-- Button add professional role select -->  
+                            <button th:id="'btnAddProfessionalRoleSlot'" 
+                                    class="btn btn-primary w-100 col-md-auto me-md-2" 
+                                    th:text="#{btnAddProfessionalRoleSlot}">
+                                Add Professional Role
+                            </button>
+
+                        </div>
+                        <div class="col-12 col-md-auto d-flex align-items-center mt-3"> 
+    
+                            <button class="btn btn-primary w-100 col-md.auto" 
+                                    id="btnPutEmployee"
+                                    form="putEmployeeForm"
+                                    th:text="#{btnEdit}">
+                                    Edit 
+                            </button>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+
+                 <!-- Change password form -->
+                 <div class="border border-secondary rounded p-3 mt-3 ">
+                    <h4 th:text="#{divLegendChangePassword}">Cambio password</h4>
+
+                    <div th:replace="~{fragments/messages/error-msg 
+                        :: error-msg('ChangePassword','')}">
+                    </div>
+
+                    <form id="changePasswordForm" method="PATCH" action="/employeeChangePassword">
+                        <div class="row">
+
+                            <input type="hidden" name="id" th:value="${employee.id}">
+
+                            <div class="col-12 col-md-auto d-flex mt-2 ">
+                                <label  class="form-label col-md-auto me-2 mt-md-2" 
+                                        for="currentPassword"
+                                        th:text="#{formLabelCurrentPasswordMandatory}">
+                                    Current password: 
+                                </label>
+                                <input  type="password" class="form-control w-100" 
+                                        id="currentPassword" name="currentPassword" >
+                                        <!-- disabled> -->
+                            </div>
+                            
+                            <div class="col-12 col-md-auto d-flex mt-2 ">
+                                <label  class="form-label col-md-auto me-2 mt-md-2" 
+                                        for="newPassword"
+                                        th:text="#{formLabelNewPasswordMandatory}">
+                                    New password: 
+                                </label>
+                                <input  type="password" class="form-control w-100" 
+                                        id="newPassword" name="newPassword" >
+                                        <!-- disabled> -->
+
+                            </div>
+
+                            <div class="col-12 col-md-auto d-flex mt-2">
+                                <label  class="form-label col-md-auto me-2 mt-md-2" 
+                                        for="confirmNewPassword"
+                                        th:text="#{formLabelConfirmNewPasswordMandatory}">
+                                    Confirm new password: 
+                                </label>
+                                <input  type="password" class="form-control w-100" 
+                                        id="confirmNewPassword" >
+                                        <!-- disabled> -->
+
+                            </div>
+
+
+                        </div> 
+
+                        <div class="row">
+                            <div class="col-12 col-md-auto d-inline-block mt-2 px-md-1">
+                                <input  type="submit" class="btn btn-primary" 
+                                        id="btnChangePassword"
+                                        th:value="#{btnChangePassword}">
+                                <!-- </button> -->
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="border border-secondary rounded p-3 mt-3 ">
+                    <h4 th:text="#{divLegendChangeLanguage}">Cambio lingua</h4>
+                    <div class="row">
+                        
+                        <div class="col-12 col-md-auto d-inline-block mt-2 px-md-1 btn btn-primary ms-md-2 me-2">
+                            <a th:href="@{/employee/settings/changeLanguage(lang='en')}" class="nav-link">
+                                English
+                            </a>
+                        </div>
+
+                        <div class="col-12 col-md-auto d-inline-block mt-2 px-md-1 btn btn-primary me-2">
+                            <a th:href="@{/employee/settings/changeLanguage(lang='it')}" class="nav-link" >
+                                Italiano
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div> <!-- end d-flex -->
+
+
+    <div th:replace="~{employee/personal-profile/fragments/requires-personal-profile :: requires-personal-profile}"></div>
+
+    <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+ 
+    <nav th:fragment="customers-nav" class="navbar navbar-expand bg-body-tertiary">
+
+        <div class="container-fluid" >
+            <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+            <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button> 
+            <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
+            <!-- me-auto -->
+            <ul class="navbar-nav mb-2 mx-auto mb-lg-0">
+                <li class="nav-item">
+                    <div th:replace="~{employee/customers/fragments/add-customer-modal :: add-customer-modal}">
+                        Add
+                    </div> 
+                </li>
+                <form class="d-flex" role="search">
+
+                    <input class="form-control me-2" name="keyword" type="search" placeholder="Search" aria-label="Search">
+                    <a th:href="@{/employee/customer/customer}" class="btn btn-outline-danger me-2" >X</a>
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form> 
+                <!-- <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{#}"> Link </a>
+                </li> -->
+               
+
+            </ul>
+            <!-- <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form> 
+            </div> -->
+
+        </div>
+    </nav>
+
+</body>
+</html>

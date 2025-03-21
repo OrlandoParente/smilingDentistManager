@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="put-dental-material-modal( dentalMaterial )">
+        <div class="modal fade" th:id="'putDentalMaterialModalToggle' + ${dentalMaterial.id}" 
+                th:aria-labelledby="'putDentalMaterialModalToggleLabel' + ${dentalMaterial.id}" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" 
+                      th:id="'putDentalMaterialModalToggleLabel' + ${dentalMaterial.id}"
+                      th:text="#{titleEditDentalMaterial}">
+                      Edit Dental Material
+                  </h1>
+                  <button th:id="'btnXCloseModal' + ${dentalMaterial.id}" type="button" 
+                          class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                  <div th:replace="~{fragments/messages/error-msg :: error-msg(${dentalMaterial.id},'')}"></div>
+
+                  <!-- get data for create the DentalMaterial -->
+                  <form th:id="'putDentalMaterialForm' + ${dentalMaterial.id}" method="PUT" th:action="@{/putDentalMaterial}" > 
+
+                    <!-- Common fields of the form dentalMaterial -->
+                    <div th:replace="~{employee/dental-materials/fragments/common-fields-form-dental-material
+                                      :: common-fields-form-dental-material( ${ dentalMaterial } )}">
+                    </div>
+
+                  </form>
+
+                </div>
+
+                <div class="modal-footer">
+
+                  <!-- TO EDIT:  add button add  Medical History -->  
+                  <!-- <button th:id="'btnAddProfessionalRoleSlot' + ${dentalMaterial.id}" 
+                          class="btn btn-primary" th:text="#{btnAddProfessionalRoleSlot}">
+                    Add Professional Role
+                  </button> -->
+
+                  <!-- Button edit DentalMaterial -->  
+                  <button th:id="'btnPutDentalMaterial' + ${dentalMaterial.id}" 
+                          type="submit" 
+                          th:form="'putDentalMaterialForm' + ${dentalMaterial.id}" 
+                          class="btn btn-primary me-2 mt-1" 
+                          th:text="#{btnEdit}">
+                    Edit Dental Material
+                  </a>
+                
+                </div>
+              </div>
+            </div>
+        </div>
+        
+        <!-- Button for open the Modal -->
+        <button class="btn btn-primary mt-1" 
+                th:data-bs-target="'#putDentalMaterialModalToggle'+ ${dentalMaterial.id}" 
+                data-bs-toggle="modal"
+                th:text="#{btnEdit}">Edit</button>
+
+        <!-- Add script for manage put request with js -->
+        <!-- This is in requires-dental-materials.html -->
+        <!-- <script th:src="@{/js/dental-materials/put-dental-material-form.js}"></script>    -->
+
+    </div>
+
+</body>
+</html>

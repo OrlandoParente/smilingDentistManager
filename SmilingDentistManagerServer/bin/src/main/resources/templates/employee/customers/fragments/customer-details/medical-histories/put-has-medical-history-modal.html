@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="put-has-medical-history-modal( formIdCustomer, formJoinMedicalHistory )">
+        <div class="modal fade" 
+                th:id="'putHasMedicalHistoryModalToggle' + ${formJoinMedicalHistory.hasMedicalHistoryDTO.id}" 
+                aria-hidden="true"
+                aria-labelledby="putPutHasMedicalHistoryModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="putHasMedicalHistoryModalToggleLabel" th:text="#{titleEditHasMedicalHistory}">
+                    Put HasMedicalHistory
+                  </h1>
+                  <button th:id="'btnXCloseModal' + ${formJoinMedicalHistory.hasMedicalHistoryDTO.id}" 
+                          type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- fragment err-msg($id, $msg) , 
+                        in this case $id='' cause in err-msg id = 'errMsg' + ${id} 
+                        but we have only one modal so we don't need different ids -->
+                    <div th:replace="~{fragments/messages/error-msg :: error-msg('','')}"></div>
+
+                    <!-- get data for create the professional role -->
+                    <form th:id="'putHasMedicalHistoryForm' + ${formJoinMedicalHistory.hasMedicalHistoryDTO.id}" 
+                          method="PUT" th:action="@{/putHasMedicalHistory}" > 
+
+                      <div><input type="hidden" name="id" th:value="${formJoinMedicalHistory.hasMedicalHistoryDTO.id}"></div>
+
+                      <!-- Common fields of the form  -->
+                      <div th:replace="~{employee/customers/fragments/customer-details/medical-histories/common-fields-has-medical-history-form
+                                        :: common-fields-has-medical-history-form ( ${ joinCustomer.customerDTO.id }, ${formJoinMedicalHistory} ) }">
+                      </div>
+                      
+                    </form>
+
+
+                </div>
+
+                <div class="modal-footer">
+                  
+                  <!-- 
+                  <button id="btnPutProfessionalRoleSlot" class="btn btn-primary" th:text="#{btnPutProfessionalRoleSlot}">
+                    Put Professional Role
+                  </button> 
+                  -->
+                  
+                  <button th:id="'btnPutHasMedicalHistory' + ${formJoinMedicalHistory.hasMedicalHistoryDTO.id}" 
+                          type="submit" 
+                          th:form="'putHasMedicalHistoryForm' + ${formJoinMedicalHistory.hasMedicalHistoryDTO.id}" 
+                          class="btn btn-primary" 
+                          th:text="#{btnEdit}">
+                    Edit 
+                  </button>
+                
+                </div>
+
+              </div>
+            </div>
+        </div>
+        <!-- If there are many buttons on the nav use this: 
+            th:text="#{btnPutAbbreviation}"
+            for a better web responsive web application  -->
+          <button  class="btn btn-primary " 
+                th:data-bs-target="'#putHasMedicalHistoryModalToggle' + ${formJoinMedicalHistory.hasMedicalHistoryDTO.id}" 
+                data-bs-toggle="modal" th:text="#{btnEdit}">
+            Edit
+      </button>
+
+        <!-- Put script for manage put link customer to medical history request with js -->
+         <!-- I put this in requires-customers -->
+        <!-- <script th:src="@{/js/customers/medical-history(put-has-medical-history-form.js}"></script>  -->
+
+    </div>
+
+</body>
+</html>

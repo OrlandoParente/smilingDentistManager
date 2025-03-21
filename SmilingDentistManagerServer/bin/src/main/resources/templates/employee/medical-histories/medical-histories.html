@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/common-head :: common-head('Medical Histories')}"></th:block>
+</head>
+<body>
+    
+    <div th:replace="~{fragments/common-top-page :: common-top-page}"></div>
+   
+    <!-- Sidebar and nav for mobile screens -->
+    <div th:replace="~{fragments/menu-dashboard-employee :: side-dashboard-mobile}"></div>
+
+	<div class="d-flex">
+
+        <!-- Sidebar for medium and larger screens -->
+        <div th:insert="~{fragments/menu-dashboard-employee :: side-dashboard}" class="col-md-3 col-lg-2" ></div>
+
+    
+        <!-- Main Content -->
+        <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
+            
+            <!-- here the page content -->
+            <div class="row">
+
+                <nav th:insert="~{employee/medical-histories/fragments/medical-histories-nav :: medical-histories-nav}"></nav>
+
+
+
+                <div class="sdm-table-scrollable table-responsive mt-3">
+                    <table class="table table-striped table-bordered text-center mt-3"
+                            th:each="entry : ${ mapByTypeMedicalHistories }">
+
+                            <thead>
+                                <!-- Medical History Type -->
+                                <tr  >
+                                    <th colspan="4" class="sdm-table-header-bg" >
+                                        <span th:text="${entry.key}">Medical History Type</span>
+                                    </th>
+                                </tr>
+                                <!-- Medical History table header -->
+                                <tr>
+                                    <th></th>
+                                    <th th:text="#{tableHeaderCategory}">Category</th>
+                                    <th th:text="#{tableHeaderName}">Name</th>
+                                    <th th:text="#{tableHeaderDescription}">Description</th>                                    
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr th:each="medicalHistory : ${ entry.value }">
+
+                                    <td class="text-center align-middle ">
+                                        <button th:id="'btnDeleteMedicalHistory' + ${ medicalHistory.id }"
+                                                class="btn btn-danger" 
+                                                th:text="#{btnDelete}">
+                                            Delete
+                                        </button>
+                                        <div class="d-inline-block" th:insert="~{employee/medical-histories/fragments/put-medical-history-modal
+                                            :: put-medical-history-modal( ${medicalHistory} )}">
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <span th:text="${medicalHistory.category}"></span>
+                                    </td>
+
+                                    <td>
+                                        <span th:text="${medicalHistory.name}"></span>
+                                    </td>
+
+                                    <td>
+                                        <span th:text="${medicalHistory.description}"></span>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </main>
+    </div> <!-- end d-flex -->
+
+
+    <!-- medical histories requires ( for delete, put and add buttons ) -->
+    <div th:replace="~{employee/medical-histories/fragments/requires-medical-histories :: requires-medical-histories}"></div>
+
+    <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           
+
+</body>
+</html>

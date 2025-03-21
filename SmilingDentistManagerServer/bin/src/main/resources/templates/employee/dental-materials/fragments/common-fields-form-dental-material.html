@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    
+    <div th:fragment="common-fields-form-dental-material( formDentalMaterial )"
+          th:with="postExpenseType = ${ postExpenseType  ?: '' }">
+
+      <!-- for put form, for have id field -->
+      <div th:if="${formDentalMaterial != null}">
+        <input type="hidden" name="id" th:value="${formDentalMaterial.id}">
+      </div>
+
+      <div class="row g-3">
+
+
+        <div class="col-12 col-md-8 d-flex align-items-center">  
+    
+          <label th:for="'name' + ${formDentalMaterial?.id} + ${postExpenseType}" class="form-label me-2" th:text="#{formLabelNameMandatory}">
+          Name*:
+          </label> 
+
+          <input type="text" class="form-control w-100" th:id="'name' + ${formDentalMaterial?.id} + ${postExpenseType}" name="name" 
+                  th:value="${formDentalMaterial?.name}"> 
+        </div>
+        
+        <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 
+          
+          <label th:for="'cost' + ${formDentalMaterial?.id} + ${postExpenseType}" class="form-label me-2" 
+                  th:text="#{formLabelCost}">
+          Cost:
+          </label> 
+
+          <input type="number" class="form-control w-100" name="cost"
+                  th:id="'cost' + ${formDentalMaterial?.id} + ${postExpenseType}"  
+                  th:value="${formDentalMaterial?.cost}">
+        </div> 
+        
+      </div>
+
+      <div class="row g-3 mt-3">
+
+        <!-- <div class="col-12 col-md-6 d-flex align-items-center">   -->
+    
+          <label class="form-label me-2 col-md-4" 
+                 th:for="'description' + ${formDentalMaterial?.id} + ${postExpenseType}" 
+                 th:text="#{formLabelDescription}">
+          Description:
+          </label> 
+          <input type="textarea" class="form-control w-100" name="description" 
+                  th:id="'description' + ${formDentalMaterial?.id} + ${postExpenseType}"  
+                  th:value="${formDentalMaterial?.description}"> 
+        <!-- </div> -->
+        
+      </div>
+
+              
+
+    </div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/common-head :: common-head('Employee')}"></th:block>
+</head>
+<body>
+    
+    <div th:replace="~{fragments/common-top-page :: common-top-page}"></div>
+    
+    <!-- Sidebar and nav for mobile screens -->
+    <div th:replace="~{fragments/menu-dashboard-employee::side-dashboard-mobile}"></div>
+
+	<div class="d-flex">
+
+        <!-- Sidebar for medium and larger screens -->
+        <div th:insert="~{fragments/menu-dashboard-employee :: side-dashboard}" class="col-md-3 col-lg-2" ></div>
+
+    
+        <!-- Main Content -->
+        <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
+
+            <!-- Employees nav -->
+            <nav th:replace="~{employee/employees/fragments/employees-nav :: employees-nav}"></nav>
+          
+            <!-- here the page content -->
+            <div class="row">
+
+                <!-- List of employees -->
+                <div class="sdm-table-scrollable sdm-table-dim table-responsive mt-3 col-md-12">
+                    <table class="table table-striped table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th class="col-md-6"></th>
+                                <th th:text="#{tableHeaderTitle}">Title</th>
+                                <th th:text="#{tableHeaderName}">Name</th>
+                                <th th:text="#{tableHeaderSurname}">Surname</th>
+                                <th class="col-md-2"
+                                    th:text="#{tableHeaderBirthDate}">Birth date</th>
+                                <th th:text="#{tableHeaderEMail}">E-Mail</th>
+                                <th th:text="#{tableHeaderPhoneNumber1}">Phone number 1</th>
+                                <th th:text="#{tableHeaderPhoneNumber2}">Phone number 2</th>
+                                <th th:text="#{tableHeaderSalary}">Salary</th>
+                                <th th:text="#{tableHeaderPermissions}">Permissions</th>
+                                <th style="min-width: 15rem;"
+                                    th:text="#{tableHeaderProfessionalRoles}">Professional Roles</th>
+                                <th style="min-width: 15rem;"
+                                    th:text="#{tableHeaderWorkPeriod}">Work Period</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr th:each="joinEmployee : ${joinEmployees}">
+                                <!-- <td class="d-flex justify-content-center"> -->
+                                <td class="text-center align-middle">
+                                    <button th:id="'btnDeleteEmployee' + ${joinEmployee.employeeDTO.id}"
+                                        class="btn btn-danger me-2"
+                                        th:text="#{btnDelete}">
+                                        Delete
+                                    </button>
+
+                                    <!-- || #lists.last(joinEmployee.workPeriodsDTO).endDate != null -->
+                                    <!-- #lists.size(joinEmployee.workPeriodsDTO) == 0 -->
+                                    <div 
+                                            th:if="${
+                                                #lists.size(joinEmployee.workPeriodsDTO) == 0
+                                                || joinEmployee.workPeriodsDTO[ #lists.size( joinEmployee.workPeriodsDTO ) -1 ]?.endDate != null
+                                                }"
+                                            th:with="lastWorkPeriod= 
+                                                        ( ${#lists.size( joinEmployee.workPeriodsDTO ) -1  >= 0 
+                                                        && joinEmployee.workPeriodsDTO[ #lists.size( joinEmployee.workPeriodsDTO ) -1 ]?.endDate == null} ) 
+                                                            ? ${ joinEmployee.workPeriodsDTO[ #lists.size( joinEmployee.workPeriodsDTO ) -1 ] }
+                                                            : null"
+                                            >
+
+                                            <div th:insert="~{employee/employees/fragments/assume-employee-modal 
+                                                            :: assume-employee-modal( ${joinEmployee}, ${lastWorkPeriod} )}"
+                                                >
+                                            </div>
+                                    </div>  
+
+                                    <div 
+                                        th:if="${
+                                            #lists.size(joinEmployee.workPeriodsDTO) > 0
+                                            && joinEmployee.workPeriodsDTO[ #lists.size( joinEmployee.workPeriodsDTO ) -1 ]?.endDate == null
+                                            }" 
+                                        th:with="lastWorkPeriod=${ joinEmployee.workPeriodsDTO[ #lists.size( joinEmployee.workPeriodsDTO ) -1 ] }"
+                                        
+                                    >
+                                        <div th:insert="~{employee/employees/fragments/dismiss-employee-modal 
+                                            :: dismiss-employee-modal( ${joinEmployee}, ${lastWorkPeriod} )}"
+                                            >
+                                        </div>
+                                    </div>
+                                    
+
+                                    <div 
+                                        th:replace="~{employee/employees/fragments/put-employee-modal :: put-employee-modal(${joinEmployee})}">
+                                    </div> 
+                                </td>
+                                <td>
+                                    <span th:text="${joinEmployee.employeeDTO.title}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${joinEmployee.employeeDTO.name}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${joinEmployee.employeeDTO.surname}"></span>
+                                </td>
+                                <td >
+                                    <span   th:with="formatDate=#{formPlaceholderDate}"
+                                            th:text="${ #temporals.format( joinEmployee.employeeDTO.birthDate, formatDate )}">
+                                    </span>
+                                </td>
+                                <td>
+                                    <span th:text="${joinEmployee.employeeDTO.eMail}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${joinEmployee.employeeDTO.phoneNumber}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${joinEmployee.employeeDTO.phoneNumber2}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${joinEmployee.employeeDTO.salary}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="#{ ${joinEmployee.employeeDTO.permission} }"></span>
+                                </td>
+                                <td >
+                                    <div 
+                                            th:each="professionalRole : ${joinEmployee.professionalRolesDTO}"
+                                            th:text="${professionalRole.name}">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div 
+                                            th:each="workPeriod : ${joinEmployee.workPeriodsDTO}"
+                                            th:with="formatDate=#{formPlaceholderDate},
+                                                        workPeriodText = (${workPeriod.endDate} != null)
+                                                            ? ${ #temporals.format( workPeriod?.startDate, formatDate )} 
+                                                              + ' - ' 
+                                                              + ${ #temporals.format( workPeriod?.endDate, formatDate )}
+                                                            : ${ #temporals.format( workPeriod?.startDate, formatDate )} 
+                                                              + ' - ' + #{textPresent}"
+                                    >
+                                        <span th:text="${workPeriodText}"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+
+            </div>
+        </main>
+    </div> <!-- end d-flex -->
+
+
+    <!-- Required for put-employee-modal fragment and delete employee buttons  -->
+    <div th:replace="~{employee/employees/fragments/requires-employees}"></div>
+
+
+    <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           
+
+</body>
+</html>

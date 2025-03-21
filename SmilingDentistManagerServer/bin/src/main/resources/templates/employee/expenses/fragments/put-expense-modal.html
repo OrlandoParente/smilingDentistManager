@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="put-expense-modal( expense )">
+        <div class="modal fade" th:id="'putExpenseModalToggle' + ${ expense.id }" aria-hidden="true"
+                aria-labelledby="addExpenseModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="putExpenseModalToggleLabel" 
+                      th:text="#{titleEditExpense}">
+                    Edit Expense
+                  </h1>
+                  <button th:id="'btnXCloseModal' + ${ expense.id }" 
+                          type="button" class="btn-close" 
+                          data-bs-dismiss="modal" aria-label="Close">
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- fragment err-msg($id, $msg) , 
+                        in this case $id='' cause in err-msg id = 'errMsg' + ${id} 
+                        but we have only one modal so we don't need different ids -->
+                    <div th:replace="~{fragments/messages/error-msg :: error-msg(${ expense.id },'')}"></div>
+
+                    <!-- get data for create the professional role -->
+                    <form th:id="'putExpenseForm' + ${ expense.id }" method="PUT" th:action="@{/putExpense}" > 
+                        
+                    <!-- Common fields of the form dental-material -->
+                    <div th:replace="~{employee/expenses/fragments/common-fields-form-expense
+                                      :: common-fields-form-expense( ${ expense } )}">
+                    </div>
+                    
+                    </form>
+
+
+                </div>
+
+                <div class="modal-footer">
+                  
+                  <!-- 
+                  <button id="btnPutProfessionalRoleSlot" class="btn btn-primary" th:text="#{btnPutProfessionalRoleSlot}">
+                    Put Professional Role
+                  </button> 
+                  -->
+                  
+                  <button th:id="'btnPutExpense' + ${ expense.id }" type="submit" 
+                          form="putExpenseForm" class="btn btn-primary" 
+                          th:text="#{btnEdit}">
+                    Edit 
+                  </button>
+                
+                </div>
+
+              </div>
+            </div>
+        </div>
+
+          <!-- button for open the model -->
+          <a href="#" class="btn btn-primary " 
+                th:data-bs-target="'#putExpenseModalToggle' + ${ expense.id }" 
+                data-bs-toggle="modal" th:text="#{btnEdit}">
+            Edit 
+          </a>
+
+        <!-- Add script for manage add dental-material request with js -->
+         <!-- I put this in requires-dental-materials -->
+        <!-- <script th:src="@{/js/dental-materials/add-dental-material-form.js}"></script>  -->
+
+    </div>
+
+</body>
+</html>

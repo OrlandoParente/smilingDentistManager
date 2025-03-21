@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+      
+      <!-- Requires for customer-details page -->
+      <div th:fragment="requires-customer-details">
+        
+            <!-- joinMedicalHistory Ids -->
+            <div th:each="entry : ${ joinCustomer.mapByTypeJoinMedicalHistoriesDTO }">
+
+                  <div th:each="joinMedicalHistory : ${ entry.value }">
+                        <span class="hasMedicalHistoryIds d-none" th:text="${ joinMedicalHistory?.hasMedicalHistoryDTO.id }" ></span>
+                        <span class="medicalHistoryIds d-none" th:text="${ joinMedicalHistory?.medicalHistoryDTO.id }" ></span>
+                  </div>
+                  
+            </div>
+
+            <!-- joinAppointment.appointmentDTO Ids -->
+            <div th:each="appointment : ${ joinCustomer.joinAppointmentsDTO }">
+                  <span class="appointmentIds d-none" th:text="${appointment.appointmentDTO.id}" ></span>
+            </div> 
+            
+
+            <!-- ---------------- MEDICAL HISTORIES SCRIPTS ----------------------------------- -->
+            <!-- Add script for manage add link customer to medical history request with js -->
+            <script th:src="@{/js/customers/customer-details/medical-history/add-has-medical-history-form.js}"></script>  
+
+            <!-- Add script for manage put link customer to medical history request with js -->
+            <script th:src="@{/js/customers/customer-details/medical-history/put-has-medical-history-form.js}"></script>  
+
+            <!-- Add script for manage delete buttons -->
+            <script th:src="@{/js/customers/customer-details/medical-history/customer-details-buttons.js}"></script> 
+
+            <!-- ------------------------------------------------------------------------------- -->
+
+            <!-- ----------------- APPOINTMRNTS SCRIPTS ---------------------------------------- -->
+            <!-- Script for post appointment -->
+            <script th:src="@{/js/customers/customer-details/appointments/add-appointment-form.js}"></script>  
+
+            <!-- Script for put appointment -->
+            <script th:src="@{/js/customers/customer-details/appointments/put-appointment-form.js}"></script>
+
+            <!-- Script for appointment buttons -->
+            <script th:src="@{/js/customers/customer-details/appointments/appointment-buttons.js}"></script>  
+
+            <!-- Script for appointment buttons -->
+            <script th:src="@{/js/customers/customer-details/appointments/dental-anatomy.js}"></script>  
+
+            <!-- ------------------------------------------------------------------------------- -->
+      </div>
+
+</body>
+</html>

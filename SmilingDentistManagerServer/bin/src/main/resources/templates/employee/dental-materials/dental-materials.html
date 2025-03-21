@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/common-head :: common-head('Dental Materials')"></th:block>
+</head>
+<body>
+    
+    <div th:replace="fragments/common-top-page :: common-top-page"></div>
+    
+    <!-- Sidebar and nav for mobile screens -->
+    <div th:replace="fragments/menu-dashboard-employee::side-dashboard-mobile"></div>
+
+	<div class="d-flex">
+
+        <!-- Sidebar for medium and larger screens -->
+        <div th:insert="fragments/menu-dashboard-employee::side-dashboard" class="col-md-3 col-lg-2" ></div>
+
+    
+        <!-- Main Content -->
+        <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
+
+            <nav th:replace="~{employee/dental-materials/fragments/dental-materials-nav :: dental-materials-nav}" ></nav>
+
+            <!-- here the page content -->
+            <div class="row">
+                
+                <!-- List of dental materials -->
+                <div class="sdm-table-scrollable table-responsive mt-3">
+                    <table class="table table-striped table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th th:text="#{tableHeaderName}">Name</th>
+                                <th th:text="#{tableHeaderQuantity}">Quantity</th>
+                                <th th:text="#{tableHeaderCostPerUnit}">Cost per unit</th>
+                                <th th:text="#{tableHeaderDescription}">Description</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="dentalMaterial : ${ dentalMaterials }">
+
+                                <td>
+                                    <button class="btn btn-danger mt-1"
+                                            th:text="#{btnDelete}"
+                                            th:id="'btnDeleteDentalMaterial' + ${dentalMaterial.id}">
+                                        Delete
+                                    </button>
+
+                                    <div class="d-inline-block"
+                                         th:insert="~{employee/dental-materials/fragments/put-dental-material-modal
+                                                    :: put-dental-material-modal( ${ dentalMaterial } ) }">
+                                        Edit
+                                    </div>
+                                </td>
+                                
+                                <td>
+                                    <span th:text="${dentalMaterial.name}"></span>
+                                </td>
+
+                                <td>
+                                    <span   class="me-3"
+                                            th:text="${dentalMaterial.quantity}">
+                                    </span>
+
+                                    <div class="d-inline-block"
+                                    th:insert="~{employee/dental-materials/fragments/increase-dental-material-quantity-modal
+                                               :: increase-dental-material-quantity-modal( ${ dentalMaterial } )}">
+                                       -
+                                    </div>
+                                    
+                                    <div class="d-inline-block"
+                                         th:insert="~{employee/dental-materials/fragments/decrease-dental-material-quantity-modal
+                                                    :: decrease-dental-material-quantity-modal( ${ dentalMaterial } )}">
+                                            -
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <span th:text="${dentalMaterial.cost}"></span>
+                                </td>
+
+                                <td>
+                                    <span th:text="${dentalMaterial.description}"></span>
+                                </td>
+
+
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div> <!-- end table div -->
+
+            </div> <!-- end main contant row div -->
+        </main>
+    </div> <!-- end d-flex -->
+
+
+    <!-- Requires for add, edit, delete, etc ... buttons  -->
+    <div th:replace="~{employee/dental-materials/fragments/requires-dental-materials :: requires-dental-materials}"></div>
+
+    <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           
+
+</body>
+</html>

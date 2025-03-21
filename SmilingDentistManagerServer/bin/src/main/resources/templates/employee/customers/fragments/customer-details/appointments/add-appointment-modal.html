@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="add-appointment-modal( idCustomer )">
+        <div class="modal fade" id="addAppointmentModalToggle" aria-hidden="true"
+                aria-labelledby="addAppointmentModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="addAppointmentModalToggleLabel" th:text="#{titleAddAppointment}">
+                    Add Appointment
+                  </h1>
+                  <button id="btnXCloseModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                  <!-- fragment err-msg($id, $msg) , 
+                        in this case $id='' cause in err-msg id = 'errMsg' + ${id} 
+                        but we have only one modal so we don't need different ids -->
+                  <div th:replace="~{fragments/messages/error-msg :: error-msg('','')}"></div>
+
+                  <!-- get data for create the appointment -->
+                  <form id="addAppointmentForm" method="POST" th:action="@{/postAppointment}" > 
+                    
+                    <div th:replace="~{employee/customers/fragments/customer-details/appointments/common-fields-appointment-form
+                                      :: common-fields-appointment-form( ${ idCustomer }, null )}"></div>
+
+
+                  </form>
+
+                </div>
+                <div class="modal-footer">
+                  <button id="btnAddAppointment" type="submit" form="addAppointmentForm" class="btn btn-primary" th:text="#{btnAdd}">
+                    Add Appointment
+                  </a>
+                </div>
+              </div>
+            </div>
+        </div>
+          <a href="#" class="nav-link active" data-bs-target="#addAppointmentModalToggle" data-bs-toggle="modal" th:text="#{btnAddAbbreviation}">
+            Add
+          </a>
+
+          <!-- Script for post appointment -->
+          <!-- I put this in customer-details-requires -->
+          <!-- <script th:src="@{/js/customers/customer-details/appointments/add-appointment-form.js}"></script>   -->
+
+    </div>
+
+</body>
+</html>

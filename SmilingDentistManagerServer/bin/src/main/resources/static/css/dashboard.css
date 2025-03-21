@@ -1,0 +1,23 @@
+.sidebar {
+    background-color: #343a40;
+    color: white;
+    padding-top: 20px;
+}
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: block;
+}
+.sidebar a:hover {
+    background-color: #495057;
+    color: #ffffff;
+}
+.content {
+    padding: 20px;
+}
+
+/* sdm: smiling dentist manager, for prevent already used names */
+.sdm-dropdownmenu{
+    background-color: #495057;
+}

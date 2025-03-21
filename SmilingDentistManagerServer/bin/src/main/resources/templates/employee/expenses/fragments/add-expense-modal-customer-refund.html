@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="add-expense-modal-customer-refund">
+
+      <!-- expense id, this is need for the js script -->
+      <div class="postExpenseTypes d-none" >CustomerRefund</div>
+      <div class="d-none" id="tagTextCustomerRefund" th:text="#{tagExpenseCustomerRefund}"></div>
+      <div class="d-none" id="prefixDescriptionCustomerRefund" th:text="#{textRefund} "></div>
+
+        <div class="modal fade" id="addExpenseModalToggleCustomerRefund" aria-hidden="true"
+                aria-labelledby="addAddExpenseModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="addExpenseModalToggleLabelCustomerRefund" 
+                      th:text="#{titleAddExpense}">
+                    Add Expense 
+                  </h1>
+                  <button id="btnXCloseModalCustomerRefund" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- fragment err-msg($id, $msg) , 
+                        in this case $id='' cause in err-msg id = 'errMsg' + ${id} 
+                        but we have only one modal so we don't need different ids -->
+                    <div th:replace="~{fragments/messages/error-msg :: error-msg('CustomerRefund','')}"></div>
+
+                    <!-- get data for create the professional role -->
+                    <form id="addExpenseFormCustomerRefund" method="POST" th:action="@{/postExpense}" > 
+                        
+                      <!-- Common fields of the form expenses -->
+                      <div th:replace="~{employee/expenses/fragments/common-fields-form-expense
+                                        :: common-fields-form-expense( formExpense = null, postExpenseType = 'CustomerRefund' )}">
+                      </div>
+                    
+                      <div class="row">
+                        <div class="col-12 d-flex align-items-center mt-3">
+
+                          <label  class=" form-label col-md-auto me-2"
+                                  for="selectElCustomerRefund"
+                                  th:text="#{formLabelCustomer}">
+                          </label>
+                          <select class="form-control form-select " name="idCustomer"
+                                  id="selectElCustomerRefund">
+                            <option th:each="customer : ${customers}"
+                                    th:text="${customer.surname} 
+                                              + ' ' + ${customer.name} 
+                                              + ' ' + ${customer.taxIdCode}"
+                                    th:value="${customer.id}">
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                    </form>
+
+
+                </div>
+
+                <div class="modal-footer">
+                  
+                  <!-- 
+                  <button id="btnAddProfessionalRoleSlot" class="btn btn-primary" th:text="#{btnAddProfessionalRoleSlot}">
+                    Add Professional Role
+                  </button> 
+                  -->
+                  
+                  <button id="btnAddExpenseCustomerRefund" type="submit" 
+                          form="addExpenseFormCustomerRefund" class="btn btn-primary" 
+                          th:text="#{btnAdd}">
+                    Add Expense
+                  </button>
+                
+                </div>
+
+              </div>
+            </div>
+        </div>
+        <!-- If there are many buttons on the nav use this: 
+            th:text="#{btnAddAbbreviation}"
+            for a better web responsive web application  -->
+          <a href="#" class="btn btn-primary w-100" data-bs-target="#addExpenseModalToggleCustomerRefund" 
+                data-bs-toggle="modal" th:text="#{btnAddCustomerRefund}">
+            Add 
+          </a>
+
+        <!-- Add script for manage add dental-material request with js -->
+         <!-- I put this in requires-dental-materials -->
+        <!-- <script th:src="@{/js/dental-materials/add-dental-material-form.js}"></script>  -->
+
+    </div>
+
+</body>
+</html>

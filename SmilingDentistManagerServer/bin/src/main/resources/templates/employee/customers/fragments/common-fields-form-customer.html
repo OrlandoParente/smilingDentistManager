@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    
+    <div th:fragment="common-fields-form-customer( formCustomer )">
+
+        <div class="row g-3">
+
+  
+            <div class="col-12 col-md-6 d-flex align-items-center">  
+        
+              <label th:for="'name' + ${formCustomer?.id}" class="form-label me-2" th:text="#{formLabelNameMandatory}">
+              Name*:
+              </label> 
+              <!-- <input type="text" class="form-control" id="name" name="name" > -->
+              <input type="text" class="form-control w-100" th:id="'name' + ${formCustomer?.id}" name="name" 
+                      th:value="${formCustomer?.name}"> 
+            </div>
+            
+            <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
+              
+              <label th:for="'surname' + ${formCustomer?.id}" class="form-label me-2" 
+                      th:text="#{formLabelSurnameMandatory}">
+              Surname*:
+              </label> 
+              <!-- <input type="text" class="form-control" id="name" name="name" > -->
+              <input type="text" class="form-control w-100" th:id="'surname' + ${formCustomer?.id}" name="surname" 
+                      th:value="${formCustomer?.surname}">
+            </div> 
+            
+          </div>
+
+          <div class="row g-3 mt-3">
+
+            <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
+              
+              <label th:for="'eMail' + ${formCustomer?.id}" class="form-label me-2 col-md-2" th:text="#{formLabelEMailMandatory}">
+              E-mail*:
+              </label> 
+              <input type="text" class="form-control w-100" th:id="'eMail' + ${formCustomer?.id}" name="eMail" 
+                      th:value="${formCustomer?.eMail}">
+            </div> 
+
+            <div class="col-12 col-md-6 d-flex align-items-center">  
+        
+              <label th:for="'taxIdCode' + ${formCustomer?.id}" class="form-label me-2 col-md-4" th:text="#{formLabelTaxIdCode}">
+                Tax id code:
+              </label> 
+              <input type="text" class="form-control w-100" th:id="'taxIdCode' + ${formCustomer?.id}" name="taxIdCode" 
+                      th:value="${formCustomer?.taxIdCode}"> 
+            </div>
+
+
+          </div>
+
+
+          <div class="row g-3 mt-3">
+
+            <div class="col-12 col-md-6 d-flex align-items-center">  
+        
+              <label th:for="'phoneNumber' + ${formCustomer?.id}" class="form-label me-2 col-md-4" th:text="#{formLabelPhoneNumber}">
+              Phone Number:
+              </label> 
+              <input type="number" class="form-control w-100" th:id="'phoneNumber' + ${formCustomer?.id}" name="phoneNumber" 
+                      th:value="${formCustomer?.phoneNumber}"> 
+            </div>
+            
+            <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
+              
+              <label th:for="'phoneNumber2-' + ${formCustomer?.id}" class="form-label me-2 col-md-4" th:text="#{formLabelPhoneNumber2}">
+              Phone number 2:
+              </label> 
+              <input type="number" class="form-control w-100" th:id="'phoneNumber2-' + ${formCustomer?.id}" name="phoneNumber2" 
+                      th:value="${formCustomer?.phoneNumber2}">
+            </div> 
+            
+          </div>
+
+
+          <div class="row g-3 mt-3">
+
+            <div class="col-12 col-md-6 d-flex align-items-center">
+              <label th:for="'birthDate' + ${formCustomer?.id}" class="form-label me-2 col-md-auto" 
+                      th:text="#{formLabelBirthDate}">
+                Birth Date*:
+              </label> 
+              <input type="text" class="form-control w-100" th:id="'birthDate' + ${formCustomer?.id}" name="birthDate" 
+                        th:placeholder="#{formPlaceholderDate}"
+                        th:with="formatDate=#{formPlaceholderDate}"
+                        th:value="${ #temporals.format( formCustomer?.birthDate, formatDate )}"> 
+            </div>
+
+            <div class="col-12 col-md-6 d-flex align-items-center">  
+        
+              <label class="form-label mb-1 col-md-auto me-2" th:for="'permission' + ${formCustomer?.id}" 
+                      th:text="#{formLabelPermissions}">
+                Permissions: 
+              </label>
+              <select class="form-select" name="permission" th:id="'permission' + ${formCustomer?.id}" >
+
+                <!-- <option selected value=""></option> -->
+                <option th:each="permission : ${customerPermissions}"
+                        th:selected="${permission == formCustomer?.permission}" 
+                        th:value="${permission}"
+                        th:text="#{ ${permission} }">
+                <!-- <option th:each="permission : ${customerPermissions}"
+                        th:if="${permission == formCustomer?.permission}"
+                          selected 
+                          th:value="${permission}"
+                          th:text="#{ ${permission} }">
+                <option th:each="permission : ${customerPermissions}"
+                        th:if="${permission != formCustomer?.permission}"
+                          selected 
+                          th:value="${permission}"
+                          th:text="#{ ${permission} }"> -->
+                </option>
+              
+              </select>
+            </div>
+            
+          </div>
+
+          
+          <fieldset class="border p-3 mt-3">
+
+            <legend th:text="#{formLegendBirthplace}">Birthplace</legend>
+
+            <div class="row g-3 mt-3">
+
+              <div class="col-12 col-md-8 d-flex align-items-center mt-3"> 
+                <label class="form-label mb-1 col-md-auto me-2" th:for="'birthCity' + ${formCustomer?.id}" 
+                        th:text="#{formLabelBirthCity}">
+                    Birth city: 
+                </label>
+                <input class="form-control" th:id="'birthCity' + ${formCustomer?.id}" name="birthCity" type="text" 
+                        th:value="${formCustomer?.birthCity}">
+              </div>
+
+              <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 
+                <label class="form-label mb-1 col-md-auto me-2" 
+                        th:for="'birthCityProvince' + ${formCustomer?.id}" 
+                        th:text="#{formLabelBirthCityProvince}">
+                    Birth city province: 
+                </label>
+                <input class="form-control" name="birthCityProvince" th:id="'birthCityProvince' + ${formCustomer?.id}" 
+                        type="text"
+                        th:value="${formCustomer?.birthCityProvince}">
+              </div>
+
+            </div>
+
+          </fieldset>
+
+          <fieldset class="border p-3 mt-3">
+
+            <legend th:text="#{formLegendResidence}">Residence</legend>
+
+            <div class="row g-3 mt-3">
+
+              <div class="col-12 col-md-8 d-flex align-items-center mt-3"> 
+                <label class="form-label mb-1 col-md-auto me-2" 
+                        th:for="'residenceStreet' + ${formCustomer?.id}" 
+                        th:text="#{formLabelResidenceStreet}">
+                    Street/square:  
+                </label>
+                <input class="form-control" name="residenceStreet" th:id="'residenceStreet' + ${formCustomer?.id}" 
+                        type="text" 
+                        th:value="${formCustomer?.residenceStreet}">
+              </div>
+
+              <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 
+                <label class="form-label mb-1 col-md-auto me-2" 
+                        th:for="'houseNumber' + ${formCustomer?.id}" 
+                        th:text="#{formLabelResidenceHouseNumber}">
+                    N.: 
+                </label>
+                <input class="form-control" name="houseNumber" th:id="'houseNumber' + ${formCustomer?.id}" 
+                        type="text"
+                        th:value="${formCustomer?.houseNumber}">
+              </div>
+
+            </div>
+
+            <div class="row g-3 mt-3">
+
+              <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
+                <label class="form-label mb-1 col-md-auto me-2" 
+                        th:for="'residenceCity' + ${formCustomer?.id}" 
+                        th:text="#{formLabelResidenceCity}">
+                    City: 
+                </label>
+                <input class="form-control" name="residenceCity" th:id="'residenceCity' + ${formCustomer?.id}" 
+                        type="text" 
+                        th:value="${formCustomer?.residenceCity}">
+              </div>
+
+              <div class="col-12 col-md-3 d-flex align-items-center mt-3"> 
+                <label class="form-label mb-1 col-md-auto me-2" 
+                        th:for="'residenceCityCap' + ${formCustomer?.id}" 
+                        th:text="#{formLabelResidenceCap}">
+                    CAP: 
+                </label>
+                <input class="form-control" name="residenceCityCap" th:id="'residenceCityCap' + ${formCustomer?.id}" 
+                        type="text"
+                        th:value="${formCustomer?.residenceCityCap}">
+              </div>
+
+
+              <div class="col-12 col-md-3 d-flex align-items-center mt-3"> 
+                <label class="form-label mb-1 col-md-auto me-2" 
+                        th:for="'residenceCityProvince' + ${formCustomer?.id}" 
+                        th:text="#{formLabelResidenceCityProvince}">
+                    Province: 
+                </label>
+                <input class="form-control" name="residenceProvince" type="text"
+                        th:id="'residenceCityProvince' + ${formCustomer?.id}"
+                        th:value="${formCustomer?.residenceProvince}">
+              </div>
+
+
+            </div>
+
+          </fieldset>
+
+
+    </div>
+
+
+
+</body>
+</html>

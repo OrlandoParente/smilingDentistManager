@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="add-expense-modal-salary-payment">
+
+      <!-- expense id, this is need for the js script -->
+      <div class="postExpenseTypes d-none" >SalaryPayment</div>
+      <div class="d-none" id="tagTextSalaryPayment" th:text="#{tagExpenseSalaryPayment}"></div>
+      <div class="d-none" id="prefixDescriptionSalaryPayment" th:text="#{textSalaryPayment} "></div>
+
+        <div class="modal fade" id="addExpenseModalToggleSalaryPayment" aria-hidden="true"
+                aria-labelledby="addAddExpenseModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="addExpenseModalToggleLabelSalaryPayment" 
+                      th:text="#{titleAddExpense}">
+                    Add Expense 
+                  </h1>
+                  <button id="btnXCloseModalSalaryPayment" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- fragment err-msg($id, $msg) , 
+                        in this case $id='' cause in err-msg id = 'errMsg' + ${id} 
+                        but we have only one modal so we don't need different ids -->
+                    <div th:replace="~{fragments/messages/error-msg :: error-msg('SalaryPayment','')}"></div>
+
+                    <!-- get data for create the professional role -->
+                    <form id="addExpenseFormSalaryPayment" method="POST" th:action="@{/postExpense}" > 
+                        
+                      <!-- Common fields of the form expenses -->
+                      <div th:replace="~{employee/expenses/fragments/common-fields-form-expense
+                                        :: common-fields-form-expense( formExpense = null, postExpenseType = 'SalaryPayment' )}">
+                      </div>
+                    
+                      <div class="row">
+                        <div class="col-12 d-flex align-items-center mt-3 ">
+
+                          <label  class="form-label me-2 col-md-auto"
+                                  for="selectElSalaryPayment"
+                                  th:text="#{formLabelEmployee}">
+                          </label>
+                          <select class="form-select " name="idEmployee"
+                                  id="selectElSalaryPayment">
+                            <option th:each="employee : ${employees}"
+                                    th:text="${employee.surname} 
+                                              + ' ' + ${employee.name}"
+                                    th:value="${employee.id}">
+                            </option>
+                          </select>
+
+                        </div>
+                      </div>
+
+                    </form>
+
+
+                </div>
+
+                <div class="modal-footer">
+                  
+                  <!-- 
+                  <button id="btnAddProfessionalRoleSlot" class="btn btn-primary" th:text="#{btnAddProfessionalRoleSlot}">
+                    Add Professional Role
+                  </button> 
+                  -->
+                  
+                  <button id="btnAddExpenseSalaryPayment" type="submit" 
+                          form="addExpenseFormSalaryPayment" class="btn btn-primary" 
+                          th:text="#{btnAdd}">
+                    Add Expense
+                  </button>
+                
+                </div>
+
+              </div>
+            </div>
+        </div>
+        <!-- If there are many buttons on the nav use this: 
+            th:text="#{btnAddAbbreviation}"
+            for a better web responsive web application  -->
+          <a href="#" class="btn btn-primary w-100" data-bs-target="#addExpenseModalToggleSalaryPayment" 
+                data-bs-toggle="modal" th:text="#{btnAddSalaryPayment}">
+            Add 
+          </a>
+
+        <!-- Add script for manage add dental-material request with js -->
+         <!-- I put this in requires-dental-materials -->
+        <!-- <script th:src="@{/js/dental-materials/add-dental-material-form.js}"></script>  -->
+
+    </div>
+
+</body>
+</html>

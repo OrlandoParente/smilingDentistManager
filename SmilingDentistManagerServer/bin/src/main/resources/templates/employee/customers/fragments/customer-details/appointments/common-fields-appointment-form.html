@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body>
+    <div th:fragment="common-fields-appointment-form( formIdCustomer, formJoinAppointment )">
+
+        <!-- For sent the idAppointment in the put request -->
+        <div th:if="${formJoinAppointment != null }"> <!-- if fields are for put request form -->
+            <input type="hidden" name="id" th:value="${formJoinAppointment?.appointmentDTO?.id}">
+        </div>
+
+        <div class="row g-3 mt-3">
+
+            <div class="col-12 col-md-6 d-flex align-items-center"> 
+                <label th:for="'date' + ${formJoinAppointment?.appointmentDTO?.id}" 
+                        class="form-label me-2" th:text="#{formLabelDateMandatory}">
+                    Date*:
+                </label> 
+                <input type="text" class="form-control w-100" 
+                        th:id="'date' + ${formJoinAppointment?.appointmentDTO?.id}" 
+                        name="date" 
+                        th:placeholder="#{formPlaceholderDate}"
+                        th:value="${ #temporals.format(formJoinAppointment?.appointmentDTO?.date, 'dd/MM/yyyy') }"> 
+            </div> 
+
+            <div class="col-12 col-md-6 d-flex align-items-center"> 
+                <label th:for="'time' + ${formJoinAppointment?.appointmentDTO?.id}" class="form-label me-2" th:text="#{formLabelTimeMandatory}">
+                    Time*:
+                </label> 
+                <input type="text" class="form-control w-100" 
+                        th:id="'time' + ${formJoinAppointment?.appointmentDTO?.id}" 
+                        name="time" 
+                        th:placeholder="#{formPlaceholderTime}"
+                        th:value="${ formJoinAppointment?.appointmentDTO?.time }"> 
+            </div> 
+
+            <!-- <div class="col-12 col-md-4 d-flex align-items-center"> 
+            <select class="form-select " name="idCustomer" id="idCustomer" > -->
+                <!-- -1 for not change, -2 for set as null -->
+                <!-- <option value="-2" th:text="#{formOptionSelectCustomerMandatory}">
+                Select the customer*
+                </option>
+                <option th:each="customer : ${customers}" 
+                        th:value="${customer.id}"
+                        th:text="${customer.name} + ' ' + ${customer.surname}"
+                        th:selected="${customer.id} == ${formJoinAppointment?.customerDTO?.id}">
+                </option>
+            </select>
+            </div> -->
+
+        </div> 
+
+        <!-- In customer-details we already know the customer -->
+        <input type="hidden" name="idCustomer" th:value="${ idCustomer }">
+
+        
+
+        <div class="row g-3 mt-3">
+
+        <div class="col-12 col-md-6 d-flex align-items-center"> 
+            <select class="form-select mt-1" name="idDoctor" 
+                    th:id="'idEmployee' + ${formJoinAppointment?.appointmentDTO?.id}" >
+                <!-- -1 for not change, -2 for set as null -->
+                
+                <!-- for post form -->
+                <option th:if="${ formJoinAppointment == null }"
+                    selected value="-1" th:text="#{formOptionSelectDoctor}">
+                Select the doctor
+                </option>
+
+                <!-- for put form -->
+                <option th:if="${ formJoinAppointment != null }"
+                        selected value="-2" th:text="#{formOptionSelectDoctor}">
+                Select the doctor
+                </option>
+                
+                <option th:each="doctor : ${doctors}" 
+                        th:value="${doctor.id}"
+                        th:text="${doctor.name} + ' ' + ${doctor.surname}"
+                        th:selected="${doctor.id} == ${formJoinAppointment?.doctorDTO?.id}">
+            </select>
+        </div>
+
+        <div class="col-12 col-md-6 d-flex align-items-center"> 
+            <select class="form-select mt-1" name="idTreatment" 
+                    th:id="'idTreatment' + ${formJoinAppointment?.appointmentDTO?.id}" >
+                <!-- -1 for not change, -2 for set as null -->
+                
+                <!-- for post form -->
+                <option th:if="${ formJoinAppointment == null }"
+                        selected value="-1" th:text="#{formOptionSelectTreatment}">
+                Select the treatment
+                </option>
+
+                <!-- for put form -->
+                <option th:if="${ formJoinAppointment != null }"
+                        selected value="-2" th:text="#{formOptionSelectTreatment}">
+                Select the treatment
+                </option>
+                
+                <option th:each="treatment : ${treatments}" 
+                        th:value="${treatment.id}"
+                        th:text="${treatment.name}"
+                        th:selected="${treatment.id} == ${formJoinAppointment?.treatmentDTO?.id}">
+            </select>
+            </div>
+
+        </div>
+
+        <div class="row g-3 mt-3">
+            
+            <div class="col-12 col-lg-3 d-flex align-items-center"> 
+                <label class="form-label me-2 col-md-auto" 
+                        th:text="#{formLabelPaymentAmount}"
+                        th:for="'payment' + ${formJoinAppointment?.appointmentDTO?.id}">
+                    Payment:
+                </label> 
+                <input type="number" class="form-control w-100" name="payment" 
+                        th:id="'payment' + ${formJoinAppointment?.appointmentDTO?.id}"  
+                        th:value="${formJoinAppointment?.appointmentDTO?.payment}" >
+            </div> 
+
+            <div class="col-12 col-lg-5 d-flex align-items-center"> 
+                <label class="form-label me-2 col-md-auto" 
+                        th:text="#{formLabelPaymentMethod}"
+                        for="paymentMethod">
+                    Payment method:
+                </label> 
+                <input type="text" class="form-control w-100" name="paymentMethod" id="paymentMethod" 
+                        th:value="${joinAppointment?.appointmentDTO?.paymentMethod}" >
+            </div> 
+
+            <div class="col-12 col-lg-4 d-flex align-items-center"> 
+                <label class="form-label me-2 col-md-auto" 
+                        th:text="#{formLabelInvoiceNumber}" 
+                        th:for="'invoiceNumber' + ${formJoinAppointment?.appointmentDTO?.id}">
+                    Invoice Num.:
+                </label> 
+                <input type="text" class="form-control w-100" name="invoiceNumber" 
+                        th:id="'invoiceNumber' + ${formJoinAppointment?.appointmentDTO?.id}"
+                        th:value="${formJoinAppointment?.appointmentDTO?.invoiceNumber}" > 
+            </div> 
+
+        </div> 
+
+        <div class="row g-3 mt-3">
+            <label class="form-label mb-1" 
+                    th:for="'notes' + ${formJoinAppointment?.appointmentDTO?.id}" 
+                    th:text="#{formLabelNotes}">
+            Notes: 
+            </label>
+            <input class="form-control" name="notes" 
+                    th:id="'notes' + ${formJoinAppointment?.appointmentDTO?.id}" 
+                    type="textarea"
+                    th:value="${formJoinAppointment?.appointmentDTO?.notes}">
+        </div>
+
+    </div>
+    
+</body>
+</html>

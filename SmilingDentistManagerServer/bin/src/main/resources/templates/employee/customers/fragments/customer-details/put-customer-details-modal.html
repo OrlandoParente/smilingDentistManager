@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="put-customer-details-modal(customer)">
+        <div class="modal fade" th:id="'putCustomerModalToggle' + ${customer.id}" 
+                th:aria-labelledby="'putCustomerModalToggleLabel' + ${customer.id}" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" 
+                      th:id="'putCustomerModalToggleLabel' + ${customer.id}"
+                      th:text="#{titleEditCustomer}">
+                      Edit Customer
+                  </h1>
+                  <button th:id="'btnXCloseModal' + ${customer.id}" type="button" 
+                          class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                  <div th:replace="~{fragments/messages/error-msg :: error-msg(${customer.id},'')}"></div>
+
+                  <!-- get data for create the Customer -->
+                  <form th:id="'putCustomerForm' + ${customer.id}" method="PUT" th:action="@{/putCustomer}" > 
+
+
+                    <!-- For sent the idCustomer in the put request -->
+                    <div><input id="putCustomerDetailsId" type="hidden" name="id" th:value="${customer.id}"></div>
+
+                    <!-- Common fields of the form customer -->
+                    <div th:replace="~{employee/customers/fragments/common-fields-form-customer
+                                      :: common-fields-form-customer( ${customer} )}">
+                    </div>
+
+                  </form>
+
+                </div>
+
+                <div class="modal-footer">
+
+                  <!-- TO EDIT:  add button add  Medical History -->  
+                  <!-- <button th:id="'btnAddProfessionalRoleSlot' + ${customer.id}" 
+                          class="btn btn-primary" th:text="#{btnAddProfessionalRoleSlot}">
+                    Add Professional Role
+                  </button> -->
+
+                  <!-- Button edit Customer -->  
+                  <button th:id="'btnPutCustomer' + ${customer.id}" 
+                          type="submit" 
+                          th:form="'putCustomerForm' + ${customer.id}" 
+                          class="btn btn-primary me-2 mt-1" 
+                          th:text="#{btnEdit}">
+                    Edit Customer
+                  </button>
+                
+                </div>
+              </div>
+            </div>
+        </div>
+        
+        <!-- Button for open the Modal -->
+        <a  href="#" class="nav-link " 
+                th:data-bs-target="'#putCustomerModalToggle'+ ${customer.id}" 
+                data-bs-toggle="modal"
+                th:text="#{btnEdit}">Edit
+        </a>
+
+        <!-- Add script for manage edit customer details request with js -->
+        <script th:src="@{/js/customers/customer-details/put-customer-details-form.js}"></script>  
+
+    </div>
+
+</body>
+</html>

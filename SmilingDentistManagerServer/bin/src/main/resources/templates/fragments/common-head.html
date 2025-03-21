@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>Head fragments</title>
+</head>
+<body>
+
+    <th:block th:fragment="common-head(title)">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title th:text="${title}" ></title> 
+    
+        <!-- Collegamento al CSS di Bootstrap -->
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+        
+        <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+        
+    </th:block>
+    
+</body>
+</html>

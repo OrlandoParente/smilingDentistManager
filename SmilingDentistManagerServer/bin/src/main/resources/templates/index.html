@@ -1,0 +1,23 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<th:block th:replace="~{fragments/common-head :: common-head('Calendar - day view')}"></th:block>
+
+		<title>Smiling Dentist Manager Server</title>
+	</head>
+	<body class="p-3">
+
+		<h1>Smiling Dentist Manager Server </h1>
+		<p>This is the server of the Smiling Dentist Manager Application</p>
+
+		<div>
+			<a class="btn btn-primary" th:href="@{/(lang='it')}">Italian</a>
+			<a class="btn btn-primary" th:href="@{/(lang='en')}">English</a>
+		</div>
+		<div>
+			<a class="btn btn-primary mt-2" th:href="@{/login}">LogIn</a>
+		</div>
+		<p th:text="#{msgWelcome}"></p>
+		
+	</body>
+</html>

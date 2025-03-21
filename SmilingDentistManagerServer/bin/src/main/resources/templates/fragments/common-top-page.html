@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+ 
+    <!-- In this file I am not define the header, but the elements right after the head tag -->
+    <div th:fragment="common-top-page">
+        
+        <!-- -------------------- Controllers url ------------------------------ -->
+        <!-- Appointment -->
+        <a th:href="@{/deleteAppointment}" class="d-none" id="urlDeleteAppointment"></a>
+        <a th:href="@{/patchTeeth}" class="d-none" id="urlUpdateTeethList"></a>
+        <!-- Professional Role -->
+        <a th:href="@{/deleteProfessionalRole}" class="d-none" id="urlDeleteProfessionalRole"></a>
+        <!-- Treatment -->
+        <a th:href="@{/deleteTreatment}" class="d-none" id="urlDeleteTreatment"></a>
+        <!-- Has Professional Role -->
+        <a th:href="@{/postLinkEmployeeToProfessionalRole}" class="d-none" id="urlPostHasProfessionalRole"></a>
+        <a th:href="@{/deleteLinkEmployeeWithProfessionalRole}" class="d-none" id="urlDeleteHasProfessionalRole"></a>
+        <!-- Employee -->
+        <a th:href="@{/deleteEmployee}" class="d-none" id="urlDeleteEmployee"></a>
+        <!-- Work Period -->
+        <a th:href="@{/putWorkPeriod}" class="d-none" id="urlPutWorkPeriod"></a>
+        <a th:href="@{/postWorkPeriod}" class="d-none" id="urlPostWorkPeriod"></a>
+        <!-- Medical History -->
+        <a th:href="@{/deleteMedicalHistoryById}" class="d-none" id="urlDeleteMedicalHistory"></a>
+        <!-- Has Medical History -->
+        <a th:href="@{/deleteHasMedicalHistory}" class="d-none" id="urlDeleteHasMedicalHistory"></a>
+        <!-- Customer -->
+        <a th:href="@{/deleteCustomer}" class="d-none" id="urlDeleteCustomer"></a>
+        <!-- Dental Material -->
+        <a th:href="@{/deleteDentalMaterial}" class="d-none" id="urlDeleteDentalMaterial"></a>
+        <!-- Expense -->
+        <a th:href="@{/deleteExpense}" class="d-none" id="urlDeleteExpense"></a>
+        <!-- ------------------------------------------------------------------- -->
+
+        <!-- err messages ------------------------------------------------------ -->
+        <span   class="d-none" id="errMsgDuplicateProfessionalRoleSelected" 
+                th:text="#{msgErrorDuplicateProfessionalRoleSelected}">
+        </span>
+
+        <span   class="d-none" id="errMsgWrongPassword" 
+                th:text="#{msgErrorWrongPassword}">
+        </span>
+
+        <span   class="d-none" id="errMsgDifferentConfirmPassword" 
+                th:text="#{msgErrorDifferentConfirmPassword}">
+        </span>
+        
+        <span   class="d-none" id="errMsgMandatoryFieldIsEmpty" 
+                th:text="#{msgErrorMandatoryFieldIsEmpty}">
+        </span>
+        <!-- ------------------------------------------------------------------- -->
+    
+    </div>
+
+</body>
+</html>

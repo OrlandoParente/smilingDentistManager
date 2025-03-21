@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/common-head :: common-head('Dashboard Employee')}"></th:block>
+</head>
+<body>
+    
+    <div th:replace="~{fragments/common-top-page :: common-top-page}"></div>
+   
+    <!-- Sidebar and nav for mobile screens -->
+    <div th:replace="~{fragments/menu-dashboard-employee :: side-dashboard-mobile}"></div>
+
+	<div class="d-flex">
+
+        <!-- Sidebar for medium and larger screens -->
+        <div th:insert="~{fragments/menu-dashboard-employee :: side-dashboard}" class="col-md-3 col-lg-2" ></div>
+
+    
+        <!-- Main Content -->
+        <main class="content col-md-9 ms-sm-auto col-lg-10 col-12 px-md-4">
+            
+            <!-- here the page content -->
+            <div class="row">
+
+                <nav th:replace="~{employee/treatments/fragments/treatments-nav :: treatments-nav}"></nav>
+                
+                 <!-- List of professional roles -->
+                 <div class="sdm-table-scrollable table-responsive mt-3">
+                    <table class="table table-striped table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th th:text="#{tableHeaderName}">Name</th>
+                                <th th:text="#{tableHeaderCost}">Cost</th>
+                                <th th:text="#{tableHeaderDescription}">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr th:each="treatment : ${treatments}">
+                                <td class="d-flex justify-content-center">
+                                    
+                                    <button th:id="'btnDeleteTreatment' + ${treatment.id}"
+                                        class="btn btn-danger me-2"
+                                        th:text="#{btnDelete}">
+                                        Delete
+                                    </button>
+                                    <div 
+                                        th:replace="~{employee/treatments/fragments/put-treatment-modal :: put-treatment-modal(${treatment})}">
+                                    </div>  
+                                </td>
+                                <td>
+                                    <span th:text="${treatment.name}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${treatment.cost}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${treatment.description}"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+            </div>
+        </main>
+    </div> <!-- end d-flex -->
+
+
+    <!-- Required for put-treatment-modal fragment and delete treatment buttons  -->
+    <div th:replace="~{employee/treatments/fragments/requires-treatments}"></div>
+
+    <div th:replace="~{fragments/common-bottom-page :: common-bottom-page}"></div>           
+
+</body>
+</html>

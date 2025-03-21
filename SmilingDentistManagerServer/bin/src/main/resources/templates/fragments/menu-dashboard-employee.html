@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<body>
+    <div th:fragment="side-dashboard-mobile">
+        <!-- Mobile Sidebar (offcanvas) -->
+        <!-- Mobile Navigation and Offcanvas for small screens -->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary d-md-none">
+            <div class="container-fluid">
+                <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+        <div class="offcanvas offcanvas-start sidebar" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="mobileSidebarLabel">
+                    <span th:text="#{labelHi} + ' ' + ${name}"></span>
+                </h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav ">
+                    <li class="nav-item">
+                        <a th:href="@{/employee/calendar/day}" class="nav-link" th:text="#{btnCalendar}">
+                            Calendar
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/employee/customer/customer}" class="nav-link" th:text="#{btnCustomers}">
+                            Customer
+                        </a>
+                    </li>
+                    <!--Should I put this in Settings ? -->
+                    <!-- <li class="nav-item">
+                        <a th:href="@{/employee/medical-histories/medical-histories}" class="nav-link" th:text="#{btnMedicalHistory}">
+                            Medical History
+                        </a>
+                    </li> -->
+                    <!--Should I put this in Settings ? -->
+                    <!-- <li class="nav-item">
+                        <a th:href="@{/employee/treatment/treatment}" class="nav-link" th:text="#{btnTreatments}">
+                            Treatments
+                        </a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a th:href="@{/employee/employee/employee}" class="nav-link" th:text="#{btnEmployees}">
+                            Employees
+                        </a>
+                    </li>
+                    <!--Should I put this in Settings ? -->
+                    <!-- <li class="nav-item">
+                        <a th:href="@{/employee/professionalRoles/professionalRoles}" class="nav-link" th:text="#{btnProfessionalRoles}">
+                            Professional Roles
+                        </a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a th:href="@{/employee/dental-materials/dental-materials}" class="nav-link" th:text="#{btnDentalMaterials}">
+                            Dental Materials
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/employee/expense/expense}" class="nav-link" th:text="#{btnExpenses}">
+                        Expenses
+                        </a>
+                    </li>
+                    <!--Should I put this in Settings ? -->
+                    <!-- <li class="nav-item">
+                        <a th:href="@{/employee/personal-profile/personal-profile}" class="nav-link" th:text="#{btnPersonalProfile}">
+                        Personal Profile
+                        </a>
+                    </li> -->
+                    <!-- <li class="nav-item">
+                        <a th:href="@{/employee/settings/settings}" class="nav-link" th:text="#{btnSettings}">
+                        Settings
+                        </a>
+                    </li> -->
+    
+                    <!-- Settings Dropdown Menu -->
+                    <!-- dropdown -->
+                    <!-- data-bs-toggle="dropdown" -->
+                    <li class="nav-item ">
+                        <a class="sdm-navbar-dropdown dropdown-toggle w-100" href="#" 
+                            id="navbarDropdownMobile"
+                            th:text="#{btnSettings}" 
+                            role="button"  aria-haspopup="true" aria-expanded="false">
+                            Settings
+                        </a>
+                        <div class="sdm-dropdownmenu sidebar w-100 float-none d-none position-static" aria-labelledby="navbarDropdown">
+                            
+                            <a th:href="@{/employee/personal-profile/personal-profile}" class="nav-link" th:text="#{btnPersonalProfile}">
+                                Personal Profile
+                            </a>
+                            <a th:href="@{/employee/treatment/treatment}" class="nav-link" th:text="#{btnTreatments}">
+                                Treatments
+                            </a>
+                            <a th:href="@{/employee/email-settings/email-settings}" class="nav-link" th:text="#{btnEmailSettings}">
+                                E-Mail Settings
+                            </a>
+                            <a th:href="@{/employee/medical-histories/medical-histories}" class="nav-link" th:text="#{btnMedicalHistory}">
+                                Medical History
+                            </a>
+                            <a th:href="@{/employee/professionalRoles/professionalRoles}" class="nav-link" th:text="#{btnProfessionalRoles}">
+                                Professional Roles
+                            </a>
+    
+                        </div>
+                    </li> 
+    
+    
+                    <!-- ############################################################### -->
+                    <!-- <li class="nav-item">
+                        <a th:href="@{/employee/settings/changeLanguage(lang='it')}" class="nav-link" >
+                            Italian
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/employee/settings/changeLanguage(lang='en')}" class="nav-link">
+                            English
+                        </a>
+                    </li> -->
+                    <!-- ############################################################### -->
+    
+                    <li class="nav-item">
+                        <a th:href="@{/logout}" class="nav-link" th:text="#{btnLogout}">
+                        Logout
+                        </a>
+                    </li>
+    
+                            
+                    <!-- Dropdown Menu -->
+                    <!-- dropdown -->
+                    <!-- data-bs-toggle="dropdown" -->
+                    <!-- <li class="nav-item ">
+                        <a class="sdm-navbar-dropdown nav-link dropdown-toggle w-100" href="#" id="navbarDropdownMobile" 
+                            role="button"  aria-haspopup="true" aria-expanded="false">
+                            More Options
+                        </a>
+                        <div class="sdm-dropdownmenu sidebar w-100 float-none d-none position-static" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Option 1</a>
+                            <a class="dropdown-item" href="#">Option 2</a>
+                            <a class="dropdown-item" href="#">Option 3</a>
+                        </div>
+                    </li> -->
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div th:fragment="side-dashboard" >
+        <!-- Sidebar for medium and larger screens -->
+        
+<!--         <div class="sidebar d-none d-md-block col-md-3 col-lg-2 vh-100"> -->
+		<div class="container-fluid sidebar d-none d-md-block  vh-100">
+            <h3 class="text-center mt-3">
+                <span th:text="#{labelHi} + ' ' + ${name}"></span>
+            </h3>
+            <hr>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a th:href="@{/employee/calendar/day}" class="nav-link" th:text="#{btnCalendar}">
+                        Calendar
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/employee/customer/customer}" class="nav-link" th:text="#{btnCustomers}">
+                        Customer
+                    </a>
+                </li>
+                <!--Should I put this in Settings ? -->
+                <!-- <li class="nav-item">
+                    <a th:href="@{/employee/medical-histories/medical-histories}" class="nav-link" th:text="#{btnMedicalHistory}">
+                        Medical History
+                    </a>
+                </li> -->
+                <!--Should I put this in Settings ? -->
+                <!-- <li class="nav-item">
+                    <a th:href="@{/employee/treatment/treatment}" class="nav-link" th:text="#{btnTreatments}">
+                        Treatments
+                    </a>
+                </li> -->
+                <li class="nav-item">
+                    <a th:href="@{/employee/employee/employee}" class="nav-link" th:text="#{btnEmployees}">
+                        Employees
+                    </a>
+                </li>
+                <!--Should I put this in Settings ? -->
+                <!-- <li class="nav-item">
+                    <a th:href="@{/employee/professionalRoles/professionalRoles}" class="nav-link" th:text="#{btnProfessionalRoles}">
+                        Professional Roles
+                    </a>
+                </li> -->
+                <li class="nav-item">
+                    <a th:href="@{/employee/dental-materials/dental-materials}" class="nav-link" th:text="#{btnDentalMaterials}">
+                        Dental Materials
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/employee/expense/expense}" class="nav-link" th:text="#{btnExpenses}">
+                    Expenses
+                    </a>
+                </li>
+                <!--Should I put this in Settings ? -->
+                <!-- <li class="nav-item">
+                    <a th:href="@{/employee/personal-profile/personal-profile}" class="nav-link" th:text="#{btnPersonalProfile}">
+                    Personal Profile
+                    </a>
+                </li> -->
+                <!-- <li class="nav-item">
+                    <a th:href="@{/employee/settings/settings}" class="nav-link" th:text="#{btnSettings}">
+                    Settings
+                    </a>
+                </li> -->
+
+                <!-- Settings Dropdown Menu -->
+                <!-- dropdown -->
+                <!-- data-bs-toggle="dropdown" -->
+                <li class="nav-item ">
+                    <a class="sdm-navbar-dropdown dropdown-toggle w-100" href="#" 
+                        id="navbarDropdownMobile"
+                        th:text="#{btnSettings}" 
+                        role="button"  aria-haspopup="true" aria-expanded="false">
+                        Settings
+                    </a>
+                    <div class="sdm-dropdownmenu sidebar w-100 float-none d-none position-static" aria-labelledby="navbarDropdown">
+                        
+                        <a th:href="@{/employee/personal-profile/personal-profile}" class="nav-link" th:text="#{btnPersonalProfile}">
+                            Personal Profile
+                        </a>
+                        <a th:href="@{/employee/email-settings/email-settings}" class="nav-link" th:text="#{btnEmailSettings}">
+                            E-Mail Settings
+                        </a>
+                        <a th:href="@{/employee/treatment/treatment}" class="nav-link" th:text="#{btnTreatments}">
+                            Treatments
+                        </a>
+                        <a th:href="@{/employee/medical-histories/medical-histories}" class="nav-link" th:text="#{btnMedicalHistory}">
+                            Medical History
+                        </a>
+                        <a th:href="@{/employee/professional-roles/professional-roles}" class="nav-link" th:text="#{btnProfessionalRoles}">
+                            Professional Roles
+                        </a>
+
+                    </div>
+                </li> 
+
+
+                <!-- ############################################################### -->
+                <!-- <li class="nav-item">
+                    <a th:href="@{/employee/settings/changeLanguage(lang='it')}" class="nav-link" >
+                        Italian
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/employee/settings/changeLanguage(lang='en')}" class="nav-link">
+                        English
+                    </a>
+                </li> -->
+                <!-- ############################################################### -->
+
+                <li class="nav-item">
+                    <a th:href="@{/logout}" class="nav-link" th:text="#{btnLogout}">
+                    Logout
+                    </a>
+                </li>
+
+
+                <!-- Dropdown Menu -->
+                <!-- dropdown -->
+                <!-- data-bs-toggle="dropdown" -->
+                <!-- <li class="nav-item ">
+                    <a class="sdm-navbar-dropdown nav-link dropdown-toggle w-100" href="#" id="navbarDropdown" 
+                        role="button" aria-haspopup="true" aria-expanded="false">
+                        More Options
+                    </a>
+                    <div class="sdm-dropdownmenu sidebar w-100 float-none d-none position-static" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Option 1</a>
+                        <a class="dropdown-item" href="#">Option 2</a>
+                        <a class="dropdown-item" href="#">Option 3</a>
+                    </div>
+                </li> -->
+            </ul>
+    
+        </div>
+
+    </div>    
+
+
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <!-- Put this fragment out of a cycle, where you want to use put-appointment-modal fragment and appointment-buttons js -->
+    <!-- Since in the js we use "document.addEventListener('DOMContentLoaded', function(){}"-->
+     <!-- you can put this also after the buttons (put and delete) -->
+     <!-- if you remove 'DOMContentLoaded' put this before the html component you want to code -->
+    <!-- We need this for correctly generate the ids of the component to pass to js script -->
+    <div th:fragment="requires-appointment">
+        
+        <!-- -->
+        <div th:each="appointment : ${ joinAppointments }">
+          <span class="appointmentIds d-none" th:text="${appointment.appointmentDTO.id}" ></span>
+        </div> 
+
+        <!-- Add script for manage add appointment request with js -->
+        <script th:src="@{/js/appointment/put-appointment-form.js}"></script>  
+
+        <!-- Add script for manage delete buttons -->
+        <script th:src="@{/js/appointment/appointment-buttons.js}"></script>
+
+    </div>
+
+</body>
+</html>
