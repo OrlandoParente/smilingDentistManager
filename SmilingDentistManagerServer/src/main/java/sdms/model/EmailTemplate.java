@@ -13,7 +13,7 @@ public class EmailTemplate {
 	private long id;
 	
 	private String type; // Recall ( richiamo ), Marketing, ecc ...
-	private String from;
+	private String emailFrom;	// "from" is a reserved word for MySql 
 	private String subject;
 	private String text;
 	
@@ -24,7 +24,7 @@ public class EmailTemplate {
 	// To String method 
 	@Override
 	public String toString() {
-		return "EmailTemplate [id=" + id + ", type=" + type + ", from=" + from + ", subject=" + subject + ", text="
+		return "EmailTemplate [id=" + id + ", type=" + type + ", emailFrom=" + emailFrom + ", subject=" + subject + ", text="
 				+ text + "]";
 	}
 
@@ -51,13 +51,13 @@ public class EmailTemplate {
 	}
 
 
-	public String getFrom() {
-		return from;
+	public String getEmailFrom() {
+		return emailFrom;
 	}
 
 
-	public void setFrom(String from) {
-		this.from = from;
+	public void setEmailFrom(String emailFrom) {
+		this.emailFrom = emailFrom;
 	}
 
 
