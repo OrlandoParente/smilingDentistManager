@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+      <!-- Scripts and useful stuff for email-settings page -->
+      <div th:fragment="requires-email-settings">
+        
+            <!-- This is not needed -->
+            <!-- <span class="employeeId d-none" th:text="${employee.id}"></span> -->
+
+            <!-- <div th:each="profRole: ${ professionalRoles }">
+                  <span class="professionalRoleNames d-none" th:id="${profRole.id}" 
+                        th:text="${profRole.name}">
+                  </span>
+            </div> -->
+
+            <!-- -->
+            <!-- <div th:each="professionalRole: ${ employeeProfessionalRoles }">
+
+                <span   class="professionalRolesIds d-none"
+                        th:text="${professionalRole.id}">
+                </span>
+
+            </div> -->
+
+
+
+
+
+
+            <!-- Add script for manage add email account request with js -->
+            <script th:src="@{/js/email-settings/email-account-form.js}"></script>  
+
+      </div>
+
+</body>
+</html>
