@@ -8,6 +8,9 @@ import jakarta.persistence.Id;
 @Entity
 public class EmailSettings {
 
+	// We want always one email account data 
+	public final static long DEFAULT_UNIQUE_ID = 1;
+	
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private long id;
