@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import sdms.dto.EmailSettingsDTO;
+import sdms.dto.EmailTemplateDTO;
 import sdms.model.EmailSettings;
+import sdms.model.EmailTemplate;
 import sdms.service.EmailSettingsServiceInterface;
+import sdms.service.EmailTemplateServiceInterface;
 import sdms.service.EmployeeServiceInterface;
 import sdms.util.WebClientCookieManager;
 
@@ -30,6 +33,9 @@ public class EmailSettingsController {
 	EmailSettingsServiceInterface emailSettingsService;
 	
 	@Autowired
+	EmailTemplateServiceInterface emailTemplateService;
+	
+	@Autowired
 	ModelMapper modelMapper;
 	
 	@GetMapping( value={"", "/", "/email-settings", "/email-settings/"} )
@@ -42,9 +48,10 @@ public class EmailSettingsController {
 		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
 		
 		EmailSettingsDTO emailAccount =  modelMapper.map( emailSettingsService.getEmailSettings(), EmailSettingsDTO.class );
-		
+		EmailTemplateDTO emailTemplateRecall = modelMapper.map( emailTemplateService.getEmailTemplateRecall() ,  EmailTemplateDTO.class ); 
 		
 		model.addAttribute("emailAccount", emailAccount);
+		model.addAttribute("emailTemplateRecall", emailTemplateRecall);
 		
 		return "employee/email-settings/email-settings";
 	}
