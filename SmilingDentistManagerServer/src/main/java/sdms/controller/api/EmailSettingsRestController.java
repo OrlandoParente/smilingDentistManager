@@ -13,7 +13,7 @@ import sdms.service.EmailSettingsServiceInterface;
 @RestController
 public class EmailSettingsRestController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(EmailSenderRestController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmailSettingsRestController.class);
 
 	@Autowired
 	private EmailSettingsServiceInterface emailSettingsService;
