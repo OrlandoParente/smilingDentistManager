@@ -38,56 +38,55 @@
                         <div class="row g-3 mt-3">
                             <div class="col-12 col-md-8 d-flex align-items-center "> 
                                 
-                                <label for="host" class="form-label me-2 col-md-auto">
-                                        <!-- th:text="#{formLabelEMailMandatory}"> -->
+                                <label for="host" class="form-label me-2 col-md-auto"
+                                        th:text="#{formLabelHostMandatory}"> 
                                 Host*:
                                 </label> 
-                                <input type="text" class="form-control w-100" id="host" name="host" th:value="${emailAccount.host}"> 
-                                        <!-- th:value="${employee.eMail}"> -->
+                                <input  type="text" class="form-control w-100" id="host" name="host" th:value="${emailAccount.host}" > 
                             </div> 
 
                             <div class="col-12 col-md-4 d-flex align-items-center "> 
                                 
-                                <label for="port" class="form-label me-2 col-md-auto">
-                                        <!-- th:text="#{formLabelEMailMandatory}"> -->
+                                <label for="port" class="form-label me-2 col-md-auto" 
+                                        th:text="#{formLabelPortMandatory}">
                                 Port*:
                                 </label> 
-                                <input type="number" class="form-control w-100" id="port" name="port" th:value="${emailAccount.port}"> 
-                                        <!-- th:value="${employee.eMail}"> -->
+                                <input type="number" class="form-control w-100" id="port" name="port" th:value="${emailAccount.port}">
+
                             </div> 
                         </div>
 
                         <div class="row g-3 mt-3">
                             <div class="col-12 col-md-6 d-flex align-items-center "> 
                                 
-                                <label for="username" class="form-label me-2 col-md-auto">
-                                        <!-- th:text="#{formLabelEMailMandatory}"> -->
+                                <label for="username" class="form-label me-2 col-md-auto"
+                                        th:text="#{formLabelUsernameMandatory}"> 
                                 Username*:
                                 </label> 
                                 <input  type="email" class="form-control w-100" id="username" name="username"
                                         autocomplete="new-username"
                                         th:value="${emailAccount.username}"> 
-                                        <!-- th:value="${employee.eMail}"> -->
+
                             </div> 
 
                             <div class="col-12 col-md-6 d-flex align-items-center "> 
                                 
-                                <label for="password" class="form-label me-2 col-md-auto">
-                                        <!-- th:text="#{formLabelEMailMandatory}"> -->
+                                <label for="password" class="form-label me-2 col-md-auto"
+                                        th:text="#{formLabelPasswordMandatory}">
                                 Password*:
                                 </label> 
                                 <input  type="password" class="form-control w-100" id="password" name="password"
                                         autocomplete="new-password"
                                         th:value="${emailAccount.password}"> 
-                                        <!-- th:value="${employee.eMail}"> -->
+
                             </div> 
                         </div>
 
                         <div class="row g-3 mt-3">
                             <div class="col-12 col-lg-auto d-flex align-items-center "> 
                                 
-                                <label for="auth" class="form-label me-2 col-auto">
-                                        <!-- th:text="#{formLabelEMailMandatory}"> -->
+                                <label  for="auth" class="form-label me-2 col-auto"
+                                        th:text="#{formLabelEnableAuthenticationMandatory}"> 
                                 Enable Authentication*:
                                 </label> 
                                 <select class="form-select" id="auth" name="enableAuth">
@@ -100,8 +99,8 @@
 
                             <div class="col-12 col-lg-auto d-flex align-items-center "> 
                                 
-                                <label for="tls" class="form-label me-2 col-auto">
-                                        <!-- th:text="#{formLabelEMailMandatory}"> -->
+                                <label  for="tls" class="form-label me-2 col-auto"
+                                        th:text="#{formLabelEnableTLSMandatory}"> 
                                 Enable TLS*:
                                 </label> 
                                 <select class="form-select" id="tls" name="enableTLS">
@@ -114,8 +113,8 @@
 
                             <div class="col-12 col-lg-auto d-flex align-items-center "> 
                                 
-                                <label for="ssl" class="form-label me-2 col-auto">
-                                        <!-- th:text="#{formLabelEMailMandatory}"> -->
+                                <label  for="ssl" class="form-label me-2 col-auto"
+                                        th:text="#{formLabelEnableSSLMandatory}">
                                 Enable SSL*:
                                 </label> 
                                 <select class="form-select" id="ssl" name="enableSSL">
@@ -152,8 +151,8 @@
                         <div class="row g-3 mt-3">
                             <div class="col-12  d-flex align-items-center "> 
                                 
-                                <label for="from" class="form-label me-2 col-md-auto">
-                                        <!-- th:text="#{formLabelEMailMandatory}"> -->
+                                <label  for="from" class="form-label me-2 col-md-auto"
+                                        th:text="#{formLabelEmailFromMandatory}"> 
                                 From*:
                                 </label> 
                                 <input type="text" class="form-control w-100" id="from" name="from"> 
@@ -165,8 +164,8 @@
                         <div class="row g-3 mt-3">
                             <div class="col-12  d-flex align-items-center "> 
                                 
-                                <label for="subject" class="form-label me-2 col-md-auto">
-                                        <!-- th:text="#{formLabelEMailMandatory}"> -->
+                                <label  for="subject" class="form-label me-2 col-md-auto"
+                                        th:text="#{formLabelEmailSubjectMandatory}">
                                 Subject*:
                                 </label> 
                                 <input type="text" class="form-control w-100" id="subject" name="subject"> 
@@ -178,8 +177,8 @@
                         <div class="row g-3 mt-3">
 
                             <div class="col-12 ">     
-                                <label for="text" class="form-label me-2 col-12">
-                                        <!-- th:text="#{formLabelEMailMandatory}"> -->
+                                <label  for="text" class="form-label me-2 col-12" 
+                                        th:text="#{formLabelEmailTextMandatory}"> 
                                 Text*:
                                 </label> 
                                 <!-- th:value="${employee.eMail}"> -->
