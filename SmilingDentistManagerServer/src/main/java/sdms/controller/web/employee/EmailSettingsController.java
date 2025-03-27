@@ -47,11 +47,24 @@ public class EmailSettingsController {
 		// Set useful cookies in the model
 		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
 		
-		EmailSettingsDTO emailAccount =  modelMapper.map( emailSettingsService.getEmailSettings(), EmailSettingsDTO.class );
-		EmailTemplateDTO emailTemplateRecall = modelMapper.map( emailTemplateService.getEmailTemplateRecall() ,  EmailTemplateDTO.class ); 
+		// Fetch emailSettings to put in the model --------------------------------------------
+		EmailSettings tmpEmailSettings = emailSettingsService.getEmailSettings();
+		EmailSettingsDTO emailAccount = null;
+		if( tmpEmailSettings != null )
+			emailAccount =  modelMapper.map( tmpEmailSettings, EmailSettingsDTO.class );
+		// ------------------------------------------------------------------------------------
 		
+		// Fetch emailTemplate to put in the model --------------------------------------------
+		EmailTemplate tmpEmailTemplate = emailTemplateService.getEmailTemplateRecall();
+		EmailTemplateDTO emailTemplateRecall = null;
+		if( tmpEmailTemplate != null )
+			emailTemplateRecall = modelMapper.map( tmpEmailTemplate ,  EmailTemplateDTO.class ); 
+		// ------------------------------------------------------------------------------------
+		
+		// Populate the model -----------------------------------------------------------------
 		model.addAttribute("emailAccount", emailAccount);
 		model.addAttribute("emailTemplateRecall", emailTemplateRecall);
+		// ------------------------------------------------------------------------------------
 		
 		return "employee/email-settings/email-settings";
 	}
