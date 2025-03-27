@@ -2,6 +2,7 @@ package sdms.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -11,6 +12,7 @@ import sdms.repository.EmailTemplateRepository;
 @Service
 public class EmailTemplateService implements EmailTemplateServiceInterface {
 
+	@Autowired
 	EmailTemplateRepository repository;
 
 	// GET --------------------------------------------------------------
