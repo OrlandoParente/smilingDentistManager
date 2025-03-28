@@ -1,7 +1,6 @@
 package sdms.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,10 +48,15 @@ public class EmailTemplateService implements EmailTemplateServiceInterface {
 	@Override
 	public void saveRecallEmailTemplate(EmailTemplate emailTemplate) {
 		
-		// check if already exist recall email
-		EmailTemplate tmpEmailTemplate = repository.findByType( EmailTemplate.TYPE_RECALL ).get();
+		EmailTemplate tmpEmailTemplate = null;
 		
-		if( tmpEmailTemplate == null ) {
+		try {
+			// check if already exist recall email
+			tmpEmailTemplate = repository.findByType( EmailTemplate.TYPE_RECALL ).get();
+		
+		} catch ( Exception e ) { // that should be NoSuchElementException, but let check for a generic Exception
+			
+			// If not already exists, create a new recall email template
 			tmpEmailTemplate = new EmailTemplate();
 		}
 		
