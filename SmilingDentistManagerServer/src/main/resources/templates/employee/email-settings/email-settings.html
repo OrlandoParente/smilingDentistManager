@@ -143,10 +143,14 @@
 
 
                 <!-- Form Recall E-Mail -->
-                <form class="mt-3">
+                <form id="formEmailTemplateRecall" class="mt-3" method="POST" th:action="@{/saveEmailTemplateRecall}" >
 
                     <fieldset class="border border-secondary p-4 rounded">
                         <legend>Recall E-Mail</legend>
+
+                        <!-- ERROR MESSAGE --> 
+                        <div th:replace="~{fragments/messages/error-msg :: error-msg('formEmailTemplateRecall', '')}"></div>
+
                         
                         <div class="row g-3 mt-3">
                             <div class="col-12  d-flex align-items-center "> 
@@ -155,8 +159,8 @@
                                         th:text="#{formLabelEmailFromMandatory}"> 
                                 From*:
                                 </label> 
-                                <input type="text" class="form-control w-100" id="from" name="from"> 
-                                        <!-- th:value="${employee.eMail}"> -->
+                                <input  type="text" class="form-control w-100" id="from" name="from" 
+                                        th:value="${emailTemplateRecall.emailFrom}">
                             </div> 
 
                         </div>
@@ -168,8 +172,8 @@
                                         th:text="#{formLabelEmailSubjectMandatory}">
                                 Subject*:
                                 </label> 
-                                <input type="text" class="form-control w-100" id="subject" name="subject"> 
-                                        <!-- th:value="${employee.eMail}"> -->
+                                <input  type="text" class="form-control w-100" id="subject" name="subject" 
+                                        th:value="${emailTemplateRecall.subject}"> 
                             </div> 
 
                         </div>
@@ -181,15 +185,17 @@
                                         th:text="#{formLabelEmailTextMandatory}"> 
                                 Text*:
                                 </label> 
-                                <!-- th:value="${employee.eMail}"> -->
-                                <textarea class="form-control w-100 mt-2" id="text" name="text">
+                                <textarea class="form-control w-100 mt-2" id="text" name="text"
+                                            th:text="${emailTemplateRecall.text}">
                                 </textarea>
                             </div> 
 
                         </div>
 
                         <!-- Button Save -->
-                        <button type="submit" class="btn btn-success col-12 col-md-auto mt-3" 
+                        <button type="submit" 
+                                class="btn btn-success col-12 col-md-auto mt-3"
+                                id="btnSaveEmailTemplateRecall" 
                                 th:text="#{btnSave}" >
                                 Save
                         </button>
