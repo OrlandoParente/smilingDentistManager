@@ -59,22 +59,20 @@
           .then( response => {
             if( response.status == 200 ) {
               // window.location.reload();
+              console.log( 'LOCATION: ' + window.location.href );
+              window.location.reload();
               console.log( 'Email account  saved with success');
+              alert("Success")
               return response.json();
 
             } else {
+
+              console.log('Error: ' + error ); 
               errMsg.style.display = "block";
-              errMsgText.innerText = "Failed to email account  ";
+              errMsgText.innerText = "Failed to save email account  ";
             }
         
-        }).then(() => {
-
-            console.log( 'LOCATION: ' + window.location.href );
-            window.location.reload();
-
-          }).catch( error => {
-            console.log('Error: ' + error ); 
-          });
+        })
 
       });
 
