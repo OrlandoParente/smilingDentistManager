@@ -30,8 +30,7 @@ public class EmailTemplateRestController {
 	// SAVE WITH EDFAULT TYPE TAGS -----------------------------------------------------------------
 	
 	@PostMapping( value={"/saveEmailTemplateRecall"}, params= { "from", "subject", "text"})
-	public ResponseEntity<?> saveEmailTemplateRecall( @RequestParam String type, @RequestParam String from, 
-														@RequestParam String subject, @RequestParam String text){
+	public ResponseEntity<?> saveEmailTemplateRecall(  @RequestParam String from, @RequestParam String subject, @RequestParam String text){
 		
 		
 		LOGGER.info("/saveEmailTemplateRecall PARAMS={  from=" + from +"; subject=" + subject + "; text=" + text + "  }");
