@@ -49,14 +49,14 @@ public class EmailSettingsController {
 		
 		// Fetch emailSettings to put in the model --------------------------------------------
 		EmailSettings tmpEmailSettings = emailSettingsService.getEmailSettings();
-		EmailSettingsDTO emailAccount = null;
+		EmailSettingsDTO emailAccount = new EmailSettingsDTO();
 		if( tmpEmailSettings != null )
 			emailAccount =  modelMapper.map( tmpEmailSettings, EmailSettingsDTO.class );
 		// ------------------------------------------------------------------------------------
 		
 		// Fetch emailTemplate to put in the model --------------------------------------------
 		EmailTemplate tmpEmailTemplate = emailTemplateService.getEmailTemplateRecall();
-		EmailTemplateDTO emailTemplateRecall = null;
+		EmailTemplateDTO emailTemplateRecall = new EmailTemplateDTO();
 		if( tmpEmailTemplate != null )
 			emailTemplateRecall = modelMapper.map( tmpEmailTemplate ,  EmailTemplateDTO.class ); 
 		// ------------------------------------------------------------------------------------
