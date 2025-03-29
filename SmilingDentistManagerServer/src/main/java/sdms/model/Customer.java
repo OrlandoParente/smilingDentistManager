@@ -45,6 +45,10 @@ public class Customer {
 	private String language;
 	private String eMail;
 	private String password;
+	
+	private LocalDate nextRecallEmailDate;
+	private Integer daysToNextRecallEmail;
+	
 	private int permission;				// Role di Spring Security
 	
 	// for use LocalDate in Containing method of JpaRepository
@@ -52,17 +56,21 @@ public class Customer {
 	
 	// Empty Constructor 
 	public Customer() {}
-	
+
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", appointments=" + appointments + ", medicalHistories= [ medical histories ... ]" /* + hasMedicalHistories */
+		return "Customer [id=" + id + ", appointments=" + appointments + ", hasMedicalHistories=" + hasMedicalHistories
 				+ ", expenses=" + expenses + ", taxIdCode=" + taxIdCode + ", name=" + name + ", surname=" + surname
 				+ ", birthCity=" + birthCity + ", birthCityProvince=" + birthCityProvince + ", birthDate=" + birthDate
 				+ ", residenceStreet=" + residenceStreet + ", houseNumber=" + houseNumber + ", residenceCity="
 				+ residenceCity + ", residenceCityCap=" + residenceCityCap + ", residenceProvince=" + residenceProvince
-				+ ", phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 + ", eMail=" + eMail + ", password="
-				+ password + ", permission=" + permission + "]";
+				+ ", phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 + ", language=" + language
+				+ ", eMail=" + eMail + ", password=" + password + ", nextRecallEmailDate=" + nextRecallEmailDate
+				+ ", daysToNextRecallEmail=" + daysToNextRecallEmail + ", permission=" + permission
+				+ ", birthDateString=" + birthDateString + "]";
 	}
+
+
 
 	public long getId() {
 		return id;
@@ -187,6 +195,22 @@ public class Customer {
 
 	public void setExpenses(List<Expense> expenses) {
 		this.expenses = expenses;
+	}
+	
+	public LocalDate getNextRecallEmailDate() {
+		return nextRecallEmailDate;
+	}
+
+	public void setNextRecallEmailDate(LocalDate nextRecallEmailDate) {
+		this.nextRecallEmailDate = nextRecallEmailDate;
+	}
+
+	public Integer getDaysToNextRecallEmail() {
+		return daysToNextRecallEmail;
+	}
+
+	public void setDaysToNextRecallEmail(Integer daysToNextRecallEmail) {
+		this.daysToNextRecallEmail = daysToNextRecallEmail;
 	}
 
 	public String getPassword() {
