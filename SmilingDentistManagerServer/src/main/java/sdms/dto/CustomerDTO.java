@@ -22,10 +22,16 @@ public class CustomerDTO {
 	private String language;
 	private String eMail;
 	private String password;
+	
+	private LocalDate nextRecallEmailDate;
+	private Integer daysToNextRecallEmail;
+	
 	private int permission;				// role per Spring Security
 	
 	public CustomerDTO() {}
 	
+
+
 	@Override
 	public String toString() {
 		return "CustomerDTO [id=" + id + ", taxIdCode=" + taxIdCode + ", name=" + name + ", surname=" + surname
@@ -33,8 +39,11 @@ public class CustomerDTO {
 				+ ", residenceStreet=" + residenceStreet + ", houseNumber=" + houseNumber + ", residenceCity="
 				+ residenceCity + ", residenceCityCap=" + residenceCityCap + ", residenceProvince=" + residenceProvince
 				+ ", phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 + ", language=" + language
-				+ ", eMail=" + eMail + ", password=" + password + ", permission=" + permission + "]";
+				+ ", eMail=" + eMail + ", password=" + password + ", nextRecallEmailDate=" + nextRecallEmailDate
+				+ ", daysToNextRecallEmail=" + daysToNextRecallEmail + ", permission=" + permission + "]";
 	}
+
+
 
 	public long getId() {
 		return id;
@@ -151,6 +160,29 @@ public class CustomerDTO {
 	public String getLanguage() {
 		return language;
 	}
+
+	public LocalDate getNextRecallEmailDate() {
+		return nextRecallEmailDate;
+	}
+
+
+
+	public void setNextRecallEmailDate(LocalDate nextRecallEmailDate) {
+		this.nextRecallEmailDate = nextRecallEmailDate;
+	}
+
+
+
+	public Integer getDaysToNextRecallEmail() {
+		return daysToNextRecallEmail;
+	}
+
+
+
+	public void setDaysToNextRecallEmail(Integer daysToNextRecallEmail) {
+		this.daysToNextRecallEmail = daysToNextRecallEmail;
+	}
+
 
 
 	public void setLanguage(String language) {
