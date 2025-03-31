@@ -10,12 +10,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import sdms.util.AutomaticEmailUtil;
 import sdms.util.UserRoleManager;
 
 @Entity
 @Table( name = "customer" )
-public class Customer {
-	
+public class Customer {	
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private long id;	// non uso il cod_fiscale come id perché non so se il cliente è tenuto a rilasciarlo
@@ -55,7 +55,10 @@ public class Customer {
 	private String birthDateString;
 	
 	// Empty Constructor 
-	public Customer() {}
+	public Customer() {
+		// If not specified, it create a customer that not receive automatic recall e-mails
+		this.daysToNextRecallEmail = AutomaticEmailUtil.AUTOMATIC_EMAIL_DISABLED;
+	}
 
 	@Override
 	public String toString() {
