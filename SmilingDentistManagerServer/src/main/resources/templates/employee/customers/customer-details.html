@@ -77,6 +77,51 @@
 
                 </div>
 
+                <!-- Automatic Email Management -->
+                <nav th:replace="~{employee/customers/fragments/customer-details/automatic-emails-management-nav
+                                    :: automatic-emails-management-nav }">
+                </nav> 
+
+                <div class="p-3">
+                    <!-- Recall E-mail -->
+                     <div>
+                        <span class="fw-bold" th:text="#{labelAutomaticEmailRecallEmail}"></span>
+
+                        <!-- --------------  days to next recall email label ----------------------- -->
+                        <span   th:if="${joinCustomer.customerDTO.daysToNextRecallEmail < 1}" 
+                                th:text="#{formOptionSelectAutomaticEmailDisabled}">
+                        </span>
+                        <span   th:if="${joinCustomer.customerDTO.daysToNextRecallEmail == 7}" 
+                                th:text="#{formOptionSelectOneWeek}">
+                        </span>
+                        <span   th:if="${joinCustomer.customerDTO.daysToNextRecallEmail == 84}" 
+                                th:text="#{formOptionSelectThreeMonths}">
+                        </span>
+                        <span   th:if="${joinCustomer.customerDTO.daysToNextRecallEmail == 112}" 
+                                th:text="#{formOptionSelectFourMonths}">
+                        </span>
+                        <span   th:if="${joinCustomer.customerDTO.daysToNextRecallEmail == 168}" 
+                                th:text="#{formOptionSelectSixMonths}">
+                        </span>
+                        <!-- ----------------------------------------------------------------------- -->
+
+                        &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
+
+                         <!-- --------------  next recall email date label ------------------------- -->
+
+                        <span   th:if="${joinCustomer.customerDTO.daysToNextRecallEmail > 0 }" > <!-- if automatic email is NOT disabled -->
+
+                                <span class="fw-bold" th:text="#{labelAutomaticEmailNextDate}"></spanclass></span>
+
+                                <span   th:with="dateFormat=#{formPlaceholderDate}"
+                                        th:text=" ' ' + ${ #temporals.format ( joinCustomer.customerDTO.nextRecallEmailDate, dateFormat) }"></span>
+                        
+                        </span>
+
+                        <!-- ----------------------------------------------------------------------- -->
+
+                     </div>
+                </div>
                 <!-- Medical History -->
 
                 <nav th:replace="~{employee/customers/fragments/customer-details/customer-details-navs
