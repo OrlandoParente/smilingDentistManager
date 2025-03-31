@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sdms.dto.CustomerDTO;
 import sdms.model.Customer;
 import sdms.service.CustomerServiceInterface;
+import sdms.util.AutomaticEmailUtil;
 import sdms.util.DateAndTimeManager;
 
 @RestController
@@ -108,6 +109,7 @@ public class CustomerRestController {
 								 @RequestParam( defaultValue = "" ) String phoneNumber, 
 								 @RequestParam( defaultValue = "" ) String phoneNumber2,
 								 @RequestParam( defaultValue = "" ) String recallEmailDateToUpdate,	// date of recall is recallEmailDateToUpdate + daysToNextRecallEmail
+								 @RequestParam( defaultValue = "" ) String recallEmailDate,
 								 @RequestParam( defaultValue = "-1" ) Integer daysToNextRecallEmail ) {
 
 		 // Check message 
@@ -119,6 +121,7 @@ public class CustomerRestController {
 				 		+ ", residenceCityCap=" + residenceCityCap + ",residenceProvince=" + residenceProvince 
 				 		+ ", phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 
 				 		+ ", recallEmailDateToUpdate=" + recallEmailDateToUpdate 
+				 		+ ", recallEmailDate=" + recallEmailDate 
 				 		+ ", daysToNextRecallEmail=" + daysToNextRecallEmail + " }");
 		 
 		 Customer customer = new Customer();
@@ -144,20 +147,28 @@ public class CustomerRestController {
 			 
 			 if(  daysToNextRecallEmail > -1 ) {
 				 
-				 // By dafault use today date, but ...
-				 LocalDate recallDate = LocalDate.now();
-				 
-				 // ... if recallEmailDateToUpdate is not empty, use this one
-				 if( ! recallEmailDateToUpdate.equals("") ) 
-					 recallDate = dateAndTimeManager.parseDate(recallEmailDateToUpdate);
-					
-				 // Add days to fetch recall email date and save
-				 customer.setNextRecallEmailDate( recallDate.plusDays( daysToNextRecallEmail ) );
 				 // Save day to add for fetch the next recall email date
 				 customer.setDaysToNextRecallEmail(daysToNextRecallEmail);
 				 
-			 } else {	// Set daysToNextRecallEmail with the default value <--- Is this needed or just leave daysToNextRecallEmail as null ?
-				 customer.setDaysToNextRecallEmail(daysToNextRecallEmail);
+				 // RecallEmailDate is not empty use this one,...
+				 if( ! recallEmailDate.equals("") ) {
+					 customer.setNextRecallEmailDate( dateAndTimeManager.parseDate(recallEmailDate) );
+				 } else {	// ... otherwise use or today date or, if passed, recallEmailDateToUpdate
+					 
+					 // By dafault use today date, but ...
+					 LocalDate recallDate = LocalDate.now();
+					 
+					 // ... if recallEmailDateToUpdate is not empty, use this one
+					 if( ! recallEmailDateToUpdate.equals("") ) 
+						 recallDate = dateAndTimeManager.parseDate(recallEmailDateToUpdate);
+						
+					 // Add days to fetch recall email date and save
+					 customer.setNextRecallEmailDate( recallDate.plusDays( daysToNextRecallEmail ) );
+				 }
+				 
+			 } else {	// Set daysToNextRecallEmail with the default value 
+				 customer.setDaysToNextRecallEmail( AutomaticEmailUtil.AUTOMATIC_EMAIL_DISABLED );
+				 customer.setNextRecallEmailDate(null);
 			 }
 			// ------------------------------------------------------------------------------------------------
 			 
@@ -211,7 +222,8 @@ public class CustomerRestController {
 									 @RequestParam( defaultValue = "sdms_nothing-nessun-val-passato" ) String phoneNumber2,  
 									 @RequestParam( defaultValue = "sdms_nothing-nessun-val-passato" ) String eMail,
 									 @RequestParam( defaultValue = "" ) String recallEmailDateToUpdate,	// date of recall is recallEmailDateToUpdate + daysToNextRecallEmail
-									 @RequestParam( defaultValue = "-1" ) Integer daysToNextRecallEmail ) {
+									 @RequestParam( defaultValue = "" ) String recallEmailDate,
+									 @RequestParam( defaultValue = "-100" ) Integer daysToNextRecallEmail ) {
 
 		 // Check message 
 		 LOGGER.info("/putCustomer, params={ id=" + id + ",name=" + name + ",surname=" + surname 
@@ -222,6 +234,7 @@ public class CustomerRestController {
 				 		+ ", residenceCityCap=" + residenceCityCap + ",residenceProvince=" + residenceProvince 
 				 		+ ", phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 
 				 		+ ", recallEmailDateToUpdate=" + recallEmailDateToUpdate 
+				 		+ ", recallEmailDate=" + recallEmailDate 
 				 		+ ", daysToNextRecallEmail=" + daysToNextRecallEmail + " }");
 		 
 		 Customer customer = service.getCustomerById(id);
@@ -243,12 +256,35 @@ public class CustomerRestController {
 			 
 			 // can throw DateTimeParseException
 			 if( ! birthDate.equals("") )	customer.setBirthDate( dateAndTimeManager.parseDate(birthDate) );
+			 
 			 // Manage recall email date, this can throw DateTimeParseException too 
-			 if( ! recallEmailDateToUpdate.equals("") && daysToNextRecallEmail > -1 ) {
-				 LocalDate recallDate = dateAndTimeManager.parseDate(recallEmailDateToUpdate);
-				 customer.setNextRecallEmailDate( recallDate.plusDays( daysToNextRecallEmail ) );
-				 customer.setDaysToNextRecallEmail(daysToNextRecallEmail);
-			 } 
+			 if( daysToNextRecallEmail != -100 ) {	// If not value passed, do not update
+				 
+				 if( daysToNextRecallEmail < 1 ) {
+					 customer.setDaysToNextRecallEmail( AutomaticEmailUtil.AUTOMATIC_EMAIL_DISABLED );
+					 customer.setNextRecallEmailDate(null);
+				 } else {
+					 customer.setDaysToNextRecallEmail(daysToNextRecallEmail);
+					 
+					 // RecallEmailDate is not empty use this one,...
+					 if( ! recallEmailDate.equals("") )
+						 customer.setNextRecallEmailDate( dateAndTimeManager.parseDate(recallEmailDate) );
+					 else {	// ... otherwise use or today date or, if passed, recallEmailDateToUpdate
+						 
+						 // By dafault use today date, but ...
+						 LocalDate recallDate = LocalDate.now();
+						 
+						 // ... if recallEmailDateToUpdate is not empty, use this one
+						 if( ! recallEmailDateToUpdate.equals("") ) 
+							 recallDate = dateAndTimeManager.parseDate(recallEmailDateToUpdate);
+							
+						 // Add days to fetch recall email date and save
+						 customer.setNextRecallEmailDate( recallDate.plusDays( daysToNextRecallEmail ) );
+					 }
+					 
+				 }
+			 }
+
 			 
 			 if( ! residenceCity.equals("") )	customer.setResidenceStreet(residenceStreet);
 			 if( ! houseNumber.equals("") )	customer.setHouseNumber(houseNumber);
