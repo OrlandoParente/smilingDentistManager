@@ -29,6 +29,7 @@ import sdms.service.ExpenseServiceInterface;
 import sdms.service.HasMedicalHistoryServiceInterface;
 import sdms.service.MedicalHistoryServiceInterface;
 import sdms.service.TreatmentServiceInterface;
+import sdms.util.AutomaticEmailUtil;
 import sdms.util.UserRoleManager;
 import sdms.util.WebClientCookieManager;
 
@@ -85,9 +86,13 @@ public class CustomerController {
 		
 		// ---------------------------------------------------------------------------------------------
 		
+		// Fetch automatic email intervals 
+		List<Integer> automaticEmailIntervals = AutomaticEmailUtil.getAutomaticEmailIntervals();
+		
 		// Add stuff to the model
 		model.addAttribute("customers", customersDTO);
 		model.addAttribute("customerPermissions", UserRoleManager.getCustomerPermissions());
+		model.addAttribute("automaticEmailIntervals", automaticEmailIntervals);
 		
 		return("employee/customers/customers");
 	}
@@ -174,6 +179,9 @@ public class CustomerController {
 		List<String> customerInvoiceNumbers = appointmentService.getInvoiceNumbersByCustomerId( customerId );
 		// ---------------------------------------------------------------------------------------------
 				
+		// Fetch automatic email intervals --------------------------------------------------------------
+		List<Integer> automaticEmailIntervals = AutomaticEmailUtil.getAutomaticEmailIntervals();
+		// ---------------------------------------------------------------------------------------------
 
 		// check print
 		joinCustomer.getJoinAppointmentsDTO().forEach( jc -> {
@@ -189,6 +197,7 @@ public class CustomerController {
 		model.addAttribute("treatments",treatments);
 		model.addAttribute("customerInvoiceNumbers", customerInvoiceNumbers);
 		model.addAttribute("selectedInvoiceNumber", selectedInvoiceNumber);
+		model.addAttribute("automaticEmailIntervals", automaticEmailIntervals);
 		
 		// serve?
 		model.addAttribute("customerPermissions", UserRoleManager.getCustomerPermissions());
