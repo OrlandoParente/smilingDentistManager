@@ -20,7 +20,12 @@
             <!-- joinAppointment.appointmentDTO Ids -->
             <div th:each="appointment : ${ joinCustomer.joinAppointmentsDTO }">
                   <span class="appointmentIds d-none" th:text="${appointment.appointmentDTO.id}" ></span>
-            </div> 
+            </div>
+            
+            <!-- Customer id  -->
+            <div>
+                  <span class="customerIds d-none" th:text="${joinCustomer.customerDTO.id}" ></span>
+            </div>
             
 
             <!-- ---------------- MEDICAL HISTORIES SCRIPTS ----------------------------------- -->
@@ -48,6 +53,10 @@
             <!-- Script for appointment buttons -->
             <script th:src="@{/js/customers/customer-details/appointments/dental-anatomy.js}"></script>  
 
+            <!-- ------------------------------------------------------------------------------- -->
+
+            <!-- ----------------- AUTOMATIC EMAILS SCRIPTS ------------------------------------ -->
+            <script th:src="@{/js/customers/put-automatic-emails-form.js}"></script> 
             <!-- ------------------------------------------------------------------------------- -->
       </div>
 
