@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sdms.dto.CustomerDTO;
+import sdms.email.AutomaticEmailUtil;
 import sdms.model.Customer;
 import sdms.service.CustomerServiceInterface;
-import sdms.util.AutomaticEmailUtil;
 import sdms.util.DateAndTimeManager;
 
 @RestController

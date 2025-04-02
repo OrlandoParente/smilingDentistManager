@@ -21,6 +21,7 @@ import sdms.dto.EmployeeDTO;
 import sdms.dto.MedicalHistoryDTO;
 import sdms.dto.TreatmentDTO;
 import sdms.dto.join.CustomerMedicalHistoryExpenseAppointmentDTO;
+import sdms.email.AutomaticEmailUtil;
 import sdms.model.Customer;
 import sdms.service.AppointmentServiceInterface;
 import sdms.service.CustomerServiceInterface;
@@ -29,7 +30,6 @@ import sdms.service.ExpenseServiceInterface;
 import sdms.service.HasMedicalHistoryServiceInterface;
 import sdms.service.MedicalHistoryServiceInterface;
 import sdms.service.TreatmentServiceInterface;
-import sdms.util.AutomaticEmailUtil;
 import sdms.util.UserRoleManager;
 import sdms.util.WebClientCookieManager;
 

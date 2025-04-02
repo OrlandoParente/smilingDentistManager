@@ -13,8 +13,7 @@ import jakarta.mail.internet.MimeMessage;
 public class EmailSenderService implements EmailSenderServiceInterface {
 
 	@Autowired
-	private JavaMailSender mailSender;
-	
+	private JavaMailSender mailSender;	
 	
 	public EmailSenderService( JavaMailSender mailSender ) {
 	
@@ -22,7 +21,7 @@ public class EmailSenderService implements EmailSenderServiceInterface {
 
 	@Override
 	public void sendEmail(String from, String to, String subject, String text) {
-		
+	
 		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 		simpleMailMessage.setFrom(from);
 		simpleMailMessage.setTo(to);
