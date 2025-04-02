@@ -2,9 +2,13 @@ package sdms.service;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import sdms.model.Customer;
 import sdms.repository.AppointmentRepository;
 import sdms.repository.CustomerRepository;
@@ -15,6 +19,8 @@ import sdms.util.DateAndTimeManager;
 @Service
 public class CustomerService implements CustomerServiceInterface {
 
+	private final static Logger LOGGER = LoggerFactory.getLogger( CustomerService.class );
+	
 	@Autowired
 	CustomerRepository repository;
 	
@@ -62,17 +68,32 @@ public class CustomerService implements CustomerServiceInterface {
 	}
 
 	@Override
+	@Transactional
 	public void postCustomer(Customer customer) {
+		
+		// for avoid exception: org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: sdms.model.Customer.appointments: could not initialize proxy - no Session
+		Hibernate.initialize(customer.getAppointments());
+		
+		LOGGER.info("postCustomer -> " + customer );
+		
 		repository.save(customer);
 		
 	}
 
 	@Override
+	@Transactional
 	public void putCustomer(Customer customer) {
+		
+		// for avoid exception: org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: sdms.model.Customer.appointments: could not initialize proxy - no Session
+//		Hibernate.initialize(customer.getAppointments());
+		
+		LOGGER.info("putCustomer -> " + customer );
+		
 		repository.save(customer);
 	}
 
 	@Override
+	@Transactional
 	public void deleteCustomer(long id) {
 		
 		Customer customer = repository.findById(id).get();
