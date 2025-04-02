@@ -1,7 +1,11 @@
-package sdms.util;
+package sdms.email;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+
+import sdms.model.EmailSettings;
 
 public class AutomaticEmailUtil {
 
@@ -13,6 +17,7 @@ public class AutomaticEmailUtil {
 	public final static Integer AUTOMATIC_EMAIL_SIX_MONTHS = 168;
 	public final static Integer AUTOMATIC_EMAIL_ONE_YEAR = 365;
 	// ###############################
+
 	
 	public static List<Integer> getAutomaticEmailIntervals(){
 		
