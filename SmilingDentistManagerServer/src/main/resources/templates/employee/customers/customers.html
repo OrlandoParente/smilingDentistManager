@@ -63,6 +63,13 @@
                                         Details
                                     </a>
 
+                                    <!-- Automatic emails management -->
+                                    <div    class="d-inline-block mt-2"
+                                            th:insert="~{employee/customers/fragments/put-automatic-emails-modal
+                                                        :: put-automatic-emails-modal( ${customer}, 'button') }">
+                                    Edit Automatic Emails 
+                                    </div>   
+
                                 </td>
 
                                 <td>
