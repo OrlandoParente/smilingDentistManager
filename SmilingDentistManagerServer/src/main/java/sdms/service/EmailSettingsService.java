@@ -1,8 +1,10 @@
 package sdms.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+import sdms.email.EmailSettingsUpdatedEvent;
 import sdms.model.EmailSettings;
 import sdms.repository.EmailSettingsRepository;
 
@@ -11,6 +13,9 @@ public class EmailSettingsService implements EmailSettingsServiceInterface {
 
 	@Autowired
 	private EmailSettingsRepository repository;
+	
+	@Autowired
+	private ApplicationEventPublisher eventPublisher;
 	
 	@Override
 	public EmailSettings getEmailSettings() {
@@ -34,7 +39,11 @@ public class EmailSettingsService implements EmailSettingsServiceInterface {
 		// We want always only ONE email account in the database
 		emailSettings.setId( EmailSettings.DEFAULT_UNIQUE_ID );
 		
+		// save changes on db
 		repository.save( emailSettings );
+	
+		// Generate the event for notify EmailConfig to update the emailSettings
+	    eventPublisher.publishEvent(new EmailSettingsUpdatedEvent(this, emailSettings));
 	}
 
 	@Override
@@ -43,7 +52,12 @@ public class EmailSettingsService implements EmailSettingsServiceInterface {
 		// We want always only ONE email account in the database
 		emailSettings.setId( EmailSettings.DEFAULT_UNIQUE_ID );
 		
-		repository.save( emailSettings );		
+		// save changes on db
+		repository.save( emailSettings );
+		
+		// Generate the event for notify EmailConfig to update the emailSettings
+	    eventPublisher.publishEvent(new EmailSettingsUpdatedEvent(this, emailSettings));
+		
 	}
 
 }
