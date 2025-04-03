@@ -2,10 +2,6 @@ package sdms.email;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-
-import sdms.model.EmailSettings;
 
 public class AutomaticEmailUtil {
 
