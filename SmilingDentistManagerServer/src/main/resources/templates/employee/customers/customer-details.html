@@ -103,6 +103,9 @@
                         <span   th:if="${joinCustomer.customerDTO.daysToNextRecallEmail == 168}" 
                                 th:text="#{formOptionSelectSixMonths}">
                         </span>
+                        <span   th:if="${joinCustomer.customerDTO.daysToNextRecallEmail == 365}" 
+                                th:text="#{formOptionSelectOneYear}">
+                        </span>
                         <!-- ----------------------------------------------------------------------- -->
 
                         &emsp; <!-- 4 spazi ; &ensp; 2 spazi -->
