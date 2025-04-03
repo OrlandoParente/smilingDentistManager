@@ -31,7 +31,7 @@ public class SheduledEmailSender {
 	private EmailTemplateServiceInterface emailTemplateService;
 	
 	@Transactional
-	@Scheduled( cron = "*/30 * * * * *" )
+	@Scheduled( cron = "0 0 8 */1 * *" )
 	public void sendPeriodicRecallEmails() {
 		
 		LOGGER.info("SCHEDULED E-MAIL SENDER -> Check for recall email candidates");
