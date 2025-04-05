@@ -110,7 +110,8 @@ public class CustomerRestController {
 								 @RequestParam( defaultValue = "" ) String phoneNumber2,
 								 @RequestParam( defaultValue = "" ) String recallEmailDateToUpdate,	// date of recall is recallEmailDateToUpdate + daysToNextRecallEmail
 								 @RequestParam( defaultValue = "" ) String recallEmailDate,
-								 @RequestParam( defaultValue = "-1" ) Integer daysToNextRecallEmail ) {
+								 @RequestParam( defaultValue = "-1" ) Integer daysToNextRecallEmail,
+								 @RequestParam( defaultValue = "" ) String customerFolder ) {
 
 		 // Check message 
 		 LOGGER.info("/postCustomer, params={ name=" + name + ",surname=" + surname 
@@ -122,7 +123,9 @@ public class CustomerRestController {
 				 		+ ", phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 
 				 		+ ", recallEmailDateToUpdate=" + recallEmailDateToUpdate 
 				 		+ ", recallEmailDate=" + recallEmailDate 
-				 		+ ", daysToNextRecallEmail=" + daysToNextRecallEmail + " }");
+				 		+ ", daysToNextRecallEmail=" + daysToNextRecallEmail 
+				 		+ ", customerFolder=" + customerFolder
+				 		+ " }");
 		 
 		 Customer customer = new Customer();
 		 
@@ -180,6 +183,7 @@ public class CustomerRestController {
 			 if( ! phoneNumber.equals("") )	customer.setPhoneNumber(phoneNumber);
 			 if( ! phoneNumber2.equals("") )	customer.setPhoneNumber2(phoneNumber2);
 			 if( ! eMail.equals("") )	customer.seteMail(eMail);
+			 if( ! customerFolder.equals("") ) customer.setCustomerFolder(customerFolder);
 			 
 			// --------------------------------------------------------------------------------------------
 			 
@@ -223,7 +227,8 @@ public class CustomerRestController {
 									 @RequestParam( defaultValue = "sdms_nothing-nessun-val-passato" ) String eMail,
 									 @RequestParam( defaultValue = "" ) String recallEmailDateToUpdate,	// date of recall is recallEmailDateToUpdate + daysToNextRecallEmail
 									 @RequestParam( defaultValue = "" ) String recallEmailDate,
-									 @RequestParam( defaultValue = "-100" ) Integer daysToNextRecallEmail ) {
+									 @RequestParam( defaultValue = "-100" ) Integer daysToNextRecallEmail,
+									 @RequestParam( defaultValue = "" ) String customerFolder	) {
 
 		 // Check message 
 		 LOGGER.info("/putCustomer, params={ id=" + id + ",name=" + name + ",surname=" + surname 
@@ -235,7 +240,9 @@ public class CustomerRestController {
 				 		+ ", phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 
 				 		+ ", recallEmailDateToUpdate=" + recallEmailDateToUpdate 
 				 		+ ", recallEmailDate=" + recallEmailDate 
-				 		+ ", daysToNextRecallEmail=" + daysToNextRecallEmail + " }");
+				 		+ ", daysToNextRecallEmail=" + daysToNextRecallEmail 
+				 		+ ", customerFolder=" + customerFolder
+				 		+ " }");
 		 
 		 Customer customer = service.getCustomerById(id);
 		 
@@ -291,6 +298,7 @@ public class CustomerRestController {
 			 if( ! residenceProvince.equals("") )	customer.setResidenceProvince(residenceProvince);
 			 if( ! residenceCity.equals("") )	customer.setResidenceCity(residenceCity);
 			 if( ! residenceCityCap.equals("") )	customer.setResidenceCityCap(residenceCityCap);
+			 if( ! customerFolder.equals("") ) customer.setCustomerFolder(customerFolder);
 			 
 			 // I avoid to compare with "" for allow the possibility of set this field as empty
 			 if( ! phoneNumber.equals("sdms_nothing-nessun-val-passato") )	customer.setPhoneNumber(phoneNumber);
