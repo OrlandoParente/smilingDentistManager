@@ -2,12 +2,12 @@ package sdms.service;
 
 import java.util.List;
 
-import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import sdms.model.Customer;
 import sdms.repository.AppointmentRepository;
@@ -15,6 +15,7 @@ import sdms.repository.CustomerRepository;
 import sdms.repository.ExpenseRepository;
 import sdms.repository.HasMedicalHistoryRepository;
 import sdms.util.DateAndTimeManager;
+import sdms.util.FolderManager;
 
 @Service
 public class CustomerService implements CustomerServiceInterface {
@@ -72,9 +73,13 @@ public class CustomerService implements CustomerServiceInterface {
 	public void postCustomer(Customer customer) {
 		
 		// for avoid exception: org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: sdms.model.Customer.appointments: could not initialize proxy - no Session
-		Hibernate.initialize(customer.getAppointments());
+//		Hibernate.initialize(customer.getAppointments());
 		
 		LOGGER.info("postCustomer -> " + customer );
+		
+		// Create customer folder, if customerFolder is set in customer, this method just create the folder
+		// otherwise it create the path folder and the folder itself
+		customer.setCustomerFolder( FolderManager.getCustomerFolder(customer) );
 		
 		repository.save(customer);
 		
@@ -89,6 +94,19 @@ public class CustomerService implements CustomerServiceInterface {
 		
 		LOGGER.info("putCustomer -> " + customer );
 		
+		Customer original = repository.findById( customer.getId() )
+				.orElseThrow( () -> new EntityNotFoundException("Customer with id " + customer.getId() + " not found in the database") );
+		
+		if( ! original.getCustomerFolder().equals( customer.getCustomerFolder() ) ) {
+			
+			// Delete old folder
+			FolderManager.deleteFolder( original.getCustomerFolder() );
+			
+			// Create customer folder, if customerFolder is set in customer, this method just create the folder
+			// otherwise it create the path folder and the folder itself
+			customer.setCustomerFolder( FolderManager.getCustomerFolder(customer) );
+		}
+		
 		repository.save(customer);
 	}
 
@@ -96,7 +114,11 @@ public class CustomerService implements CustomerServiceInterface {
 	@Transactional
 	public void deleteCustomer(long id) {
 		
-		Customer customer = repository.findById(id).get();
+		Customer customer = repository.findById(id)
+				.orElseThrow( () -> new EntityNotFoundException("Customer with id " + id + " not found in the database") );
+		
+		// Delete customer folder
+		FolderManager.deleteFolder( customer.getCustomerFolder() );
 		
 		// Delete the constraints -------------------------------------------------------------------------
 		
@@ -121,7 +143,8 @@ public class CustomerService implements CustomerServiceInterface {
 	@Override
 	public Customer getCustomerByEMail(String eMail) {
 		
-		return repository.findByEMail(eMail).orElse(null);
+		return repository.findByEMail(eMail)
+				.orElseThrow( () -> new EntityNotFoundException("Customer with email " + eMail + " not found in the database") );
 	}
 	
 }

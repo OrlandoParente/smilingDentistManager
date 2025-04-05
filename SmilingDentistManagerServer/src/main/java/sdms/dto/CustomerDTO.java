@@ -6,6 +6,8 @@ public class CustomerDTO {
 	
 	private long id;	// non uso il cod_fiscale come id perché non so se il cliente è tenuto a rilasciarlo
 	
+	private String customerFolder;		// folder that contains all customer documents and images
+	
 	private String taxIdCode; 			// codice fiscale
 	private String name;
 	private String surname;
@@ -29,20 +31,19 @@ public class CustomerDTO {
 	private int permission;				// role per Spring Security
 	
 	public CustomerDTO() {}
-	
 
 
 	@Override
 	public String toString() {
-		return "CustomerDTO [id=" + id + ", taxIdCode=" + taxIdCode + ", name=" + name + ", surname=" + surname
-				+ ", birthCity=" + birthCity + ", birthCityProvince=" + birthCityProvince + ", birthDate=" + birthDate
-				+ ", residenceStreet=" + residenceStreet + ", houseNumber=" + houseNumber + ", residenceCity="
-				+ residenceCity + ", residenceCityCap=" + residenceCityCap + ", residenceProvince=" + residenceProvince
-				+ ", phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 + ", language=" + language
-				+ ", eMail=" + eMail + ", password=" + password + ", nextRecallEmailDate=" + nextRecallEmailDate
-				+ ", daysToNextRecallEmail=" + daysToNextRecallEmail + ", permission=" + permission + "]";
+		return "CustomerDTO [id=" + id + ", customerFolder=" + customerFolder + ", taxIdCode=" + taxIdCode + ", name="
+				+ name + ", surname=" + surname + ", birthCity=" + birthCity + ", birthCityProvince="
+				+ birthCityProvince + ", birthDate=" + birthDate + ", residenceStreet=" + residenceStreet
+				+ ", houseNumber=" + houseNumber + ", residenceCity=" + residenceCity + ", residenceCityCap="
+				+ residenceCityCap + ", residenceProvince=" + residenceProvince + ", phoneNumber=" + phoneNumber
+				+ ", phoneNumber2=" + phoneNumber2 + ", language=" + language + ", eMail=" + eMail + ", password="
+				+ password + ", nextRecallEmailDate=" + nextRecallEmailDate + ", daysToNextRecallEmail="
+				+ daysToNextRecallEmail + ", permission=" + permission + "]";
 	}
-
 
 
 	public long getId() {
@@ -181,6 +182,18 @@ public class CustomerDTO {
 
 	public void setDaysToNextRecallEmail(Integer daysToNextRecallEmail) {
 		this.daysToNextRecallEmail = daysToNextRecallEmail;
+	}
+
+
+
+	public String getCustomerFolder() {
+		return customerFolder;
+	}
+
+
+
+	public void setCustomerFolder(String customerFolder) {
+		this.customerFolder = customerFolder;
 	}
 
 

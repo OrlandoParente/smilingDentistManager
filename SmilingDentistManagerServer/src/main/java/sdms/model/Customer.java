@@ -29,6 +29,11 @@ public class Customer {
 	@OneToMany( mappedBy = "customer" )
 	private List<Expense> expenses;
 	
+	@OneToMany( mappedBy = "customer" )
+	private List<Orthopantomogram> orthopantomograms;
+	
+	private String customerFolder;		// folder that contains all customer documents and images
+
 	private String taxIdCode; 			// codice fiscale
 	private String name;
 	private String surname;
@@ -60,19 +65,20 @@ public class Customer {
 		this.daysToNextRecallEmail = AutomaticEmailUtil.AUTOMATIC_EMAIL_DISABLED;
 	}
 
+	
+ 
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", appointments=" + appointments + ", hasMedicalHistories=" + hasMedicalHistories
-				+ ", expenses=" + expenses + ", taxIdCode=" + taxIdCode + ", name=" + name + ", surname=" + surname
+				+ ", expenses=" + expenses + ", orthopantomograms=" + orthopantomograms + ", customerFolder="
+				+ customerFolder + ", taxIdCode=" + taxIdCode + ", name=" + name + ", surname=" + surname
 				+ ", birthCity=" + birthCity + ", birthCityProvince=" + birthCityProvince + ", birthDate=" + birthDate
 				+ ", residenceStreet=" + residenceStreet + ", houseNumber=" + houseNumber + ", residenceCity="
 				+ residenceCity + ", residenceCityCap=" + residenceCityCap + ", residenceProvince=" + residenceProvince
 				+ ", phoneNumber=" + phoneNumber + ", phoneNumber2=" + phoneNumber2 + ", language=" + language
 				+ ", eMail=" + eMail + ", password=" + password + ", nextRecallEmailDate=" + nextRecallEmailDate
-				+ ", daysToNextRecallEmail=" + daysToNextRecallEmail + ", permission=" + permission
-				+ ", birthDateString=" + birthDateString + "]";
+				+ ", daysToNextRecallEmail=" + daysToNextRecallEmail + ", permission=" + permission + "]";
 	}
-
 
 
 	public long getId() {
@@ -231,6 +237,24 @@ public class Customer {
 
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+	
+	public List<Orthopantomogram> getOrthopantomograms() {
+		return orthopantomograms;
+	}
+
+	public void setOrthopantomograms(List<Orthopantomogram> orthopantomograms) {
+		this.orthopantomograms = orthopantomograms;
+	}
+
+	public String getCustomerFolder() {
+				
+		return customerFolder;
+	}
+
+	public void setCustomerFolder(String customerFolder) {
+		
+		this.customerFolder = customerFolder;
 	}
 	
 	// ----------------------------------------------------------------------------------
