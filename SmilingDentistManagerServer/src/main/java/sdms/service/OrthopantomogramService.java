@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import sdms.model.Customer;
 import sdms.model.Orthopantomogram;
+import sdms.repository.CustomerRepository;
 import sdms.repository.OrthopantomogramRepository;
 import sdms.util.FolderManager;
 
@@ -25,6 +27,8 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 	@Autowired
 	private OrthopantomogramRepository repository;
 	
+	@Autowired
+	private CustomerRepository customerRepository;
 	
 	@Override
 	public Orthopantomogram getOrthopantomogramById(Long id) {
@@ -37,14 +41,14 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 	}
 
 	@Override
-	public Orthopantomogram getOrthopantomogramByFileName(String filename) {
+	public List<Orthopantomogram> getOrthopantomogramsByCustomerAndFilename( Long idCustomer, String filename) {
 		
-		Orthopantomogram orthopantomogram = repository.findByFilename(filename)
-				.orElseThrow(
-						() -> new EntityNotFoundException("Orthopantomogram with filename " + filename + " not found in the database" )
-				);
+		Customer customer = customerRepository.findById(idCustomer)
+				.orElseThrow( () -> new EntityNotFoundException("Customer with id " + idCustomer + " not found in the database") );
 		
-		return orthopantomogram;
+		List<Orthopantomogram> orthopantomograms = repository.findByCustomerAndFilenameContaining( customer , filename);
+		
+		return orthopantomograms;
 	}
 
 	@Override
@@ -54,13 +58,31 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 	}
 	
 	@Override
-	public List<Orthopantomogram> getOrthopantomogramsByCustomer( Customer customer ) {
+	public List<Orthopantomogram> getOrthopantomogramsByCustomer( Long idCustomer ) {
+		
+		Customer customer = customerRepository.findById(idCustomer)
+				.orElseThrow( () -> new EntityNotFoundException("Customer with id " + idCustomer + " not found in the database") );
+	
 		
 		return repository.findByCustomer(customer);
 	}
 	
 	@Override
-	public void uploadOrthopantomogram(Customer customer, MultipartFile orthopantomogram, String format) {
+	public void uploadOrthopantomogram(Long idCustomer, MultipartFile orthopantomogram, String format ) {
+		uploadOrthopantomogram(idCustomer, orthopantomogram, format, LocalDate.now() );
+	}
+	
+	@Override
+	public void uploadOrthopantomogram(String folderPath, MultipartFile orthopantomogram, String format ) {
+		uploadOrthopantomogram(folderPath, orthopantomogram, format, LocalDate.now() );
+	}
+	
+	@Override
+	public void uploadOrthopantomogram(Long idCustomer, MultipartFile orthopantomogram, String format, LocalDate date ) {
+		
+		Customer customer = customerRepository.findById(idCustomer)
+				.orElseThrow( () -> new EntityNotFoundException("Customer with id " + idCustomer + " not found in the database") );
+	
 		
 		String folderPath = FolderManager.getOrthopantomogramFolder(customer);
 		
@@ -69,12 +91,13 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 	}
 
 	@Override
-	public void uploadOrthopantomogram(String folderPath, MultipartFile orthopantomogram, String format) {
+	@Transactional
+	public void uploadOrthopantomogram(String folderPath, MultipartFile orthopantomogram, String format, LocalDate date ) {
 		
 		try {
 			Orthopantomogram orthopantomogramEntity = new Orthopantomogram();
 			orthopantomogramEntity.setFolder(folderPath);
-			orthopantomogramEntity.setDate( LocalDate.now() );
+			orthopantomogramEntity.setDate( date );
 			orthopantomogramEntity.setFileName( orthopantomogram.getOriginalFilename() );
 			orthopantomogramEntity.setFormat(format);
 			
@@ -90,6 +113,7 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 	}
 
 	@Override
+	@Transactional
 	public void putOrthopantomogram(Orthopantomogram orthopantomogram) {
 		
 		// If filename is changed, upload the file
@@ -119,26 +143,26 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 	}
 
 	@Override
+	@Transactional
 	public void deleteOrthopantomogram(Long id) {
 		
+		// find the Orthopantomogram
 		Orthopantomogram orthopantomogram = repository.findById(id)
 				.orElseThrow(
 						() -> new EntityNotFoundException("Orthopantomogram with id " + id + " not found in the database" )
 				);
 		
-		repository.delete(orthopantomogram);
+		// delete the file
+		String filePath = orthopantomogram.getFilename() + File.pathSeparator + orthopantomogram.getFilename();
+		File file = new File( filePath );
 		
-	}
-
-	@Override
-	public void deleteOrthopantomogram(String filename) {
-		
-		Orthopantomogram orthopantomogram = repository.findByFilename(filename)
-				.orElseThrow(
-						() -> new EntityNotFoundException("Orthopantomogram with filename " + filename + " not found in the database" )
-				);
+        // Delete file
+        if (!file.delete()) {
+            throw new RuntimeException("Failed to delete file: " + file.getAbsolutePath());
+        }
 		
 		repository.delete(orthopantomogram);
+		
 	}
 
 }
