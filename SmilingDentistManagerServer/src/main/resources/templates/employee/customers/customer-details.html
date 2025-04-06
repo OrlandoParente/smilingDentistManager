@@ -85,7 +85,7 @@
                 <div class="p-3">
                     <!-- Recall E-mail -->
                      <div>
-                        <span class="fw-bold" th:text="#{labelAutomaticEmailRecallEmail}"></span>
+                        <span class="fw-bold" th:text="#{labelAutomaticEmailRecallEmailNoColon} + ' ' + #{labelAutomaticEmailEvery}"></span>
 
                         <!-- --------------  days to next recall email label ----------------------- -->
                         <span   th:if="${joinCustomer.customerDTO.daysToNextRecallEmail < 1}" 
@@ -125,6 +125,7 @@
 
                      </div>
                 </div>
+
                 <!-- Medical History -->
 
                 <nav th:replace="~{employee/customers/fragments/customer-details/customer-details-navs
