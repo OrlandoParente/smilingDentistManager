@@ -12,8 +12,7 @@ import java.time.LocalDate;
 
 public interface OrthopantomogramRepository extends JpaRepository<Orthopantomogram, Long> {
 
-	Optional<Orthopantomogram> findByFilename(String filename);
-	
+	List<Orthopantomogram> findByCustomerAndFilenameContaining(Customer customer, String filename );
 	List<Orthopantomogram> findByCustomer(Customer customer);
 	List<Orthopantomogram> findByDate(LocalDate date);
 	List<Orthopantomogram> findByFormat(String format);
