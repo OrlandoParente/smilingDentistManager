@@ -30,6 +30,7 @@ import sdms.service.ExpenseServiceInterface;
 import sdms.service.HasMedicalHistoryServiceInterface;
 import sdms.service.MedicalHistoryServiceInterface;
 import sdms.service.TreatmentServiceInterface;
+import sdms.util.FileFormatManager;
 import sdms.util.UserRoleManager;
 import sdms.util.WebClientCookieManager;
 
@@ -181,8 +182,12 @@ public class CustomerController {
 				
 		// Fetch automatic email intervals --------------------------------------------------------------
 		List<Integer> automaticEmailIntervals = AutomaticEmailUtil.getAutomaticEmailIntervals();
-		// ---------------------------------------------------------------------------------------------
-
+		// ----------------------------------------------------------------------------------------------
+		
+		// Fetch orthopantomogram formats ---------------------------------------------------------------
+		List<String> orthoFormats = FileFormatManager.getOrthopantomogramFileFormats();
+		// ----------------------------------------------------------------------------------------------
+		
 		// check print
 		joinCustomer.getJoinAppointmentsDTO().forEach( jc -> {
 			LOGGER.info( "joinCustomer.joinAppointmentDTO.teeth = " + jc.getAppointmentDTO().getTeeth() );
@@ -198,6 +203,7 @@ public class CustomerController {
 		model.addAttribute("customerInvoiceNumbers", customerInvoiceNumbers);
 		model.addAttribute("selectedInvoiceNumber", selectedInvoiceNumber);
 		model.addAttribute("automaticEmailIntervals", automaticEmailIntervals);
+		model.addAttribute("orthoFormats", orthoFormats);
 		
 		// serve?
 		model.addAttribute("customerPermissions", UserRoleManager.getCustomerPermissions());
