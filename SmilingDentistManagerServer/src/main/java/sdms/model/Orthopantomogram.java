@@ -24,7 +24,6 @@ public class Orthopantomogram {
 	
 	private LocalDate date;		// Not sure the database needs this
 	
-	@Column( unique = true )
 	private String filename;	// file fileName 
 	private String format;		// png, jpg, DICOM (dcm), etc ...
 	private String folder;		// This is for an elastic use of the Rest API. The Web Application use DEFAULT_ORTHOPANTOMOGRAM_FOLDER in FolderManager 
