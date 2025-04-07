@@ -30,6 +30,5 @@ public class SmilingDentistManagerServerApplication {
 	AntPathMatcher antPathMatcher() {
 		return new AntPathMatcher();
 	}
-	
-	
+
 }
