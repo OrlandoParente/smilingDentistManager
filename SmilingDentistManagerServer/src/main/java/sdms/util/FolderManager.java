@@ -1,6 +1,7 @@
 package sdms.util;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +14,11 @@ public class FolderManager {
 	private final static Logger LOGGER = LoggerFactory.getLogger( FolderManager.class );
 	
 	// Private paths: Use get for be sure that the folder exists
-	private final static String DEFAULT_FOLDER_CUSTOMERS = File.pathSeparator + "img" + File.pathSeparator  + "customer_folders";
+	private final static String DEFAULT_FOLDER_CUSTOMERS = File.separator + "img" + File.separator  + "customer_folders";
 	
 	// Public paths
-	public final static String DEFAULT_FOLDER_ORTHOPANTOMOGRAMS = File.pathSeparator + "orthopantomograms";
-	public final static String FOLDER_STATIC_RESOURCES = "src" + File.pathSeparator + "main" + File.pathSeparator + "resources" + File.pathSeparator + "static";
+	public final static String DEFAULT_FOLDER_ORTHOPANTOMOGRAMS = File.separator + "orthopantomograms";
+	public final static String FOLDER_STATIC_RESOURCES = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static";
 	
 	public FolderManager() {
 	}
@@ -74,7 +75,9 @@ public class FolderManager {
 		} else { // If not exist yet, create a unique folder path
 			
 									
-			String prefixFolderPath = FolderManager.FOLDER_STATIC_RESOURCES + FolderManager.DEFAULT_FOLDER_CUSTOMERS + File.pathSeparator + customer.getName() + "-" + customer.getSurname() + "-";
+			String prefixFolderPath = 	FolderManager.getAbsoluteRootProjectPath() + File.separator 
+										+ FolderManager.FOLDER_STATIC_RESOURCES + FolderManager.DEFAULT_FOLDER_CUSTOMERS + File.separator 
+										+ customer.getName() + "-" + customer.getSurname() + "-";
 		
 			if( customer.getTaxIdCode() != null ) {	// if we have the taxIdCode (Cod. Fiscale) we have a unique folder name
 				folderPath = prefixFolderPath + customer.getTaxIdCode();
@@ -93,11 +96,14 @@ public class FolderManager {
 		
 		if( ! folder.exists() ) {
 			
-			if( folder.mkdir() ) {
+			if( folder.mkdirs() ) {
 				LOGGER.info(folderPath + " created ");
+
 			} else {
 				LOGGER.error("Fail to create : " + folderPath);
-				return null;
+			    throw new IllegalStateException("Failed to create directory: " + folderPath);
+		        // throw new IOException("Failed to create directory at: " + folderPath);
+
 			}
 				
 			
@@ -115,7 +121,11 @@ public class FolderManager {
 		// Get ( eventually generate ) customer folder 
 		String customerFolderPath = getCustomerFolder( customer );
 		
-		String folderPath = customerFolderPath + File.pathSeparator + FolderManager.DEFAULT_FOLDER_ORTHOPANTOMOGRAMS;
+		LOGGER.info("getOrthopantomogramFolder -> customerFolderPath: " + customerFolderPath);
+		
+		String folderPath = customerFolderPath + File.separator + FolderManager.DEFAULT_FOLDER_ORTHOPANTOMOGRAMS;
+		
+		LOGGER.info("getOrthopantomogramFolder -> orthopantomogramsFolderPath: " + customerFolderPath);
 		
 		File folder = new File( folderPath );
 		
@@ -126,7 +136,9 @@ public class FolderManager {
 				LOGGER.info(folderPath + " created ");
 			} else {
 				LOGGER.error("Fail to create : " + folderPath);
-				return null;
+			    throw new IllegalStateException("Failed to create directory: " + folderPath);
+		        // throw new IOException("Failed to create directory at: " + folderPath);
+
 			}
 				
 			
@@ -163,5 +175,21 @@ public class FolderManager {
 		}
 		
 		return folderPath;
+	}
+	
+	// Static paths can cause a problem for different contexts that depends if you are run the war or the jar 
+	public static String getAbsoluteRootProjectPath() {
+		
+		File root = new File(".");
+		String rootProjectPath = null;
+		
+		try {
+			rootProjectPath = root.getCanonicalPath();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return rootProjectPath;
 	}
 }
