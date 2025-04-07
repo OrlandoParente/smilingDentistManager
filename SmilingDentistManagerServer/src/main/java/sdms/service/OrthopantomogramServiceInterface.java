@@ -16,10 +16,10 @@ public interface OrthopantomogramServiceInterface {
 	public List<Orthopantomogram> getOrthopantomogramsByCustomer( Long idCustomer );
 
 	public void uploadOrthopantomogram( Long idCustomer, MultipartFile orthopantomogram, String format );
-	public void uploadOrthopantomogram( String folderPath, MultipartFile orthopantomogram, String format );
+	public void uploadOrthopantomogram( Long idCustomer,String folderPath, MultipartFile orthopantomogram, String format );
 	
 	public void uploadOrthopantomogram( Long idCustomer, MultipartFile orthopantomogram, String format, LocalDate date );
-	public void uploadOrthopantomogram( String folderPath, MultipartFile orthopantomogram, String format, LocalDate date );
+	public void uploadOrthopantomogram( Long idCustomer, String folderPath, MultipartFile orthopantomogram, String format, LocalDate date );
 	
 	public void putOrthopantomogram( Orthopantomogram orthopantomogram );
 	

@@ -73,8 +73,8 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 	}
 	
 	@Override
-	public void uploadOrthopantomogram(String folderPath, MultipartFile orthopantomogram, String format ) {
-		uploadOrthopantomogram(folderPath, orthopantomogram, format, LocalDate.now() );
+	public void uploadOrthopantomogram(Long idCustomer, String folderPath, MultipartFile orthopantomogram, String format ) {
+		uploadOrthopantomogram(idCustomer, folderPath, orthopantomogram, format, LocalDate.now() );
 	}
 	
 	@Override
@@ -86,22 +86,38 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 		
 		String folderPath = FolderManager.getOrthopantomogramFolder(customer);
 		
-		uploadOrthopantomogram(folderPath, orthopantomogram, format);
+		LOGGER.info( "FOLDER_PATH: " + folderPath);
+		
+		uploadOrthopantomogram(idCustomer, folderPath, orthopantomogram, format, date);
 		
 	}
 
 	@Override
 	@Transactional
-	public void uploadOrthopantomogram(String folderPath, MultipartFile orthopantomogram, String format, LocalDate date ) {
+	public void uploadOrthopantomogram(Long idCustomer, String folderPath, MultipartFile orthopantomogram, String format, LocalDate date ) {
+		
+		LOGGER.info("uploadOrthopantomogram  -> idCustomer=" + idCustomer + " folderPath=" + folderPath + ";date=" + date  +"; format=" + format +" ; "
+				+ " orthopantomogram=" + orthopantomogram + ";");
+		
+		Customer customer = customerRepository.findById(idCustomer)
+				.orElseThrow( () -> new EntityNotFoundException("Customer with id " + idCustomer + " not found in the database") );
+		
 		
 		try {
 			Orthopantomogram orthopantomogramEntity = new Orthopantomogram();
+			orthopantomogramEntity.setCustomer(customer);
 			orthopantomogramEntity.setFolder(folderPath);
 			orthopantomogramEntity.setDate( date );
 			orthopantomogramEntity.setFileName( orthopantomogram.getOriginalFilename() );
 			orthopantomogramEntity.setFormat(format);
 			
-			String filePath = folderPath + orthopantomogramEntity.getFilename();
+			String filePath = folderPath + File.separator +  orthopantomogramEntity.getFilename();
+			
+//			File rootDir = new File(".");
+//			String absolutePath = rootDir.getCanonicalPath();
+//			System.out.println("##################################>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Project Root Directory: " + absolutePath);
+
+			
 			orthopantomogram.transferTo( new File( filePath ) );
 			
 			repository.save( orthopantomogramEntity );
@@ -153,7 +169,7 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 				);
 		
 		// delete the file
-		String filePath = orthopantomogram.getFilename() + File.pathSeparator + orthopantomogram.getFilename();
+		String filePath = orthopantomogram.getFolder() + File.separator + orthopantomogram.getFilename();
 		File file = new File( filePath );
 		
         // Delete file
