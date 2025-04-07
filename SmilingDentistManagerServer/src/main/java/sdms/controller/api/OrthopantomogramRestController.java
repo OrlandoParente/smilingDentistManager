@@ -3,7 +3,6 @@ package sdms.controller.api;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.persistence.EntityNotFoundException;
 import sdms.dto.OrthopantomogramDTO;
 import sdms.model.Orthopantomogram;
-import sdms.repository.OrthopantomogramRepository;
 import sdms.service.OrthopantomogramServiceInterface;
 import sdms.util.DateAndTimeManager;
 import sdms.util.FileFormatManager;
@@ -97,21 +94,29 @@ public class OrthopantomogramRestController {
 	}
 	
 	
-	// ---------------------------------------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------------------------------------------	
 	
 	// Post ----------------------------------------------------------------------------------------------------------------------
 	// UPLOAD ( POST )
 	// Should this method return orthopantomogram entity? So we have to create findLastInseterd method in database and in the repository
-	@PostMapping( value="/uploadOrthopantomogram", params = { "idCustomer", "orthopantomogram" } )
+	// OSS:: not include "orthopantomogram" in params cause Spring can't correctly verify that's not null if present in params list
+	@PostMapping( value="/uploadOrthopantomogram", params = { "idCustomer" } )
 	public ResponseEntity<?> uploadOrthopantomogram( @RequestParam Long idCustomer, @RequestParam MultipartFile orthopantomogram,
 													@RequestParam( defaultValue = FileFormatManager.FILE_FORMAT_IMAGE_SIMPLE ) String format,
 													@RequestParam( defaultValue = "" ) String date ){
-		LOGGER.info("/uploadOrthopantomogram");
+		LOGGER.info("/uploadOrthopantomogram PARAMS = { idCustomer=" + idCustomer + " ; format=" + format + " ;"
+															+ " date="  + date + " : orthopantomogram=" + orthopantomogram + " ; }");
+		
+		// check orthopantomogram file is not null or not embpy
+		if( orthopantomogram == null || orthopantomogram.isEmpty() ) {
+			LOGGER.error("The param orthopantomogram file is null or empty");
+			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body(" File to upload not present or empty ");
+		}
 		
 		LocalDate tmpDate = LocalDate.now();
 		
 		try {
-			if( ! date.equals("") || date.isEmpty() )
+			if( ! date.equals("") )
 				tmpDate = dateAndTimeManager.parseDate(date);
 		
 		} catch ( DateTimeException e ) {
@@ -173,8 +178,8 @@ public class OrthopantomogramRestController {
 	
 	// Delete --------------------------------------------------------------------------------------------------------------------
 	// DELETE
-	@DeleteMapping( "/deleteOrthopantomogram/{id}" )
-	public ResponseEntity<?> deleteOrthopantomogram( @PathVariable Long id ){
+	@DeleteMapping( value= "/deleteOrthopantomogram", params= { "id" } )
+	public ResponseEntity<?> deleteOrthopantomogram( @RequestParam Long id ){
 		
 		try {
 			service.deleteOrthopantomogram(id);
