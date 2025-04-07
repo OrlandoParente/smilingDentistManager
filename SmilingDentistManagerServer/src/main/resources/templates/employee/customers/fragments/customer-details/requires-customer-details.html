@@ -26,6 +26,11 @@
             <div>
                   <span class="customerIds d-none" th:text="${joinCustomer.customerDTO.id}" ></span>
             </div>
+
+            <!-- Orthopantomogram ids -->
+            <div th:each="orthopantomogram : ${orthopantomograms}">
+                  <span class="orthopantomogramIds d-nonw" th:text="${ orthopantomogram.id }"></span>
+            </div>
             
 
             <!-- ---------------- MEDICAL HISTORIES SCRIPTS ----------------------------------- -->
@@ -57,6 +62,11 @@
 
             <!-- ----------------- AUTOMATIC EMAILS SCRIPTS ------------------------------------ -->
             <script th:src="@{/js/customers/put-automatic-emails-form.js}"></script> 
+            <!-- ------------------------------------------------------------------------------- -->
+
+            <!-- ----------------- ORTHOPANTOMOGRAM SCRIPTS ------------------------------------ -->
+            <script th:src="@{/js/customers/customer-details/orthopantomograms/upload-orthopantomogram.js}"></script>
+            <script th:src="@{/js/customers/customer-details/orthopantomograms/orthopantomogram-buttons.js}"></script>
             <!-- ------------------------------------------------------------------------------- -->
       </div>
 
