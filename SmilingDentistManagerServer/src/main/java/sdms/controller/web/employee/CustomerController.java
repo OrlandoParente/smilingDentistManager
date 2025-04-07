@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import sdms.dto.CustomerDTO;
 import sdms.dto.EmployeeDTO;
 import sdms.dto.MedicalHistoryDTO;
+import sdms.dto.OrthopantomogramDTO;
 import sdms.dto.TreatmentDTO;
 import sdms.dto.join.CustomerMedicalHistoryExpenseAppointmentDTO;
 import sdms.email.AutomaticEmailUtil;
@@ -29,6 +30,7 @@ import sdms.service.EmployeeServiceInterface;
 import sdms.service.ExpenseServiceInterface;
 import sdms.service.HasMedicalHistoryServiceInterface;
 import sdms.service.MedicalHistoryServiceInterface;
+import sdms.service.OrthopantomogramServiceInterface;
 import sdms.service.TreatmentServiceInterface;
 import sdms.util.FileFormatManager;
 import sdms.util.UserRoleManager;
@@ -60,6 +62,9 @@ public class CustomerController {
 	
 	@Autowired
 	EmployeeServiceInterface employeeService;
+	
+	@Autowired
+	OrthopantomogramServiceInterface orthopantomogramService;
 	
 	@Autowired
 	ModelMapper modelMapper;
@@ -187,6 +192,16 @@ public class CustomerController {
 		// Fetch orthopantomogram formats ---------------------------------------------------------------
 		List<String> orthoFormats = FileFormatManager.getOrthopantomogramFileFormats();
 		// ----------------------------------------------------------------------------------------------
+
+		// Fetch orthopantomograms ----------------------------------------------------------------------
+		List<OrthopantomogramDTO> orthopantomograms = orthopantomogramService.getOrthopantomogramsByCustomer(customerId).stream()
+																				.sorted( Comparator.comparing( ortho -> ortho.getDate() ) )
+																				.map( ortho ->  modelMapper.map(ortho, OrthopantomogramDTO.class ) )
+																				.toList();
+		
+		orthopantomograms.forEach(  ortho ->  LOGGER.info(ortho.toString()) );
+		// ----------------------------------------------------------------------------------------------
+
 		
 		// check print
 		joinCustomer.getJoinAppointmentsDTO().forEach( jc -> {
@@ -204,6 +219,7 @@ public class CustomerController {
 		model.addAttribute("selectedInvoiceNumber", selectedInvoiceNumber);
 		model.addAttribute("automaticEmailIntervals", automaticEmailIntervals);
 		model.addAttribute("orthoFormats", orthoFormats);
+		model.addAttribute("orthopantomograms", orthopantomograms);
 		
 		// serve?
 		model.addAttribute("customerPermissions", UserRoleManager.getCustomerPermissions());
