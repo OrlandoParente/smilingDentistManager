@@ -126,8 +126,90 @@
                      </div>
                 </div>
 
-                <!-- Medical History -->
+                <!-- Orthopantomograms management -->
+                <nav th:replace="~{employee/customers/fragments/customer-details/customer-details-navs
+                    :: orthopantomograms-management-nav }">
+                </nav> 
 
+                <div th:replace="~{fragments/messages/error-msg :: error-msg('Orthopantomograms', '')}"></div>
+
+                <!-- upload orthopantomogram form -->
+                <form id="formUploadOrthopantomogram" method="post" enctype="multipart/form-data" th:action="@{/uploadOrthopantomogram}">
+
+                    <input type="hidden" name="idCustomer" th:value="${joinCustomer.customerDTO.id}">
+
+                    <label for="orthopantomogram">Scegli il file</label>
+                    <input id="orthopantomogram" type="file" name="orthopantomogram" class="form-control" />
+                    <button type="submit" id="btnUploadOrthopantomogram"
+                            class="btn btn-primary mt-2 col-12 col-md-auto">
+                        Carica
+                    </button>
+                </form>
+
+                <!-- orthopantomograms list -->
+                <div class="row" th:if="${orthopantomograms != null and !orthopantomograms.isEmpty()}">
+
+                    <div class="table-responsive mt-3">
+                        <table class="table table-striped table-bordered text-center">
+                            <thead>
+                                <tr>
+                                    
+                                    <th></th>
+                                    <th th:text="#{tableHeaderFilename}">Filename</th>
+                                    <th th:text="#{tableHeaderDate}">Date</th>
+                                    <th th:text="#{tableHeaderFileFormat}">Format</th>
+                                </tr>
+                            </thead>
+    
+                            <tbody>
+                                <tr th:each="ortho : ${orthopantomograms}">
+                                    
+                                    <td class="text-center align-middle">
+                                        
+                                        <div class="btn-group">
+                                            <button th:id="'btnDeleteOrthopantogram' + ${ortho.id}"
+                                                class="btn btn-danger sdm-onclick-reload me-2"
+                                                th:text="#{btnDelete}">
+                                                
+                                            </button>
+
+                                            <!-- <div class="d-inline-block"
+                                                th:insert="~{employee/customers/fragments/customer-details/appointments/put-appointment-modal
+                                                                :: put-appointment-modal( ${ joinCustomer.customerDTO.id }, ${appointment} )}">
+                                            </div> -->
+
+                                            <button class="btn btn-primary" th:text="#{btnEdit}">
+                                                Edit
+                                            </button>
+
+                                            <button class="btn btn-success" th:text="#{btnOpen}">
+                                                Open
+                                            </button>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <span th:text="${ortho.filename}"></span> </span>
+                                    </td>
+                                    <td 
+                                        th:with="dateFormat=#{formPlaceholderDate}"
+                                        th:text="${ #temporals.format( ortho.date, dateFormat )}" >
+                                    </td>
+                                    <td>
+                                        <span th:text="${ortho.format}"></span>
+                                    </td>
+                                   
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> <!-- End Table-responsive -->
+    
+    
+
+                </div>
+
+
+                <!-- Medical History -->
                 <nav th:replace="~{employee/customers/fragments/customer-details/customer-details-navs
                                     :: customer-medical-histories }">
                 </nav> 
@@ -385,7 +467,7 @@
                 
                 <div class="row">
 
-                    <div class="sdm-calendar-table-reponsive table-responsive mt-3">
+                    <div class="table-responsive mt-3">
                         <table class="table table-striped table-bordered text-center">
                             <thead>
                                 <tr>
@@ -404,17 +486,19 @@
                             <tbody>
                                 <tr th:each="appointment : ${ joinCustomer.joinAppointmentsDTO }">
                                     
-                                    <td class="d-flex justify-content-center">
+                                    <td class="text-center align-middle">
                                         
-                                        <button th:id="'btnDeleteAppointment' + ${appointment.appointmentDTO.id}"
-                                            class="btn btn-danger sdm-onclick-reload me-2"
-                                            th:text="#{btnDelete}">
-                                            
-                                        </button>
+                                        <div class="btn-group">
+                                            <button th:id="'btnDeleteAppointment' + ${appointment.appointmentDTO.id}"
+                                                class="btn btn-danger sdm-onclick-reload me-2"
+                                                th:text="#{btnDelete}">
+                                                
+                                            </button>
 
-                                        <div class="d-inline-block"
-                                             th:insert="~{employee/customers/fragments/customer-details/appointments/put-appointment-modal
-                                                            :: put-appointment-modal( ${ joinCustomer.customerDTO.id }, ${appointment} )}">
+                                            <div class="d-inline-block"
+                                                th:insert="~{employee/customers/fragments/customer-details/appointments/put-appointment-modal
+                                                                :: put-appointment-modal( ${ joinCustomer.customerDTO.id }, ${appointment} )}">
+                                            </div>
                                         </div>
 
                                     </td>
