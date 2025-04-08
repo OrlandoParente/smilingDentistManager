@@ -17,6 +17,7 @@ import sdms.model.Customer;
 import sdms.model.Orthopantomogram;
 import sdms.repository.CustomerRepository;
 import sdms.repository.OrthopantomogramRepository;
+import sdms.util.FileFormatManager;
 import sdms.util.FolderManager;
 
 @Service
@@ -108,7 +109,7 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 			orthopantomogramEntity.setCustomer(customer);
 			orthopantomogramEntity.setFolder(folderPath);
 			orthopantomogramEntity.setDate( date );
-			orthopantomogramEntity.setFileName( orthopantomogram.getOriginalFilename() );
+			orthopantomogramEntity.setFilename( orthopantomogram.getOriginalFilename() );
 			orthopantomogramEntity.setFormat(format);
 			
 			String filePath = folderPath + File.separator +  orthopantomogramEntity.getFilename();
@@ -132,6 +133,7 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 	@Transactional
 	public void putOrthopantomogram(Orthopantomogram orthopantomogram) {
 		
+			
 		// If filename is changed, upload the file
 		Orthopantomogram original = repository.findById( orthopantomogram.getId() )
 				.orElseThrow(
@@ -140,14 +142,27 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 		
 		// check if it has to rename the filename 
 		if( ! original.getFilename().equals( orthopantomogram.getFilename() ) ) {
+			
+			// Like ".dcm"
+			String formatExtension = FileFormatManager.extractFormatFileFromFilename( orthopantomogram.getFilename() );	
+		
+			
+			// If user deleted it, restore formatExtension (like ".dcm")
+			if( formatExtension == null || formatExtension.equals("") || formatExtension.equals( FileFormatManager.FILE_FORMAT_UNKNOWN ) ) {
+				formatExtension = FileFormatManager.extractFormatFileFromFilename( original.getFilename() );
+				orthopantomogram.setFilename( orthopantomogram.getFilename() + formatExtension );
+			}
+			
 			// change filename
-			String oldFilePath = original.getFolder() + File.pathSeparator + original.getFilename();
-			String newFilePath = orthopantomogram.getFolder() + File.pathSeparator + orthopantomogram.getFilename();
+			String oldFilePath = original.getFolder() + File.separator + original.getFilename();
+			String newFilePath = original.getFolder() + File.separator + orthopantomogram.getFilename() ;
 			File originalFile = new File( oldFilePath );
-			File newFile = new File(newFilePath);
+			File newFile = new File( newFilePath );
 			
 			if( originalFile.renameTo( newFile ) ) {
 				LOGGER.info( oldFilePath + " renamed to " + newFilePath );
+				// Save new filename in the database
+				original.setFilename( orthopantomogram.getFilename() );
 			} else {
 				LOGGER.error( "Impossible rename file from " + oldFilePath + " to " + newFilePath );
 			    throw new IllegalStateException( "Impossible rename file from " + oldFilePath + " to " + newFilePath );
@@ -155,7 +170,13 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 			
 		}
 		
-		repository.save( orthopantomogram );
+		// check file format
+		original.setFormat( FileFormatManager.getFormatFromFilename(original.getFilename() ) );
+		// save new date
+		if( orthopantomogram.getDate() != null )
+			original.setDate(  orthopantomogram.getDate()  );
+		
+		repository.save( original );
 	}
 
 	@Override

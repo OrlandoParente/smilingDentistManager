@@ -83,7 +83,7 @@ public class Orthopantomogram {
 	}
 
 
-	public void setFileName(String filename) {
+	public void setFilename(String filename) {
 		this.filename = filename;
 	}
 
