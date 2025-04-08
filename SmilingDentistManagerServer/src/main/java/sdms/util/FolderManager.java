@@ -123,9 +123,10 @@ public class FolderManager {
 		
 		LOGGER.info("getOrthopantomogramFolder -> customerFolderPath: " + customerFolderPath);
 		
-		String folderPath = customerFolderPath + File.separator + FolderManager.DEFAULT_FOLDER_ORTHOPANTOMOGRAMS;
+		// String folderPath = customerFolderPath + File.separator + FolderManager.DEFAULT_FOLDER_ORTHOPANTOMOGRAMS;
+		String folderPath = customerFolderPath + FolderManager.DEFAULT_FOLDER_ORTHOPANTOMOGRAMS;
 		
-		LOGGER.info("getOrthopantomogramFolder -> orthopantomogramsFolderPath: " + customerFolderPath);
+		LOGGER.info("getOrthopantomogramFolder -> orthopantomogramsFolderPath: " + folderPath );
 		
 		File folder = new File( folderPath );
 		
