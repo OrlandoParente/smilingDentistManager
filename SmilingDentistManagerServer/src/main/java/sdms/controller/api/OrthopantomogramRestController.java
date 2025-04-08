@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -102,7 +103,7 @@ public class OrthopantomogramRestController {
 	// OSS:: not include "orthopantomogram" in params cause Spring can't correctly verify that's not null if present in params list
 	@PostMapping( value="/uploadOrthopantomogram", params = { "idCustomer" } )
 	public ResponseEntity<?> uploadOrthopantomogram( @RequestParam Long idCustomer, @RequestParam MultipartFile orthopantomogram,
-													@RequestParam( defaultValue = FileFormatManager.FILE_FORMAT_IMAGE_SIMPLE ) String format,
+													@RequestParam( defaultValue = "" ) String format,
 													@RequestParam( defaultValue = "" ) String date ){
 		LOGGER.info("/uploadOrthopantomogram PARAMS = { idCustomer=" + idCustomer + " ; format=" + format + " ;"
 															+ " date="  + date + " : orthopantomogram=" + orthopantomogram + " ; }");
@@ -125,6 +126,10 @@ public class OrthopantomogramRestController {
 			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body(" Invalid format data ");
 		}
 		
+		// If format is not passed, it try to automatic fetch it from the filename 
+		if( format.trim().equals("") )
+			format = FileFormatManager.getFormatFromFilename( orthopantomogram.getOriginalFilename() );
+		
 		service.uploadOrthopantomogram(idCustomer, orthopantomogram, format, tmpDate );
 		
 		return ResponseEntity.ok().build();
@@ -134,7 +139,7 @@ public class OrthopantomogramRestController {
 	
 	// Put -----------------------------------------------------------------------------------------------------------------------
 	// PUT 
-	@PostMapping( value="/putOrthopantomogram", params = { "id" } )
+	@PutMapping( value="/putOrthopantomogram", params = { "id" } )
 	public ResponseEntity<?> uploadOrthopantomogram( @RequestParam Long id, 
 													@RequestParam( defaultValue = "" ) String filename,
 													@RequestParam( defaultValue = "" ) String format,
@@ -143,14 +148,12 @@ public class OrthopantomogramRestController {
 		LOGGER.info("/putOrthopantomogram");
 		
 		
-		Orthopantomogram orthopantomogram = service.getOrthopantomogramById(id);
-		
-		if( orthopantomogram == null )
-			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body(" Orthopantomogram with id " + id + " not found in the database ");
-		
-		if( ! filename.equals("") )	orthopantomogram.setFileName(filename);
-		if( ! format.equals("") ) orthopantomogram.setFormat(format);
-		
+		Orthopantomogram orthopantomogram = new Orthopantomogram();
+		orthopantomogram.setId(id);
+		orthopantomogram.setFilename(filename);
+		orthopantomogram.setFormat(format);
+			
+		// Manage date ---------------------------------------------
 		
 		LocalDate tmpDate = null;
 		if( ! date.equals("") ) {
@@ -165,11 +168,23 @@ public class OrthopantomogramRestController {
 				LOGGER.error( e.getMessage() );
 				return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body(" Invalid format data ");
 			}
+		} else {
+			orthopantomogram.setDate(null);
 		}
+		// ---------------------------------------------------------
 		
-		
-		service.putOrthopantomogram(orthopantomogram);
-		
+		try {
+			service.putOrthopantomogram(orthopantomogram);
+		} catch ( EntityNotFoundException e ) {
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body(" Orthopantomogram with id " + id + " not found in the database ");
+			
+		} catch( Exception e ) {
+			LOGGER.error( e.getMessage() );
+			e.printStackTrace();
+			return ResponseEntity.internalServerError().build();
+		}
+			
+			
 		return ResponseEntity.ok().body( modelMapper.map( orthopantomogram, OrthopantomogramDTO.class ) );
 	}
 	
