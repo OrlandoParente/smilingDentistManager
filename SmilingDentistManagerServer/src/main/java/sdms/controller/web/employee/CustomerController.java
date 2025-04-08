@@ -195,8 +195,8 @@ public class CustomerController {
 
 		// Fetch orthopantomograms ----------------------------------------------------------------------
 		List<OrthopantomogramDTO> orthopantomograms = orthopantomogramService.getOrthopantomogramsByCustomer(customerId).stream()
-																				.sorted( Comparator.comparing( ortho -> ortho.getDate() ) )
 																				.map( ortho ->  modelMapper.map(ortho, OrthopantomogramDTO.class ) )
+																				.sorted( Comparator.comparing( ortho -> ((OrthopantomogramDTO) ortho).getDate() ).reversed() )
 																				.toList();
 		
 		orthopantomograms.forEach(  ortho ->  LOGGER.info(ortho.toString()) );
