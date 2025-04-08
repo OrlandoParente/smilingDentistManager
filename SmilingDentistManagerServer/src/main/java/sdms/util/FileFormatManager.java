@@ -33,25 +33,38 @@ public class FileFormatManager {
 	public static String getFormatFromFilename( String filename ) {
 		
 		// fetch the file format
-		char [] arrFilename = filename.toCharArray();
-		int i = arrFilename.length - 1;
+		String formatExtension = FileFormatManager.extractFormatFileFromFilename(filename);
 		
-		for( ; i > 0; i ++ ) 
-			if( arrFilename[i] == '.' )
-				break;
-		
-		if( i == 0 )
+		if( formatExtension.trim().equals("") )
 			return FileFormatManager.FILE_FORMAT_UNKNOWN;
-		
-		String formatExtension = filename.substring(i);
-		
-		LOGGER.info( "File name format extension of " + filename + " : " + formatExtension );
 		
 		if( formatExtension.equals(".dcm") )	return FileFormatManager.FILE_FORMAT_IMAGE_DICOM;
 		if( formatExtension.equals(".jpg") || formatExtension.equals(".jpeg") || formatExtension.equals(".png") )
 				return FileFormatManager.FILE_FORMAT_IMAGE_SIMPLE;
 		
 		return FileFormatManager.FILE_FORMAT_UNKNOWN;
+	}
+	
+	// extract the formatfile from the filename
+	public static String extractFormatFileFromFilename( String filename ) {
+		
+		char [] arrFilename = filename.toCharArray();
+		int i = arrFilename.length - 1;
+		
+		for( ; i > 0; i -- ) 
+			if( arrFilename[i] == '.' )
+				break;
+		
+		// No format found
+		if( i == 0 )
+			return ""; 
+		
+		String formatExtension = filename.substring(i);
+		
+		LOGGER.info( "File name format extension of " + filename + " : " + formatExtension );
+		
+		return formatExtension;
+		
 	}
 
 }
