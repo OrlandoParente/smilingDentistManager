@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="put-orthopantomogram-modal( orthopantomogram )">
+        <div class="modal fade" th:id="'putOrthopantomogramModalToggle' + ${orthopantomogram?.id}" 
+                th:aria-labelledby="'putOrthopantomogramModalToggleLabel' + ${orthopantomogram?.id}" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" 
+                      th:id="'putOrthopantomogramModalToggleLabel' + ${orthopantomogram?.id}"
+                      th:text="#{titleEditOrthopantomogram}">
+                      Edit Orthopantomogram
+                  </h1>
+                  <button th:id="'btnXCloseModal' + ${orthopantomogram?.id}" type="button" 
+                          class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                  <div th:replace="~{fragments/messages/error-msg :: error-msg( 'Orthopantomogram' + ${orthopantomogram?.id},'')}"></div>
+
+                  <!-- get data for create the Orthopantomogram -->
+                  <form th:id="'putOrthopantomogramForm' + ${orthopantomogram?.id}" method="PUT" th:action="@{/putOrthopantomogram}" > 
+
+
+                    <!-- For sent the idOrthopantomogram in the put request -->
+                    <div><input id="putOrthopantomogramId" type="hidden" name="id" th:value="${orthopantomogram?.id}"></div>
+
+                    <div class="row g-3 mt-3">
+
+                      <!-- Filename -->
+                      <div class="col-12 col-md-8 d-flex align-items-center"> 
+                          <label th:for="'filename' + ${orthopantomogram?.id}" class="form-label col-auto me-2" th:text="#{formLabelFilename}">
+                              Filename:
+                          </label> 
+                          <input type="text" class="form-control w-100" 
+                                  th:id="'filename' + ${orthopantomogram?.id}" 
+                                  name="filename" 
+                                  th:value="${ orthopantomogram?.filename }"> 
+                      </div> 
+
+                      <!-- Format select -->
+                      <!-- <div class="col-12 col-md-4 d-flex align-items-center"> 
+                      <label th:for="'format' + ${orthopantomogram?.id}" class="form-label me-2 col-auto" th:text="#{formLabelFormat}">
+                        Format: 
+                      </label>
+                      <select class="form-select " name="format" th:id="'format' + ${orthopantomogram?.id}" > 
+                          <option th:each="orthoFormat : ${orthoFormats}" 
+                                  th:value="${orthoFormat}"
+                                  th:text="${orthoFormat}"
+                                  th:selected="${orthoFormat} == ${orthopantomogram?.format}">
+                          </option>
+                      </select>
+                      </div>  -->
+
+                      <!-- Date -->
+                      <div class="col-12 col-md-4 d-flex align-items-center"> 
+                        <label th:for="'date' + ${orthopantomogram?.id}" 
+                                class="form-label col-auto me-2" th:text="#{formLabelDate}">
+                            Date*:
+                        </label> 
+                        <input type="text" class="form-control w-100" 
+                                th:id="'date' + ${orthopantomogram?.id}" 
+                                name="date" 
+                                th:placeholder="#{formPlaceholderDate}"
+                                th:value="${ #temporals.format(orthopantomogram?.date, 'dd/MM/yyyy') }"> 
+                      </div> 
+          
+          
+                  </div> 
+
+
+                  </form>
+
+                </div>
+
+                <div class="modal-footer">
+
+                  <!-- TO EDIT:  add button add  Medical History -->  
+                  <!-- <button th:id="'btnAddProfessionalRoleSlot' + ${orthopantomogram.id}" 
+                          class="btn btn-primary" th:text="#{btnAddProfessionalRoleSlot}">
+                    Add Professional Role
+                  </button> -->
+
+                  <!-- Button edit Orthopantomogram -->  
+                  <button th:id="'btnPutOrthopantomogram' + ${orthopantomogram.id}" 
+                          type="submit" 
+                          th:form="'putOrthopantomogramForm' + ${orthopantomogram.id}" 
+                          class="btn btn-primary me-2 mt-1" 
+                          th:text="#{btnEdit}">
+                    Edit Orthopantomogram
+                  </button>
+                
+                </div>
+              </div>
+            </div>
+        </div>
+        
+        <!-- Button for open the Modal -->
+        <a  href="#" class="btn btn-primary " 
+                th:data-bs-target="'#putOrthopantomogramModalToggle'+ ${orthopantomogram.id}" 
+                data-bs-toggle="modal"
+                th:text="#{btnEdit}">Edit
+        </a>
+
+        <!-- Add script for manage edit orthopantomogram details request with js -->
+        <!-- This ìs in customer-details requires -->
+        <!-- <script th:src="@{/js/customers/customer-details/put-orthopantomogram-form.js}"></script>   -->
+
+    </div>
+
+</body>
+</html>
