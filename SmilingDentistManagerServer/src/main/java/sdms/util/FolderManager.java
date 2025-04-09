@@ -193,4 +193,14 @@ public class FolderManager {
 		
 		return rootProjectPath;
 	}
+	
+	// Remove the part before ..static/ (static folder included)
+	// Useful for generate path for get resources from static folder in the webclient
+	public static String pathFromRootToPathFromStatic( String pathFromRoot ) {
+		
+		String pathRootToStatic = FolderManager.getAbsoluteRootProjectPath() + File.separator + FolderManager.FOLDER_STATIC_RESOURCES;
+		String pathFromStatic = pathFromRoot.replace(pathRootToStatic, "");
+				
+		return pathFromStatic;
+	}
 }
