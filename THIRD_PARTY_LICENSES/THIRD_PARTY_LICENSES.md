@@ -42,6 +42,14 @@ This file contains information about the licenses of third-party dependencies us
 - License: Apache License 2.0
 - URL: https://www.apache.org/licenses/LICENSE-2.0
 
+## Cornerstone
+- License: MIT License
+- URL cornerstonejs/cornerstone: https://github.com/cornerstonejs/cornerstone/blob/master/LICENSE
+- URL cornerstonejs/cornerstoneWADOImageLoader: https://github.com/cornerstonejs/cornerstoneWADOImageLoader/blob/master/LICENSE
+- URL cornerstonejs/cornerstoneTools: https://github.com/cornerstonejs/cornerstoneTools/blob/master/LICENSE
+- URL cornerstonejs/dicomParser :https://github.com/cornerstonejs/dicomParser/blob/master/LICENSE 
+
+
 ---
 
 ### Notice
