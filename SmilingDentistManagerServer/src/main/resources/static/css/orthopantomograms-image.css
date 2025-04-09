@@ -1,0 +1,18 @@
+.dicom-viewer{
+
+    background-color: black; 
+    height: 82vh; 
+    width: 95vw;
+}
+
+/* bootstrap md breakpoint */
+@media (min-width: 768px) { 
+
+    .dicom-viewer{
+
+        background-color: black; 
+        height: 82vh; 
+        width: 80vw;
+    }
+
+}
