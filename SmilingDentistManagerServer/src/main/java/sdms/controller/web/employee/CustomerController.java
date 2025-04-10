@@ -100,6 +100,7 @@ public class CustomerController {
 		model.addAttribute("customerPermissions", UserRoleManager.getCustomerPermissions());
 		model.addAttribute("automaticEmailIntervals", automaticEmailIntervals);
 		
+		
 		return("employee/customers/customers");
 	}
 	
@@ -189,10 +190,6 @@ public class CustomerController {
 		List<Integer> automaticEmailIntervals = AutomaticEmailUtil.getAutomaticEmailIntervals();
 		// ----------------------------------------------------------------------------------------------
 		
-		// Fetch orthopantomogram formats ---------------------------------------------------------------
-		List<String> orthoFormats = FileFormatManager.getOrthopantomogramFileFormats();
-		// ----------------------------------------------------------------------------------------------
-
 		// Fetch orthopantomograms ----------------------------------------------------------------------
 		List<OrthopantomogramDTO> orthopantomograms = orthopantomogramService.getOrthopantomogramsByCustomer(customerId).stream()
 																				.map( ortho ->  modelMapper.map(ortho, OrthopantomogramDTO.class ) )
@@ -218,13 +215,35 @@ public class CustomerController {
 		model.addAttribute("customerInvoiceNumbers", customerInvoiceNumbers);
 		model.addAttribute("selectedInvoiceNumber", selectedInvoiceNumber);
 		model.addAttribute("automaticEmailIntervals", automaticEmailIntervals);
-		model.addAttribute("orthoFormats", orthoFormats);
 		model.addAttribute("orthopantomograms", orthopantomograms);
 		
 		// serve?
 		model.addAttribute("customerPermissions", UserRoleManager.getCustomerPermissions());
 		
+		
+//		model.addAttribute("orthoFormats", orthoFormats);		
+//		// Fetch orthopantomogram formats ---------------------------------------------------------------
+//		List<String> orthoFormats = FileFormatManager.getOrthopantomogramFileFormats();
+//		// ----------------------------------------------------------------------------------------------
+
+		
 		return "employee/customers/customer-details";
+	}
+	
+	@GetMapping( value =  "/openOrthopantomogram/{orthopantomogramId}" )
+	public String openOrthopantomogram( HttpServletRequest request, Model model, @PathVariable Long orthopantomogramId ) {
+		
+		// Set useful cookies --------------------------------------------------------------------------
+		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
+		// ---------------------------------------------------------------------------------------------
+					
+		OrthopantomogramDTO orthopantomogram = modelMapper.map( orthopantomogramService.getOrthopantomogramById(orthopantomogramId), OrthopantomogramDTO.class );
+		// <-------------------- TO ADD: GO TO NOT FOUND PAGE IF NOT FOUND ENTITY IS THROWED 
+		
+		
+		model.addAttribute("orthopantomogram", orthopantomogram);
+		
+		return "employee/customers/view-orthopantomograms";
 	}
 	
 	
