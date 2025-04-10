@@ -84,7 +84,7 @@ public class OrthopantomogramDTO {
 		
 		// Set path from static instead from root 
 		// For recovery the path in the web
-		this.setFolderFromStatic( FolderManager.pathFromRootToPathFromStatic(folder) );
+		this.setFolderFromStatic( FolderManager.pathFromRootToPathFromResources(folder) );
 	}
 
 
