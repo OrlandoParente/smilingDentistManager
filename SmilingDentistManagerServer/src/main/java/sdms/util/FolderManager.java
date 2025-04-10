@@ -13,11 +13,13 @@ public class FolderManager {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger( FolderManager.class );
 	
-	// Private paths: Use get for be sure that the folder exists
-	private final static String DEFAULT_FOLDER_CUSTOMERS = File.separator + "img" + File.separator  + "customer_folders";
+	// Use get for be sure that the folder exists
+	public final static String DEFAULT_FOLDER_CUSTOMERS =  File.separator + "customer_folders";
+	public final static String DEFAULT_FOLDER_RESOURCES = "resources"; // "." + File.separator + "resources";
 	
-	// Public paths
+	// 
 	public final static String DEFAULT_FOLDER_ORTHOPANTOMOGRAMS = File.separator + "orthopantomograms";
+	// Note: Spring boot will not get changes in classpath:static (like new files in it) folder cause it load this folder at the start up in the cache
 	public final static String FOLDER_STATIC_RESOURCES = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static";
 	
 	public FolderManager() {
@@ -64,7 +66,7 @@ public class FolderManager {
 		
 		String folderPath = null;
 		
-		
+		// First check if the customer already has a customer folder 
 		if( customer.getCustomerFolder() != null && ! customer.getCustomerFolder().isEmpty() ) {	// If folderPath already exists for the customer, just return it
 			if( new File( customer.getCustomerFolder() ).exists() ) {
 				return customer.getCustomerFolder();
@@ -75,9 +77,14 @@ public class FolderManager {
 		} else { // If not exist yet, create a unique folder path
 			
 									
+//			String prefixFolderPath = 	FolderManager.getAbsoluteRootProjectPath() + File.separator 
+//										+ FolderManager.FOLDER_STATIC_RESOURCES + FolderManager.DEFAULT_FOLDER_CUSTOMERS + File.separator 
+//										+ customer.getName() + "-" + customer.getSurname() + "-";
+		
 			String prefixFolderPath = 	FolderManager.getAbsoluteRootProjectPath() + File.separator 
-										+ FolderManager.FOLDER_STATIC_RESOURCES + FolderManager.DEFAULT_FOLDER_CUSTOMERS + File.separator 
+										+ FolderManager.DEFAULT_FOLDER_RESOURCES + FolderManager.DEFAULT_FOLDER_CUSTOMERS + File.separator 
 										+ customer.getName() + "-" + customer.getSurname() + "-";
+
 		
 			if( customer.getTaxIdCode() != null ) {	// if we have the taxIdCode (Cod. Fiscale) we have a unique folder name
 				folderPath = prefixFolderPath + customer.getTaxIdCode();
@@ -186,6 +193,7 @@ public class FolderManager {
 		
 		try {
 			rootProjectPath = root.getCanonicalPath();
+			LOGGER.info("PROJECT PATH FROM ROOT -> " + rootProjectPath);
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -202,5 +210,15 @@ public class FolderManager {
 		String pathFromStatic = pathFromRoot.replace(pathRootToStatic, "");
 				
 		return pathFromStatic;
+	}
+	
+	// Remove the part before ..resources/ (resources folder included)
+	// Useful for generate path for get resources from static folder in the webclient
+	public static String pathFromRootToPathFromResources( String pathFromRoot ) {
+		
+		String pathRootToResources = FolderManager.getAbsoluteRootProjectPath() + File.separator + FolderManager.DEFAULT_FOLDER_RESOURCES;
+		String pathFromResources = pathFromRoot.replace(pathRootToResources, "");
+				
+		return pathFromResources;
 	}
 }
