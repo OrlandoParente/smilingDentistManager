@@ -166,25 +166,43 @@
                                     
                                     <td class="text-center align-middle">
                                         
+                                        <!-- Keep all the buttons on a single row -->
                                         <div class="btn-group">
+
+                                            <!-- Delete button -->
                                             <button th:id="'btnDeleteOrthopantogram' + ${ortho.id}"
                                                 class="btn btn-danger sdm-onclick-reload me-2"
                                                 th:text="#{btnDelete}">
                                                 
                                             </button>
 
-                                            <!-- <div class="d-inline-block"
-                                                th:insert="~{employee/customers/fragments/customer-details/appointments/put-appointment-modal
-                                                                :: put-appointment-modal( ${ joinCustomer.customerDTO.id }, ${appointment} )}">
-                                            </div> -->
+                                            <!-- Edit button -->
+                                            <div class="d-inline-block me-2"
+                                                th:insert="~{employee/customers/fragments/customer-details/orthopantomograms/put-orthopantomogram-modal
+                                                                :: put-orthopantomogram-modal( ${ ortho } )}">
+                                            </div>
 
-                                            <button class="btn btn-primary" th:text="#{btnEdit}">
-                                                Edit
-                                            </button>
+                                            <!-- Open orthopantomogram button for simple image -->
+                                            <div    th:if="${ ortho.format != 'DICOM' }"
+                                                    class="d-inline-block me-2"
+                                                    th:insert="~{employee/customers/fragments/customer-details/orthopantomograms/open-orthopantomogram-image-modal
+                                                            :: open-orthopantomogram-image-modal( ${ ortho } )}">
+                                            </div>
 
-                                            <button class="btn btn-success" th:text="#{btnOpen}">
-                                                Open
-                                            </button>
+                                            <!-- Open orthopantomogram button for DICOM format image -->
+                                            <a  th:if="${ ortho.format == 'DICOM' }"
+                                                class="btn btn-success me-2"
+                                                th:text="#{btnOpenDicom}" 
+                                                th:href="@{'/employee/customer/openOrthopantomogram/' + ${ortho.id} }">
+                                                Open Dicom
+                                            </a>
+
+                                            <a  th:href="@{ ${ ortho.folderFromStatic } + '/' + ${ ortho.filename } }"
+                                                download=""
+                                                class="btn border border-primary text-primary">
+                                                Download
+                                            </a>
+                                            
                                         </div>
 
                                     </td>
