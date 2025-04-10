@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="open-orthopantomogram-image-modal( orthopantomogram )">
+
+        <div class="modal fade" th:id="'openOrthopantomogramImageModalToggle' + ${orthopantomogram?.id}" 
+                th:aria-labelledby="'openOrthopantomogramModalToggleLabel' + ${orthopantomogram?.id}" tabindex="-1">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" 
+                      th:id="'openOrthopantomogramModalToggleLabel' + ${orthopantomogram?.id}"
+                      th:text="#{titleViewOrthopantomogramImage}">
+                      View Orthopantomogram (Simple image)
+                  </h1>
+                  <button th:id="'btnXCloseModal' + ${orthopantomogram?.id}" type="button" 
+                          class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                  <!-- Here is needed error message? -->
+                  <!-- <div th:replace="~{fragments/messages/error-msg :: error-msg( 'OrthopantomogramSimpleImage' + ${orthopantomogram?.id},'')}"></div> -->
+
+                  <a  th:with="imgPath=${orthopantomogram?.folderFromStatic} + '/' + ${orthopantomogram?.filename}"
+                      class="d-none" th:id="'imgPath'" th:href="@{ ${imgPath} }"></a> 
+
+                  <img  th:with="imgPath=${orthopantomogram?.folderFromStatic} + '/' + ${orthopantomogram?.filename}"
+                        th:src="@{ ${imgPath} }"> 
+
+
+                </div>
+
+                <!-- ####################################### MODAL FOOTER ########################################### -->
+
+                <!-- <div class="modal-footer"> -->
+
+                  <!-- TO EDIT:  add button add  Medical History -->  
+                  <!-- <button th:id="'btnAddProfessionalRoleSlot' + ${orthopantomogram.id}" 
+                          class="btn btn-primary" th:text="#{btnAddProfessionalRoleSlot}">
+                    Add Professional Role
+                  </button> -->
+
+                  <!-- Button edit Orthopantomogram -->  
+                  <!-- <button th:id="'btnPutOrthopantomogram' + ${orthopantomogram.id}" 
+                          type="submit" 
+                          th:form="'openOrthopantomogramForm' + ${orthopantomogram.id}" 
+                          class="btn btn-primary me-2 mt-1" 
+                          th:text="#{btnEdit}">
+                    Edit Orthopantomogram
+                  </button> -->
+                
+                <!-- </div> -->
+
+                <!-- ################################################################################################ -->
+
+              </div>
+            </div>
+        </div>
+        
+        <!-- Button for open the Modal -->
+        <a  href="#" class="btn btn-success " 
+                th:data-bs-target="'#openOrthopantomogramImageModalToggle'+ ${orthopantomogram.id}" 
+                data-bs-toggle="modal"
+                th:text="#{btnOpen}" >
+                Open
+        </a>
+
+    </div>
+
+</body>
+</html>
