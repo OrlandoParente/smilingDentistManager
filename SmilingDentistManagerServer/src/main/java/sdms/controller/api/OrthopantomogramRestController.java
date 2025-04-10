@@ -105,6 +105,7 @@ public class OrthopantomogramRestController {
 	public ResponseEntity<?> uploadOrthopantomogram( @RequestParam Long idCustomer, @RequestParam MultipartFile orthopantomogram,
 													@RequestParam( defaultValue = "" ) String format,
 													@RequestParam( defaultValue = "" ) String date ){
+		
 		LOGGER.info("/uploadOrthopantomogram PARAMS = { idCustomer=" + idCustomer + " ; format=" + format + " ;"
 															+ " date="  + date + " : orthopantomogram=" + orthopantomogram + " ; }");
 		

@@ -31,9 +31,11 @@ public class CustomerService implements CustomerServiceInterface {
 	@Autowired
 	AppointmentRepository appointmentRepository;
 	
-	
 	@Autowired
 	ExpenseRepository expenseRepository;
+	
+	@Autowired
+	OrthopantomogramServiceInterface orthopantomogramService;
 	
 	@Autowired
 	DateAndTimeManager dateAndTimeManager;
@@ -118,9 +120,18 @@ public class CustomerService implements CustomerServiceInterface {
 				.orElseThrow( () -> new EntityNotFoundException("Customer with id " + id + " not found in the database") );
 		
 		// Delete customer folder
-		FolderManager.deleteFolder( customer.getCustomerFolder() );
+		try {
+			FolderManager.deleteFolder( customer.getCustomerFolder() );
+		} catch ( IllegalArgumentException e ) {
+			// Customer folder doesn't exist (This is weird, but doesn't block customer deleting)
+			LOGGER.warn( e.getMessage() );
+		}
 		
 		// Delete the constraints -------------------------------------------------------------------------
+		
+		orthopantomogramService.getOrthopantomogramsByCustomer(id).forEach( ortho -> {
+			orthopantomogramService.deleteOrthopantomogram(ortho.getId());
+		} );
 		
 		hasMedicalHistoryRepository.findByCustomer(customer).forEach( hasMedicalHistory -> {
 			hasMedicalHistoryRepository.delete(hasMedicalHistory);
