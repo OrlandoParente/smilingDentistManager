@@ -2,17 +2,20 @@ package sdms.dto;
 
 import java.time.LocalDate;
 
+import sdms.util.FolderManager;
+
 public class OrthopantomogramDTO {
 
 	private Long id;
 	
 	private Long idCustomer;
 	
-	private LocalDate date;		// Not sure the database needs this
-	
-	private String filename;	// file fileName 
-	private String format;		// png, jpg, DICOM (dcm), etc ...
-	private String folder;		// This is for an elastic use of the Rest API. The Web Application use DEFAULT_ORTHOPANTOMOGRAM_FOLDER in FolderManager 
+	private LocalDate date;				// Not sure the database needs this
+		
+	private String filename;			// file fileName 
+	private String format;				// png, jpg, DICOM (dcm), etc ...
+	private String folder;				// This is for an elastic use of the Rest API. The Web Application use DEFAULT_ORTHOPANTOMOGRAM_FOLDER in FolderManager 
+	private String folderFromStatic; 	// For recovery resources from webClient (that doesn't accept absolute path)
 	
 	public OrthopantomogramDTO() {
 	
@@ -61,17 +64,15 @@ public class OrthopantomogramDTO {
 	public void setIdCustomer( Long idCustomer ) {
 		this.idCustomer = idCustomer;
 	}
-
-
+	
 	public String getFilename() {
 		return filename;
 	}
 
-
-	public void setFileName(String filename) {
+	public void setFilename(String filename) {
 		this.filename = filename;
 	}
-
+	
 
 	public String getFolder() {
 		return folder;
@@ -80,8 +81,24 @@ public class OrthopantomogramDTO {
 
 	public void setFolder(String folder) {
 		this.folder = folder;
+		
+		// Set path from static instead from root 
+		// For recovery the path in the web
+		this.setFolderFromStatic( FolderManager.pathFromRootToPathFromStatic(folder) );
 	}
-	
+
+
+	public String getFolderFromStatic() {
+		return folderFromStatic;
+	}
+
+
+	public void setFolderFromStatic(String folderFromStatic) {
+		this.folderFromStatic = folderFromStatic;
+	}
+
+
+
 	
 	
 }
