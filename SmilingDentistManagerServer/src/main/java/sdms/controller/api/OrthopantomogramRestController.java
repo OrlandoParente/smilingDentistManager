@@ -186,7 +186,9 @@ public class OrthopantomogramRestController {
 		}
 			
 			
-		return ResponseEntity.ok().body( modelMapper.map( orthopantomogram, OrthopantomogramDTO.class ) );
+		// If you want to return orthopantomogram you need to return if from the service 
+		// return ResponseEntity.ok().body( modelMapper.map( orthopantomogram, OrthopantomogramDTO.class ) );
+		return ResponseEntity.ok().build();
 	}
 	
 	
