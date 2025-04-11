@@ -1,12 +1,20 @@
-.dicom-viewer{
+.dicom-viewer {
+
+    background-color: black; 
+    height: 89vh; 
+    width: 96vw;
+    margin-right: 2vw;
+}
+
+/* .dicom-viewer {
 
     background-color: black; 
     height: 82vh; 
     width: 95vw;
-}
+} */
 
 /* bootstrap md breakpoint */
-@media (min-width: 768px) { 
+/* @media (min-width: 768px) { 
 
     .dicom-viewer{
 
@@ -15,4 +23,9 @@
         width: 80vw;
     }
 
+} */
+
+.orthopantomogram-simple-image {
+    /* max-width: 100%; */
+    max-height: 100%;
 }
