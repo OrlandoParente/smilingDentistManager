@@ -8,6 +8,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,7 +32,7 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 	
 	@Autowired
 	private CustomerRepository customerRepository;
-	
+
 	@Override
 	public Orthopantomogram getOrthopantomogramById(Long id) {
 		Orthopantomogram orthopantomogram = repository.findById(id)
@@ -79,11 +81,22 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 	}
 	
 	@Override
+	@Transactional
 	public void uploadOrthopantomogram(Long idCustomer, MultipartFile orthopantomogram, String format, LocalDate date ) {
 		
 		Customer customer = customerRepository.findById(idCustomer)
 				.orElseThrow( () -> new EntityNotFoundException("Customer with id " + idCustomer + " not found in the database") );
 	
+		// check if customer has customer folder
+		if( customer.getCustomerFolder() == null || customer.getCustomerFolder().trim().equals("") ) {
+			customer.setCustomerFolder( FolderManager.getCustomerFolder(customer) );
+			LOGGER.info("Generated customer folder");
+			
+			// save the customer folder on the db
+			customerRepository.save(customer);
+			LOGGER.info("saved customer folder on the database");
+		}
+		
 		
 		String folderPath = FolderManager.getOrthopantomogramFolder(customer);
 		
@@ -122,6 +135,8 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 			orthopantomogram.transferTo( new File( filePath ) );
 			
 			repository.save( orthopantomogramEntity );
+			
+			// RELOAD PROJECT HERE <--------------------------
 			
 		} catch( IOException e ) {
 			e.printStackTrace();
@@ -195,7 +210,11 @@ public class OrthopantomogramService implements OrthopantomogramServiceInterface
 		
         // Delete file
         if (!file.delete()) {
-            throw new RuntimeException("Failed to delete file: " + file.getAbsolutePath());
+        	
+        	if( ! file.exists() )
+        		LOGGER.warn("The file that you are tring to delete, already doesn't exist : " + filePath);
+        	else
+        		throw new RuntimeException("Failed to delete file: " + file.getAbsolutePath());
         }
 		
 		repository.delete(orthopantomogram);
