@@ -3,7 +3,7 @@
 <head></head>
 <body>
 
-    <nav th:fragment="view-orthopantomograms-nav" class="navbar navbar-expand bg-body-tertiary mb-2">
+    <nav th:fragment="view-orthopantomograms-nav( $orthopantomogram )" class="navbar navbar-expand bg-body-tertiary mb-2">
 
         <div class="container-fluid" >
             <!-- <a class="navbar-brand" href="#">Navbar</a> -->
@@ -25,7 +25,10 @@
 
                 <li class="nav-item">
                     <h3 class="nav-item me-2"
-                        th:text="#{navTitleViewOrthopantomogram}"></h3>
+                        th:with="dateFormat=#{formPlaceholderDate}"
+                        th:text="${ orthopantomogram.filename + ' - ' + #temporals.format( orthopantomogram.date, dateFormat ) }">
+                        <!-- th:text="#{navTitleViewOrthopantomogram}" -->
+                    </h3>
                 </li>
 
                 <!--  <################# USE THIS FOR SHOW/HIDE OTHOPANTOMOGRAMS BUTTON -->
