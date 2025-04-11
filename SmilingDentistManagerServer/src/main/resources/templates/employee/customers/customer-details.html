@@ -3,6 +3,7 @@
 <head>
     <th:block th:replace="~{fragments/common-head :: common-head('Customer')}"></th:block>
     <link rel="stylesheet" th:href="@{/css/customer-details.css}">
+    <link rel="stylesheet" th:href="@{/css/orthopantomograms-image.css}">
 
 </head>
 <body>
@@ -136,9 +137,11 @@
                 <!-- upload orthopantomogram form -->
                 <form id="formUploadOrthopantomogram" method="post" enctype="multipart/form-data" th:action="@{/uploadOrthopantomogram}">
 
-                    <input type="hidden" name="idCustomer" th:value="${joinCustomer.customerDTO.id}">
+                    <input type="hidden" name="idCustomer" th:value="${joinCustomer.customerDTO.id}" >
 
-                    <label for="orthopantomogram">Scegli il file</label>
+                    <!-- This use the language set up on the browser, you can hide this with d-none class and make a custom one kind of -->
+                    <!-- <label for="orthopantomogram" class="btn btn-outline-secondary" id="customFileLabel">Carica ortopantomografia</label> -->
+                    <!-- and a span with js that upload it on onchange event for show the filename of the file to upload -->
                     <input id="orthopantomogram" type="file" name="orthopantomogram" class="form-control" />
                     <button type="submit" id="btnUploadOrthopantomogram"
                             class="btn btn-primary mt-2 col-12 col-md-auto">
@@ -165,7 +168,7 @@
                                 <tr th:each="ortho : ${orthopantomograms}">
                                     
                                     <td class="text-center align-middle">
-                                        
+
                                         <!-- Keep all the buttons on a single row -->
                                         <div class="btn-group">
 
@@ -187,6 +190,7 @@
                                                     class="d-inline-block me-2"
                                                     th:insert="~{employee/customers/fragments/customer-details/orthopantomograms/open-orthopantomogram-image-modal
                                                             :: open-orthopantomogram-image-modal( ${ ortho } )}">
+                                                            QULCOSA 
                                             </div>
 
                                             <!-- Open orthopantomogram button for DICOM format image -->
@@ -198,7 +202,8 @@
                                             </a>
 
                                             <a  th:href="@{ ${ ortho.folderFromStatic } + '/' + ${ ortho.filename } }"
-                                                download=""
+                                                th:text="#{btnDownloadOrthopantomogram}"
+                                                download
                                                 class="btn border border-primary text-primary">
                                                 Download
                                             </a>
