@@ -446,7 +446,7 @@ This project uses several dependencies, each with its own license. Below is a su
   - **License**: BSD-3-Clause License
   - **URL**: [BSD-3-Clause License](https://opensource.org/licenses/BSD-3-Clause)
 
-- **Cornersone**:
+- **Cornerstone**:
   - **License**: MIT License
   - **URL**: [MIT License](https://opensource.org/licenses/MIT) 
  	
