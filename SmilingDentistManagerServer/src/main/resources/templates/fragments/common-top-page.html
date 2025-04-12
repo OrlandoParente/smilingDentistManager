@@ -30,6 +30,8 @@
         <a th:href="@{/deleteHasMedicalHistory}" class="d-none" id="urlDeleteHasMedicalHistory"></a>
         <!-- Customer -->
         <a th:href="@{/deleteCustomer}" class="d-none" id="urlDeleteCustomer"></a>
+        <!-- Customer details -->
+        <a  id="urlResetSearchByInvoiceNumber" th:href="@{'/employee/customer/customer/details/' + ${joinCustomer?.customerDTO?.id}}"></a>
         <!-- Dental Material -->
         <a th:href="@{/deleteDentalMaterial}" class="d-none" id="urlDeleteDentalMaterial"></a>
         <!-- Expense -->
