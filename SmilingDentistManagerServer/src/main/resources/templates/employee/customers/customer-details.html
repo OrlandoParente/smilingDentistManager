@@ -337,8 +337,8 @@
                                                 + '/' ${VALORE SELEZIONATO DALLA SELECT} }">
                                     Search
                                 </a> -->
-                                <a  id="urlResetSearchByInvoiceNumber"
-                                    th:href="@{'/employee/customer/customer/details/' + ${joinCustomer.customerDTO.id}}" 
+                                <!-- <a  id="urlResetSearchByInvoiceNumber" -->
+                                <a  th:href="@{'/employee/customer/customer/details/' + ${joinCustomer.customerDTO.id}} + '#anchor-point-nav-appointments' " 
                                     class="btn btn-danger col-auto me-2" th:text="#{btnResetSearch}"> 
                                     X 
                                 </a>

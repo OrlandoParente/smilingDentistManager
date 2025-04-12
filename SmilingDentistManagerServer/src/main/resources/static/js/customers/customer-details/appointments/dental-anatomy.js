@@ -2,6 +2,8 @@
 
     document.addEventListener('DOMContentLoaded', function(){
 
+        const anchorPointNavAppointments = '#anchor-point-nav-appointments';
+
         const btnSaveChanges = document.getElementById('btnSaveDentalAnatomyChanges');
         // from common-top-page
         const urlPatchTooth = document.getElementById('urlPatchTooth');
@@ -39,6 +41,7 @@
         // -----------------------------------------------------------------------------------------
 
         const selectInvoiceNumber = document.getElementById("selectInvoiceNumber");
+        // From common-top-page
         const urlResetSearchByInvoiceNumber = document.getElementById("urlResetSearchByInvoiceNumber");
 
         // Script for manage the research on invoice number
@@ -50,7 +53,7 @@
             if( selectInvoiceNumber.value.trim() !== "" && selectInvoiceNumber.value.trim() !== "-1"  )
                 urlSearch += '/' + selectInvoiceNumber.value;
 
-            window.location.href = urlSearch;
+            window.location.href = urlSearch + anchorPointNavAppointments ;
         } );
 
         // -----------------------------------------------------------------------------------------
@@ -70,12 +73,14 @@
                 let appId = document.getElementById('select' + cb.value).value;
                 
                 // simulates continue
-                if( appId == -1 )   return;
+                if( appId == -1 || appId == '-1' ) return;
+
+                console.log( 'APP-ID : ' + appId );
 
                 if( mapAppointmentIdTeeth.has( appId ) ){
                     let strTeeth = mapAppointmentIdTeeth.get( appId );
-                    strTeeth += ',' + cb.value
-                    mapAppointmentIdTeeth.set( appId, strTeeth )
+                    strTeeth += ',' + cb.value;
+                    mapAppointmentIdTeeth.set( appId, strTeeth );
                 } else {
                     mapAppointmentIdTeeth.set( appId, '' + cb.value );
                 }
@@ -84,8 +89,9 @@
 
             // Add idAppointment which new selection is empty (for update them as well)
             oldSelectedAppointmentId.forEach( idAppSelectedBefore => {
-                if( ! mapAppointmentIdTeeth.has( idAppSelectedBefore ) ) {
+                if( idAppSelectedBefore != -1 && ! mapAppointmentIdTeeth.has( idAppSelectedBefore ) ) {
                     mapAppointmentIdTeeth.set( idAppSelectedBefore, '' );
+                    console.log(' ---------------------------------> old selected id appointments -> ' + idAppSelectedBefore );
                 }
             } );
 
@@ -93,19 +99,24 @@
 
             // -------------------------------------------------------------------------------------------
 
+            keysAppointmentIdTeeth.forEach( k => console.log( 'keysAppointmentIdTeeth -> ' + k ) );
 
             Promise.all( keysAppointmentIdTeeth.map( appId => {
 
                 let urlPatchTeeth = urlUpdateTeethList + '?idAppointment=' + appId + '&teeth=' + mapAppointmentIdTeeth.get(appId);
 
+                console.log('url patch teeth : ' + urlPatchTeeth );
+
                 fetch(
                     urlPatchTeeth, 
                     { method: 'PATCH' }
                 ).then( response => {
-                    if( response === 200 ){
+                    if( response.status === 200 ){
                         console.log('teeth successfully updated');
                     } else {
                         // <=================== TO EDIT: show error message
+                        console.log('Error response code: ' + response.status );
+                        
                     }
                 })
 
@@ -113,12 +124,19 @@
             })).then(() => {
                 // Changes saved successfully
                 console.log('Changes saved successfully.');
-                window.location.reload();
+
 
                 // <=================== TO EDIT: show sucessful message 
+                alert('changes successful saved');
 
-             }).catch( () => {
+                // .split('#')[0] is needed for remove possible other anchor points 
+                window.location.href = window.location.href.split('#')[0] +  anchorPointNavAppointments ;
+                // window.location.reload();
+
+            }).catch( (err) => {
                  console.log('An error occurred while saving changes.');
+                 console.log('ERROR: ' + err);
+                 alert('ERROR');
             });
 
         } );
