@@ -129,8 +129,8 @@ public class AppointmentRestController {
 			
 			// TO EDIT: Return 404 Not found if they don't have default value and the service can't find them on the db // <<===================================
 			// Not insert if they have the default value 
-			if( idDoctor != -1 )	appointment.setDoctor( employeeService.getEmployeeById(idDoctor) );
-			if( idTreatment != -1 )	appointment.setTreatment( treatmentService.getTreatmentById(idTreatment) );
+			if( idDoctor > -1 )	appointment.setDoctor( employeeService.getEmployeeById(idDoctor) );
+			if( idTreatment > -1 )	appointment.setTreatment( treatmentService.getTreatmentById(idTreatment) );
 			if( ! invoiceNumber.equals("none") )	appointment.setInvoiceNumber(invoiceNumber);
 			if( payment != -1 ) appointment.setPayment(payment);
 			
@@ -141,6 +141,7 @@ public class AppointmentRestController {
 			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body("Format date not valid");
 		} catch( Exception e ) {
 			System.err.println( "AppointmentRestconstroller -> PostAppointment, error: " + e.getMessage() );
+			e.printStackTrace();
 			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body("Post Appointment Failed");
 		}
 	
