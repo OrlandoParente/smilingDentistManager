@@ -57,12 +57,16 @@
                   } )
           .then( response => {
             if( response.status == 200 ) {
+
+              alert("Success"); 
+
+              // .split('#')[0] is needed for remove possible other anchor points 
+              window.location.href = window.location.href.split('#')[0] +  '#formEmailTemplateRecall' ;
+
               // window.location.reload();
-              console.log( 'LOCATION: ' + window.location.href );
-              window.location.reload();
 
               console.log( 'Recall email temaplate  saved with success');
-              alert("Success"); 
+              
               return response.json();
 
             } else {
