@@ -36,6 +36,15 @@
                       + "; time=" + formDataAddAppointment.get("time")
                       + "; idCustomer=" + formDataAddAppointment.get("idCustomer"));
 
+          // check mandatory fields
+          if( formDataAddAppointment.get("date").trim() == "" || formDataAddAppointment.get("time").trim() == "" ){
+            errMsg.style.display = "block";
+            // from common top page 
+            errMsgText.innerText = document.getElementById("errMsgMandatoryFieldIsEmpty").innerText;
+
+            return;
+          }
+
           // Do post AJAX request
           fetch( formAddAppointment.action, {
                    method:'POST',
