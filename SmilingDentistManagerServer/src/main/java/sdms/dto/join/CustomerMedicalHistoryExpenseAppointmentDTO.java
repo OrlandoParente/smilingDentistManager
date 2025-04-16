@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -129,7 +130,9 @@ public class CustomerMedicalHistoryExpenseAppointmentDTO {
 			return;
 		
 		this.joinAppointmentsDTO = this.joinAppointmentsDTO.stream()
-														   .filter( ja -> ja.getAppointmentDTO().getInvoiceNumber().equals(invoiceNumber) )
+														   .filter( ja -> Optional.ofNullable( ja.getAppointmentDTO().getInvoiceNumber() )	// make sure to manage null invoice number 
+																   					.orElse("")
+																   					.equals(invoiceNumber) )
 														   .toList();
 	}
 			
