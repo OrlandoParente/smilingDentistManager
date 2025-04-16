@@ -6,8 +6,8 @@
         // const bsModalAddAppointment = new bootstrap.Modal(htmlModalAddAppointment);
         const formAddAppointment = document.getElementById("addAppointmentForm");
         const btnAddAppointment = document.getElementById("btnAddAppointment");
-        const errMsg = document.getElementById("errMsg");
-        const errMsgText = document.getElementById("errMsgText");
+        const errMsg = document.getElementById("errMsgDetailsCustomerAddAppointment");
+        const errMsgText = document.getElementById("errMsgTextDetailsCustomerAddAppointment");
 
         const btnXCloseModal = document.getElementById("btnXCloseModal");
 

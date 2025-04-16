@@ -16,10 +16,8 @@
                 </div>
                 <div class="modal-body">
 
-                  <!-- fragment err-msg($id, $msg) , 
-                        in this case $id='' cause in err-msg id = 'errMsg' + ${id} 
-                        but we have only one modal so we don't need different ids -->
-                  <div th:replace="~{fragments/messages/error-msg :: error-msg('','')}"></div>
+                  <!-- fragment err-msg($id, $msg)  -->
+                  <div th:replace="~{fragments/messages/error-msg :: error-msg('DetailsCustomerAddAppointment','')}"></div>
 
                   <!-- get data for create the appointment -->
                   <form id="addAppointmentForm" method="POST" th:action="@{/postAppointment}" > 
