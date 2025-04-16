@@ -12,11 +12,11 @@
         const btnXCloseModal = document.getElementById("btnXCloseModal");
 
         console.log("formAddAppointment -> " + formAddAppointment);
-   
+
         // block preventDefault and do post request for manage response messages
         btnAddAppointment.addEventListener('click', function( event ){
-         
-          // prevent default behavior 
+
+          // prevent default behavior
           event.preventDefault();
 
           // Reset messages
@@ -32,13 +32,13 @@
 
           // control print
           console.log("POST url: " + formAddAppointment.action);
-          console.log("date=" + formDataAddAppointment.get("date") 
-                      + "; time=" + formDataAddAppointment.get("time") 
+          console.log("date=" + formDataAddAppointment.get("date")
+                      + "; time=" + formDataAddAppointment.get("time")
                       + "; idCustomer=" + formDataAddAppointment.get("idCustomer"));
 
           // Do post AJAX request
-          fetch( formAddAppointment.action, { 
-                   method:'POST', 
+          fetch( formAddAppointment.action, {
+                   method:'POST',
                    body:formDataAddAppointment
                    // NOTE: For use @ResponseBody on the server I have to sent data in json format
                    // headers: {
@@ -48,8 +48,14 @@
                    } )
             .then( response => {
               if( response.status == 200 ) {
-                // bsModalAddAppointment.hide();
+
+                // Add hash to the URL
+                // A js script in requires will intercept it for scroll the page on the right position
+                window.location.hash = '#anchor-point-appointments';
+
+                // reload
                 window.location.reload();
+
               } else {
                 errMsg.style.display = "block";
                 errMsgText.innerText = "Failed to post appointment";
@@ -67,11 +73,12 @@
 
         // Reset messages
         function resetMessages(){
-         errMsg.style.display = "none";
-         errMsgText.innerText = "";
+          errMsg.style.display = "none";
+          errMsgText.innerText = "";
         }
+        
 
-      });
+    });
 
-      
+
 })()
