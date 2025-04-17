@@ -3,6 +3,8 @@ package sdms.controller.api;
 import java.time.DateTimeException;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -326,10 +328,16 @@ public class AppointmentRestController {
 		// Check Message
 		LOGGER.info("AppointmentRestController -> deleteAppointmentById , params={id=" + id + "}");
 
-		Appointment appointment = service.getAppointmentById(id);
-		if( appointment == null )
+		Appointment appointment = null;
+		try {
+			appointment = service.getAppointmentById(id);
+			
+		} catch( NoSuchElementException | EntityNotFoundException e ) {
+			
+			LOGGER.error("Appointment with id=" + id + " not found in the database");
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Appointment with id=" + id + " not found in the database");
-		
+		}
 		service.deleteAppointmentById(id);
 		
 		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(appointment, AppointmentDTO.class) );
