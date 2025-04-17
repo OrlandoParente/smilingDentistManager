@@ -37,7 +37,14 @@
             })
             .then( response => {
                 if( response.ok ){
+
+                    // Add hash to the URL
+                    // A js script in requires will intercept it for scroll the page on the right position
+                    window.location.hash = '#anchor-point-appointments';
                     window.location.reload();
+
+                    // this is not good couse page reload is needed
+                    // window.location.href = window.location.href.split('#')[0] + '#anchor-point-appointments';
                 } else {
                     alert("Failed to Delete Appointment");
                 }
