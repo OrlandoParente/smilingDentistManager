@@ -69,7 +69,14 @@
             .then( response => {
               if( response.status == 200 ) {
                 // bsModalAddAppointment.hide();
+                // window.location.reload();
+
+                // Add hash to the URL
+                // A js script in requires will intercept it for scroll the page on the right position
+                // window.location.hash = '#anchor-point-appointments';
+                window.location.hash = 'anchor-point-appointment-row-' + appointmentId; // appointment row position
                 window.location.reload();
+
               } else {
                 errMsg.style.display = "block";
                 errMsgText.innerText = "Failed to put appointment";
