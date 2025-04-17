@@ -507,7 +507,8 @@
                             </thead>
     
                             <tbody>
-                                <tr th:each="appointment : ${ joinCustomer.joinAppointmentsDTO }">
+                                <tr th:each="appointment : ${ joinCustomer.joinAppointmentsDTO }"
+                                    th:id="'anchor-point-appointment-row-' + ${appointment.appointmentDTO.id}">
                                     
                                     <td class="text-center align-middle">
                                         
