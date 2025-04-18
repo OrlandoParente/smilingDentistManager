@@ -159,7 +159,8 @@ public class LoginController {
     		SecurityContextHolder.getContext().setAuthentication(authentication);
     	
     	} catch( Exception e ) {
-    		System.err.println( e.getMessage() );
+    		
+    		LOGGER.error( e.getMessage() );
     	}
     	
 //    	return "redirect:/dashboard/employee";
