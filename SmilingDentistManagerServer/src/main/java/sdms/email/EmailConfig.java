@@ -53,6 +53,10 @@ public class EmailConfig {
 	// Call this every time the emailSettings entity is updated
 	public void updateJavaMailSender( EmailSettings emailSettings ) {
 		
+		if( emailSettings == null ) {
+			LOGGER.warn("Email setting are null");
+			return;
+		}
 //		EmailSettings emailSettings = service.getEmailSettings();
 //		EmailSettings emailSettings = emailSettingsService.getEmailSettings();
 		
