@@ -1,7 +1,12 @@
 package sdms.dto;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class EmailSettingsDTO {
 
+	private final static Logger LOGGER = LoggerFactory.getLogger( EmailSettingsDTO.class );
+	
 	private long id;
 	
 	private String host;
@@ -54,9 +59,18 @@ public class EmailSettingsDTO {
 		return password;
 	}
 
+	// Hide the real password to the client
 	public void setPassword(String password) {
 		
-		this.password = password;
+		LOGGER.info("Replace the real password with stars");
+		
+		char pswChar[] = password.toCharArray();
+		
+		for( int i = 0; i < pswChar.length; i ++ ) {
+			pswChar[i] = '*';
+		}
+		
+		this.password = new String(pswChar);
 	}
 
 	public boolean isEnableAuth() {
