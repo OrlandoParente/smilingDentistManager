@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div th:fragment="common-fields-form-employee(joinEmployee)">
+
+      <!-- For sent the idEmployee in the put request -->
+      <div th:if="${joinEmployee != null}">
+        <input type="hidden" name="id" th:value="${joinEmployee?.employeeDTO?.id}">
+      </div>
+
+      <div class="row g-3">
+
+        <div class="col-12 col-md-4 d-flex align-items-center">  
+    
+          <label th:for="'title' + ${joinEmployee?.employeeDTO?.id}" class="form-label me-2" th:text="#{formLabelTitle}">
+          Title*:
+          </label> 
+          <!-- <input type="text" class="form-control" th:id="name" name="name" > -->
+          <input type="text" class="form-control w-100" th:id="'title' + ${joinEmployee?.employeeDTO?.id}" name="title" 
+                th:value="${joinEmployee?.employeeDTO?.title}"> 
+        </div>
+
+        <div class="col-12 col-md-4 d-flex align-items-center">  
+    
+          <label th:for="'name' + ${joinEmployee?.employeeDTO?.id}" class="form-label me-2" th:text="#{formLabelNameMandatory}">
+          Name*:
+          </label> 
+          <!-- <input type="text" class="form-control" th:id="'name' + ${joinEmployee?.employeeDTO?.id}" name="name" > -->
+          <input type="text" class="form-control w-100" th:id="'name' + ${joinEmployee?.employeeDTO?.id}" name="name" 
+                  th:value="${joinEmployee?.employeeDTO?.name}"> 
+        </div>
+        
+        <div class="col-12 col-md-4 d-flex align-items-center mt-3"> 
+          
+          <label th:for="'surname' + ${joinEmployee?.employeeDTO?.id}" class="form-label me-2" th:text="#{formLabelSurnameMandatory}">
+          Surname*:
+          </label> 
+          <!-- <input type="text" class="form-control" th:id="'name' + ${joinEmployee?.employeeDTO?.id}" name="name" > -->
+          <input type="text" class="form-control w-100" th:id="'surname' + ${joinEmployee?.employeeDTO?.id}" name="surname" 
+                  th:value="${joinEmployee?.employeeDTO?.surname}">
+        </div> 
+          
+        
+      </div>
+
+      <div class="row g-3 mt-3">
+
+        <div class="col-12 col-md-6 d-flex align-items-center">  
+    
+          <label th:for="'birthDate' + ${joinEmployee?.employeeDTO?.id}" class="form-label me-2 col-md-4" th:text="#{formLabelBirthDate}">
+          Birth Date*:
+          </label> 
+          <input type="text" class="form-control w-100" th:id="'birthDate' + ${joinEmployee?.employeeDTO?.id}" name="birthDate" 
+                  th:placeholder="#{formPlaceholderDate}"
+                  th:with="formatDate=#{formPlaceholderDate}"
+                  th:value="${ #temporals.format( joinEmployee?.employeeDTO?.birthDate, formatDate) }"> 
+        </div>
+        
+        <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
+          
+          <label th:for="'eMail' + ${joinEmployee?.employeeDTO?.id}" class="form-label me-2 col-md-2" th:text="#{formLabelEMailMandatory}">
+          E-mail*:
+          </label> 
+          <input type="email" class="form-control w-100" th:id="'eMail' + ${joinEmployee?.employeeDTO?.id}" name="eMail" 
+                  autocomplete="off"
+                  th:value="${joinEmployee?.employeeDTO?.eMail}">
+        </div> 
+          
+        
+      </div>
+
+      <div class="row g-3 mt-3">
+
+        <div class="col-12 col-md-6 d-flex align-items-center">  
+    
+          <label th:for="'phoneNumber' + ${joinEmployee?.employeeDTO?.id}" class="form-label me-2 col-md-4" th:text="#{formLabelPhoneNumber}">
+          Phone Number:
+          </label> 
+          <input type="number" class="form-control w-100" th:id="'phoneNumber' + ${joinEmployee?.employeeDTO?.id}" name="phoneNumber" 
+                  th:value="${joinEmployee?.employeeDTO?.phoneNumber}"> 
+        </div>
+        
+        <div class="col-12 col-md-6 d-flex align-items-center mt-3"> 
+          
+          <label th:for="'phoneNumber2' + ${joinEmployee?.employeeDTO?.id}" class="form-label me-2 col-md-4" th:text="#{formLabelPhoneNumber2}">
+          Phone number 2:
+          </label> 
+          <input type="number" class="form-control w-100" th:id="'phoneNumber2' + ${joinEmployee?.employeeDTO?.id}" name="phoneNumber2" 
+                  th:value="${joinEmployee?.employeeDTO?.phoneNumber2}">
+        </div> 
+        
+      </div>
+
+      <div class="row g-3 mt-3">
+
+        <div class="col-12 col-md-12 d-flex align-items-center mt-3"> 
+          
+          <label th:for="'password' + ${joinEmployee?.employeeDTO?.id}" class="form-label me-2 col-md-auto" th:text="#{formLabelNewPassword}">
+          New Password :
+          </label> 
+          <input type="password" class="form-control w-100" th:id="'password' + ${joinEmployee?.employeeDTO?.id}" name="password" 
+                  autocomplete="new-password"> 
+                  <!-- th:value="${joinEmployee?.employeeDTO?.phoneNumber2}"> -->
+        </div> 
+      </div>
+        
+      <div class="row g-3 mt-3">
+
+        <div class="col-12 col-md-5 d-flex align-items-center mt-3"> 
+          <label class="form-label mb-1 col-md-auto me-2" 
+                  th:for="'salary' + ${joinEmployee?.employeeDTO?.id}" 
+                  th:text="#{formLabelSalary}"
+                  th:value="${joinEmployee?.employeeDTO?.salary}">
+              Salary: 
+          </label>
+          <input class="form-control" name="salary" th:id="'salary' + ${joinEmployee?.employeeDTO?.id}" type="number" 
+                  th:value="${joinEmployee?.employeeDTO?.salary}">
+        </div>
+
+        <div class="col-12 col-md-7 d-flex align-items-center mt-3"> 
+          <label  class="form-label mb-1 col-md-auto me-2" 
+                  th:for="'permission' + ${joinEmployee?.employeeDTO?.id}" 
+                  th:text="#{formLabelPermissions}">
+              Permissions: 
+          </label>
+          <select class="form-select" name="permission" th:id="'permission' + ${joinEmployee?.employeeDTO?.id}" >
+            <!-- <option value=""></option> -->
+            <option th:each="permission : ${permissions}" 
+                    th:if="( ${joinEmployee?.employeeDTO?.permission} == ${permission} )" selected
+                    th:value="${permission}"
+                    th:text="#{ ${permission} }"
+            >
+            <option th:each="permission : ${permissions}" 
+                    th:if="( ${joinEmployee?.employeeDTO?.permission} != ${permission} )"
+                    th:value="${permission}"
+                    th:text="#{ ${permission} }"
+            >
+            
+            </option>
+          </select>
+        </div>
+
+
+      </div>
+
+    </div>
+
+</body>
+</html>
