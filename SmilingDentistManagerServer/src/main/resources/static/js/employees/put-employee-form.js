@@ -141,6 +141,27 @@
           }
 
           // ---------------------------------------------------------------------------------------------
+
+          // Check mandatory fields ----------------------------------------------------------------------
+
+          // from common-top-page
+          const errMsgMandatoryFieldIsEmpty = document.getElementById("errMsgMandatoryFieldIsEmpty").innerText; 
+
+          if( formDataPutEmployee.get("name").trim() === "" || formDataPutEmployee.get("surname").trim() === ""
+              || formDataPutEmployee.get("eMail").trim() === "" 
+          ){
+
+            console.log("mandatory fields empty");
+
+            errMsg.style.display = "block";
+            errMsgText.innerText = errMsgMandatoryFieldIsEmpty;
+
+            return;
+            
+          }
+
+          // ---------------------------------------------------------------------------------------------
+
           // control print
           console.log("PUT url: " + formPutEmployee.action);
 
