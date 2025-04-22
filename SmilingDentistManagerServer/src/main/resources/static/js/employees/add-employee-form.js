@@ -75,7 +75,7 @@
 
         // block preventDefault and do post request for manage response messages
         btnAddEmployee.addEventListener('click', function( event ){
-         
+          
           // prevent default behavior 
           event.preventDefault();
 
@@ -112,22 +112,41 @@
             }
           }
 
-         // ---------------------------------------------------------------------------------------------
+          // ---------------------------------------------------------------------------------------------
 
+          // Check mandatory fields ----------------------------------------------------------------------
+
+          // from common-top-page
+          const errMsgMandatoryFieldIsEmpty = document.getElementById("errMsgMandatoryFieldIsEmpty").innerText; 
+
+          if( formDataAddEmployee.get("name").trim() === "" || formDataAddEmployee.get("surname").trim() === ""
+              || formDataAddEmployee.get("eMail").trim() === "" 
+          ){
+
+            console.log("mandatory fields empty");
+
+            errMsg.style.display = "block";
+            errMsgText.innerText = errMsgMandatoryFieldIsEmpty;
+
+            return;
+            
+          }
+
+          // ---------------------------------------------------------------------------------------------
 
           // control print
           console.log("POST url: " + formAddEmployee.action);
 
           // Do post AJAX request
           fetch( formAddEmployee.action, { 
-                   method:'POST', 
-                   body:formDataAddEmployee
-                   // NOTE: For use @ResponseBody on the server I have to sent data in json format
-                   // headers: {
-                   //    'Content-Type': 'application/json' // Imposta l'intestazione del contenuto come JSON
-                   // },
-                   // body: jsonFormData
-                   } )
+                    method:'POST', 
+                    body:formDataAddEmployee
+                    // NOTE: For use @ResponseBody on the server I have to sent data in json format
+                    // headers: {
+                    //    'Content-Type': 'application/json' // Imposta l'intestazione del contenuto come JSON
+                    // },
+                    // body: jsonFormData
+                    } )
             .then( response => {
               if( response.status == 200 ) {
 
