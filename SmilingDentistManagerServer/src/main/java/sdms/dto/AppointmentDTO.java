@@ -5,7 +5,7 @@ import java.time.LocalTime;
 
 public class AppointmentDTO {
 	
-	private long id;
+	private Long id;
 	
 	// FOREIGN KEYS ######################################################
 	private long idCustomer;
@@ -31,10 +31,10 @@ public class AppointmentDTO {
 	
 
 	
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
-	public void setId( long id ) {
+	public void setId( Long id ) {
 		this.id = id;
 	}
 	
