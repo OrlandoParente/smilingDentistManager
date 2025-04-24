@@ -18,7 +18,7 @@ import sdms.util.UserRoleManager;
 public class Customer {	
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	private long id;	// non uso il cod_fiscale come id perché non so se il cliente è tenuto a rilasciarlo
+	private Long id;	// non uso il cod_fiscale come id perché non so se il cliente è tenuto a rilasciarlo
 	
 	@OneToMany( mappedBy = "customer" )
 	private List<Appointment> appointments;
@@ -81,10 +81,10 @@ public class Customer {
 	}
 
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getTaxIdCode() {
