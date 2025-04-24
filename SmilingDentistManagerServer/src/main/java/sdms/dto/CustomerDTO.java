@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class CustomerDTO {
 	
-	private long id;	// non uso il cod_fiscale come id perché non so se il cliente è tenuto a rilasciarlo
+	private Long id;	// non uso il cod_fiscale come id perché non so se il cliente è tenuto a rilasciarlo
 	
 	private String customerFolder;		// folder that contains all customer documents and images
 	
@@ -46,11 +46,11 @@ public class CustomerDTO {
 	}
 
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
