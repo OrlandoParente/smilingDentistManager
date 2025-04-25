@@ -15,7 +15,7 @@ public class DentalMaterial {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	private long id;
+	private Long id;
 	
 	@OneToMany( mappedBy = "dentalMaterial" )
 	private List<Expense> expenses;
@@ -28,11 +28,11 @@ public class DentalMaterial {
 	// Empty Constructor 
 	public DentalMaterial() {}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
