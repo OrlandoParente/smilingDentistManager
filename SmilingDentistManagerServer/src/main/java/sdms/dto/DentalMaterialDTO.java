@@ -2,7 +2,7 @@ package sdms.dto;
 
 public class DentalMaterialDTO {
 
-	private long id;
+	private Long id;
 	
 	private String name;
 	private int quantity;
@@ -12,11 +12,11 @@ public class DentalMaterialDTO {
 	public DentalMaterialDTO() {}
 
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
