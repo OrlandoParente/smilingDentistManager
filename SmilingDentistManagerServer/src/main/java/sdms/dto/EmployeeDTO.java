@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class EmployeeDTO {
 	
-	private long id;  					// non uso il cod_fiscale come id perché non so se il dipendente è tenuto a rilasciarlo
+	private Long id;  					// non uso il cod_fiscale come id perché non so se il dipendente è tenuto a rilasciarlo
 		
 	private String name;
 	private String surname;
@@ -23,12 +23,12 @@ public class EmployeeDTO {
 	
 	// GETTERS AND SETTERS
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
