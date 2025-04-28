@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class ExpenseDTO {
 
-	private long id;
+	private Long id;
 	
 	// FOREIGN KEYS ######################################################
 	private Long idCustomer;
@@ -27,7 +27,6 @@ public class ExpenseDTO {
 
 
 	public void setIdCustomer(Long idCustomer) {
-		
 		this.idCustomer = idCustomer;
 	}
 
