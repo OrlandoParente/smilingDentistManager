@@ -14,7 +14,7 @@ public class HasProfessionalRole {
 	
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	private long id;
+	private Long id;
 	
 	// FOREIGN KEYS ######################################################
 	
@@ -32,10 +32,10 @@ public class HasProfessionalRole {
 	public HasProfessionalRole() {}
 		
 	// GETTERS AND SETTERS
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
