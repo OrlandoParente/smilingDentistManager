@@ -2,7 +2,7 @@ package sdms.dto;
 
 public class HasMedicalHistoryDTO {
 	
-	private long id;
+	private Long id;
 	
 	// FOREIGN KEYS ######################################################
 	
@@ -15,11 +15,11 @@ public class HasMedicalHistoryDTO {
 
 	public HasMedicalHistoryDTO() {}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
