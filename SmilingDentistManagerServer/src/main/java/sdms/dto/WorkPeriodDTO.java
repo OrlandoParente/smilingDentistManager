@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class WorkPeriodDTO {
 
 	// primary key
-	private long id;
+	private Long id;
 
 	// foreign key
 	private long idEmployee;
@@ -19,12 +19,12 @@ public class WorkPeriodDTO {
 	public WorkPeriodDTO() {}
 
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
