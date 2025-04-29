@@ -2,7 +2,7 @@ package sdms.dto;
 
 public class TreatmentDTO {
 
-	private long id; 
+	private Long id; 
 	
 	private String name;
 	private String description;
@@ -10,7 +10,8 @@ public class TreatmentDTO {
 	
 	public TreatmentDTO() {}
 	
-	public TreatmentDTO(int id, String name, String description, float cost) {
+	// <================================== Is this needed ?? Can I delete this? 
+	public TreatmentDTO(Long id, String name, String description, float cost) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -26,10 +27,10 @@ public class TreatmentDTO {
 	
 	// GETTERS AND SETTERS
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {

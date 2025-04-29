@@ -15,7 +15,7 @@ public class Treatment {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	private long id; 
+	private Long id; 
 	
 	@OneToMany( mappedBy = "treatment" )
 	private List<Appointment> appointments;
@@ -29,10 +29,10 @@ public class Treatment {
 	
 	// GETTERS AND SETTERS
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {
