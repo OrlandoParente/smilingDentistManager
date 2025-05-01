@@ -24,23 +24,9 @@
                     <!-- get data for create the professional role -->
                     <form id="addProfessionalRoleForm" method="POST" th:action="@{/postProfessionalRole}" > 
                         
-
-                        <div class="col-12 d-flex align-items-center">  
-                        <!-- <div class="row g-3 mt-3"> -->
-                            <label for="name" class="form-label me-2" th:text="#{formLabelNameMandatory}">
-                            Name*:
-                            </label> 
-                            <!-- <input type="text" class="form-control" id="name" name="name" > -->
-                            <input type="text" class="form-control w-100" id="name" name="name" > 
-                        </div> 
-                      
-                            
-                        <div class="row g-3 mt-3">
-                        <label class="form-label mb-1" for="description" th:text="#{formLabelDescription}">
-                            Description: 
-                        </label>
-                        <input class="form-control" name="description" id="description" type="textarea">
-                        </div>
+                      <div th:replace="~{employee/professional-roles/fragments/common-fields-profesional-role-form 
+                                        :: common-fields-profesional-role-form( null ) }">
+                      </div> 
                     
                     </form>
 
