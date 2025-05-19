@@ -34,7 +34,9 @@ public class DentalMaterialsController {
 	ModelMapper modelMapper;
 	
 	@GetMapping({"/dental-materials","","/"})
-	public String mainCalendarPage( HttpServletRequest request, Model model ) {
+	public String dentalMaterialsPage( HttpServletRequest request, Model model ) {
+		
+		LOGGER.info("dentalMaterialsPage");
 		
 		// Set useful cookies --------------------------------------------------------------------------
 		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
