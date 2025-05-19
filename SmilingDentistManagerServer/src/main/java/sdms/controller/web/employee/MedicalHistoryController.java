@@ -37,7 +37,9 @@ public class MedicalHistoryController {
 	ModelMapper modelMapper;
 	
 	@GetMapping({"/medical-histories","","/"})
-	public String mainCalendarPage( HttpServletRequest request, Model model ) {
+	public String medicalHistoriesPage( HttpServletRequest request, Model model ) {
+		
+		LOGGER.info("medicalHistoriesPage");
 		
 		// Set useful cookies --------------------------------------------------------------------------
 		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
