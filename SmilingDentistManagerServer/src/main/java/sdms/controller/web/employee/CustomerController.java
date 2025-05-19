@@ -32,7 +32,6 @@ import sdms.service.HasMedicalHistoryServiceInterface;
 import sdms.service.MedicalHistoryServiceInterface;
 import sdms.service.OrthopantomogramServiceInterface;
 import sdms.service.TreatmentServiceInterface;
-import sdms.util.FileFormatManager;
 import sdms.util.UserRoleManager;
 import sdms.util.WebClientCookieManager;
 
