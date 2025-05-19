@@ -4,6 +4,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,8 @@ import sdms.util.WebClientCookieManager;
 @Controller
 @RequestMapping("/employee/personal-profile")
 public class PersonalProfileController {
+	
+	Logger LOGGER = LoggerFactory.getLogger( PersonalProfileController.class );
 
 	@Autowired
 	EmployeeServiceInterface employeeService;
@@ -33,6 +37,8 @@ public class PersonalProfileController {
 	
 	@GetMapping( value= {"", "/", "/personal-profile"} )
 	public String personalProfilePage( HttpServletRequest request, Model model ) {
+		
+		LOGGER.info("personalProfilePage");
 		
 		// Set useful cookies --------------------------------------------------------------------------
 		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
