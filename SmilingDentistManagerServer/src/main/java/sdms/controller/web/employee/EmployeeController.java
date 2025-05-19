@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,8 @@ import sdms.util.WebClientCookieManager;
 @RequestMapping("/employee/employee")
 public class EmployeeController {
 	
+	private final Logger LOGGER = LoggerFactory.getLogger( EmployeeController.class );
+	
 	@Autowired
 	EmployeeServiceInterface employeeService;
 
@@ -38,6 +42,8 @@ public class EmployeeController {
 	public String mainCalendarPage( HttpServletRequest request, Model model, 
 									@RequestParam( defaultValue = "-1" ) Long idProfessionalRole,
 									@RequestParam( defaultValue = "" ) String keyword ) {
+		
+		LOGGER.info("mainCalendarPage");
 		
 		// Set useful cookies --------------------------------------------------------------------------
 		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
