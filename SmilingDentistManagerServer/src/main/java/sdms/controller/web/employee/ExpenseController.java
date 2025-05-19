@@ -65,6 +65,8 @@ public class ExpenseController {
 									@RequestParam( defaultValue = "" ) String endDate,
 									@RequestParam( defaultValue = "false" ) boolean csv ) {
 		
+		LOGGER.info("getTreatmentPage");
+		
 		// Set useful cookies --------------------------------------------------------------------------
 		WebClientCookieManager.setUsefulGlobalCookiesInTheModel(request, model, employeeService);
 		// ---------------------------------------------------------------------------------------------
