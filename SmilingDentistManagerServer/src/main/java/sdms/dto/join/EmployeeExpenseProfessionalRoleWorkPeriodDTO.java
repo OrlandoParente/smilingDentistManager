@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import sdms.dto.EmployeeDTO;
@@ -16,6 +18,8 @@ import sdms.service.EmployeeServiceInterface;
 
 @Component
 public class EmployeeExpenseProfessionalRoleWorkPeriodDTO {
+	
+	private static Logger LOGGER = LoggerFactory.getLogger(EmployeeExpenseProfessionalRoleWorkPeriodDTO.class);
 	
 	private EmployeeDTO employeeDTO;
 	private List<ExpenseDTO> expensesDTO;
@@ -34,6 +38,8 @@ public class EmployeeExpenseProfessionalRoleWorkPeriodDTO {
 
 	
 	public EmployeeExpenseProfessionalRoleWorkPeriodDTO buildFromEmployeeId( long idEmployee, EmployeeServiceInterface employeeService, ModelMapper modelMapper ) {
+		
+		LOGGER.info("buildFromEmployeeId");
 		
 		Employee employee = employeeService.getEmployeeById(idEmployee);
 		
