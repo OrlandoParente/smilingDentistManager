@@ -1,6 +1,8 @@
 package sdms.dto.join;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import sdms.dto.HasMedicalHistoryDTO;
 import sdms.dto.MedicalHistoryDTO;
@@ -11,6 +13,8 @@ import sdms.service.MedicalHistoryServiceInterface;
 
 public class MedicalHistoryHasMedicalHistoryDTO {
 
+	private static Logger LOGGER = LoggerFactory.getLogger( MedicalHistoryHasMedicalHistoryDTO.class );
+	
 	private HasMedicalHistoryDTO hasMedicalHistoryDTO;
 	private MedicalHistoryDTO medicalHistoryDTO;
 	
@@ -23,6 +27,8 @@ public class MedicalHistoryHasMedicalHistoryDTO {
 														HasMedicalHistoryServiceInterface hasMedicalHistoryService, 
 														MedicalHistoryServiceInterface medicalHistoryService,
 														ModelMapper modelMapper) {
+		
+		LOGGER.info("build  MedicalHistoryHasMedicalHistoryDTO from HasMedicalHistoryId");
 		
 		HasMedicalHistory hasMedicalHistory = hasMedicalHistoryService.getHasMedicalHistoryById(id);
 		MedicalHistory medicalHistory = medicalHistoryService.getMedicalHistoryById( hasMedicalHistory.getMedicalHistory().getId() );
