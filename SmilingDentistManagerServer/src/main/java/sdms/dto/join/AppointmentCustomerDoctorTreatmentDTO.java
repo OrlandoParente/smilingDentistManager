@@ -47,7 +47,7 @@ public class AppointmentCustomerDoctorTreatmentDTO {
 	
 	public AppointmentCustomerDoctorTreatmentDTO buildFromAppointmentId( long idAppointment, AppointmentServiceInterface appointmentService, ModelMapper modelMapper ) {
 		
-		LOGGER.info("buildFromAppointmentId");
+		LOGGER.info("build AppointmentCustomerDoctorTreatmentDTO from AppointmentId");
 		
 		Appointment appointment = appointmentService.getAppointmentById(idAppointment);
 		
