@@ -47,7 +47,7 @@ public class CustomerMedicalHistoryExpenseAppointmentDTO {
 																			AppointmentServiceInterface appointmentService,
 																			ModelMapper modelMapper ) {
 		
-		LOGGER.info("buildFromCustomerId");
+		LOGGER.info("build CustomerMedicalHistoryExpenseAppointmentDTO from CustomerId");
 		
 		Customer customer = customerService.getCustomerById( idCustomer );
 		this.customerDTO = modelMapper.map(customer, CustomerDTO.class);
