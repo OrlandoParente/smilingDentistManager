@@ -39,7 +39,7 @@ public class EmployeeExpenseProfessionalRoleWorkPeriodDTO {
 	
 	public EmployeeExpenseProfessionalRoleWorkPeriodDTO buildFromEmployeeId( long idEmployee, EmployeeServiceInterface employeeService, ModelMapper modelMapper ) {
 		
-		LOGGER.info("buildFromEmployeeId");
+		LOGGER.info("build EmployeeExpenseProfessionalRoleWorkPeriodDTO from EmployeeId");
 		
 		Employee employee = employeeService.getEmployeeById(idEmployee);
 		
