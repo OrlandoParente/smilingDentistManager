@@ -16,8 +16,10 @@ import org.mockito.MockitoAnnotations;
 
 import sdms.model.Appointment;
 import sdms.model.Customer;
+import sdms.model.Employee;
 import sdms.repository.AppointmentRepository;
 import sdms.repository.CustomerRepository;
+import sdms.repository.EmployeeRepository;
 
 /*
  * 	// Gestione Appuntamenti --------------------------------
@@ -77,6 +79,9 @@ class AppointmentServiceTest {
 	
 	@Mock
 	CustomerRepository customerRepository;
+	
+	@Mock
+	EmployeeRepository employeeRepository;
 	
 	@InjectMocks
 	AppointmentService appointmentService;
@@ -200,7 +205,65 @@ class AppointmentServiceTest {
 	
 //	public List<Appointment> getAppointmentsByDoctorId( long doctorId );
 	
+	@Test
+	public void testGetAppointmentsByDoctorId() {
+		
+		// simulate database --------------------------
+		Employee doctor = new Employee();
+		Long doctorId = 3L;
+		doctor.setId(doctorId);
+			
+		List<Appointment> appointments = new ArrayList<>();
+		
+		Appointment app1 = new Appointment();
+		Long id1 = 1L;
+		app1.setId(id1);
+		app1.setDoctor(doctor);
+		
+		
+		Appointment app2 = new Appointment();
+		Long id2 = 2L;
+		app2.setId(id2);
+		app2.setDoctor(doctor);
+		
+		Appointment app3 = new Appointment();
+		Long id3 = 5L;
+		app3.setId(id3);
+		app3.setDoctor(doctor);
+		
+		appointments.add(app1);
+		appointments.add(app2);
+		appointments.add(app3);
+		
+		
+		when( employeeRepository.findById( doctorId ) ).thenReturn( Optional.of( doctor ) );
+		when( repository.findByDoctor(doctor) ).thenReturn(appointments);
+		
+		// --------------------------------------------
+		
+		// test
+		List<Appointment> result = appointmentService.getAppointmentsByDoctorId( doctorId );
+		
+						
+		// check ----
+		assertNotNull(result);
+		assertEquals( appointments.size(), result.size() );
+
+		for( int i = 0; i < appointments.size(); i ++ ) {
+			assertEquals(appointments.get(i).getId(), result.get(i).getId() );
+		}
+		// ----------
+		
+	}
+	
 //	public List<String> getInvoiceNumbersByCustomerId( long customerId );
+	
+	@Test
+	public void testGetInvoiceNumbersByCustomerId() {
+		
+		
+		
+	}
 
 //	public void postAppointment( Appointment appointment );
 	// per registrare un appuntamento ancora non svolto
