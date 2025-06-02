@@ -83,6 +83,9 @@ class AppointmentServiceTest {
 	@Mock
 	EmployeeRepository employeeRepository;
 	
+	@Mock 
+	AppointmentRepository appointmentRepository;
+	
 	@InjectMocks
 	AppointmentService appointmentService;
 	
@@ -261,8 +264,50 @@ class AppointmentServiceTest {
 	@Test
 	public void testGetInvoiceNumbersByCustomerId() {
 		
+		// simulate database --------------------------
+		Customer customer = new Customer();
 		
+		Long customerId = 1L;
+		customer.setId(customerId);
 		
+//		int numOfDifferentInvoices = 2;
+		
+		Appointment appointment1 = new Appointment();
+		Long appId1 = 2L;
+		appointment1.setId(appId1);
+		String invoiceNumber1 = "AAAAAAAAA";
+		appointment1.setInvoiceNumber(invoiceNumber1);
+		
+		Appointment appointment2 = new Appointment();
+		Long appId2 = 3L;
+		appointment2.setId(appId2);
+		String invoiceNumber2 = "BBBBBBBBBB";
+		appointment2.setInvoiceNumber(invoiceNumber2);
+		
+		List<Appointment> appointments = new ArrayList<Appointment>();
+		appointments.add(appointment1);
+		appointments.add(appointment2);
+		
+		when( customerRepository.findById(customerId) ).thenReturn( Optional.of(customer) ) ;
+		when( appointmentRepository.findByCustomer(customer) ).thenReturn( appointments );
+		
+		// --------------------------------------------
+		
+		// test
+		List<String> result = appointmentService.getInvoiceNumbersByCustomerId( customerId );
+		
+		for( String str : result ) {
+			System.out.println( str );
+		}
+		
+		// check ----
+		assertNotNull(result);
+//		assertEquals( numOfDifferentInvoices, result.size() );
+
+		for( int i = 0; i < appointments.size(); i ++ ) {
+			assertEquals(appointments.get(i).getInvoiceNumber(), result.get(i) );
+		}
+		// ----------
 	}
 
 //	public void postAppointment( Appointment appointment );
