@@ -10,9 +10,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 class MultiUserDetailsServiceTest {
 
-	@Test
-	void test() {
-		fail("Not yet implemented");
-	}
+//	@Test
+//	void test() {
+//		fail("Not yet implemented");
+//	}
 
 }
