@@ -34,9 +34,9 @@ import sdms.model.MedicalHistory;
 
 class MedicalHistoryServiceTest {
 
-	@Test
-	void test() {
-		fail("Not yet implemented");
-	}
+//	@Test
+//	void test() {
+//		fail("Not yet implemented");
+//	}
 
 }
