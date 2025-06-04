@@ -103,46 +103,61 @@ class CustomerServiceTest {
 			assertEquals( id , result.getId() );			
 		}
 		
+		// ######################################################################################################################### 
 //		public List<Customer> getCustomers();
 		
+//		@Test
+//		public void testGetCustomers(){
+//			
+//			// Build list of customer for simulate the database ----
+//			List<Customer> customers = new ArrayList<Customer>();
+//			
+//			Long id1 = 1L;
+//			Long id2 = 2L;
+//			
+//			Customer customer1 = new Customer();
+//			customer1.setId( id1 );
+//			
+//			Customer customer2 = new Customer();
+//			customer2.setId(id2);
+//			
+//			// 
+//			customers.add(customer1);
+//			customers.add(customer2);
+//			// -----------------------------------------------------
+//			
+//			when( repository.findAll() ).thenReturn(customers);
+//			
+//			List<Customer> result = customerService.getCustomers();
+//			
+//			// check not null
+//			assertNotNull(result);
+//			
+//			// check size
+//			assertEquals( customers.size(), result.size());
+//			
+//		    // check list
+//		    for (int i = 0; i < customers.size(); i++) {
+//		        assertEquals(customers.get(i).getId(), result.get(i).getId());
+//		    }
+//			
+//		}
+		
+		// ######################################################################################################################### 
+		
+//		public List<Customer> getCustomersByPartialKeyWordOverAllFields( String key_word );
+		
 		@Test
-		public void testGetCustomers(){
+		public void testGetCustomersByPartialKeyWordOverAllFields() {
 			
-			// Build list of customer for simulate the database ----
-			List<Customer> customers = new ArrayList<Customer>();
+			Customer customer = new Customer();
+			Long id = 1L;
+			String name = "Customer";
 			
-			Long id1 = 1L;
-			Long id2 = 2L;
 			
-			Customer customer1 = new Customer();
-			customer1.setId( id1 );
-			
-			Customer customer2 = new Customer();
-			customer2.setId(id2);
-			
-			// 
-			customers.add(customer1);
-			customers.add(customer2);
-			// -----------------------------------------------------
-			
-			when( repository.findAll() ).thenReturn(customers);
-			
-			List<Customer> result = customerService.getCustomers();
-			
-			// check not null
-			assertNotNull(result);
-			
-			// check size
-			assertEquals( customers.size(), result.size());
-			
-		    // check list
-		    for (int i = 0; i < customers.size(); i++) {
-		        assertEquals(customers.get(i).getId(), result.get(i).getId());
-		    }
 			
 		}
 		
-//		public List<Customer> getCustomersByPartialKeyWordOverAllFields( String key_word );
 //		public void postCustomer( Customer customer );
 
 //		public void putCustomer( Customer customer );
