@@ -376,7 +376,7 @@ class AppointmentServiceTest {
 		app.setDoctor(doctor);
 		app.setCustomer(customer);
 		
-		when( customerRepository.findById(idApp) ).thenReturn( Optional.of( customer ) ); 
+		when( repository.findById(idApp) ).thenReturn( Optional.of( app ) ); 
 		
 		// --------------------------------------------
 		
@@ -385,7 +385,7 @@ class AppointmentServiceTest {
 		// --------
 		
 		// check ---
-		verify( customerRepository , times(1) ).findById( anyLong() );
+		verify( repository , times(1) ).findById( anyLong() );
 		
 		assertEquals(1, app.getisDone() );
 		// ---------
@@ -394,8 +394,75 @@ class AppointmentServiceTest {
 	
 	// set is_done = 0
 //	public void putUnsetAppointmentDoneById( long id );
+	
+	@Test
+	public void testPutUnsetAppointmentDoneById() {
+		
+		// simulate database --------------------------
+		Employee doctor = new Employee();
+		Long doctorId = 3L;
+		doctor.setId(doctorId);
+		
+		Customer customer = new Customer();
+		Long customerId = 10L;
+		customer.setId(customerId);
+				
+		Appointment app = new Appointment();
+		Long idApp = 1L;
+		app.setId(idApp);
+		app.setDoctor(doctor);
+		app.setCustomer(customer);
+		
+		when( repository.findById(idApp) ).thenReturn( Optional.of( app ) ); 
+		
+		// --------------------------------------------
+		
+		// test ---
+		appointmentService.putUnsetAppointmentDoneById( idApp );
+		// --------
+		
+		// check ---
+		verify( repository , times(1) ).findById( anyLong() );
+		
+		assertEquals( 0, app.getisDone() );
+		// ---------
+		
+	}
 
 //	public void putAppointment( Appointment appointment );
+	
+	@Test
+	public void testPutAppointment() {
+	
+		// simulate database --------------------------
+		Employee doctor = new Employee();
+		Long doctorId = 3L;
+		doctor.setId(doctorId);
+		
+		Customer customer = new Customer();
+		Long customerId = 10L;
+		customer.setId(customerId);
+				
+		Appointment app = new Appointment();
+		Long idApp = 1L;
+		app.setId(idApp);
+		app.setDoctor(doctor);
+		app.setCustomer(customer);
+	
+		// --------------------------------------------
+		
+		// test -----
+		appointmentService.putAppointment(app);
+		
+		// ----------
+		
+		// check ----
+		verify( repository, times(1) ).save(app);
+		
+		// ----------
+	}
+	
+	// ################################## <<<<<<------------------------ DA TOGLIEREEEEEEEEEEEEEE ???????? ------------------------
 	
 	// Volendo se ne può fare a meno, basta il putAppointment
 	// però dato che questa funzionalità è prevista, così si alleggerisce il controller
@@ -409,8 +476,13 @@ class AppointmentServiceTest {
 	// però dato che questa funzionalità è prevista, così si alleggerisce il controller
 //	public void putAppointmentTreatmentById( long id, long idTreatment );
 	
+	// ############################################################################################################################
+	
 	// PATCH REQUESTS -----------------------------
 //	public void updateTeethList( long id, String teeth );
+	
+	
+	
 	// --------------------------------------------
 	
 //	public void deleteAppointmentById( long id );
