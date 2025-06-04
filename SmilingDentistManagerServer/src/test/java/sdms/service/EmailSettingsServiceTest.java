@@ -15,9 +15,9 @@ import sdms.model.EmailSettings;
 
 class EmailSettingsServiceTest {
 
-	@Test
-	void test() {
-		fail("Not yet implemented");
-	}
+//	@Test
+//	void test() {
+//		fail("Not yet implemented");
+//	}
 
 }
