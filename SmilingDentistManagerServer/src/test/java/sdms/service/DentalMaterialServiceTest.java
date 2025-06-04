@@ -26,9 +26,9 @@ import org.junit.jupiter.api.Test;
 
 class DentalMaterialServiceTest {
 
-	@Test
-	void test() {
-		fail("Not yet implemented");
-	}
+//	@Test
+//	void test() {
+//		fail("Not yet implemented");
+//	}
 
 }
