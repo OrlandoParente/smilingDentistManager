@@ -481,7 +481,33 @@ class AppointmentServiceTest {
 	// PATCH REQUESTS -----------------------------
 //	public void updateTeethList( long id, String teeth );
 	
-	
+	@Test
+	public void testUpdateTeethList() {
+		
+		// simulate database --------------------------
+		
+		// The teeth string has to be like NUM_TOOTH1, NUM_TOOTH2, ...
+		String teeth="11,21,12,14,16,28,";
+		
+		Appointment app = new Appointment();
+		Long idApp = 1L;
+		app.setId(idApp);
+		app.setTeeth("11,14,");
+		
+		when( repository.findById(idApp) ).thenReturn( Optional.of(app) );
+		
+		// --------------------------------------------
+		
+		// test ------
+		appointmentService.updateTeethList(idApp, teeth);
+		// -----------
+		
+		// check -----
+		verify( repository , times(1) ).findById(idApp);
+		
+		assertEquals(teeth, app.getTeeth());
+		// -----------
+	}
 	
 	// --------------------------------------------
 	
