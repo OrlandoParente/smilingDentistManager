@@ -2,6 +2,7 @@ package sdms.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ import sdms.repository.CustomerRepository;
 class CustomerServiceTest {
 	
 		@Mock
-		private CustomerRepository repository;
+		private CustomerRepository customerRepository;
 	
 		@InjectMocks
 		private CustomerService customerService;
@@ -76,7 +77,7 @@ class CustomerServiceTest {
 //			CustomerRepository repository = mock(CustomerRepository.class);
 			
 			// anyLong()
-			when( repository.findById( id ) ).thenReturn( Optional.of(customer) ) ;
+			when( customerRepository.findById( id ) ).thenReturn( Optional.of(customer) ) ;
 			
 			Customer result = customerService.getCustomerById( id );
 			
@@ -96,7 +97,7 @@ class CustomerServiceTest {
 			customer.setId(id);
 			customer.seteMail(eMail);
 			
-			when( repository.findByEMail( eMail ) ).thenReturn( Optional.of(customer) );
+			when( customerRepository.findByEMail( eMail ) ).thenReturn( Optional.of(customer) );
 			
 			Customer result = customerService.getCustomerByEMail(eMail);
 			
@@ -150,10 +151,47 @@ class CustomerServiceTest {
 		@Test
 		public void testGetCustomersByPartialKeyWordOverAllFields() {
 			
-			Customer customer = new Customer();
-			Long id = 1L;
-			String name = "Customer";
+			// Simulate the database ----------------------------
 			
+			
+			Customer customer1 = new Customer();
+			Long id1 = 1L;
+			String name1 = "Customer";
+			customer1.setName(name1);
+			customer1.setId(id1);
+			
+			Customer customer2 = new Customer();
+			Long id2 = 2L;
+			String name2 = "Customer2";
+			customer2.setId(id2);
+			customer2.setName(name2);
+			
+			
+			String partialWord = "Cust";
+			
+			List<Customer> customers = new ArrayList<>();
+			customers.add(customer1);
+			customers.add(customer2);
+			
+			// We have 2 method for do the same thing (the service can choose the one who prefer)
+			when( customerRepository.findCustomersByPartialKeyWordOverAllFields( partialWord ) ).thenReturn( customers );
+			
+			// We have 2 method for do the same thing (the service can choose the one who prefer)
+			when( customerRepository.findCustomerByTaxIdCodeContainingOrNameContainingOrSurnameContainingOrBirthCityContainingOrBirthCityProvinceContainingOrBirthDateStringContainingOrResidenceStreetContainingOrHouseNumberContainingOrResidenceCityContainingOrResidenceCityCapContainingOrResidenceProvinceContainingOrPhoneNumberContainingOrPhoneNumber2ContainingOrEMailContaining(partialWord, partialWord, partialWord, partialWord, partialWord, partialWord, partialWord, partialWord, partialWord, partialWord, partialWord, partialWord, partialWord, partialWord) )
+						.thenReturn( customers );
+			
+			// --------------------------------------------------
+			
+			// test ---------------------------------------------
+			List<Customer> result = customerService.getCustomersByPartialKeyWordOverAllFields(partialWord);
+			// --------------------------------------------------
+			
+			// check --------------------------------------------
+			assertEquals(customers.size(), result.size());
+			
+			for( int i = 0; i < customers.size(); i ++ )
+				assertEquals(customers.get(i).getId(), result.get(i).getId() );
+			// --------------------------------------------------
 			
 			
 		}
