@@ -512,5 +512,27 @@ class AppointmentServiceTest {
 	// --------------------------------------------
 	
 //	public void deleteAppointmentById( long id );
+	public void testDeleteAppointmentById() {
+	
+		// simulate database --------------------------
+		Appointment app = new Appointment();
+		Long idApp = 1L;
+		app.setId(idApp);
+		app.setTeeth("11,14,");
+		
+		when( repository.findById(idApp) ).thenReturn( Optional.of(app) );
+		
+		// --------------------------------------------
+		
+		// test -------
+		appointmentService.deleteAppointmentById(idApp);
+		// ------------
+		
+		// check ------
+		verify( repository , times(1) ).delete(app);
+		// ------------
+		
+	}
+	
 	// ------------------------------------------------------
 }
