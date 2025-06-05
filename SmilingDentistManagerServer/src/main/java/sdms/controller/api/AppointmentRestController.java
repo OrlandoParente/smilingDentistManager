@@ -147,10 +147,7 @@ public class AppointmentRestController {
 			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body("Post Appointment Failed");
 		}
 	
-		
-		
 		return ResponseEntity.status( HttpStatus.OK ).body( modelMapper.map(appointment, AppointmentDTO.class) );
-
 	}
 	
 	// set is_done = 1
