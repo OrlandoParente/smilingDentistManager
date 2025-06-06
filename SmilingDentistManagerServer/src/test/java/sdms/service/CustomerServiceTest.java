@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.repository.core.support.RepositoryComposition;
 
 import sdms.model.Customer;
 import sdms.repository.CustomerRepository;
@@ -207,14 +208,11 @@ class CustomerServiceTest {
 		public void testPostCustomer() {
 			
 			// Simulate the database ----------------------------
-			
-			
 			Customer customer = new Customer();
 			Long id = 1L;
 			String name = "Customer";
 			customer.setName(name);
 			customer.setId(id);
-			
 			// --------------------------------------------------
 			
 			// test ---------------------------------------------
@@ -229,6 +227,48 @@ class CustomerServiceTest {
 		}
 		
 //		public void putCustomer( Customer customer );
+		
+		@Test
+		public void testPutCustomer() {
+			
+			
+			// Simulate the database ----------------------------
+			
+			// common values old and new customer object --
+			Long id = 1L;
+			String customerFolderPath = "/path/customer";
+			// --------------------------------------------
+			
+			Customer customer = new Customer();
+			String name = "Customer";
+			customer.setName(name);
+			customer.setId(id);
+			customer.setCustomerFolder( customerFolderPath );
+			
+			
+			Customer oldCustomer = new Customer();
+			// Long id = 1L;
+			String nameOldCustomer = "CustomerOld";
+			oldCustomer.setName(nameOldCustomer);
+			oldCustomer.setId(id);
+			oldCustomer.setCustomerFolder( customerFolderPath );
+			
+			when( customerRepository.findById(id) ).thenReturn( Optional.of( oldCustomer ) );
+			// --------------------------------------------------
+			
+			// test ---------------------------------------------
+			customerService.putCustomer(customer);
+			// --------------------------------------------------
+			
+			// check --------------------------------------------
+			verify( customerRepository, times(1) ).findById(id);
+			verify( customerRepository, times(1) ).save( customer );
+			
+			// Oss.: verify can be used only on Mocks, customer is not a mock in this case 
+			// verify( customer, times(1) ).setCustomerFolder( anyString() );
+			// --------------------------------------------------
+			
+		}
 
 //		public void deleteCustomer( long id );
 }
