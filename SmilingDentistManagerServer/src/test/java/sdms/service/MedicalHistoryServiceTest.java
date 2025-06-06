@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
 
 import sdms.model.MedicalHistory;
 
@@ -34,6 +36,12 @@ import sdms.model.MedicalHistory;
 
 class MedicalHistoryServiceTest {
 
+	// enable mochito annotations
+	@BeforeEach
+	public void setUp() {
+		MockitoAnnotations.openMocks(this);
+	}
+	
 //	@Test
 //	void test() {
 //		fail("Not yet implemented");
