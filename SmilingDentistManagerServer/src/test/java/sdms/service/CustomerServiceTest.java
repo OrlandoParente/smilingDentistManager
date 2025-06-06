@@ -1,8 +1,12 @@
 package sdms.service;
 
+import static org.hamcrest.CoreMatchers.any;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -187,6 +191,8 @@ class CustomerServiceTest {
 			// --------------------------------------------------
 			
 			// check --------------------------------------------
+			assertNotNull(result);
+			
 			assertEquals(customers.size(), result.size());
 			
 			for( int i = 0; i < customers.size(); i ++ )
@@ -198,6 +204,30 @@ class CustomerServiceTest {
 		
 //		public void postCustomer( Customer customer );
 
+		public void testPostCustomer() {
+			
+			// Simulate the database ----------------------------
+			
+			
+			Customer customer = new Customer();
+			Long id = 1L;
+			String name = "Customer";
+			customer.setName(name);
+			customer.setId(id);
+			
+			// --------------------------------------------------
+			
+			// test ---------------------------------------------
+			customerService.postCustomer(customer);
+			// --------------------------------------------------
+			
+			// check --------------------------------------------
+			verify( customerRepository, times(1) ).save( customer );
+			verify( customer, times(1) ).setCustomerFolder( anyString() );
+			// --------------------------------------------------
+			
+		}
+		
 //		public void putCustomer( Customer customer );
 
 //		public void deleteCustomer( long id );
