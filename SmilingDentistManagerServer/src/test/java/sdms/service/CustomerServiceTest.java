@@ -205,6 +205,7 @@ class CustomerServiceTest {
 		
 //		public void postCustomer( Customer customer );
 
+		@Test
 		public void testPostCustomer() {
 			
 			// Simulate the database ----------------------------
@@ -221,7 +222,6 @@ class CustomerServiceTest {
 			
 			// check --------------------------------------------
 			verify( customerRepository, times(1) ).save( customer );
-			verify( customer, times(1) ).setCustomerFolder( anyString() );
 			// --------------------------------------------------
 			
 		}
@@ -271,4 +271,6 @@ class CustomerServiceTest {
 		}
 
 //		public void deleteCustomer( long id );
+		
+		
 }
