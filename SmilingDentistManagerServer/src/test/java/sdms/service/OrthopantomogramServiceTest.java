@@ -2,7 +2,9 @@ package sdms.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
 
 /*
  * 	public Orthopantomogram getOrthopantomogramById( Long id );
@@ -24,6 +26,12 @@ import org.junit.jupiter.api.Test;
 
 class OrthopantomogramServiceTest {
 
+	// enable mochito annotations
+	@BeforeEach
+	public void setUp() {
+		MockitoAnnotations.openMocks(this);
+	}
+	
 //	@Test
 //	void test() {
 //		fail("Not yet implemented");
