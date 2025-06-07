@@ -1,15 +1,13 @@
 package sdms.service;
 
-import static org.hamcrest.CoreMatchers.any;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,10 +16,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.repository.core.support.RepositoryComposition;
 
 import sdms.model.Customer;
+import sdms.repository.AppointmentRepository;
 import sdms.repository.CustomerRepository;
+import sdms.repository.ExpenseRepository;
+import sdms.repository.HasMedicalHistoryRepository;
 
 /*
  * 	public long getLastCustomerId();
@@ -60,7 +60,19 @@ class CustomerServiceTest {
 	
 		@Mock
 		private CustomerRepository customerRepository;
+		
+		@Mock
+		private OrthopantomogramServiceInterface orthopantomogramService;
 	
+		@Mock
+		private HasMedicalHistoryRepository hasMedicalHistoryRepository;
+		
+		@Mock
+		private ExpenseRepository expenseRepository;
+		
+		@Mock
+		private AppointmentRepository appointmentRepository;
+		
 		@InjectMocks
 		private CustomerService customerService;
 	
@@ -272,5 +284,32 @@ class CustomerServiceTest {
 
 //		public void deleteCustomer( long id );
 		
+		@Test
+		public void testDeleteCustome() {
 		
+			// Simulate the database ----------------------------
+			Customer customer = new Customer();
+			Long id = 1L;
+			String name = "Customer";
+			String customerFolderPath = "/path/customer";
+			customer.setName(name);
+			customer.setId(id);
+			customer.setCustomerFolder(customerFolderPath);
+			
+			when( customerRepository.findById(id) ).thenReturn( Optional.of( customer ) );
+			when( orthopantomogramService.getOrthopantomogramsByCustomer(id)).thenReturn(Collections.emptyList() );
+			when( hasMedicalHistoryRepository.findByCustomer(customer) ).thenReturn(Collections.emptyList() );
+			when( expenseRepository.findByCustomer(customer) ).thenReturn(Collections.emptyList() );
+			when( appointmentRepository.findByCustomer(customer) ).thenReturn(Collections.emptyList() );
+			// --------------------------------------------------
+			
+			// test ---------------------------------------------
+			customerService.deleteCustomer(id);
+			// --------------------------------------------------
+			
+			// check --------------------------------------------
+			verify( customerRepository, times(1) ).delete( customer );
+			// --------------------------------------------------
+			
+		}
 }
