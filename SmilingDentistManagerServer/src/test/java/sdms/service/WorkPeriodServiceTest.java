@@ -76,14 +76,49 @@ class WorkPeriodServiceTest {
 	// READ -----------------------------------------------------------------
 	// WorkPeriod getWorkPeriodById( long id );
 	// List<WorkPeriod> getWorkPeriodsByEmployee(Employee employee);
+	
 	public void testGetWorkPeriodsByEmployee() {
+		
+		// simulate database ----------------------------------
+		WorkPeriod workPeriod = new WorkPeriod();
+		Long id = 1L;
+		workPeriod.setId( id );
+		
+		// ----------------------------------------------------
+		
+		// test -----------------------------------------------
+		workPeriodService.postWorkPeriod(workPeriod);
+		// ----------------------------------------------------
+		
+		// check ----------------------------------------------
+		verify( workPeriodRepository, times(1) ).save( workPeriod );
+		// ----------------------------------------------------
+		
 		
 	}
 	
-	
 	// UPDATE ---------------------------------------------------------------
 	// public void putWorkPeriod( WorkPeriod workPeriod );
+	
+	@Test
+	public void testPutWorkPeriod() {
 		
+		// simulate database ----------------------------------
+		WorkPeriod workPeriod = new WorkPeriod();
+		Long id = 1L;
+		workPeriod.setId( id );
+		
+		// ----------------------------------------------------
+		
+		// test -----------------------------------------------
+		workPeriodService.putWorkPeriod(workPeriod);
+		// ----------------------------------------------------
+		
+		// check ----------------------------------------------
+		verify( workPeriodRepository, times(1) ).save( workPeriod );
+		// ----------------------------------------------------
+	}
+	
 	// DELETE ---------------------------------------------------------------
 	// public void deleteWorkPeriodById( long id );
 	
