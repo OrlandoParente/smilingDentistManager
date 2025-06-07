@@ -1,15 +1,16 @@
 package sdms.service;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoSettings;
 
 import sdms.model.WorkPeriod;
 import sdms.repository.WorkPeriodRepository;
@@ -36,7 +37,7 @@ class WorkPeriodServiceTest {
 	private WorkPeriodRepository workPeriodRepository;
 	
 	@InjectMocks
-	private WorkPeriodServiceInterface workPeriodService;
+	private WorkPeriodService workPeriodService;
 	
 	// enable mockito annotations
 	@BeforeEach
@@ -75,11 +76,35 @@ class WorkPeriodServiceTest {
 	// READ -----------------------------------------------------------------
 	// WorkPeriod getWorkPeriodById( long id );
 	// List<WorkPeriod> getWorkPeriodsByEmployee(Employee employee);
+	public void testGetWorkPeriodsByEmployee() {
+		
+	}
+	
 	
 	// UPDATE ---------------------------------------------------------------
 	// public void putWorkPeriod( WorkPeriod workPeriod );
 		
 	// DELETE ---------------------------------------------------------------
 	// public void deleteWorkPeriodById( long id );
+	
+	@Test
+	public void testDeleteWorkPeriodById() {
+		
+		// simulate database ----------------------------------
+		WorkPeriod workPeriod = new WorkPeriod();
+		Long id = 1L;
+		workPeriod.setId( id );
+		
+		when( workPeriodRepository.findById(id) ).thenReturn( Optional.of( workPeriod ) );
+		// ----------------------------------------------------
+		
+		// test -----------------------------------------------
+		workPeriodService.deleteWorkPeriodById( id );
+		// ----------------------------------------------------
+		
+		// check ----------------------------------------------
+		verify( workPeriodRepository, times(1) ).delete(workPeriod);
+		// ----------------------------------------------------
+	}
 
 }
