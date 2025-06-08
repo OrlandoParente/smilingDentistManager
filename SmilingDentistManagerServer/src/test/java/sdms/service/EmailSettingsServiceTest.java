@@ -28,5 +28,19 @@ class EmailSettingsServiceTest {
 //	void test() {
 //		fail("Not yet implemented");
 //	}
+	
+	// public EmailSettings getEmailSettings();
+	public void testGetEmailSettting() {
+		
+		EmailSettings emailSettings;
+		emailSettings = new EmailSettings();
+		
+		
+	}
+	
+	// public void saveSettings( EmailSettings emailSettings );
+	
+	// public void saveSettings( String host, int port, String username, String password, boolean enableAuth, boolean enableTLS, boolean enableSSL);
+
 
 }
