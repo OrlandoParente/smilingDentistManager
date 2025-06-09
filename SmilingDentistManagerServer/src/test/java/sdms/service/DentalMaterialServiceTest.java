@@ -1,10 +1,16 @@
 package sdms.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import sdms.model.DentalMaterial;
+import sdms.repository.DentalMaterialRepository;
 
 /*
  * 	
@@ -28,6 +34,11 @@ import org.mockito.MockitoAnnotations;
 
 class DentalMaterialServiceTest {
 
+	@Mock
+	private DentalMaterialRepository dentalMaterialRepository;
+	
+	@InjectMocks
+	private DentalMaterialService dentalMaterialService;
 	
 	// enable mochito annotations
 	@BeforeEach
@@ -43,8 +54,33 @@ class DentalMaterialServiceTest {
 	// CREATE ----------------------------------------------------
 	// public void postDentalMaterial( DentalMaterial dentalMaterial );
 	
+	@Test
+	public void testPostDentalMaterial() {
+		
+		// Simulate the database ----------------------------
+		DentalMaterial dentalMaterial = new DentalMaterial();
+		Long id = 1L;
+		dentalMaterial.setId(id);
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		dentalMaterialService.postDentalMaterial(dentalMaterial);
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		verify( dentalMaterialRepository, times(1) ).save( dentalMaterial );
+		// --------------------------------------------------
+	}
+	
 	// READ ------------------------------------------------------
 	// public DentalMaterial getDentalMaterialById( long id );
+	
+	
+	public void testGetDentalMaterial() {
+		
+	}
+	
+	
 	// public List<DentalMaterial> getDentalMaterials();
 	
 	// UPDATE ----------------------------------------------------
