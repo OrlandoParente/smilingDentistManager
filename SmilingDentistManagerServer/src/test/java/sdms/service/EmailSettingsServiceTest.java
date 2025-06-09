@@ -1,12 +1,22 @@
 package sdms.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Collections;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import sdms.model.Customer;
 import sdms.model.EmailSettings;
+import sdms.repository.EmailSettingsRepository;
 
 /*
  * 	public EmailSettings getEmailSettings();
@@ -17,6 +27,11 @@ import sdms.model.EmailSettings;
 
 class EmailSettingsServiceTest {
 
+	@Mock
+	private EmailSettingsService emailSettingsService;
+	
+	@InjectMocks
+	private EmailSettingsRepository emailSettingsRepository;
 	
 	// enable mochito annotations
 	@BeforeEach
@@ -30,17 +45,36 @@ class EmailSettingsServiceTest {
 //	}
 	
 	// public EmailSettings getEmailSettings();
+	
+	@Test
 	public void testGetEmailSettting() {
 		
+		// Simulate the database ----------------------------
 		EmailSettings emailSettings;
 		emailSettings = new EmailSettings();
 		
+		Long id = 1L;
+		emailSettings.setId(id);
 		
+		when( emailSettingsRepository.findById(id) ).thenReturn( Optional.of( emailSettings ) );
+		// --------------------------------------------------
+					
+		// test ---------------------------------------------
+		EmailSettings result = emailSettingsService.getEmailSettings();
+		// --------------------------------------------------
+					
+		// check --------------------------------------------
+		assertEquals( emailSettings.getId() ,  result.getId() );
+		// --------------------------------------------------
 	}
 	
 	// public void saveSettings( EmailSettings emailSettings );
 	
+//	@Test
+	public void testSaveSattings() {
+		
+	}
+	
 	// public void saveSettings( String host, int port, String username, String password, boolean enableAuth, boolean enableTLS, boolean enableSSL);
-
 
 }
