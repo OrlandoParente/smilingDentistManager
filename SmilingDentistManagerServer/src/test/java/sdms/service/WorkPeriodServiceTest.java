@@ -1,9 +1,12 @@
 package sdms.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import sdms.model.Employee;
 import sdms.model.WorkPeriod;
 import sdms.repository.WorkPeriodRepository;
 
@@ -77,21 +81,43 @@ class WorkPeriodServiceTest {
 	// WorkPeriod getWorkPeriodById( long id );
 	// List<WorkPeriod> getWorkPeriodsByEmployee(Employee employee);
 	
+	@Test
 	public void testGetWorkPeriodsByEmployee() {
 		
 		// simulate database ----------------------------------
-		WorkPeriod workPeriod = new WorkPeriod();
-		Long id = 1L;
-		workPeriod.setId( id );
 		
+		Employee employee = new Employee();
+		Long employeeId = 1L;
+		employee.setId( employeeId );
+		
+		WorkPeriod workPeriod1 = new WorkPeriod();
+		Long wpId1 = 2L;
+		workPeriod1.setId( wpId1 );
+		workPeriod1.setEmployee(employee);
+		
+		WorkPeriod workPeriod2 = new WorkPeriod();
+		Long wpId2 = 3L;
+		workPeriod2.setId( wpId2 );
+		workPeriod2.setEmployee(employee);
+		
+		
+		List<WorkPeriod> workPeriods = new ArrayList<>();
+		workPeriods.add(workPeriod1);
+		workPeriods.add(workPeriod2);
+		
+		when( workPeriodRepository.findByEmployee(employee) ).thenReturn(workPeriods);
 		// ----------------------------------------------------
 		
 		// test -----------------------------------------------
-		workPeriodService.postWorkPeriod(workPeriod);
+		List<WorkPeriod> result = workPeriodService.getWorkPeriodsByEmployee(employee);
 		// ----------------------------------------------------
 		
 		// check ----------------------------------------------
-		verify( workPeriodRepository, times(1) ).save( workPeriod );
+		assertEquals(workPeriods.size(), result.size());
+		
+		for( int i = 0; i < workPeriods.size(); i ++ ) {
+			assertEquals(workPeriods.get(i).getId(), result.get(i).getId() );
+		}
 		// ----------------------------------------------------
 		
 		
