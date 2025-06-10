@@ -37,5 +37,23 @@ class HasProfessionalRoleServiceTest {
 //	void test() {
 //		fail("Not yet implemented");
 //	}
+	
+  	// CREATE
+	// public void postLinkEmployeeToProfessionalRole( HasProfessionalRole hasProfessionalRole );
+	
+	@Test
+	public void testPostLinkEmployeeToProfessionalRole() {
+		
+	}
+	
+	// READ
+	// public List<ProfessionalRole> getProfessionalRolesByEmployee( long idEmployee );
+	// public List<Employee> getEmployeesByProfessionalRole( long idProfessionalRole );
+	// public List<Employee> getEmployeesByProfessionalRoleName( String professionalRoleName );
+	
+	
+	// DELETE
+	// public void deleteLinkEmployeeWithProfessionalRole( long idEmployee, long idProfessionalRole );
+	// public void deleteLinkEmployeeWithProfessionalRole( long id );
 
 }
