@@ -11,6 +11,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import sdms.model.EmailSettings;
+import sdms.model.Employee;
+import sdms.model.HasProfessionalRole;
+import sdms.model.ProfessionalRole;
 import sdms.repository.EmployeeRepository;
 import sdms.repository.ProfessionalRoleRepository;
 
@@ -35,13 +38,15 @@ import sdms.repository.ProfessionalRoleRepository;
 class HasProfessionalRoleServiceTest {
 
 	@Mock
-	EmployeeRepository employeeRepository;
+	EmployeeRepository employeeRepository;	// <<---------------------------- SERVE?
 	
 	@Mock
-	ProfessionalRoleRepository professionalRoleRepository;
+	ProfessionalRoleRepository professionalRoleRepository;  // <<---------------------------- SERVE?
+	
+	
 	
 	@InjectMocks
-	ProfessionalRoleService professionalRoleService;
+	HasProfessionalRoleService hasProfessionalRoleService;
 	
 	// enable mochito annotations
 	@BeforeEach
@@ -62,16 +67,23 @@ class HasProfessionalRoleServiceTest {
 	public void testPostLinkEmployeeToProfessionalRole() {
 		
 		// Simulate the database ----------------------------
+		Employee employee = new Employee();
+		employee.setId(1L);
 		
+		ProfessionalRole professionalRole = new ProfessionalRole();
+		professionalRole.setId(1L);
 		
+		HasProfessionalRole hasProfessionalRole = new HasProfessionalRole();
+		hasProfessionalRole.setEmployee(employee);
+		hasProfessionalRole.setProfessionalRole(professionalRole);
 		// --------------------------------------------------
 							
 		// test ---------------------------------------------
-		
+		hasProfessionalRoleService.postLinkEmployeeToProfessionalRole( hasProfessionalRole );
 		// --------------------------------------------------
 							
 		// check --------------------------------------------
-		
+//		verify(  );
 		// --------------------------------------------------
 		
 	}
