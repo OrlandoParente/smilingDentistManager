@@ -23,6 +23,7 @@ public class EmailSettingsService implements EmailSettingsServiceInterface {
 		return repository.findById( EmailSettings.DEFAULT_UNIQUE_ID ).orElse(null);
 	}
 	
+	// <---------- SHOULD I DELETE THIS?, Should be enough the one with the only object ? 
 	@Override
 	public void saveSettings(String host, int port, String username, String password, boolean enableAuth,
 			boolean enableTLS, boolean enableSSL) {
