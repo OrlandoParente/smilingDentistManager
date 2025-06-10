@@ -5,7 +5,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Collections;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import sdms.model.Customer;
 import sdms.model.EmailSettings;
 import sdms.repository.EmailSettingsRepository;
 
@@ -70,11 +68,33 @@ class EmailSettingsServiceTest {
 	
 	// public void saveSettings( EmailSettings emailSettings );
 	
-//	@Test
+	@Test
 	public void testSaveSattings() {
+		// Simulate the database ----------------------------
+		EmailSettings emailSettings;
+		emailSettings = new EmailSettings();
 		
+		Long id = 1L;
+		emailSettings.setId(id);
+		
+		// when( emailSettingsRepository.findById(id) ).thenReturn( Optional.of( emailSettings ) );
+		
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		// EmailSettings result = emailSettingsService.getEmailSettings();
+		emailSettingsService.saveSettings(emailSettings);
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		verify( emailSettingsRepository , times(1) ).save( emailSettings );
+		// --------------------------------------------------
 	}
 	
 	// public void saveSettings( String host, int port, String username, String password, boolean enableAuth, boolean enableTLS, boolean enableSSL);
-
+	
+	public void testSaveSettings() {
+		
+	}
+	
 }
