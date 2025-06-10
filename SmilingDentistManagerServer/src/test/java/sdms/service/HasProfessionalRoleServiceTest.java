@@ -1,10 +1,18 @@
 package sdms.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import sdms.model.EmailSettings;
+import sdms.repository.EmployeeRepository;
+import sdms.repository.ProfessionalRoleRepository;
 
 /*
  * 	// CREATE
@@ -26,6 +34,15 @@ import org.mockito.MockitoAnnotations;
 
 class HasProfessionalRoleServiceTest {
 
+	@Mock
+	EmployeeRepository employeeRepository;
+	
+	@Mock
+	ProfessionalRoleRepository professionalRoleRepository;
+	
+	@InjectMocks
+	ProfessionalRoleService professionalRoleService;
+	
 	// enable mochito annotations
 	@BeforeEach
 	public void setUp() {
@@ -41,8 +58,21 @@ class HasProfessionalRoleServiceTest {
   	// CREATE
 	// public void postLinkEmployeeToProfessionalRole( HasProfessionalRole hasProfessionalRole );
 	
-	@Test
+//	@Test
 	public void testPostLinkEmployeeToProfessionalRole() {
+		
+		// Simulate the database ----------------------------
+		
+		
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		
+		// --------------------------------------------------
 		
 	}
 	
