@@ -1,7 +1,11 @@
 package sdms.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -76,9 +80,24 @@ class DentalMaterialServiceTest {
 	// public DentalMaterial getDentalMaterialById( long id );
 	
 	
+	@Test
 	public void testGetDentalMaterial() {
 	
+		// Simulate the database ----------------------------
+		DentalMaterial dentalMaterial = new DentalMaterial();
+		Long id = 1L;
+		dentalMaterial.setId(id);
 		
+		when( dentalMaterialRepository.findById(id) ).thenReturn( Optional.of( dentalMaterial ) );
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		DentalMaterial result = dentalMaterialService.getDentalMaterialById(id);
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		assertEquals( dentalMaterial.getId() , result.getId() );
+		// --------------------------------------------------
 	}
 	
 	
