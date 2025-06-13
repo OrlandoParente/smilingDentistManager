@@ -5,6 +5,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -102,7 +104,37 @@ class DentalMaterialServiceTest {
 	
 	
 	// public List<DentalMaterial> getDentalMaterials();
-	
+	public void testGetDentalMaterials() {
+		
+		// Simulate the database ----------------------------
+		DentalMaterial dentalMaterial1 = new DentalMaterial();
+		Long id1 = 1L;
+		dentalMaterial1.setId(id1);
+		
+		DentalMaterial dentalMaterial2 = new DentalMaterial();
+		Long id2 = 1L;
+		dentalMaterial1.setId(id2);
+		
+		List<DentalMaterial> dentalMaterials = new ArrayList<>();
+		dentalMaterials.add(dentalMaterial1);
+		dentalMaterials.add(dentalMaterial2);
+		
+		when( dentalMaterialRepository.findAll() ).thenReturn( dentalMaterials );
+		
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		List<DentalMaterial> result = dentalMaterialService.getDentalMaterials();
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		assertEquals( dentalMaterials.size(), result.size() );
+		
+		for( int i = 0; i < dentalMaterials.size(); i ++ ) {
+			assertEquals( dentalMaterials.get(i).getId(), result.get(i).getId() );
+		}
+		// --------------------------------------------------
+	}
 	
 	// UPDATE ----------------------------------------------------
 	// public void putDentalMaterial( DentalMaterial dentalMaterial );
