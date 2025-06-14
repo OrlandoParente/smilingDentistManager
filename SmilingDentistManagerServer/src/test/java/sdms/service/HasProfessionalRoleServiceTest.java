@@ -15,6 +15,7 @@ import sdms.model.Employee;
 import sdms.model.HasProfessionalRole;
 import sdms.model.ProfessionalRole;
 import sdms.repository.EmployeeRepository;
+import sdms.repository.HasProfessionalRoleRepository;
 import sdms.repository.ProfessionalRoleRepository;
 
 /*
@@ -38,12 +39,13 @@ import sdms.repository.ProfessionalRoleRepository;
 class HasProfessionalRoleServiceTest {
 
 	@Mock
-	EmployeeRepository employeeRepository;	// <<---------------------------- SERVE?
+	EmployeeRepository employeeRepository;	
 	
 	@Mock
-	ProfessionalRoleRepository professionalRoleRepository;  // <<---------------------------- SERVE?
+	ProfessionalRoleRepository professionalRoleRepository;  
 	
-	
+	@Mock
+	HasProfessionalRoleRepository hasProfessionalRoleRepository;
 	
 	@InjectMocks
 	HasProfessionalRoleService hasProfessionalRoleService;
@@ -63,7 +65,7 @@ class HasProfessionalRoleServiceTest {
   	// CREATE
 	// public void postLinkEmployeeToProfessionalRole( HasProfessionalRole hasProfessionalRole );
 	
-//	@Test
+	@Test
 	public void testPostLinkEmployeeToProfessionalRole() {
 		
 		// Simulate the database ----------------------------
@@ -83,7 +85,7 @@ class HasProfessionalRoleServiceTest {
 		// --------------------------------------------------
 							
 		// check --------------------------------------------
-//		verify(  );
+		verify( hasProfessionalRoleRepository , times(1) ).save( hasProfessionalRole );
 		// --------------------------------------------------
 		
 	}
