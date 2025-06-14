@@ -20,6 +20,8 @@ import sdms.repository.EmailSettingsRepository;
  * 	public EmailSettings getEmailSettings();
 	
 	public void saveSettings( EmailSettings emailSettings );
+	
+	// <---- Should I delete this method? The method with the object should be enough 
 	public void saveSettings( String host, int port, String username, String password, boolean enableAuth, boolean enableTLS, boolean enableSSL);
  */
 
@@ -70,6 +72,7 @@ class EmailSettingsServiceTest {
 	
 	@Test
 	public void testSaveSattings() {
+		
 		// Simulate the database ----------------------------
 		EmailSettings emailSettings;
 		emailSettings = new EmailSettings();
@@ -91,10 +94,7 @@ class EmailSettingsServiceTest {
 		// --------------------------------------------------
 	}
 	
+	// <---- Should I delete this method? The method with the object should be enough 
 	// public void saveSettings( String host, int port, String username, String password, boolean enableAuth, boolean enableTLS, boolean enableSSL);
-	
-	public void testSaveSettings() {
-		
-	}
 	
 }
