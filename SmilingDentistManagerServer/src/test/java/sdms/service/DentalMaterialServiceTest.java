@@ -141,7 +141,18 @@ class DentalMaterialServiceTest {
 	// UPDATE ----------------------------------------------------
 	// public void putDentalMaterial( DentalMaterial dentalMaterial );
 	
-	
+	@Test
+	public void testPutDentalMaterial () {
+		
+		// Simulate the database ----------------------------
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		// --------------------------------------------------
+	}
 	
 	// public void increaseDentalMaterialQuantity( long idDentalMaterial, int quantity );
 	
