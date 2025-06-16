@@ -4,7 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoSettings;
+
+import sdms.repository.HasMedicalHistoryRepository;
 
 /*
  * // CREATE
@@ -27,6 +32,12 @@ import org.mockito.MockitoAnnotations;
 
 class HasMedicalHistoryServiceTest {
 
+	@Mock
+	HasMedicalHistoryRepository hasMedicalHistoryRepository;
+	
+	@InjectMocks
+	HasMedicalHistoryService hasMedicalHistoryService;
+	
 	// enable mochito annotations
 	@BeforeEach
 	public void setUp() {
@@ -44,6 +55,17 @@ class HasMedicalHistoryServiceTest {
 //	@Test
 	public void testPostHasMedicalHistory() {
 		
+		// Simulate the database ----------------------------
+		
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		
+		// --------------------------------------------------
 	}
 	
 	// READ
