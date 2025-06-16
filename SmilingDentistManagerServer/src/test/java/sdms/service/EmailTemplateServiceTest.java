@@ -48,6 +48,7 @@ class EmailTemplateServiceTest {
 	}
 	
 	// public EmailTemplate getEmailTemplateByType( String type );
+	
 	public void testGetEmailTemplateByType() {
 		
 		// Simulate the database ----------------------------
@@ -65,6 +66,20 @@ class EmailTemplateServiceTest {
 	
 	// Use default tags
 	// public EmailTemplate getEmailTemplateRecall();
+	
+	public void testGetEmailTemplateRecall() {
+		// Simulate the database ----------------------------
+		
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		
+		// --------------------------------------------------
+	}
 	
 	// public List<EmailTemplate> getAllEmailTemplates();
 	
