@@ -3,6 +3,9 @@ package sdms.service;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -90,6 +93,46 @@ class HasProfessionalRoleServiceTest {
 	
 	// READ
 	// public List<ProfessionalRole> getProfessionalRolesByEmployee( long idEmployee );
+	
+	public void testGetProfessionalRolesByEmployee () {
+		
+		// Simulate the database ----------------------------
+		Employee employee = new Employee();
+		employee.setId(1L);
+		
+		ProfessionalRole professionalRole = new ProfessionalRole();
+		professionalRole.setId(1L);
+		
+		HasProfessionalRole hasProfessionalRole = new HasProfessionalRole();
+		hasProfessionalRole.setEmployee(employee);
+		hasProfessionalRole.setProfessionalRole(professionalRole);
+		
+		
+		// Employee employee = new Employee();
+		// employee.setId(1L);
+		
+		ProfessionalRole professionalRole1 = new ProfessionalRole();
+		professionalRole.setId(1L);
+		
+		HasProfessionalRole hasProfessionalRole1 = new HasProfessionalRole();
+		hasProfessionalRole.setEmployee(employee);
+		hasProfessionalRole.setProfessionalRole(professionalRole1);
+		
+		
+		List< HasProfessionalRole > hasProfessionalRoles = new ArrayList<>();
+		hasProfessionalRoles.add( hasProfessionalRole );
+		hasProfessionalRoles.add( hasProfessionalRole1 );
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+//		hasProfessionalRoleService.postLinkEmployeeToProfessionalRole( hasProfessionalRole );
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+//		verify( hasProfessionalRoleRepository , times(1) ).save( hasProfessionalRole );
+		// --------------------------------------------------	
+	}
+	
 	// public List<Employee> getEmployeesByProfessionalRole( long idProfessionalRole );
 	// public List<Employee> getEmployeesByProfessionalRoleName( String professionalRoleName );
 	
