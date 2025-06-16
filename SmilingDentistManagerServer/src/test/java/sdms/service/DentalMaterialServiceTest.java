@@ -104,6 +104,8 @@ class DentalMaterialServiceTest {
 	
 	
 	// public List<DentalMaterial> getDentalMaterials();
+	
+	@Test
 	public void testGetDentalMaterials() {
 		
 		// Simulate the database ----------------------------
@@ -138,6 +140,7 @@ class DentalMaterialServiceTest {
 	
 	// UPDATE ----------------------------------------------------
 	// public void putDentalMaterial( DentalMaterial dentalMaterial );
+	
 	
 	
 	// public void increaseDentalMaterialQuantity( long idDentalMaterial, int quantity );
