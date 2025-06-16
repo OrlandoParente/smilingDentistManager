@@ -1,6 +1,5 @@
 package sdms.service;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -10,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import sdms.model.EmailSettings;
 import sdms.model.Employee;
 import sdms.model.HasProfessionalRole;
 import sdms.model.ProfessionalRole;
