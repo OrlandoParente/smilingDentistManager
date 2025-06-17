@@ -145,16 +145,27 @@ class DentalMaterialServiceTest {
 	public void testPutDentalMaterial () {
 		
 		// Simulate the database ----------------------------
+		DentalMaterial dentalMaterial = new DentalMaterial();
+		Long id = 1L;
+		dentalMaterial.setId(id);
+		dentalMaterial.setCost(10);
+		
+		// DentalMaterial dentalMaterialUpdated = new DentalMaterial();
+		// dentalMaterialUpdated.setId(id);
+		// dentalMaterialUpdated.setCost(20);
 		// --------------------------------------------------
 							
 		// test ---------------------------------------------
+		dentalMaterialService.putDentalMaterial(dentalMaterial);
 		// --------------------------------------------------
 							
 		// check --------------------------------------------
+		verify( dentalMaterialRepository , times(1) ).save( dentalMaterial );
 		// --------------------------------------------------
 	}
 	
 	// public void increaseDentalMaterialQuantity( long idDentalMaterial, int quantity );
+	
 	
 	
 	// public void decreaseDentalMaterialQuantity( long idDentalMaterial, int quantity );
