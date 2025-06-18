@@ -3,12 +3,16 @@ package sdms.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import sdms.model.Employee;
 import sdms.repository.EmployeeRepository;
 
 /*
@@ -80,6 +84,43 @@ class EmployeeServiceTest {
 	}
 	
 	// public List<Employee> getEmployees();
+	
+
+	@Test
+	public void  testGetEmployees() {
+		
+		// Simulate the database ----------------------------
+		Employee employee1 = new Employee();
+		Long id1 = 1L;
+		employee1.setId(id1);
+		
+		Employee employee2 = new Employee();
+		Long id2 = 2L;
+		employee1.setId(id2);
+		
+		List<Employee> employees = new ArrayList<>();
+		
+		employees.add(employee1);
+		employees.add(employee2);
+		
+		when( employeeRepository.findAll() ).thenReturn( employees );
+		
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		List<Employee> result = employeeService.getEmployees();
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		assertEquals( result.size(), employees.size() );
+		
+		for( int i = 0; i < result.size(); i ++ ) {
+			assertEquals( result.get(i).getId(), employees.get(i).getId() );
+		}
+		
+		// --------------------------------------------------	
+	}
+	
 	// public List<Employee> getEmployeesByName( String name );
 	// public List<Employee> getEmployeesBySurname( String surname );
 	// public List<Employee> getEmployeesByProfessionalRoleName( String professionalRoleName );
