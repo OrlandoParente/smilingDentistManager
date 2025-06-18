@@ -1,10 +1,14 @@
 package sdms.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -94,16 +98,20 @@ class HasProfessionalRoleServiceTest {
 	// READ
 	// public List<ProfessionalRole> getProfessionalRolesByEmployee( long idEmployee );
 	
+	@Test
 	public void testGetProfessionalRolesByEmployee () {
 		
 		// Simulate the database ----------------------------
 		Employee employee = new Employee();
-		employee.setId(1L);
+		Long idEmployee = 1L;
+		employee.setId( idEmployee );
 		
 		ProfessionalRole professionalRole = new ProfessionalRole();
 		professionalRole.setId(1L);
 		
 		HasProfessionalRole hasProfessionalRole = new HasProfessionalRole();
+		Long profRoleId = 2L;
+		hasProfessionalRole.setId( profRoleId );
 		hasProfessionalRole.setEmployee(employee);
 		hasProfessionalRole.setProfessionalRole(professionalRole);
 		
@@ -112,24 +120,40 @@ class HasProfessionalRoleServiceTest {
 		// employee.setId(1L);
 		
 		ProfessionalRole professionalRole1 = new ProfessionalRole();
-		professionalRole.setId(1L);
+		professionalRole.setId(2L);
 		
 		HasProfessionalRole hasProfessionalRole1 = new HasProfessionalRole();
-		hasProfessionalRole.setEmployee(employee);
-		hasProfessionalRole.setProfessionalRole(professionalRole1);
+		Long profRoleId1 = 3L;
+		hasProfessionalRole1.setId( profRoleId1 );
+		hasProfessionalRole1.setEmployee(employee);
+		hasProfessionalRole1.setProfessionalRole(professionalRole1);
 		
 		
 		List< HasProfessionalRole > hasProfessionalRoles = new ArrayList<>();
 		hasProfessionalRoles.add( hasProfessionalRole );
 		hasProfessionalRoles.add( hasProfessionalRole1 );
+		
+		List<ProfessionalRole> expectedProfRoles = hasProfessionalRoles.stream().map( hpr ->  hpr.getProfessionalRole() ).toList();
+		
+		when( employeeRepository.findById(idEmployee) ).thenReturn( Optional.of( employee ) );
+		when( hasProfessionalRoleRepository.findByEmployee( any( Employee.class )) ).thenReturn( hasProfessionalRoles );
 		// --------------------------------------------------
 							
 		// test ---------------------------------------------
-//		hasProfessionalRoleService.postLinkEmployeeToProfessionalRole( hasProfessionalRole );
+		List< ProfessionalRole > result = hasProfessionalRoleService.getProfessionalRolesByEmployee( idEmployee );
 		// --------------------------------------------------
 							
 		// check --------------------------------------------
-//		verify( hasProfessionalRoleRepository , times(1) ).save( hasProfessionalRole );
+		assertEquals( expectedProfRoles.size(), result.size() );
+		
+		// System.out.println( "expectedProfRoles size : " + expectedProfRoles.size() + " - result size :" + result.size() );
+		
+		for( int i = 0; i < expectedProfRoles.size(); i ++ ) {
+		
+			// System.out.println( i + " -> " + expectedProfRoles.get(i).getId() + " - " + i + " -> " + result.get(i).getId() );
+			assertEquals( expectedProfRoles.get(i).getId() , result.get(i).getId() );
+		}
+		
 		// --------------------------------------------------	
 	}
 	
