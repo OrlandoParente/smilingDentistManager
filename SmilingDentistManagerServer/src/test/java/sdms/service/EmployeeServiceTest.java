@@ -152,7 +152,7 @@ class EmployeeServiceTest {
 		// --------------------------------------------------
 							
 		// test ---------------------------------------------
-		List<Employee> result = employeeService.getEmployees();
+		List<Employee> result = employeeService.getEmployeesByName( name );
 		// --------------------------------------------------
 							
 		// check --------------------------------------------
@@ -160,6 +160,7 @@ class EmployeeServiceTest {
 		
 		for( int i = 0; i < result.size(); i ++ ) {
 			assertEquals( result.get(i).getId(), employees.get(i).getId() );
+			assertEquals( name , employees.get(i).getName() );
 		}
 		// --------------------------------------------------	
 		
