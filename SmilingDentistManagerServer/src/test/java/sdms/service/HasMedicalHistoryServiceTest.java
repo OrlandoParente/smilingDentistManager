@@ -1,6 +1,7 @@
 package sdms.service;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -66,6 +67,21 @@ class HasMedicalHistoryServiceTest {
 	// READ
 	// HasMedicalHistory getHasMedicalHistoryById(long id);
 	
+//	@Test
+	public void testGetHasMedicalHistoryById () {
+		
+		// Simulate the database ----------------------------
+		
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		
+		// --------------------------------------------------
+	}
 	
 	// List<HasMedicalHistory> getHasMedicalHistories();
 	// List<HasMedicalHistory> getHasMedicalHistoriesByMedicalHistory( MedicalHistory medicalHistory );
