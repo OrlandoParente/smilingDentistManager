@@ -84,14 +84,47 @@ class HasMedicalHistoryServiceTest {
 	}
 	
 	// List<HasMedicalHistory> getHasMedicalHistories();
+	
+//	@Test
+	public void testGetHasMedicalHistories() {
+		
+	}
+	
 	// List<HasMedicalHistory> getHasMedicalHistoriesByMedicalHistory( MedicalHistory medicalHistory );
+	
+//	@Test
+	public void testGetHasMedicalHistoriesByMedicalHistory() {
+		
+	}
+	
 	// List<HasMedicalHistory> getHasMedicalHistoriesByCustomer(Customer customer);
+	
+//	@Test
+	public void testGetHasMedicalHistoriesByCustomer() {
+		
+	}
 	
 	// UPDATE
 	// void putHasMedicalHistory( HasMedicalHistory hasMedicalHistory );
 	
+//	@Test
+	public void testPutHasMedicalHistory() {
+		
+	}
+	
 	// DELETE
 	// void deleteHasMedicalHistoryById( long id );
+	
+//	@Test
+	public void testDeleteHasMedicalHistoryById() {
+		
+	}
+	
 	// void deleteHasMedicalHistoryByIdCustomerAndIdMedicalHistory( long idCustomer, long idMedicalHistory );
 
+//	@Test
+	public void testDeleteHasMedicalHistoryByIdCustomerAndIdMedicalHistory() {
+		
+	}
+	
 }
