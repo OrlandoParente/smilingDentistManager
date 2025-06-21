@@ -88,6 +88,17 @@ class HasMedicalHistoryServiceTest {
 //	@Test
 	public void testGetHasMedicalHistories() {
 		
+		// Simulate the database ----------------------------
+		
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		
+		// --------------------------------------------------
 	}
 	
 	// List<HasMedicalHistory> getHasMedicalHistoriesByMedicalHistory( MedicalHistory medicalHistory );
@@ -95,6 +106,17 @@ class HasMedicalHistoryServiceTest {
 //	@Test
 	public void testGetHasMedicalHistoriesByMedicalHistory() {
 		
+		// Simulate the database ----------------------------
+		
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		
+		// --------------------------------------------------
 	}
 	
 	// List<HasMedicalHistory> getHasMedicalHistoriesByCustomer(Customer customer);
@@ -102,6 +124,17 @@ class HasMedicalHistoryServiceTest {
 //	@Test
 	public void testGetHasMedicalHistoriesByCustomer() {
 		
+		// Simulate the database ----------------------------
+		
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		
+		// --------------------------------------------------		
 	}
 	
 	// UPDATE
@@ -109,6 +142,18 @@ class HasMedicalHistoryServiceTest {
 	
 //	@Test
 	public void testPutHasMedicalHistory() {
+		
+		// Simulate the database ----------------------------
+		
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		
+		// --------------------------------------------------
 		
 	}
 	
@@ -118,12 +163,36 @@ class HasMedicalHistoryServiceTest {
 //	@Test
 	public void testDeleteHasMedicalHistoryById() {
 		
+		// Simulate the database ----------------------------
+		
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		
+		// --------------------------------------------------
+		
 	}
 	
 	// void deleteHasMedicalHistoryByIdCustomerAndIdMedicalHistory( long idCustomer, long idMedicalHistory );
 
 //	@Test
 	public void testDeleteHasMedicalHistoryByIdCustomerAndIdMedicalHistory() {
+		
+		// Simulate the database ----------------------------
+		
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		
+		// --------------------------------------------------
 		
 	}
 	
