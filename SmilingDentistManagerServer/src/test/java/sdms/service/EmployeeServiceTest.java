@@ -168,6 +168,49 @@ class EmployeeServiceTest {
 	
 	// public List<Employee> getEmployeesBySurname( String surname );
 	
+	@Test
+	public void testGetEmployeesBySurname() {
+		
+		String surname = "Nome";
+		
+		// Simulate the database ----------------------------
+		Employee employee1 = new Employee();
+		Long id1 = 1L;
+		String name1 = "Cognome1";
+		employee1.setId(id1);
+		employee1.setSurname( surname );
+		employee1.setName(name1);
+		
+		Employee employee2 = new Employee();
+		Long id2 = 2L;
+		String name2 = "Cognome2";
+		employee2.setId(id2);
+		employee2.setSurname( surname );
+		employee2.setName( name2 );
+		
+		List<Employee> employees = new ArrayList<>();
+		
+		employees.add(employee1);
+		employees.add(employee2);
+		
+		when( employeeRepository.findBySurname( surname ) ).thenReturn( employees );
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		List<Employee> result = employeeService.getEmployeesBySurname( surname );
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		assertEquals( result.size(), employees.size() );
+		
+		for( int i = 0; i < result.size(); i ++ ) {
+			assertEquals( result.get(i).getId(), employees.get(i).getId() );
+			assertEquals( surname , employees.get(i).getSurname() );
+		}
+		// --------------------------------------------------	
+		
+	}
+	
 	// public List<Employee> getEmployeesByProfessionalRoleName( String professionalRoleName );
 	
 	
