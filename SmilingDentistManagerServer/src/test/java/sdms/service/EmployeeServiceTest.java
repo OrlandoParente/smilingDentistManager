@@ -122,12 +122,66 @@ class EmployeeServiceTest {
 	}
 	
 	// public List<Employee> getEmployeesByName( String name );
+	
+	@Test
+	public void testGetEmployeesByName() {
+	
+		String name = "Nome";
+		
+		// Simulate the database ----------------------------
+		Employee employee1 = new Employee();
+		Long id1 = 1L;
+		String surname1 = "Cognome1";
+		employee1.setId(id1);
+		employee1.setName(name);
+		employee1.setSurname(surname1);
+		
+		Employee employee2 = new Employee();
+		Long id2 = 2L;
+		String surname2 = "Cognome2";
+		employee2.setId(id2);
+		employee2.setName(name);
+		employee2.setSurname(surname2);
+		
+		List<Employee> employees = new ArrayList<>();
+		
+		employees.add(employee1);
+		employees.add(employee2);
+		
+		when( employeeRepository.findByName( name ) ).thenReturn( employees );
+		// --------------------------------------------------
+							
+		// test ---------------------------------------------
+		List<Employee> result = employeeService.getEmployees();
+		// --------------------------------------------------
+							
+		// check --------------------------------------------
+		assertEquals( result.size(), employees.size() );
+		
+		for( int i = 0; i < result.size(); i ++ ) {
+			assertEquals( result.get(i).getId(), employees.get(i).getId() );
+		}
+		// --------------------------------------------------	
+		
+	}
+	
 	// public List<Employee> getEmployeesBySurname( String surname );
+	
 	// public List<Employee> getEmployeesByProfessionalRoleName( String professionalRoleName );
+	
+	
 	// public List<Employee> getEmployeesByProfessionalRoleId( long professionalRoleId );
+	
+	
 	// public List<Employee> getEmployeesByPartialKeyWordOverAllFields( String keyWord );
+	
+	
 	// public List<ProfessionalRole> getEmployeeProfessionalRole( long idEmployee );
+	
+	
 	// public Employee getEmployeeById( Long id );
+	
+	
 	// public Employee getEmployeeByEMail( String eMail );
 	
 	//		// title e.g. Dott. , Dott.ssa, Sig. , Sig.ra , Sig.na
