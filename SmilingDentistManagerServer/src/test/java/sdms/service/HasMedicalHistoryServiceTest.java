@@ -1,9 +1,15 @@
 package sdms.service;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import sdms.model.HasMedicalHistory;
 import sdms.repository.HasMedicalHistoryRepository;
 
 /*
@@ -47,19 +53,23 @@ class HasMedicalHistoryServiceTest {
 	// CREATE
 	// void postHasMedicalHistory( HasMedicalHistory hasMedicalHistory );
 	
-//	@Test
+	@Test
 	public void testPostHasMedicalHistory() {
 		
 		// Simulate the database ----------------------------
-		
+		HasMedicalHistory hasMedicalHistory = new HasMedicalHistory();
+		Long idHMH = 1L;
+		hasMedicalHistory.setId(idHMH);
+
 		// --------------------------------------------------
 							
 		// test ---------------------------------------------
-		
+
+		hasMedicalHistoryService.postHasMedicalHistory(hasMedicalHistory);		
 		// --------------------------------------------------
 							
 		// check --------------------------------------------
-		
+		verify( hasMedicalHistoryRepository, times(1) ).save( hasMedicalHistory );
 		// --------------------------------------------------
 	}
 	
