@@ -200,5 +200,20 @@ class DentalMaterialServiceTest {
 	
 	// DELETE ----------------------------------------------------
 	// public void deleteDentalMaterial( long id );
+	
+	@Test
+	public void testDeleteDentalMaterial() {
+		
+	    Long id = 3L;
+	    
+	    DentalMaterial dentalMaterial = new DentalMaterial();
+	    dentalMaterial.setId(id);
+
+	    when(dentalMaterialRepository.findById(id)).thenReturn( Optional.of( dentalMaterial ) );
+
+	    dentalMaterialService.deleteDentalMaterial(id);
+
+	    verify(dentalMaterialRepository, times(1)).delete( dentalMaterial );
+	}
 
 }
