@@ -165,7 +165,20 @@ class DentalMaterialServiceTest {
 	}
 	
 	// public void increaseDentalMaterialQuantity( long idDentalMaterial, int quantity );
-	
+	@Test
+	public void testIncreaseDentalMaterialQuantity() {
+	    Long id = 1L;
+	    DentalMaterial material = new DentalMaterial();
+	    material.setId(id);
+	    material.setQuantity(5);
+
+	    when(dentalMaterialRepository.findById(id)).thenReturn(Optional.of(material));
+
+	    dentalMaterialService.increaseDentalMaterialQuantity(id, 3);
+
+	    assertEquals(8, material.getQuantity());
+	    verify(dentalMaterialRepository, times(1)).save(material);
+	}
 	
 	
 	// public void decreaseDentalMaterialQuantity( long idDentalMaterial, int quantity );
