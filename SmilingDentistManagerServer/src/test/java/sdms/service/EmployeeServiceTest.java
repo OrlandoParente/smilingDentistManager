@@ -1,10 +1,12 @@
 package sdms.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -224,9 +226,35 @@ class EmployeeServiceTest {
 	
 	
 	// public Employee getEmployeeById( Long id );
-	
+	@Test
+	public void testGetEmployeeById() {
+	    Long id = 10L;
+	    Employee employee = new Employee();
+	    employee.setId(id);
+
+	    when(employeeRepository.findById(id)).thenReturn(Optional.of(employee));
+
+	    Employee result = employeeService.getEmployeeById(id);
+
+	    assertNotNull(result);
+	    assertEquals(id, result.getId());
+	}
 	
 	// public Employee getEmployeeByEMail( String eMail );
+	@Test
+	public void testGetEmployeeByEMail() {
+	    String email = "test@email.com";
+	    Employee employee = new Employee();
+	    employee.seteMail(email);
+
+	    when(employeeRepository.findByEMail(email)).thenReturn(Optional.of(employee));
+
+	    Employee result = employeeService.getEmployeeByEMail(email);
+
+	    assertNotNull(result);
+	    assertEquals(email, result.geteMail());
+	}
+
 	
 	//		// title e.g. Dott. , Dott.ssa, Sig. , Sig.ra , Sig.na
 	//		boolean postEmployee( String name, String surname, String title, String phone_number ) throws SQLException;
