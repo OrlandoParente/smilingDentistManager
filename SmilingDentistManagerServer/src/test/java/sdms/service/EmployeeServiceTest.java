@@ -2,6 +2,7 @@ package sdms.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,10 +18,13 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import sdms.model.Employee;
+import sdms.model.HasProfessionalRole;
+import sdms.model.ProfessionalRole;
 import sdms.repository.AppointmentRepository;
 import sdms.repository.EmployeeRepository;
 import sdms.repository.ExpenseRepository;
 import sdms.repository.HasProfessionalRoleRepository;
+import sdms.repository.ProfessionalRoleRepository;
 import sdms.repository.WorkPeriodRepository;
 
 /*
@@ -67,6 +71,9 @@ class EmployeeServiceTest {
 	
 	@Mock
 	WorkPeriodRepository workPeriodRepository;
+	
+	@Mock
+	ProfessionalRoleRepository professionalRoleRepository;
 	
 	@InjectMocks
 	EmployeeService employeeService;
@@ -232,12 +239,70 @@ class EmployeeServiceTest {
 	}
 	
 	// public List<Employee> getEmployeesByProfessionalRoleName( String professionalRoleName );
-	
+	@Test
+	public void testGetEmployeesByProfessionalRoleName() {
+	    String roleName = "Igienista";
+	    ProfessionalRole role = new ProfessionalRole();
+	    role.setName(roleName);
+
+	    Employee employee1 = new Employee();
+	    Employee employee2 = new Employee();
+
+	    HasProfessionalRole hpr1 = new HasProfessionalRole();
+	    hpr1.setEmployee(employee1);
+	    HasProfessionalRole hpr2 = new HasProfessionalRole();
+	    hpr2.setEmployee(employee2);
+
+	    when(professionalRoleRepository.findByName(roleName)).thenReturn(List.of(role));
+	    when(hasProfessionalRoleRepository.findByProfessionalRole(role)).thenReturn(List.of(hpr1, hpr2));
+
+	    List<Employee> result = employeeService.getEmployeesByProfessionalRoleName(roleName);
+
+	    assertEquals(2, result.size());
+	    assertTrue(result.contains(employee1));
+	    assertTrue(result.contains(employee2));
+	}
+
 	
 	// public List<Employee> getEmployeesByProfessionalRoleId( long professionalRoleId );
-	
+	@Test
+	public void testGetEmployeesByProfessionalRoleId() {
+	    long roleId = 101L;
+	    ProfessionalRole role = new ProfessionalRole();
+	    role.setId(roleId);
+
+	    Employee employee = new Employee();
+	    HasProfessionalRole hpr = new HasProfessionalRole();
+	    hpr.setEmployee(employee);
+
+	    when(professionalRoleRepository.findById(roleId)).thenReturn(Optional.of(role));
+	    when(hasProfessionalRoleRepository.findByProfessionalRole(role)).thenReturn(List.of(hpr));
+
+	    List<Employee> result = employeeService.getEmployeesByProfessionalRoleId(roleId);
+
+	    assertEquals(1, result.size());
+	    assertEquals(employee, result.get(0));
+	}
+
 	
 	// public List<Employee> getEmployeesByPartialKeyWordOverAllFields( String keyWord );
+//	@Test
+//	public void testGetEmployeesByPartialKeyWordOverAllFields() {
+//	    String keyword = "rossi";
+//	    Employee employee1 = new Employee();
+//	    Employee employee2 = new Employee();
+//
+//	    when(employeeRepository.findByTitleContainingOrNameContainingOrSurnameContainingOrBirthDateStringContainingOrPhoneNumberContainingOrPhoneNumber2ContainingOrEMailContainingOrSalaryStringContaining(
+//	            keyword, keyword, keyword, keyword, keyword, keyword, keyword, keyword))
+//	        .thenReturn(List.of(employee1, employee2));
+//
+//	    List<Employee> result = employeeService.getEmployeesByPartialKeyWordOverAllFields(keyword);
+//
+//	    assertEquals(2, result.size());
+//	    assertTrue(result.contains(employee1));
+//	    assertTrue(result.contains(employee2));
+//	}
+
 	
 	
 	// public List<ProfessionalRole> getEmployeeProfessionalRole( long idEmployee );
