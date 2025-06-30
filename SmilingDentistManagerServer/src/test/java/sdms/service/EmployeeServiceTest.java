@@ -2,6 +2,8 @@ package sdms.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -15,7 +17,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import sdms.model.Employee;
+import sdms.repository.AppointmentRepository;
 import sdms.repository.EmployeeRepository;
+import sdms.repository.ExpenseRepository;
+import sdms.repository.HasProfessionalRoleRepository;
+import sdms.repository.WorkPeriodRepository;
 
 /*
   	public long getLastCustomerId();
@@ -49,6 +55,18 @@ class EmployeeServiceTest {
 
 	@Mock
 	EmployeeRepository employeeRepository;
+	
+	@Mock
+	HasProfessionalRoleRepository hasProfessionalRoleRepository;
+	
+	@Mock
+	ExpenseRepository expenseRepository;
+	
+	@Mock
+	AppointmentRepository appointmentRepository;
+	
+	@Mock
+	WorkPeriodRepository workPeriodRepository;
 	
 	@InjectMocks
 	EmployeeService employeeService;
@@ -264,8 +282,46 @@ class EmployeeServiceTest {
 	//		boolean putEmployeeById( String id, String name, String surname, String title, String birth_date, 
 	//								String phone_number, String phone_number_2, String e_mail ) throws SQLException;
 	
+	@Test
+	public void testPostEmployee() {
+	    Employee employee = new Employee();
+	    employee.setName("Mario");
+
+	    employeeService.postEmployee(employee);
+
+	    verify(employeeRepository, times(1)).save(employee);
+	}
+	
+	
 	// public void putEmployee( Employee employee );
+	@Test
+	public void testPutEmployee() {
+	    Employee employee = new Employee();
+	    employee.setId(1L);
+	    employee.setSurname("Rossi");
+
+	    employeeService.putEmployee(employee);
+
+	    verify(employeeRepository, times(1)).save(employee);
+	}
+	
 	
 	// public void deleteEmployeeById( Long id );
+	@Test
+	public void testDeleteEmployeeById() {
+	    Long id = 42L;
+	    Employee employee = new Employee();
+	    employee.setId(id);
+
+	    when(employeeRepository.findById(id)).thenReturn(Optional.of(employee));
+	    when(hasProfessionalRoleRepository.findByEmployee(employee)).thenReturn(new ArrayList<>());
+	    when(expenseRepository.findByEmployee(employee)).thenReturn(new ArrayList<>());
+	    when(appointmentRepository.findByDoctor(employee)).thenReturn(new ArrayList<>());
+	    when(workPeriodRepository.findByEmployee(employee)).thenReturn(new ArrayList<>());
+
+	    employeeService.deleteEmployeeById(id);
+
+	    verify(employeeRepository, times(1)).delete(employee);
+	}
 
 }
