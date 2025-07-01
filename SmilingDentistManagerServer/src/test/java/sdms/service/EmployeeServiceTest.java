@@ -306,6 +306,33 @@ class EmployeeServiceTest {
 	
 	
 	// public List<ProfessionalRole> getEmployeeProfessionalRole( long idEmployee );
+	@Test
+	public void testGetEmployeeProfessionalRole() {
+	    long id = 22L;
+	    Employee employee = new Employee();
+	    employee.setId(id);
+
+	    ProfessionalRole role1 = new ProfessionalRole();
+	    ProfessionalRole role2 = new ProfessionalRole();
+
+	    HasProfessionalRole hpr1 = new HasProfessionalRole();
+	    hpr1.setEmployee(employee);
+	    hpr1.setProfessionalRole(role1);
+
+	    HasProfessionalRole hpr2 = new HasProfessionalRole();
+	    hpr2.setEmployee(employee);
+	    hpr2.setProfessionalRole(role2);
+
+	    when(employeeRepository.findById(id)).thenReturn(Optional.of(employee));
+	    when(hasProfessionalRoleRepository.findByEmployee(employee)).thenReturn(List.of(hpr1, hpr2));
+
+	    List<ProfessionalRole> result = employeeService.getEmployeeProfessionalRole(id);
+
+	    assertEquals(2, result.size());
+	    assertTrue(result.contains(role1));
+	    assertTrue(result.contains(role2));
+	}
+
 	
 	
 	// public Employee getEmployeeById( Long id );
