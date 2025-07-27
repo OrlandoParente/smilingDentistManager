@@ -1,7 +1,11 @@
 package sdms.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,11 +64,9 @@ class HasMedicalHistoryServiceTest {
 		HasMedicalHistory hasMedicalHistory = new HasMedicalHistory();
 		Long idHMH = 1L;
 		hasMedicalHistory.setId(idHMH);
-
 		// --------------------------------------------------
 							
 		// test ---------------------------------------------
-
 		hasMedicalHistoryService.postHasMedicalHistory(hasMedicalHistory);		
 		// --------------------------------------------------
 							
@@ -76,19 +78,23 @@ class HasMedicalHistoryServiceTest {
 	// READ
 	// HasMedicalHistory getHasMedicalHistoryById(long id);
 	
-//	@Test
+	@Test
 	public void testGetHasMedicalHistoryById () {
 		
 		// Simulate the database ----------------------------
+		HasMedicalHistory hasMedicalHistory = new HasMedicalHistory();
+		Long idHMH = 1L;
+		hasMedicalHistory.setId(idHMH);
 		
+		when( hasMedicalHistoryRepository.findById(idHMH) ).thenReturn( Optional.of(hasMedicalHistory) );
 		// --------------------------------------------------
 							
 		// test ---------------------------------------------
-		
+		HasMedicalHistory result = hasMedicalHistoryService.getHasMedicalHistoryById(idHMH);
 		// --------------------------------------------------
 							
 		// check --------------------------------------------
-		
+		assertEquals(hasMedicalHistory.getId(), result.getId());
 		// --------------------------------------------------
 	}
 	

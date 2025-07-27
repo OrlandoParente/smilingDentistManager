@@ -16,7 +16,7 @@ public interface HasMedicalHistoryRepository extends JpaRepository<HasMedicalHis
 	// CREATE
 	
 	// READ
-	Optional <HasMedicalHistory> findById(long id);
+	Optional <HasMedicalHistory> findById(Long id);
 	
 	List<HasMedicalHistory> findAll();
 	List<HasMedicalHistory> findByMedicalHistory( MedicalHistory medicalHistory );
