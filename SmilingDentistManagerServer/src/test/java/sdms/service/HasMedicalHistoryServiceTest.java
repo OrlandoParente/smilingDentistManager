@@ -35,6 +35,7 @@ import sdms.repository.HasMedicalHistoryRepository;
 	void deleteHasMedicalHistoryByIdCustomerAndIdMedicalHistory( long idCustomer, long idMedicalHistory );
  */
 
+// <<<<<<<<<<<<<<<<<<<<<-------------------------- CODICE SOLO DA DECOMMENTARE E CONTROLLARE
 class HasMedicalHistoryServiceTest {
 
 	@Mock
@@ -114,6 +115,15 @@ class HasMedicalHistoryServiceTest {
 		// check --------------------------------------------
 		
 		// --------------------------------------------------
+		
+//        HasMedicalHistory hmh1 = new HasMedicalHistory();
+//        HasMedicalHistory hmh2 = new HasMedicalHistory();
+//        List<HasMedicalHistory> list = Arrays.asList(hmh1, hmh2);
+//
+//        when(hasMedicalHistoryRepository.findAll()).thenReturn(list);
+//
+//        List<HasMedicalHistory> result = hasMedicalHistoryService.getHasMedicalHistories();
+//        assertEquals(2, result.size());
 	}
 	
 	// List<HasMedicalHistory> getHasMedicalHistoriesByMedicalHistory( MedicalHistory medicalHistory );
@@ -132,6 +142,16 @@ class HasMedicalHistoryServiceTest {
 		// check --------------------------------------------
 		
 		// --------------------------------------------------
+		
+//        MedicalHistory mh = new MedicalHistory();
+//        HasMedicalHistory hmh = new HasMedicalHistory();
+//        List<HasMedicalHistory> list = Arrays.asList(hmh);
+//
+//        when(hasMedicalHistoryRepository.findByMedicalHistory(mh)).thenReturn(list);
+//
+//        List<HasMedicalHistory> result = hasMedicalHistoryService.getHasMedicalHistoriesByMedicalHistory(mh);
+//        assertEquals(1, result.size());
+		
 	}
 	
 	// List<HasMedicalHistory> getHasMedicalHistoriesByCustomer(Customer customer);
@@ -150,6 +170,15 @@ class HasMedicalHistoryServiceTest {
 		// check --------------------------------------------
 		
 		// --------------------------------------------------		
+		
+//        Customer customer = new Customer();
+//        HasMedicalHistory hmh = new HasMedicalHistory();
+//        List<HasMedicalHistory> list = Arrays.asList(hmh);
+//
+//        when(hasMedicalHistoryRepository.findByCustomer(customer)).thenReturn(list);
+//
+//        List<HasMedicalHistory> result = hasMedicalHistoryService.getHasMedicalHistoriesByCustomer(customer);
+//        assertEquals(1, result.size());
 	}
 	
 	// UPDATE
@@ -169,6 +198,10 @@ class HasMedicalHistoryServiceTest {
 		// check --------------------------------------------
 		
 		// --------------------------------------------------
+		
+//        HasMedicalHistory hmh = new HasMedicalHistory();
+//        hasMedicalHistoryService.putHasMedicalHistory(hmh);
+//        verify(hasMedicalHistoryRepository, times(1)).save(hmh);
 		
 	}
 	
@@ -190,6 +223,14 @@ class HasMedicalHistoryServiceTest {
 		
 		// --------------------------------------------------
 		
+//        HasMedicalHistory hmh = new HasMedicalHistory();
+//        hmh.setId(1L);
+//
+//        when(hasMedicalHistoryRepository.findById(1L)).thenReturn(Optional.of(hmh));
+//
+//        hasMedicalHistoryService.deleteHasMedicalHistoryById(1L);
+//        verify(hasMedicalHistoryRepository, times(1)).delete(hmh);
+		
 	}
 	
 	// void deleteHasMedicalHistoryByIdCustomerAndIdMedicalHistory( long idCustomer, long idMedicalHistory );
@@ -208,6 +249,24 @@ class HasMedicalHistoryServiceTest {
 		// check --------------------------------------------
 		
 		// --------------------------------------------------
+		
+//        Customer customer = new Customer();
+//        customer.setId(1L);
+//
+//        MedicalHistory mh = new MedicalHistory();
+//        mh.setId(2L);
+//
+//        HasMedicalHistory hmh = new HasMedicalHistory();
+//        hmh.setCustomer(customer);
+//        hmh.setMedicalHistory(mh);
+//        List<HasMedicalHistory> list = Arrays.asList(hmh);
+//
+//        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
+//        when(medicalHistoryRepository.findById(2L)).thenReturn(Optional.of(mh));
+//        when(hasMedicalHistoryRepository.findByCustomer(customer)).thenReturn(list);
+//
+//        hasMedicalHistoryService.deleteHasMedicalHistoryByIdCustomerAndIdMedicalHistory(1L, 2L);
+//        verify(hasMedicalHistoryRepository, times(1)).delete(hmh);
 		
 	}
 	
